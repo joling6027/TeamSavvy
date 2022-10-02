@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Team Savvy</string>
+    <string name="txt_splash">Employee Attendance</string>
+    <string name="txt_title">Team Savvy</string>
+    <string name="emp_biometric">Employee Biometric</string>
+    <string name="emp_id">Employee ID</string>
+    <string name="status">STATUS</string>
+    <string name="clock_in">CLOCK IN</string>
+    <string name="GetData">https://teamsavvyapi.azurewebsites.net/api/Employee</string>
+    <string name="ClockIn">https://teamsavvyapi.azurewebsites.net/api/TimeSheet/clockIn</string>
+    <string name="ClockOut">https://teamsavvyapi.azurewebsites.net/api/TimeSheet/clockOut</string>
+</resources>
