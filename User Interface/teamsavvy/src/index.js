@@ -4,17 +4,17 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import "./assets/css/nucleo-icons.css";
 // import "./react-notification-alert/dist/animate.css";
-// import "./assets/scss/black-dashboard-pro-react.scss?v=1.2.0";
+// import "./assets/css/black-dashboard-pro-react.css";
 import "./assets/demo/demo.css";
 
 
 import App from './App';
-import Login from './components/Login';
+import Login from './components/login/Login';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Login/>
+    <App/>
   </React.StrictMode>
 );
 
