@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import classnames from 'classnames'
+import classnames from 'classnames';
 import {
     Button,
     Card,
@@ -16,85 +16,52 @@ import {
     Col
   } from "reactstrap";
 
-const Login = () => {
-    const [state, setState] = React.useState({});
-    React.useEffect(() => {
-    document.body.classList.toggle("login-page");
-    return function cleanup() {
-      document.body.classList.toggle("login-page");
-    };
-  });
-    return ( 
-        <>
-        <div className="content">
-          <Container>
-            <Col className="ml-auto mr-auto" lg="4" md="6">
-              <Form className="form">
-                <Card className="card-login card-white">
-                  <CardHeader>
-                    <img alt="..." src={require("../assets/img/card-primary.png")} />
-                    <CardTitle tag="h1">Log in</CardTitle>
-                  </CardHeader>
-                  <CardBody>
-                    <InputGroup className={classnames({"input-group-focus": state.emailFocus})} >
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>
-                          <i className="tim-icons icon-email-85" />
-                        </InputGroupText>
-                      </InputGroupAddon>
-                      <Input placeholder="Email" type="text"
-                        onFocus={(e) => setState({ ...state, emailFocus: true })}
-                        onBlur={(e) => setState({ ...state, emailFocus: false })}
-                      />
-                    </InputGroup>
-                    <InputGroup
-                      className={classnames({
-                        "input-group-focus": state.passFocus
-                      })}
-                    >
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>
-                          <i className="tim-icons icon-lock-circle" />
-                        </InputGroupText>
-                      </InputGroupAddon>
-                      <Input
-                        placeholder="Password"
-                        type="text"
-                        onFocus={(e) => setState({ ...state, passFocus: true })}
-                        onBlur={(e) => setState({ ...state, passFocus: false })}
-                      />
-                    </InputGroup>
-                  </CardBody>
-                  <CardFooter>
-                    <Button block className="mb-3" color="primary" href="#pablo" onClick={(e) => e.preventDefault()} size="lg">
-                      Get Started
-                    </Button>
-                    <div className="pull-left">
-                      <h6>
-                        <a className="link footer-link" href="#pablo" onClick={(e) => e.preventDefault()} >
-                          Create Account
-                        </a>
-                      </h6>
-                    </div>
-                    <div className="pull-right">
-                      <h6>
-                        <a
-                          className="link footer-link"
-                          href="#pablo"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          Need Help?
-                        </a>
-                      </h6>
-                    </div>
-                  </CardFooter>
-                </Card>
-              </Form>
-            </Col>
-          </Container>
-        </div>
+
+class  Login extends Component {
+  // state = { 
+  //   count : this.state.name 
+  // } 
+  render() { 
+    //  console.log(this.state.count);
+    return (
+      <>
+            <div className="card m-auto " style={{width: "18rem"}}>
+            <img src="..." className="card-img-top" alt="..."/>
+            <div className="card-body">
+              <h5 className="card-title">Login</h5>
+              <form>
+                <div className="mb-3">
+                  <label for="exampleInputEmail1" className="form-label">Email address</label>
+                  <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
+                </div>
+                <div className="mb-3">
+                  <label for="exampleInputPassword1" className="form-label">Password</label>
+                  <input type="password" className="form-control" id="exampleInputPassword1"/>
+                </div>
+                <div className="mb-3 form-check">
+                  <input type="checkbox" className="form-check-input" id="exampleCheck1"/>
+                </div>
+                <a type="submit" className="btn btn-primary">LETS GO</a>
+              </form>
+            </div>
+          </div>
       </>
-     );
+    );
+  }
 }
  
 export default Login;
+// const Login = () => {
+//     const [state, setState] = React.useState({});
+//     React.useEffect(() => {
+//     document.body.classList.toggle("login-page");
+//     return function cleanup() {
+//       document.body.classList.toggle("login-page");
+//     };
+//   });
+//     return ( 
+       
+//       );
+// }
+
+// export default Login;
