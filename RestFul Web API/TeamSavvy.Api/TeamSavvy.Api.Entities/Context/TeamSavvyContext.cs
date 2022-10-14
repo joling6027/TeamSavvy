@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using TeamSavvy.Api.Web.Models;
+using TeamSavvy.Api.Web.Entities;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -192,7 +192,6 @@ namespace TeamSavvy.Api.Entities.Context
                 entity.Property(e => e.JobLocationId).HasColumnName("JOB_LOCATION_ID");
 
                 entity.Property(e => e.Password)
-                    .IsRequired()
                     .HasColumnName("PASSWORD")
                     .IsUnicode(false);
 
@@ -286,11 +285,11 @@ namespace TeamSavvy.Api.Entities.Context
             {
                 entity.ToTable("Employee_Skill");
 
-                entity.Property(e => e.EmployeeSkillId)
-                    .HasColumnName("EMPLOYEE_SKILL_ID")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.EmployeeSkillId).HasColumnName("EMPLOYEE_SKILL_ID");
 
                 entity.Property(e => e.EmployeeId).HasColumnName("EMPLOYEE_ID");
+
+                entity.Property(e => e.Isactive).HasColumnName("ISACTIVE");
 
                 entity.Property(e => e.SkillId).HasColumnName("SKILL_ID");
 
@@ -396,18 +395,24 @@ namespace TeamSavvy.Api.Entities.Context
 
                 entity.Property(e => e.JobLocationId).HasColumnName("JOB_LOCATION_ID");
 
-                entity.Property(e => e.JobLocationAddressId).HasColumnName("JOB_LOCATION_ADDRESS_ID");
+                entity.Property(e => e.CityId).HasColumnName("CITY_ID");
 
-                entity.Property(e => e.JobLocationName)
+                entity.Property(e => e.Location)
                     .IsRequired()
-                    .HasColumnName("JOB_LOCATION_NAME")
-                    .HasMaxLength(10)
-                    .IsFixedLength();
+                    .HasColumnName("LOCATION")
+                    .IsUnicode(false);
 
-                entity.HasOne(d => d.JobLocationAddress)
+                entity.Property(e => e.Postcode)
+                    .IsRequired()
+                    .HasColumnName("POSTCODE")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.City)
                     .WithMany(p => p.JobLocation)
-                    .HasForeignKey(d => d.JobLocationAddressId)
-                    .HasConstraintName("FK_Job_Location_Address");
+                    .HasForeignKey(d => d.CityId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Job_Location_City");
             });
 
             modelBuilder.Entity<Leave>(entity =>
@@ -625,9 +630,7 @@ namespace TeamSavvy.Api.Entities.Context
 
             modelBuilder.Entity<Task>(entity =>
             {
-                entity.Property(e => e.TaskId)
-                    .HasColumnName("TASK_ID")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.TaskId).HasColumnName("TASK_ID");
 
                 entity.Property(e => e.AssignedBy)
                     .HasColumnName("ASSIGNED_BY")

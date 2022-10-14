@@ -128,8 +128,8 @@ namespace TeamSavvy.Api
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ITimeSheetService, TimeSheetService>();
             services.AddScoped<IEmployeeService, EmployeeService>();
-            services.AddScoped<IProjects, Projects>();
-            services.AddScoped<IEmployeeTask, EmployeeTask>();
+            services.AddScoped<IProjectsService, ProjectsService>();
+            services.AddScoped<IEmployeeTasksService, EmployeeTasksService>();
            
         }
 

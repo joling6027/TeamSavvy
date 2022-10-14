@@ -11,6 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\TeamSavvy.Api.BusinessModel\TeamSavvy.Api.BusinessModel.csproj" />
     <ProjectReference Include="..\TeamSavvy.Api.Entities\TeamSavvy.Api.Entities.csproj" />
+    <ProjectReference Include="..\TeamSavvy.Api.Utilities\TeamSavvy.Api.Utilities.csproj" />
   </ItemGroup>
 
 </Project>

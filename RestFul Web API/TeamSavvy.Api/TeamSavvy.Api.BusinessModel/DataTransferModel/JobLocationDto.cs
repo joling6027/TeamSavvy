@@ -7,7 +7,8 @@ namespace TeamSavvy.Api.BusinessModel.DataTransferModel
     public class JobLocationDto
     {
         public int JobLocationId { get; set; }
-        public string JobLocationName { get; set; }
-        public int JobLocationAddressId { get; set; }
+        public string Location { get; set; }
+        public string Postcode { get; set; }
+        public int CityId { get; set; }
     }
 }

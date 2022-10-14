@@ -7,7 +7,13 @@ namespace TeamSavvy.Api.BusinessModel.DataTransferModel
     public class CityDto
     {
         public int CityId { get; set; }
-        public ProvinceDto Province { get; set; }
         public string CityName { get; set; }
+        public ProvinceDto Province { get; set; }
+   
+    }
+
+    public class CityAddDto
+    {
+        public int CityId { get; set; }
     }
 }

@@ -10,7 +10,7 @@ using TeamSavvy.Api.Services.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace TeamSavvy.Api.Web.Controllers
+namespace TeamSavvy.Api.Entities.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

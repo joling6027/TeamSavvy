@@ -1,0 +1,13 @@
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Entities\bin\Debug\netcoreapp3.1\TeamSavvy.Api.Entities.deps.json
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Entities\bin\Debug\netcoreapp3.1\TeamSavvy.Api.Entities.runtimeconfig.json
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Entities\bin\Debug\netcoreapp3.1\TeamSavvy.Api.Entities.runtimeconfig.dev.json
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Entities\bin\Debug\netcoreapp3.1\TeamSavvy.Api.Entities.dll
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Entities\bin\Debug\netcoreapp3.1\TeamSavvy.Api.Entities.pdb
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Entities\obj\Debug\netcoreapp3.1\TeamSavvy.Api.Entities.csproj.AssemblyReference.cache
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Entities\obj\Debug\netcoreapp3.1\TeamSavvy.Api.Entities.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Entities\obj\Debug\netcoreapp3.1\TeamSavvy.Api.Entities.AssemblyInfoInputs.cache
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Entities\obj\Debug\netcoreapp3.1\TeamSavvy.Api.Entities.AssemblyInfo.cs
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Entities\obj\Debug\netcoreapp3.1\TeamSavvy.Api.Entities.csproj.CoreCompileInputs.cache
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Entities\obj\Debug\netcoreapp3.1\TeamSavvy.Api.Entities.dll
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Entities\obj\Debug\netcoreapp3.1\TeamSavvy.Api.Entities.pdb
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Entities\obj\Debug\netcoreapp3.1\TeamSavvy.Api.Entities.genruntimeconfig.cache

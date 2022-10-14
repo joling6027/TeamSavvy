@@ -7334,11 +7334,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jaspa\\source\\repos\\TeamSavvy.Api\\TeamSavvy.Api.Middleware\\TeamSavvy.Api.Middleware.csproj",
+      "projectUniqueName": "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.Middleware\\TeamSavvy.Api.Middleware.csproj",
       "projectName": "TeamSavvy.Api.Middleware",
-      "projectPath": "C:\\Users\\jaspa\\source\\repos\\TeamSavvy.Api\\TeamSavvy.Api.Middleware\\TeamSavvy.Api.Middleware.csproj",
+      "projectPath": "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.Middleware\\TeamSavvy.Api.Middleware.csproj",
       "packagesPath": "C:\\Users\\jaspa\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jaspa\\source\\repos\\TeamSavvy.Api\\TeamSavvy.Api.Middleware\\obj\\",
+      "outputPath": "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.Middleware\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\jaspa\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -7355,8 +7355,8 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\jaspa\\source\\repos\\TeamSavvy.Api\\TeamSavvy.Api.Utilities\\TeamSavvy.Api.Utilities.csproj": {
-              "projectPath": "C:\\Users\\jaspa\\source\\repos\\TeamSavvy.Api\\TeamSavvy.Api.Utilities\\TeamSavvy.Api.Utilities.csproj"
+            "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.Utilities\\TeamSavvy.Api.Utilities.csproj": {
+              "projectPath": "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.Utilities\\TeamSavvy.Api.Utilities.csproj"
             }
           }
         }

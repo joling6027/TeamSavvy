@@ -5,21 +5,15 @@ using System.Collections.Generic;
 // If you have enabled NRTs for your project, then un-comment the following line:
 // #nullable disable
 
-namespace TeamSavvy.Api.Web.Models
+namespace TeamSavvy.Api.Web.Entities
 {
     public partial class Address
     {
-        public Address()
-        {
-            JobLocation = new HashSet<JobLocation>();
-        }
-
         public int AddressId { get; set; }
         public string Apartment { get; set; }
         public int CityId { get; set; }
         public string Postcode { get; set; }
 
         public virtual City City { get; set; }
-        public virtual ICollection<JobLocation> JobLocation { get; set; }
     }
 }

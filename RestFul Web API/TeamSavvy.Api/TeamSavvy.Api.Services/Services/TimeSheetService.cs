@@ -6,7 +6,8 @@ using TeamSavvy.Api.BusinessModel.DataTransferModel;
 using TeamSavvy.Api.Entities.Context;
 using TeamSavvy.Api.Entities.GenericRepo;
 using TeamSavvy.Api.Services.IServices;
-using TeamSavvy.Api.Web.Models;
+using TeamSavvy.Api.Utilities.Helper;
+using TeamSavvy.Api.Web.Entities;
 
 namespace TeamSavvy.Api.Services.Services
 {
@@ -85,6 +86,17 @@ namespace TeamSavvy.Api.Services.Services
                                     .OrderByDescending(x => x.ClockTime)
                                     .Where(x => x.EmployeeId == employeeId)
                                     .Select(x => x.ClockType).FirstOrDefault();
+                    if(clockType != null)
+                    {
+                        if(clockType == ClockType.ClockIn.ToString())
+                        {
+                            clockType = ClockType.ClockOut.ToString();
+                        }
+                        else
+                        {
+                            clockType = ClockType.ClockIn.ToString();
+                        }
+                    }
                 }
             }
             catch (Exception e)

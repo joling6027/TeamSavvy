@@ -7116,11 +7116,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jaspa\\source\\repos\\TeamSavvy.Api\\TeamSavvy.Api.Entities\\TeamSavvy.Api.Entities.csproj",
+      "projectUniqueName": "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.Entities\\TeamSavvy.Api.Entities.csproj",
       "projectName": "TeamSavvy.Api.Entities",
-      "projectPath": "C:\\Users\\jaspa\\source\\repos\\TeamSavvy.Api\\TeamSavvy.Api.Entities\\TeamSavvy.Api.Entities.csproj",
+      "projectPath": "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.Entities\\TeamSavvy.Api.Entities.csproj",
       "packagesPath": "C:\\Users\\jaspa\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jaspa\\source\\repos\\TeamSavvy.Api\\TeamSavvy.Api.Entities\\obj\\",
+      "outputPath": "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.Entities\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\jaspa\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -9,9 +9,8 @@ using TeamSavvy.Api.BusinessModel.DataTransferModel;
 using TeamSavvy.Api.BusinessModel.Helper;
 using TeamSavvy.Api.Services.IServices;
 using TeamSavvy.Api.Utilities.Helper;
-using TeamSavvy.Api.Web.Models;
 
-namespace TeamSavvy.Api.Web.Controllers
+namespace TeamSavvy.Api.Entities.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -124,7 +123,7 @@ namespace TeamSavvy.Api.Web.Controllers
         [ProducesResponseType(typeof(ResponseMessage), 400)]
         [ProducesResponseType(typeof(ResponseMessage), 401)]
         [ProducesResponseType(typeof(ResponseMessage), 404)]
-        public ActionResult<EmployeeDto> AddEmployeeDetails([FromBody] EmployeeDto employee)
+        public ActionResult<EmployeeAddDto> AddEmployeeDetails([FromBody] EmployeeAddDto employee)
         {
             ActionResult response;
             ResponseMessage responseMessage;
@@ -156,7 +155,7 @@ namespace TeamSavvy.Api.Web.Controllers
         [ProducesResponseType(typeof(ResponseMessage), 400)]
         [ProducesResponseType(typeof(ResponseMessage), 401)]
         [ProducesResponseType(typeof(ResponseMessage), 404)]
-        public IActionResult UpdateEmployeeDetails([FromBody] EmployeeDto employee)
+        public IActionResult UpdateEmployeeDetails([FromBody] EmployeeAddDto employee)
         {
             ActionResult response;
             ResponseMessage responseMessage;

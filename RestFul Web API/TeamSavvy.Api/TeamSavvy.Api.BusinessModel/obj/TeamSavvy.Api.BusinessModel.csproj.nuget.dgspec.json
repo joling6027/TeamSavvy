@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\jaspa\\source\\repos\\TeamSavvy.Api\\TeamSavvy.Api.BusinessModel\\TeamSavvy.Api.BusinessModel.csproj": {}
+    "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.BusinessModel\\TeamSavvy.Api.BusinessModel.csproj": {}
   },
   "projects": {
-    "C:\\Users\\jaspa\\source\\repos\\TeamSavvy.Api\\TeamSavvy.Api.BusinessModel\\TeamSavvy.Api.BusinessModel.csproj": {
+    "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.BusinessModel\\TeamSavvy.Api.BusinessModel.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jaspa\\source\\repos\\TeamSavvy.Api\\TeamSavvy.Api.BusinessModel\\TeamSavvy.Api.BusinessModel.csproj",
+        "projectUniqueName": "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.BusinessModel\\TeamSavvy.Api.BusinessModel.csproj",
         "projectName": "TeamSavvy.Api.BusinessModel",
-        "projectPath": "C:\\Users\\jaspa\\source\\repos\\TeamSavvy.Api\\TeamSavvy.Api.BusinessModel\\TeamSavvy.Api.BusinessModel.csproj",
+        "projectPath": "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.BusinessModel\\TeamSavvy.Api.BusinessModel.csproj",
         "packagesPath": "C:\\Users\\jaspa\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jaspa\\source\\repos\\TeamSavvy.Api\\TeamSavvy.Api.BusinessModel\\obj\\",
+        "outputPath": "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.BusinessModel\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\jaspa\\AppData\\Roaming\\NuGet\\NuGet.Config",

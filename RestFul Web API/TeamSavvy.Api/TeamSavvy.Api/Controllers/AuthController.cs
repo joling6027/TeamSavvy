@@ -7,7 +7,7 @@ using TeamSavvy.Api.BusinessModel.DataTransferModel;
 using TeamSavvy.Api.BusinessModel.Helper;
 using TeamSavvy.Api.Services.IServices;
 
-namespace TeamSavvy.Api.Web.Controllers
+namespace TeamSavvy.Api.Entities.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

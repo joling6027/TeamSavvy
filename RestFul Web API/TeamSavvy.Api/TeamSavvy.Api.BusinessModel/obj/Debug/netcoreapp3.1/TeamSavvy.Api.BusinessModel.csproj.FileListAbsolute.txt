@@ -1,0 +1,10 @@
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.BusinessModel\bin\Debug\netcoreapp3.1\TeamSavvy.Api.BusinessModel.deps.json
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.BusinessModel\bin\Debug\netcoreapp3.1\TeamSavvy.Api.BusinessModel.dll
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.BusinessModel\bin\Debug\netcoreapp3.1\TeamSavvy.Api.BusinessModel.pdb
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.BusinessModel\obj\Debug\netcoreapp3.1\TeamSavvy.Api.BusinessModel.csproj.AssemblyReference.cache
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.BusinessModel\obj\Debug\netcoreapp3.1\TeamSavvy.Api.BusinessModel.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.BusinessModel\obj\Debug\netcoreapp3.1\TeamSavvy.Api.BusinessModel.AssemblyInfoInputs.cache
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.BusinessModel\obj\Debug\netcoreapp3.1\TeamSavvy.Api.BusinessModel.AssemblyInfo.cs
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.BusinessModel\obj\Debug\netcoreapp3.1\TeamSavvy.Api.BusinessModel.csproj.CoreCompileInputs.cache
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.BusinessModel\obj\Debug\netcoreapp3.1\TeamSavvy.Api.BusinessModel.dll
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.BusinessModel\obj\Debug\netcoreapp3.1\TeamSavvy.Api.BusinessModel.pdb

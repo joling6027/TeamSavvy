@@ -3253,7 +3253,8 @@
           "AutoMapper": "9.0.0",
           "System.IdentityModel.Tokens.Jwt": "5.6.0",
           "TeamSavvy.Api.BusinessModel": "1.0.0",
-          "TeamSavvy.Api.Entities": "1.0.0"
+          "TeamSavvy.Api.Entities": "1.0.0",
+          "TeamSavvy.Api.Utilities": "1.0.0"
         },
         "compile": {
           "bin/placeholder/TeamSavvy.Api.Services.dll": {}
@@ -9536,11 +9537,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jaspa\\source\\repos\\TeamSavvy.Api\\TeamSavvy.Api\\TeamSavvy.Api.Web.csproj",
+      "projectUniqueName": "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api\\TeamSavvy.Api.Web.csproj",
       "projectName": "TeamSavvy.Api.Web",
-      "projectPath": "C:\\Users\\jaspa\\source\\repos\\TeamSavvy.Api\\TeamSavvy.Api\\TeamSavvy.Api.Web.csproj",
+      "projectPath": "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api\\TeamSavvy.Api.Web.csproj",
       "packagesPath": "C:\\Users\\jaspa\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jaspa\\source\\repos\\TeamSavvy.Api\\TeamSavvy.Api\\obj\\",
+      "outputPath": "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\jaspa\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -9557,14 +9558,14 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\jaspa\\source\\repos\\TeamSavvy.Api\\TeamSavvy.Api.Entities\\TeamSavvy.Api.Entities.csproj": {
-              "projectPath": "C:\\Users\\jaspa\\source\\repos\\TeamSavvy.Api\\TeamSavvy.Api.Entities\\TeamSavvy.Api.Entities.csproj"
+            "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.Entities\\TeamSavvy.Api.Entities.csproj": {
+              "projectPath": "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.Entities\\TeamSavvy.Api.Entities.csproj"
             },
-            "C:\\Users\\jaspa\\source\\repos\\TeamSavvy.Api\\TeamSavvy.Api.Middleware\\TeamSavvy.Api.Middleware.csproj": {
-              "projectPath": "C:\\Users\\jaspa\\source\\repos\\TeamSavvy.Api\\TeamSavvy.Api.Middleware\\TeamSavvy.Api.Middleware.csproj"
+            "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.Middleware\\TeamSavvy.Api.Middleware.csproj": {
+              "projectPath": "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.Middleware\\TeamSavvy.Api.Middleware.csproj"
             },
-            "C:\\Users\\jaspa\\source\\repos\\TeamSavvy.Api\\TeamSavvy.Api.Services\\TeamSavvy.Api.Services.csproj": {
-              "projectPath": "C:\\Users\\jaspa\\source\\repos\\TeamSavvy.Api\\TeamSavvy.Api.Services\\TeamSavvy.Api.Services.csproj"
+            "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.Services\\TeamSavvy.Api.Services.csproj": {
+              "projectPath": "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.Services\\TeamSavvy.Api.Services.csproj"
             }
           }
         }

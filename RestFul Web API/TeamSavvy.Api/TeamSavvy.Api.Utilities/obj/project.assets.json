@@ -7256,11 +7256,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jaspa\\source\\repos\\TeamSavvy.Api\\TeamSavvy.Api.Utilities\\TeamSavvy.Api.Utilities.csproj",
+      "projectUniqueName": "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.Utilities\\TeamSavvy.Api.Utilities.csproj",
       "projectName": "TeamSavvy.Api.Utilities",
-      "projectPath": "C:\\Users\\jaspa\\source\\repos\\TeamSavvy.Api\\TeamSavvy.Api.Utilities\\TeamSavvy.Api.Utilities.csproj",
+      "projectPath": "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.Utilities\\TeamSavvy.Api.Utilities.csproj",
       "packagesPath": "C:\\Users\\jaspa\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jaspa\\source\\repos\\TeamSavvy.Api\\TeamSavvy.Api.Utilities\\obj\\",
+      "outputPath": "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.Utilities\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\jaspa\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -7277,11 +7277,11 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\jaspa\\source\\repos\\TeamSavvy.Api\\TeamSavvy.Api.BusinessModel\\TeamSavvy.Api.BusinessModel.csproj": {
-              "projectPath": "C:\\Users\\jaspa\\source\\repos\\TeamSavvy.Api\\TeamSavvy.Api.BusinessModel\\TeamSavvy.Api.BusinessModel.csproj"
+            "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.BusinessModel\\TeamSavvy.Api.BusinessModel.csproj": {
+              "projectPath": "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.BusinessModel\\TeamSavvy.Api.BusinessModel.csproj"
             },
-            "C:\\Users\\jaspa\\source\\repos\\TeamSavvy.Api\\TeamSavvy.Api.Entities\\TeamSavvy.Api.Entities.csproj": {
-              "projectPath": "C:\\Users\\jaspa\\source\\repos\\TeamSavvy.Api\\TeamSavvy.Api.Entities\\TeamSavvy.Api.Entities.csproj"
+            "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.Entities\\TeamSavvy.Api.Entities.csproj": {
+              "projectPath": "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.Entities\\TeamSavvy.Api.Entities.csproj"
             }
           }
         }

@@ -10,7 +10,7 @@ using TeamSavvy.Api.BusinessModel.Helper;
 using TeamSavvy.Api.Services.IServices;
 using TeamSavvy.Api.Services.Services;
 
-namespace TeamSavvy.Api.Web.Controllers
+namespace TeamSavvy.Api.Entities.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -18,11 +18,11 @@ namespace TeamSavvy.Api.Web.Controllers
     {
         #region Private Member Variables
         private readonly ILogger<ProjectsController> _logger;
-        private readonly IProjects _projectsService;
+        private readonly IProjectsService _projectsService;
         #endregion
 
         #region Constructors
-        public ProjectsController(IProjects projectsService, ILogger<ProjectsController> logger)
+        public ProjectsController(IProjectsService projectsService, ILogger<ProjectsController> logger)
         {
             _projectsService = projectsService;
             _logger = logger;
@@ -91,7 +91,7 @@ namespace TeamSavvy.Api.Web.Controllers
         [ProducesResponseType(typeof(ResponseMessage), 400)]
         [ProducesResponseType(typeof(ResponseMessage), 401)]
         [ProducesResponseType(typeof(ResponseMessage), 404)]
-        public ActionResult<List<ProjectDto>> GetProjectByName([FromRoute] string projectName)
+        public ActionResult<ProjectDto> GetProjectByName([FromRoute] string projectName)
         {
             ActionResult response;
             ResponseMessage responseMessage;
@@ -221,7 +221,7 @@ namespace TeamSavvy.Api.Web.Controllers
         [ProducesResponseType(typeof(ResponseMessage), 400)]
         [ProducesResponseType(typeof(ResponseMessage), 401)]
         [ProducesResponseType(typeof(ResponseMessage), 404)]
-        public IActionResult Delete([FromRoute] int projectId)
+        public IActionResult DeleteProject([FromRoute] int projectId)
         {
             ActionResult response;
             ResponseMessage responseMessage;

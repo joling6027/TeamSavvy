@@ -2333,6 +2333,23 @@
         "runtime": {
           "bin/placeholder/TeamSavvy.Api.Entities.dll": {}
         }
+      },
+      "TeamSavvy.Api.Utilities/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "AutoMapper": "9.0.0",
+          "Microsoft.AspNetCore.WebUtilities": "2.2.0",
+          "Newtonsoft.Json": "13.0.1",
+          "TeamSavvy.Api.BusinessModel": "1.0.0",
+          "TeamSavvy.Api.Entities": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/TeamSavvy.Api.Utilities.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/TeamSavvy.Api.Utilities.dll": {}
+        }
       }
     }
   },
@@ -7412,6 +7429,11 @@
       "type": "project",
       "path": "../TeamSavvy.Api.Entities/TeamSavvy.Api.Entities.csproj",
       "msbuildProject": "../TeamSavvy.Api.Entities/TeamSavvy.Api.Entities.csproj"
+    },
+    "TeamSavvy.Api.Utilities/1.0.0": {
+      "type": "project",
+      "path": "../TeamSavvy.Api.Utilities/TeamSavvy.Api.Utilities.csproj",
+      "msbuildProject": "../TeamSavvy.Api.Utilities/TeamSavvy.Api.Utilities.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -7419,7 +7441,8 @@
       "AutoMapper >= 9.0.0",
       "System.IdentityModel.Tokens.Jwt >= 5.6.0",
       "TeamSavvy.Api.BusinessModel >= 1.0.0",
-      "TeamSavvy.Api.Entities >= 1.0.0"
+      "TeamSavvy.Api.Entities >= 1.0.0",
+      "TeamSavvy.Api.Utilities >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -7428,11 +7451,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jaspa\\source\\repos\\TeamSavvy.Api\\TeamSavvy.Api.Services\\TeamSavvy.Api.Services.csproj",
+      "projectUniqueName": "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.Services\\TeamSavvy.Api.Services.csproj",
       "projectName": "TeamSavvy.Api.Services",
-      "projectPath": "C:\\Users\\jaspa\\source\\repos\\TeamSavvy.Api\\TeamSavvy.Api.Services\\TeamSavvy.Api.Services.csproj",
+      "projectPath": "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.Services\\TeamSavvy.Api.Services.csproj",
       "packagesPath": "C:\\Users\\jaspa\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jaspa\\source\\repos\\TeamSavvy.Api\\TeamSavvy.Api.Services\\obj\\",
+      "outputPath": "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.Services\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\jaspa\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -7449,11 +7472,14 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\jaspa\\source\\repos\\TeamSavvy.Api\\TeamSavvy.Api.BusinessModel\\TeamSavvy.Api.BusinessModel.csproj": {
-              "projectPath": "C:\\Users\\jaspa\\source\\repos\\TeamSavvy.Api\\TeamSavvy.Api.BusinessModel\\TeamSavvy.Api.BusinessModel.csproj"
+            "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.BusinessModel\\TeamSavvy.Api.BusinessModel.csproj": {
+              "projectPath": "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.BusinessModel\\TeamSavvy.Api.BusinessModel.csproj"
             },
-            "C:\\Users\\jaspa\\source\\repos\\TeamSavvy.Api\\TeamSavvy.Api.Entities\\TeamSavvy.Api.Entities.csproj": {
-              "projectPath": "C:\\Users\\jaspa\\source\\repos\\TeamSavvy.Api\\TeamSavvy.Api.Entities\\TeamSavvy.Api.Entities.csproj"
+            "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.Entities\\TeamSavvy.Api.Entities.csproj": {
+              "projectPath": "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.Entities\\TeamSavvy.Api.Entities.csproj"
+            },
+            "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.Utilities\\TeamSavvy.Api.Utilities.csproj": {
+              "projectPath": "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.Utilities\\TeamSavvy.Api.Utilities.csproj"
             }
           }
         }
