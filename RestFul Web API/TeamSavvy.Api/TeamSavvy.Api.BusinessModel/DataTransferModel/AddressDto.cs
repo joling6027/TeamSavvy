@@ -9,18 +9,19 @@ namespace TeamSavvy.Api.BusinessModel.DataTransferModel
 
         public int AddressId { get; set; }
         public string Apartment { get; set; }
+        public int CityId { get; set; }
         public string Postcode { get; set; }
-        public CityDto City { get; set; }
-      
+        //public CityDto City { get; set; }
+
     }
 
-    public class AddressAddDto
-    {
+    //public class AddressAddDto
+    //{
 
-        public int AddressId { get; set; }
-        public string Apartment { get; set; }
-        public string Postcode { get; set; }
-        public CityAddDto City { get; set; }
+    //    public int AddressId { get; set; }
+    //    public string Apartment { get; set; }
+    //    public string Postcode { get; set; }
+    //    public CityAddDto City { get; set; }
 
-    }
+    //}
 }

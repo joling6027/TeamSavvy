@@ -10,12 +10,13 @@ namespace TeamSavvy.Api.BusinessModel.DataTransferModel
         public int EmployeeId { get; set; }
         public DateTime PayDate { get; set; }
         public string PayType { get; set; }
-        public int TotalHours { get; set; }
-        public decimal Earning { get; set; }
-        public decimal Netpay { get; set; }
-        public decimal PayYtd { get; set; }
-        public decimal PayVacation { get; set; }
-        public decimal PaySick { get; set; }
-        public decimal Deduction { get; set; } 
+        public int? TotalHours { get; set; }
+        public string Earning { get; set; }
+        public string Netpay { get; set; }
+        public string PayYtd { get; set; }
+        public string PayVacation { get; set; }
+        public string PaySick { get; set; }
+        public string Deduction { get; set; }
+        public int SalaryId { get; set; }
     }
 }

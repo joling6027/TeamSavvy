@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using TeamSavvy.Api.BusinessModel.DataTransferModel;
-using TeamSavvy.Api.Web.Entities;
+using TeamSavvy.Api.Entities.Models;
 
 namespace TeamSavvy.Api.Utilities.MapperRegistration
 {
@@ -13,9 +13,11 @@ namespace TeamSavvy.Api.Utilities.MapperRegistration
         public TeamSavvyProfiler()
         {
             //Employee endpoint
-            CreateMap<Employee, EmployeeDto>(MemberList.Destination);
-            CreateMap<EmployeeDto, Employee>(MemberList.Source);
-            CreateMap<EmployeeAddDto, Employee>().ReverseMap();
+            CreateMap<EmployeeDto, Employee>().ReverseMap();
+            CreateMap<EmployeeSkillDto, EmployeeSkill>().ReverseMap();
+
+            //Address
+            CreateMap<AddressDto, Address>().ReverseMap();
 
             //TimeSheet endpoint
             CreateMap<TimeSheet, TimeSheetDto>().ReverseMap();
@@ -26,6 +28,18 @@ namespace TeamSavvy.Api.Utilities.MapperRegistration
 
             //Address endpoint
             CreateMap<Task, TaskDto>()
+                    .ReverseMap();
+            
+            //Payroll endpoint
+            CreateMap<Payroll, PayrollDto>()
+                    .ReverseMap();
+
+            //Salary endpoint
+            CreateMap<Salary, SalaryDto>()
+                    .ReverseMap();
+            
+            //Leaves endpoint
+            CreateMap<EmployeeLeave, EmployeeLeaveDto>()
                     .ReverseMap();
 
         }

@@ -150,7 +150,7 @@ namespace TeamSavvy.Api.Entities.Controllers
         }
 
 
-        [Route("task")]
+        [Route("addTask")]
         [HttpPost]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ResponseMessage), 200)]
@@ -182,7 +182,7 @@ namespace TeamSavvy.Api.Entities.Controllers
             return response;
         }
 
-        [Route("tasks")]
+        [Route("addTasks")]
         [HttpPost]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ResponseMessage), 200)]
@@ -214,6 +214,7 @@ namespace TeamSavvy.Api.Entities.Controllers
             return response;
         }
 
+        [Route("updateTask")]
         [HttpPut]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ResponseMessage), 200)]
@@ -246,7 +247,7 @@ namespace TeamSavvy.Api.Entities.Controllers
         }
 
 
-        [Route("delete/{taskId}")]
+        [Route("deleteTask/{taskId}")]
         [HttpDelete]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ResponseMessage), 200)]

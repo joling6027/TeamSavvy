@@ -104,7 +104,7 @@ namespace TeamSavvy.Api.Entities.Controllers
         }
 
 
-        [Route("timesheet")]
+        [Route("addTimesheet")]
         [HttpPost]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ResponseMessage), 200)]

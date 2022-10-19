@@ -7,9 +7,9 @@ namespace TeamSavvy.Api.BusinessModel.DataTransferModel
     public class SalaryDto
     {
         public int SalaryId { get; set; }
-        public decimal EmployeeSalary { get; set; }
+        public string Employeesalary { get; set; }
         public int EmployeeId { get; set; }
-        public DateTime SalaryIncrementDate { get; set; }
+        public string SalaryIncrementDate { get; set; }
         public string SalaryType { get; set; }
 
     }

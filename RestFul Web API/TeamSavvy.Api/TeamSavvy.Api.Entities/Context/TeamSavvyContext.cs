@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using TeamSavvy.Api.Web.Entities;
+using TeamSavvy.Api.Entities.Models;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -177,6 +177,8 @@ namespace TeamSavvy.Api.Entities.Context
                     .HasMaxLength(20)
                     .IsFixedLength();
 
+                entity.Property(e => e.EmployeeImage).HasColumnName("EMPLOYEE_IMAGE");
+
                 entity.Property(e => e.EmployeeLastname)
                     .IsRequired()
                     .HasColumnName("EMPLOYEE_LASTNAME")
@@ -198,8 +200,8 @@ namespace TeamSavvy.Api.Entities.Context
                 entity.Property(e => e.Phone)
                     .IsRequired()
                     .HasColumnName("PHONE")
-                    .HasMaxLength(10)
-                    .IsFixedLength();
+                    .HasMaxLength(15)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.RoleId).HasColumnName("ROLE_ID");
 
@@ -225,15 +227,15 @@ namespace TeamSavvy.Api.Entities.Context
             {
                 entity.ToTable("Employee_Leave");
 
-                entity.Property(e => e.EmployeeLeaveId)
-                    .HasColumnName("EMPLOYEE_LEAVE_ID")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.EmployeeLeaveId).HasColumnName("EMPLOYEE_LEAVE_ID");
 
                 entity.Property(e => e.EmployeeId).HasColumnName("EMPLOYEE_ID");
 
                 entity.Property(e => e.IsApproved).HasColumnName("IS_APPROVED");
 
-                entity.Property(e => e.LeaveApprovalBy).HasColumnName("LEAVE_APPROVAL_BY");
+                entity.Property(e => e.LeaveApprovalBy)
+                    .HasColumnName("LEAVE_APPROVAL_BY")
+                    .IsUnicode(false);
 
                 entity.Property(e => e.LeaveApprovalDate)
                     .HasColumnName("LEAVE_APPROVAL_DATE")
@@ -250,10 +252,9 @@ namespace TeamSavvy.Api.Entities.Context
                     .HasColumnType("date");
 
                 entity.Property(e => e.LeaveStatus)
-                    .IsRequired()
                     .HasColumnName("LEAVE_STATUS")
-                    .HasMaxLength(10)
-                    .IsFixedLength();
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.LeaveTypeId).HasColumnName("LEAVE_TYPE_ID");
             });
@@ -436,13 +437,11 @@ namespace TeamSavvy.Api.Entities.Context
                 entity.Property(e => e.PayrollId).HasColumnName("PAYROLL_ID");
 
                 entity.Property(e => e.Deduction)
-                    .IsRequired()
                     .HasColumnName("DEDUCTION")
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Earning)
-                    .IsRequired()
                     .HasColumnName("EARNING")
                     .HasMaxLength(50)
                     .IsUnicode(false);
@@ -450,7 +449,6 @@ namespace TeamSavvy.Api.Entities.Context
                 entity.Property(e => e.EmployeeId).HasColumnName("EMPLOYEE_ID");
 
                 entity.Property(e => e.Netpay)
-                    .IsRequired()
                     .HasColumnName("NETPAY")
                     .HasMaxLength(50)
                     .IsUnicode(false);
@@ -460,28 +458,26 @@ namespace TeamSavvy.Api.Entities.Context
                     .HasColumnType("date");
 
                 entity.Property(e => e.PaySick)
-                    .IsRequired()
                     .HasColumnName("PAY_SICK")
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.PayType)
-                    .IsRequired()
                     .HasColumnName("PAY_TYPE")
                     .HasMaxLength(20)
                     .IsUnicode(false);
 
                 entity.Property(e => e.PayVacation)
-                    .IsRequired()
                     .HasColumnName("PAY_VACATION")
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.PayYtd)
-                    .IsRequired()
                     .HasColumnName("PAY_YTD")
                     .HasMaxLength(50)
                     .IsUnicode(false);
+
+                entity.Property(e => e.SalaryId).HasColumnName("SALARY_ID");
 
                 entity.Property(e => e.TotalHours).HasColumnName("TOTAL_HOURS");
 
@@ -489,6 +485,12 @@ namespace TeamSavvy.Api.Entities.Context
                     .WithMany(p => p.Payroll)
                     .HasForeignKey(d => d.EmployeeId)
                     .HasConstraintName("FK_Payroll_Employee");
+
+                entity.HasOne(d => d.Salary)
+                    .WithMany(p => p.Payroll)
+                    .HasForeignKey(d => d.SalaryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Payroll_Salary");
             });
 
             modelBuilder.Entity<Project>(entity =>
