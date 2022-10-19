@@ -4,6 +4,7 @@ import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import { submenu } from "../utilities/Submenu";
 import { useState } from "react";
 import styles from "./sidenav.module.css"
+import logo from "../../assets/img/sideBarLogo.png"
 
 export default function Sidenav() {
     const [open, setopen] = useState(true)
@@ -17,13 +18,15 @@ export default function Sidenav() {
         <button className={styles.menuBtn} onClick={toggleOpen}>
             {open? <FormatListBulletedOutlinedIcon />: <CloseOutlinedIcon />}
         </button>
-        <NavLink>
-          <a href="#"></a>
+        <NavLink className="navlinklogo d-inline-block">
+          <a href="#" className="ps-3 d-inline-block">
+            {/* <img src= {logo} alt="teamsavvy logo" className="tslogo overflow-hidden  mb-3"/> */}
+            </a>
         </NavLink>
         {submenu.map(item =>{
             return `${item.text}` === "Profile" ? 
             <NavLink key={item.id} className={styles.sideitem} to={item.link}>
-            <img className="sidebarprofile d-inline-block" src={item.img} alt="profile pic"/>
+            <img className={styles.sidebarprofile} src={item.img}  alt="profile pic"/>
             <span className={styles.linkText}>{item.text}</span>
         </NavLink>
         :

@@ -1,8 +1,8 @@
 import './App.css';
-// import Login from './components/login/Login';
+import Login from './components/login/Login';
 import "./assets/css/bootstrap.min.css";
-// import ForgotPasswordOtp from './components/forgetPassword/ForgetPasswordOtp';
-// import ResetPassword from './components/forgetPassword/ResetPassword';
+import ForgotPasswordOtp from './components/forgetPassword/ForgetPasswordOtp';
+import ResetPassword from './components/forgetPassword/ResetPassword';
 import Sidenav from './components/sidenav/Sidenav';
 import Dashboard from './components/dashboard/Dashboard';
 
@@ -48,8 +48,7 @@ function App() {
     
 
     <div className="App">
-      <Sidenav/>
-     
+     <Sidenav/>
       <main className="d-inline-block w-100">
       <header>
       <Header/>
@@ -63,11 +62,13 @@ function App() {
         <Route path="/jobs" element={<InternalJobs />} />
       
       </Routes>
-      </main>
+      </main> 
 
      
     </div>
-
+    {/* <ResetPassword/> */}
+    
+    
 
     </>
   );

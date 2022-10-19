@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
-import loginbg from '../../assets/img/card-bg.png'
+import loginbg from '../../assets/img/card-bg.png';
+import './forgetPassword.css';
+
 import {
 
     Button,
@@ -23,7 +25,7 @@ import {
   const ForgotPasswordOtp = () => {
     return ( <>
       <div className="loginBody d-inline-block position-absolute h-100 w-100">
-        <Card className= "card " style={{}}>
+        <Card className= "card" style={{}}>
         <img src={loginbg} className="mb-2 cardImg" alt=""  />
         <CardBody className="border-none">
           <h2 className="card-title mt-5 pb-3"><strong>Forgot Password</strong></h2>

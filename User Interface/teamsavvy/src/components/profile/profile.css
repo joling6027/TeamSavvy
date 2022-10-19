@@ -1,0 +1,6 @@
+.profile-card{background:url("../../assets/img/bg-profile.png")no-repeat;background-position:center top }
+.card{transform:translate(0); left:0; top:0; width:auto}
+.skillPill{background-color: #F0A86A;font-size: 14px}
+body{background: #000}
+.moremargin{margin-bottom:100px}
+.fsmall{font-size:10px;}

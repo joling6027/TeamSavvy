@@ -2,6 +2,7 @@ import React, { Component, useState  } from 'react';
 import "../../assets/css/bootstrap.min.css";
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
+import './header.css'
 
 import {
   Collapse,
@@ -18,7 +19,10 @@ import {
   NavbarText,
   Badge,
   Breadcrumb,
-  BreadcrumbItem
+  BreadcrumbItem,
+  Button,
+  Alert, 
+  Input
 } from 'reactstrap';
 
 import {
@@ -67,7 +71,18 @@ const Header = () => {
         
         </div>
         <div className= "float-end d-flex align-items-top">
-            <span className="me-3"> <SearchOutlinedIcon/></span>
+            <span className="me-3"  onClick={function noRefCheck(){}}>
+              <SearchOutlinedIcon/>
+            </span>
+            <Collapse horizontal>
+          <Alert
+          style={{
+        width: '500px'
+          }}
+         >
+<Input type="search" placeholder="search"/>   
+ </Alert>
+  </Collapse>
          
         <Navbar className="p-0">
           <Nav className="me-auto p-0" navbar>
