@@ -8,25 +8,25 @@
   position: relative;
 }
 
-.card {
+.card-payroll {
   /* margin-top: 150px; */
   width: 80vw;
   height: 90%;
   overflow-x: hidden;
-  position: relative;
+  position: absolute;
 }
 
-.card-header{
+.card-header-payroll{
   background-color: white;
   border: none;
 }
 
-.card-footer{
+.card-footer-payroll{
   background-color: white;
   border: none;
 }
 
-.card-footer > h6 {
+.card-footer-payroll > h6 {
   text-align: end;
 }
 

@@ -9,8 +9,8 @@ const Paystub = () => {
   return(
     <>
       <div className="content">
-        <div className="card paystub-card">
-          <div className='card-header'>
+        <div className="card card-payroll paystub-card">
+          <div className='card-header card-header-payroll'>
               <div className="row">
                 <h5 className="title col-sm">Joling Weng</h5>
                 <h5 className="title col-sm">Employee#300335548</h5>

@@ -41,134 +41,134 @@ const Payroll = ({ columns, data }) => {
 
     const { pageIndex, pageSize } = state;
 
-    return (  
+    return (
         <>
-        <div className='content'>
-            <div className="card">
-                {/* <div className='col md-12'> */}
+            <div className='content'>
+                <div className="card card-payroll">
+                    {/* <div className='col md-12'> */}
                     {/* <div className="card"> */}
-                        <div className='card-header'>
-                            {/* <div className="tools float-right">
+                    <div className='card-header card-header-payroll'>
+                        {/* <div className="tools float-right">
                             </div> */}
-                            <h4 className='card-title' tag="h4">Paylips</h4>
-                        </div>
-                        <div className='card-body'>
+                        <h4 className='card-title' tag="h4">Paylips</h4>
+                    </div>
+                    <div className='card-body'>
                         <table className='table table-striped paylips-table'>
-                                <thead className="text-primary">
-                                    <tr>
+                            <thead className="text-primary">
+                                <tr>
                                     <th className="text-center" scope="col">Pay Date</th>
                                     <th className="text-center" scope="col">Pay Type</th>
                                     <th className="text-center" scope="col">Total Hours</th>
                                     <th className="text-center" scope="col">Earnings</th>
                                     <th className="text-center" scope="col">Net Pay(after taxes)</th>
                                     <th className="text-center" scope="col">File</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td className="text-center ">
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td className="text-center ">
 
-                                            31-MAR-2022
-                                        </td>
-                                        <td className="text-center">Monthly</td>
-                                        <td className="text-center">80</td>
-                                        <td className="text-center">$3600</td>
-                                        <td className="text-center">$3200</td>
-                                        <td className="text-center">
+                                        31-MAR-2022
+                                    </td>
+                                    <td className="text-center">Monthly</td>
+                                    <td className="text-center">80</td>
+                                    <td className="text-center">$3600</td>
+                                    <td className="text-center">$3200</td>
+                                    <td className="text-center">
                                         <Link to={"/paystub"}>VIEW FILE</Link>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td className="text-center">
-                                            28-FEB-2022
-                                        </td>
-                                        <td className="text-center">Monthly</td>
-                                        <td className="text-center">80</td>
-                                        <td className="text-center">$3600</td>
-                                        <td className="text-center">$3200</td>
-                                        <td className="text-center">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="text-center">
+                                        28-FEB-2022
+                                    </td>
+                                    <td className="text-center">Monthly</td>
+                                    <td className="text-center">80</td>
+                                    <td className="text-center">$3600</td>
+                                    <td className="text-center">$3200</td>
+                                    <td className="text-center">
                                         <Link to={"/paystub"}>VIEW FILE</Link>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td className="text-center">
-                                            31-JAN-2022
-                                        </td>
-                                        <td className="text-center">Monthly</td>
-                                        <td className="text-center">80</td>
-                                        <td className="text-center">$3600</td>
-                                        <td className="text-center">$3200</td>
-                                        <td className="text-center">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="text-center">
+                                        31-JAN-2022
+                                    </td>
+                                    <td className="text-center">Monthly</td>
+                                    <td className="text-center">80</td>
+                                    <td className="text-center">$3600</td>
+                                    <td className="text-center">$3200</td>
+                                    <td className="text-center">
                                         <Link to={"/paystub"}>VIEW FILE</Link>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td className="text-center">
-                                            31-JAN-2022
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="text-center">
+                                        31-JAN-2022
 
-                                        </td>
-                                        <td className="text-center">Monthly</td>
-                                        <td className="text-center">80</td>
-                                        <td className="text-center">$3600</td>
-                                        <td className="text-center">$3200</td>
-                                        <td className="text-center">
+                                    </td>
+                                    <td className="text-center">Monthly</td>
+                                    <td className="text-center">80</td>
+                                    <td className="text-center">$3600</td>
+                                    <td className="text-center">$3200</td>
+                                    <td className="text-center">
                                         <Link to={"/paystub"}>VIEW FILE</Link>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td className="text-center">
-                                            31-JAN-2022
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="text-center">
+                                        31-JAN-2022
 
-                                        </td>
-                                        <td className="text-center">Monthly</td>
-                                        <td className="text-center">80</td>
-                                        <td className="text-center">$3600</td>
-                                        <td className="text-center">$3200</td>
-                                        <td className="text-center">
+                                    </td>
+                                    <td className="text-center">Monthly</td>
+                                    <td className="text-center">80</td>
+                                    <td className="text-center">$3600</td>
+                                    <td className="text-center">$3200</td>
+                                    <td className="text-center">
                                         <Link to={"/paystub"}>VIEW FILE</Link>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td className="text-center">
-                                            31-JAN-2022
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="text-center">
+                                        31-JAN-2022
 
-                                        </td>
-                                        <td className="text-center">Monthly</td>
-                                        <td className="text-center">80</td>
-                                        <td className="text-center">$3600</td>
-                                        <td className="text-center">$3200</td>
-                                        <td className="text-center">
+                                    </td>
+                                    <td className="text-center">Monthly</td>
+                                    <td className="text-center">80</td>
+                                    <td className="text-center">$3600</td>
+                                    <td className="text-center">$3200</td>
+                                    <td className="text-center">
                                         <Link to={"/paystub"}>VIEW FILE</Link>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td className="text-center">
-                                            31-JAN-2022
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="text-center">
+                                        31-JAN-2022
 
-                                        </td>
-                                        <td className="text-center">Monthly</td>
-                                        <td className="text-center">80</td>
-                                        <td className="text-center">$3600</td>
-                                        <td className="text-center">$3200</td>
-                                        <td className="text-center">
+                                    </td>
+                                    <td className="text-center">Monthly</td>
+                                    <td className="text-center">80</td>
+                                    <td className="text-center">$3600</td>
+                                    <td className="text-center">$3200</td>
+                                    <td className="text-center">
                                         <Link to={"/paystub"}>VIEW FILE</Link>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td className="text-center">
-                                            31-JAN-2022
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="text-center">
+                                        31-JAN-2022
 
-                                        </td>
-                                        <td className="text-center">Monthly</td>
-                                        <td className="text-center">80</td>
-                                        <td className="text-center">$3600</td>
-                                        <td className="text-center">$3200</td>
-                                        <td className="text-center">
+                                    </td>
+                                    <td className="text-center">Monthly</td>
+                                    <td className="text-center">80</td>
+                                    <td className="text-center">$3600</td>
+                                    <td className="text-center">$3200</td>
+                                    <td className="text-center">
                                         <Link to={"/paystub"}>VIEW FILE</Link>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                         <div className='payroll-pagination'>
                             <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
                                 {"<<"}
@@ -213,12 +213,12 @@ const Payroll = ({ columns, data }) => {
                                 ))}
                             </select>
                         </div>
-                        </div>
-                        <div className='card-footer'>
-                            {/* <h6>Rows per page</h6> */}
-                            <div className="pagination_style">
-                                
-                                {/* <Pagination>
+                    </div>
+                    <div className='card-footer card-footer-payroll'>
+                        {/* <h6>Rows per page</h6> */}
+                        <div className="pagination_style">
+
+                            {/* <Pagination>
                                     <PaginationItem>
                                         <PaginationLink
                                             aria-label="Previous"
@@ -272,15 +272,15 @@ const Payroll = ({ columns, data }) => {
                                         </PaginationLink>
                                     </PaginationItem>
                                 </Pagination> */}
-                            </div>
                         </div>
+                    </div>
                     {/* </div> */}
-                {/* </div> */}
-                {/* </Row> */}
+                    {/* </div> */}
+                    {/* </Row> */}
+                </div>
             </div>
-        </div>
         </>
     );
 }
- 
+
 export default Payroll;
