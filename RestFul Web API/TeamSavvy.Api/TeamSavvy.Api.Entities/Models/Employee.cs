@@ -5,7 +5,7 @@ using System.Collections.Generic;
 // If you have enabled NRTs for your project, then un-comment the following line:
 // #nullable disable
 
-namespace TeamSavvy.Api.Web.Entities
+namespace TeamSavvy.Api.Entities.Models
 {
     public partial class Employee
     {
@@ -34,6 +34,7 @@ namespace TeamSavvy.Api.Web.Entities
         public int StatusId { get; set; }
         public string Bankaccount { get; set; }
         public int JobLocationId { get; set; }
+        public byte[] EmployeeImage { get; set; }
         public string Password { get; set; }
 
         public virtual JobLocation JobLocation { get; set; }

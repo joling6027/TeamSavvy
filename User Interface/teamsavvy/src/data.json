@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "PayDate":"31-JAN-2022",
+    "PayType":"Monthly",
+    "TotalHours": 80,
+    "Earnings":"$3500",
+    "NetPay":"$3000",
+    "File":""
+  },
+  {
+    "id": 2,
+    "PayDate":"31-JAN-2022",
+    "PayType":"Monthly",
+    "TotalHours": 80,
+    "Earnings":"$3500",
+    "NetPay":"$3000",
+    "File":""
+  },
+  {
+    "id": 3,
+    "PayDate":"31-JAN-2022",
+    "PayType":"Monthly",
+    "TotalHours": 80,
+    "Earnings":"$3500",
+    "NetPay":"$3000",
+    "File":""
+  }
+  
+]

@@ -2,14 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TeamSavvy.Api.BusinessModel.DataTransferModel;
 using TeamSavvy.Api.Entities.Context;
 using TeamSavvy.Api.Entities.GenericRepo;
+using TeamSavvy.Api.Entities.Models;
 using TeamSavvy.Api.Services.IServices;
-using TeamSavvy.Api.Web.Entities;
-using Task = TeamSavvy.Api.Web.Entities.Task;
+using Task = TeamSavvy.Api.Entities.Models.Task;
 
 namespace TeamSavvy.Api.Services.Services
 {

@@ -84,46 +84,46 @@ namespace TeamSavvy.Api.Entities.Controllers
             return response;
         }
 
-        [Route("{employeeFirstName}")]
-        [HttpGet/*, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = Access.Employee)*/]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(ResponseMessage), 200)]
-        [ProducesResponseType(typeof(ResponseMessage), 400)]
-        [ProducesResponseType(typeof(ResponseMessage), 401)]
-        [ProducesResponseType(typeof(ResponseMessage), 404)]
-        public ActionResult<List<EmployeeDto>> GetEmployeesByName([FromRoute] string employeeFirstName)
-        {
-            ActionResult response;
-            ResponseMessage responseMessage;
-            if (string.IsNullOrWhiteSpace(employeeFirstName))
-            {
-                responseMessage = new ResponseMessage(false, null, new Message(HttpStatusCode.BadRequest, "Please enter valid employee id."));
-                response = BadRequest(responseMessage);
-            }
-            else
-            {
-                List<EmployeeDto> employeeRecords = _employeeService.GetEmployeeByFirstName(employeeFirstName);
-                if (employeeRecords == null)
-                {
-                    response = NotFound(new ResponseMessage(false, null, new Message(HttpStatusCode.NotFound, $"There is no record in database against employee id {employeeFirstName}")));
-                }
-                else
-                {
-                    response = Ok(new ResponseMessage(true, employeeRecords, new Message(HttpStatusCode.OK)));
-                }
-            }
+        //[Route("{employeeFirstName}")]
+        //[HttpGet/*, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = Access.Employee)*/]
+        //[Produces("application/json")]
+        //[ProducesResponseType(typeof(ResponseMessage), 200)]
+        //[ProducesResponseType(typeof(ResponseMessage), 400)]
+        //[ProducesResponseType(typeof(ResponseMessage), 401)]
+        //[ProducesResponseType(typeof(ResponseMessage), 404)]
+        //public ActionResult<List<EmployeeDto>> GetEmployeesByName([FromRoute] string employeeFirstName)
+        //{
+        //    ActionResult response;
+        //    ResponseMessage responseMessage;
+        //    if (string.IsNullOrWhiteSpace(employeeFirstName))
+        //    {
+        //        responseMessage = new ResponseMessage(false, null, new Message(HttpStatusCode.BadRequest, "Please enter valid employee id."));
+        //        response = BadRequest(responseMessage);
+        //    }
+        //    else
+        //    {
+        //        List<EmployeeDto> employeeRecords = _employeeService.GetEmployeeByFirstName(employeeFirstName);
+        //        if (employeeRecords == null)
+        //        {
+        //            response = NotFound(new ResponseMessage(false, null, new Message(HttpStatusCode.NotFound, $"There is no record in database against employee id {employeeFirstName}")));
+        //        }
+        //        else
+        //        {
+        //            response = Ok(new ResponseMessage(true, employeeRecords, new Message(HttpStatusCode.OK)));
+        //        }
+        //    }
 
-            return response;
-        }
+        //    return response;
+        //}
 
-        [Route("employee")]
+        [Route("addEmployee")]
         [HttpPost]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ResponseMessage), 200)]
         [ProducesResponseType(typeof(ResponseMessage), 400)]
         [ProducesResponseType(typeof(ResponseMessage), 401)]
         [ProducesResponseType(typeof(ResponseMessage), 404)]
-        public ActionResult<EmployeeAddDto> AddEmployeeDetails([FromBody] EmployeeAddDto employee)
+        public IActionResult AddEmployeeDetails([FromBody] EmployeeDto employee)
         {
             ActionResult response;
             ResponseMessage responseMessage;
@@ -149,13 +149,14 @@ namespace TeamSavvy.Api.Entities.Controllers
         }
 
         // PUT api/<EmployeeController>/5
+        [Route("updateEmployee")]
         [HttpPut]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ResponseMessage), 200)]
         [ProducesResponseType(typeof(ResponseMessage), 400)]
         [ProducesResponseType(typeof(ResponseMessage), 401)]
         [ProducesResponseType(typeof(ResponseMessage), 404)]
-        public IActionResult UpdateEmployeeDetails([FromBody] EmployeeAddDto employee)
+        public IActionResult UpdateEmployeeDetails([FromBody] EmployeeDto employee)
         {
             ActionResult response;
             ResponseMessage responseMessage;
@@ -181,8 +182,8 @@ namespace TeamSavvy.Api.Entities.Controllers
         }
 
         // DELETE api/<EmployeeController>/5
-        [Route("{id}/{status}")]
-        [HttpPut]
+        [Route("deleteEmployee/{id}/{status}")]
+        [HttpDelete]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ResponseMessage), 200)]
         [ProducesResponseType(typeof(ResponseMessage), 400)]

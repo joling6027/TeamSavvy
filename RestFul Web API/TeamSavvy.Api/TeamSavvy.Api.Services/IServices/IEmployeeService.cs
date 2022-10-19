@@ -9,9 +9,9 @@ namespace TeamSavvy.Api.Services.IServices
     {
         EmployeeDto GetEmployeeById(int id);
         List<EmployeeDto> GetAllEmployees();
-        List<EmployeeDto> GetEmployeeByFirstName(string name);
-        bool AddEmployee(EmployeeAddDto employee);
-        bool UpdateEmployee(EmployeeAddDto employee);
+        //List<EmployeeDto> GetEmployeeByFirstName(string name);
+        bool AddEmployee(EmployeeDto employee);
+        bool UpdateEmployee(EmployeeDto employee);
         bool DeleteEmployee(int id, string status);
     }
 }

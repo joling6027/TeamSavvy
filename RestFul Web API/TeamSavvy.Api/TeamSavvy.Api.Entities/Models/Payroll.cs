@@ -5,15 +5,16 @@ using System.Collections.Generic;
 // If you have enabled NRTs for your project, then un-comment the following line:
 // #nullable disable
 
-namespace TeamSavvy.Api.Web.Entities
+namespace TeamSavvy.Api.Entities.Models
 {
     public partial class Payroll
     {
         public int PayrollId { get; set; }
         public int EmployeeId { get; set; }
+        public int SalaryId { get; set; }
         public DateTime PayDate { get; set; }
         public string PayType { get; set; }
-        public int TotalHours { get; set; }
+        public int? TotalHours { get; set; }
         public string Earning { get; set; }
         public string Netpay { get; set; }
         public string PayYtd { get; set; }
@@ -22,5 +23,6 @@ namespace TeamSavvy.Api.Web.Entities
         public string Deduction { get; set; }
 
         public virtual Employee Employee { get; set; }
+        public virtual Salary Salary { get; set; }
     }
 }

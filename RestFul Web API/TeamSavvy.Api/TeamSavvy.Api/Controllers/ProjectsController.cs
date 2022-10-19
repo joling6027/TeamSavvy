@@ -149,7 +149,7 @@ namespace TeamSavvy.Api.Entities.Controllers
         }
 
 
-        [Route("project")]
+        [Route("addProject")]
         [HttpPost]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ResponseMessage), 200)]
@@ -182,6 +182,7 @@ namespace TeamSavvy.Api.Entities.Controllers
         }
 
         // PUT api/<EmployeeController>/5
+        [Route("updateProject")]
         [HttpPut]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ResponseMessage), 200)]
@@ -214,7 +215,7 @@ namespace TeamSavvy.Api.Entities.Controllers
         }
 
         // DELETE api/<EmployeeController>/5
-        [Route("delete/{projectId}")]
+        [Route("deleteProject/{projectId}")]
         [HttpDelete]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ResponseMessage), 200)]

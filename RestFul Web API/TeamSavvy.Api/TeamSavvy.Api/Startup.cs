@@ -130,7 +130,9 @@ namespace TeamSavvy.Api
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IProjectsService, ProjectsService>();
             services.AddScoped<IEmployeeTasksService, EmployeeTasksService>();
-           
+            services.AddScoped<IPayRollService, PayRollService>();
+            services.AddScoped<ISalaryService, SalaryService>();
+            services.AddScoped<ILeavesService, LeavesService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
