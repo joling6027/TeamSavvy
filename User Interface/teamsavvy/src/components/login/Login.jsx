@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
+import loginbg from '../../assets/img/card-bg.png';
+import forgetpass from '../forgetPassword/ForgetPasswordOtp';
 import {
+
     Button,
     Card,
     CardHeader,
@@ -13,11 +16,13 @@ import {
     InputGroupText,
     InputGroup,
     Container,
+    FormGroup,
+    Label,
     Col
   } from "reactstrap";
 
 
-class  Login extends Component {
+class Login extends Component {
   // state = { 
   //   count : this.state.name 
   // } 
@@ -25,25 +30,27 @@ class  Login extends Component {
     //  console.log(this.state.count);
     return (
       <>
-            <div className="card m-auto " style={{width: "18rem"}}>
-            <img src="..." className="card-img-top" alt="..."/>
-            <div className="card-body">
-              <h5 className="card-title">Login</h5>
-              <form>
-                <div className="mb-3">
-                  <label for="exampleInputEmail1" className="form-label">Email address</label>
-                  <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
+          <div className="loginBody d-inline-block position-absolute h-100 w-100">
+            <Card classname= "card " style={{}}>
+            <img src={loginbg} className="mb-2 cardImg" alt=""  />
+            <CardBody className="border-none">
+              <h2 className="card-title mt-5 pb-3"><strong>Login</strong></h2>
+              <Form>
+                <FormGroup className="mb-3 mt-2">
+                  <Label for="exampleInputEmail1" className="form-label mt-2">Employee Id</Label>
+                  <Input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
+                </FormGroup>
+                <FormGroup className="mb-5">
+                  <Label for="exampleInputPassword1" className="form-label mt-2">Password</Label>
+                  <Input type="password" className="form-control " id="exampleInputPassword1"/>
+                  <a href={forgetpass} className="alert-link mb-5 font-weight-light float-right text-secondary" target="_blank"><small>Forgot Password?</small></a>
+                </FormGroup>
+                <div className="w-100 text-center d-inline-block">
+                <a href="#" className="alert-link" target="_blank">LETS GO</a>
                 </div>
-                <div className="mb-3">
-                  <label for="exampleInputPassword1" className="form-label">Password</label>
-                  <input type="password" className="form-control" id="exampleInputPassword1"/>
-                </div>
-                <div className="mb-3 form-check">
-                  <input type="checkbox" className="form-check-input" id="exampleCheck1"/>
-                </div>
-                <a type="submit" className="btn btn-primary">LETS GO</a>
-              </form>
-            </div>
+              </Form>
+            </CardBody>
+          </Card>
           </div>
       </>
     );
