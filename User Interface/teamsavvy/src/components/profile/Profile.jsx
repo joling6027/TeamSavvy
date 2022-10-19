@@ -33,7 +33,7 @@ import {
         <div className="col-3">
 
             {/* profile card */}
-            <Card style={{}} className="text-center">
+            <Card style={{}} className="text-center prCard">
                 <CardBody className="profile-card" >
                     <a href="#pablo" onClick={(e) => e.preventDefault()}>
                         <img alt="..."className="avatar mt-5" src={pic} />
@@ -49,7 +49,7 @@ import {
             </Card>
 
             {/* team members */}
-            <Card style={{}} className="mt-4">
+            <Card style={{}} className="mt-4 prCard">
                 <CardBody>
                 <CardTitle tag="h6"> Team Members</CardTitle>
                 <ListGroup flush>
@@ -78,7 +78,7 @@ import {
         <div className="col-9">
 
             {/* personal details */}
-            <Card className="ms-4 col-9">
+            <Card className="ms-4 col-9 prCard">
             <CardBody>
             <CardTitle tag="h5"> Personal Details </CardTitle>
             
@@ -280,7 +280,7 @@ import {
 
             
             {/* skill set */}
-            <Card style={{}} className="ms-4 mt-4">
+            <Card style={{}} className="ms-4 mt-4 prCard">
                 <CardBody className="" >
                 <CardTitle tag="h5" className="mb-3"> Skill Set </CardTitle>
                 <div className="d-flex flex-wrap ">
@@ -300,7 +300,7 @@ import {
             </Card>
             
             {/* Bank details */}
-            <Card className="ms-4 col-9 mt-4">
+            <Card className="ms-4 col-9 mt-4 prCard">
             <CardBody>
             <CardTitle tag="h5"> Bank Details </CardTitle>
             <Form>
@@ -484,7 +484,7 @@ import {
             </Card> */}
 
 
-            <Card className="d-flex ms-4 mt-4 moremargin">
+            <Card className="d-flex ms-4 mt-4 moremargin prCard">
                 <CardBody className="d-flex justify-content-between">
                 <CardTitle tag="h5" className="mb-3"> Resignation </CardTitle>
                 <Button className="btn-primary bg-primary float-end">Resign</Button>
