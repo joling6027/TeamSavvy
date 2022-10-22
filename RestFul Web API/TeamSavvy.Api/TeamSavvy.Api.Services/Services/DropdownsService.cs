@@ -36,7 +36,7 @@ namespace TeamSavvy.Api.Services.Services
         #endregion
         public List<CountryDdl> GetCountryProvCity()
         {
-            List<CountryDdl> counProvCityDdl = null;
+            List<CountryDdl> counProvCityDdl = new List<CountryDdl>();
             try
             {
                 var countries = _unitOfWork.Context.Country.ToList();
@@ -45,25 +45,25 @@ namespace TeamSavvy.Api.Services.Services
 
                 foreach (var country in countries)
                 {
-                    counProvCityDdl = new List<CountryDdl>
+                    CountryDdl countryDdl = new CountryDdl
                     {
-                        new CountryDdl
+                        CountryId = country.CountryId,
+                        CountryName = country.CountryName,
+                        Provinces = provinces.Where(x => x.CountryId == country.CountryId).Select(x => new ProvinceDdl
                         {
-                            CountryId = country.CountryId,
-                            CountryName = country.CountryName,
-                            Provinces = provinces.Where(x=>x.CountryId == country.CountryId).Select(x=> new ProvinceDdl
+                            ProvinceId = x.ProvinceId,
+                            ProvinceName = x.ProvinceName,
+                            ProvinceAbbr = x.ProvinceAbbr,
+                            Cities = cities.Where(a => a.ProvinceId == x.ProvinceId).Select(z => new CityDdl
                             {
-                                ProvinceId = x.ProvinceId,
-                                ProvinceName = x.ProvinceName,
-                                ProvinceAbbr = x.ProvinceAbbr,
-                                Cities = cities.Where(a=>a.ProvinceId == x.ProvinceId).Select(z=> new CityDdl
-                                {
-                                    CityId = z.CityId,
-                                    CityName = z.CityName,
-                                }).ToList()
+                                CityId = z.CityId,
+                                CityName = z.CityName,
                             }).ToList()
-                        }
+                        }).ToList()
                     };
+
+                    counProvCityDdl.Add(countryDdl);
+
                 }
             }
             catch (Exception e)
