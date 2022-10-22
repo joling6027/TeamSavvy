@@ -1,8 +1,8 @@
 import './App.css';
-// import Login from './components/login/Login';
+import Login from './components/login/Login';
 import "./assets/css/bootstrap.min.css";
-// import ForgotPasswordOtp from './components/forgetPassword/ForgetPasswordOtp';
-// import ResetPassword from './components/forgetPassword/ResetPassword';
+import ForgotPasswordOtp from './components/forgetPassword/ForgetPasswordOtp';
+import ResetPassword from './components/forgetPassword/ResetPassword';
 import Sidenav from './components/sidenav/Sidenav';
 import Dashboard from './components/dashboard/Dashboard';
 
@@ -17,7 +17,10 @@ import Payroll from './components/payroll/Payroll';
 import Timesheet from './components/timesheet/Timesheet';
 import InternalJobs from './components/internaljobs/InternalJobs';
 import Header from './components/header/Header';
+import Paystub from './components/payroll/PayStub';
 
+import data from './data.json'
+import {COLUMNS} from './column'
 
 
 
@@ -48,8 +51,7 @@ function App() {
     
 
     <div className="App">
-      <Sidenav/>
-     
+     <Sidenav/>
       <main className="d-inline-block w-100">
       <header>
       <Header/>
@@ -59,15 +61,17 @@ function App() {
         <Route path="/" element={<Dashboard />}/>
         <Route path="/timesheet" element={<Timesheet/>} />
         <Route path="/task" element={<Task/>}/>
-        <Route path="/payroll" element={<Payroll />} />
+        <Route path="/payroll" element={<Payroll data={data} columns={COLUMNS} />} />
         <Route path="/jobs" element={<InternalJobs />} />
-      
+        <Route path='/paystub' element={<Paystub/>} />
       </Routes>
-      </main>
+      </main> 
 
      
     </div>
-
+    {/* <ResetPassword/> */}
+    
+    
 
     </>
   );

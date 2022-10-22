@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import classnames from 'classnames';
 import loginbg from '../../assets/img/card-bg.png';
 import forgetpass from '../forgetPassword/ForgetPasswordOtp';
+import './login.css';
 import {
 
     Button,
@@ -31,7 +32,7 @@ class Login extends Component {
     return (
       <>
           <div className="loginBody d-inline-block position-absolute h-100 w-100">
-            <Card classname= "card " style={{}}>
+            <Card className= "card" style={{}}>
             <img src={loginbg} className="mb-2 cardImg" alt=""  />
             <CardBody className="border-none">
               <h2 className="card-title mt-5 pb-3"><strong>Login</strong></h2>
@@ -43,7 +44,7 @@ class Login extends Component {
                 <FormGroup className="mb-5">
                   <Label for="exampleInputPassword1" className="form-label mt-2">Password</Label>
                   <Input type="password" className="form-control " id="exampleInputPassword1"/>
-                  <a href={forgetpass} className="alert-link mb-5 font-weight-light float-right text-secondary" target="_blank"><small>Forgot Password?</small></a>
+                  <a href={forgetpass} className="alert-link mb-5 font-weight-light float-end text-secondary" target="_blank"><small>Forgot Password?</small></a>
                 </FormGroup>
                 <div className="w-100 text-center d-inline-block">
                 <a href="#" className="alert-link" target="_blank">LETS GO</a>

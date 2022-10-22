@@ -2,11 +2,15 @@
     width: 250px;
     transition: width 0.3s ease-in-out;
     height: 100vh;
-    background:url("../../assets/img/bg.png") no-repeat;
+    background:url("../../assets/img/bg.png") no-repeat #000;
     background-position: left center;
     background-size: cover;
     padding: 20px 0;
+    position:relative;
+
 }
+
+.sidenav > button{position: absolute;color:#000;right:-50px}
 
 .sidenavClosed {
     composes: sidenav;
@@ -25,7 +29,7 @@
 }
 
 .sidenav .sideitem:nth-of-type(2){
-  margin:0 15px;
+  margin:0 10px;
   padding:15px 0;
   border-top: 1px solid rgba(255,255,255,0.5);
   border-bottom: 1px solid rgba(255,255,255,0.5);
@@ -49,4 +53,19 @@
     cursor: pointer;
     padding-left: 20px;
 }
+.sidenavClosed .sideitem:nth-of-type(2) > img {
+    height:25px !important;
+    padding:0 8px;
+}
+.sidenavClosed .navlinklogo a img{
+    height:30px!important;
+    max-width: 40px;
+    overflow:hidden;
+}
 
+.sidebarprofile{height:35px; width:auto; display:inline-block}
+
+/* .navlinklogo a img{
+  height:30px!important;
+  overflow:hidden;
+} */

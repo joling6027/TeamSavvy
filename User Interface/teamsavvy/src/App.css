@@ -1,6 +1,7 @@
 body {
   margin: 0;
   padding: 0;
+  background-color: #000000;
 }
 .App {
   display: flex;
@@ -9,19 +10,14 @@ main {
 background-color:#F4F5F8
 }
 
-
-.loginBody{background:url("../src/assets/img/bg.png")no-repeat;background-size:cover }
-.card{width: 25rem; position: absolute; top: 50%; left:50% ;transform: translate(-50%, -50%)}
-.cardImg{position:absolute; width:24.87rem; z-index: -8}
-
-.notif-badge{top:-2px; left:10px; font-size:10px !important; height:17px; width:17px;}
-
-#sidenav{position:relative}
+/* #sidenav{position:relative}
 
 #sidenav > button{position: absolute;color:#000;right:-50px}
 .breadcrumb > .breadcrumb-item{margin-left:30px}
 
 .sidebarprofile{height:35px; width:auto}
 
-
-
+.navlinklogo a img{
+  height:30px!important;
+  overflow:hidden;
+} */
