@@ -13,7 +13,9 @@
   width: 80vw;
   height: 90%;
   overflow-x: hidden;
-  position: absolute;
+
+  /* position: absolute; */
+  margin: 2% 0% 0% 2%;
 }
 
 .card-header-payroll{
@@ -48,7 +50,7 @@
   color: #848484;
 }
 
-a {
+.view-file >a {
   text-decoration: none;
 }
 

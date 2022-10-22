@@ -19,6 +19,7 @@
     "prop-types": "15.8.1",
     "react": ">=16.8.0",
     "react-big-calendar": "0.40.2",
+    "react-bootstrap": "^2.5.0",
     "react-bootstrap-sweetalert": "5.2.0",
     "react-bootstrap-wizard": "0.0.9",
     "react-chartjs-2": "3.0.4",

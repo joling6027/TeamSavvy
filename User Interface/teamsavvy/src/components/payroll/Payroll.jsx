@@ -67,14 +67,13 @@ const Payroll = ({ columns, data }) => {
                             <tbody>
                                 <tr>
                                     <td className="text-center ">
-
                                         31-MAR-2022
                                     </td>
                                     <td className="text-center">Monthly</td>
                                     <td className="text-center">80</td>
                                     <td className="text-center">$3600</td>
                                     <td className="text-center">$3200</td>
-                                    <td className="text-center">
+                                    <td className="text-center view-file">
                                         <Link to={"/paystub"}>VIEW FILE</Link>
                                     </td>
                                 </tr>
@@ -86,7 +85,7 @@ const Payroll = ({ columns, data }) => {
                                     <td className="text-center">80</td>
                                     <td className="text-center">$3600</td>
                                     <td className="text-center">$3200</td>
-                                    <td className="text-center">
+                                    <td className="text-center view-file">
                                         <Link to={"/paystub"}>VIEW FILE</Link>
                                     </td>
                                 </tr>
@@ -98,20 +97,7 @@ const Payroll = ({ columns, data }) => {
                                     <td className="text-center">80</td>
                                     <td className="text-center">$3600</td>
                                     <td className="text-center">$3200</td>
-                                    <td className="text-center">
-                                        <Link to={"/paystub"}>VIEW FILE</Link>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="text-center">
-                                        31-JAN-2022
-
-                                    </td>
-                                    <td className="text-center">Monthly</td>
-                                    <td className="text-center">80</td>
-                                    <td className="text-center">$3600</td>
-                                    <td className="text-center">$3200</td>
-                                    <td className="text-center">
+                                    <td className="text-center view-file">
                                         <Link to={"/paystub"}>VIEW FILE</Link>
                                     </td>
                                 </tr>
@@ -124,7 +110,7 @@ const Payroll = ({ columns, data }) => {
                                     <td className="text-center">80</td>
                                     <td className="text-center">$3600</td>
                                     <td className="text-center">$3200</td>
-                                    <td className="text-center">
+                                    <td className="text-center view-file">
                                         <Link to={"/paystub"}>VIEW FILE</Link>
                                     </td>
                                 </tr>
@@ -137,7 +123,7 @@ const Payroll = ({ columns, data }) => {
                                     <td className="text-center">80</td>
                                     <td className="text-center">$3600</td>
                                     <td className="text-center">$3200</td>
-                                    <td className="text-center">
+                                    <td className="text-center view-file">
                                         <Link to={"/paystub"}>VIEW FILE</Link>
                                     </td>
                                 </tr>
@@ -150,7 +136,7 @@ const Payroll = ({ columns, data }) => {
                                     <td className="text-center">80</td>
                                     <td className="text-center">$3600</td>
                                     <td className="text-center">$3200</td>
-                                    <td className="text-center">
+                                    <td className="text-center view-file">
                                         <Link to={"/paystub"}>VIEW FILE</Link>
                                     </td>
                                 </tr>
@@ -163,7 +149,20 @@ const Payroll = ({ columns, data }) => {
                                     <td className="text-center">80</td>
                                     <td className="text-center">$3600</td>
                                     <td className="text-center">$3200</td>
+                                    <td className="text-center view-file">
+                                        <Link to={"/paystub"}>VIEW FILE</Link>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td className="text-center">
+                                        31-JAN-2022
+
+                                    </td>
+                                    <td className="text-center">Monthly</td>
+                                    <td className="text-center">80</td>
+                                    <td className="text-center">$3600</td>
+                                    <td className="text-center">$3200</td>
+                                    <td className="text-center view-file">
                                         <Link to={"/paystub"}>VIEW FILE</Link>
                                     </td>
                                 </tr>
