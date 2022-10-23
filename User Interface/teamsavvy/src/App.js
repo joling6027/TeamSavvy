@@ -53,7 +53,7 @@ function App() {
     <div className="App">
      <Sidenav/>
       <main className="d-inline-block w-100">
-      <header>
+      <header className="sticky-top bg-header">
       <Header/>
       </header>
       <Routes>

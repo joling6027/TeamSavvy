@@ -8,15 +8,15 @@
   position: relative;
 }
 
-.card-payroll {
+/* .card-payroll {
   /* margin-top: 150px; */
-  width: 80vw;
+  /* width: 80vw;
   height: 90%;
-  overflow-x: hidden;
-
+  overflow-x: hidden; */
+  
   /* position: absolute; */
-  margin: 2% 0% 0% 2%;
-}
+  /* margin: 2% 0% 0% 2%;
+} */ 
 
 .card-header-payroll{
   background-color: white;

@@ -2,7 +2,8 @@ import React, { Component, useState  } from 'react';
 import "../../assets/css/bootstrap.min.css";
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
-import './header.css'
+import './header.css';
+import {Link} from 'react-router-dom';
 
 import {
   Collapse,
@@ -71,9 +72,9 @@ const Header = () => {
         
         </div>
         <div className= "float-end d-flex align-items-top">
-            <span className="me-3"  onClick={function noRefCheck(){}}>
+            {/* <span className="me-3"  onClick={function noRefCheck(){}}>
               <SearchOutlinedIcon/>
-            </span>
+            </span> */}
             <Collapse horizontal>
           <Alert
           style={{
@@ -92,10 +93,10 @@ const Header = () => {
                 <Badge className="notif-badge bg-danger p-1 rounded-circle position-absolute d-inline-block"> 2</Badge>
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem>Option 1</DropdownItem>
-                <DropdownItem>Option 2</DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>Reset</DropdownItem>
+                <DropdownItem>Notification 1</DropdownItem>
+                <DropdownItem>Notification 2</DropdownItem>
+                {/* <DropdownItem divider />
+                <DropdownItem></DropdownItem> */}
               </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>

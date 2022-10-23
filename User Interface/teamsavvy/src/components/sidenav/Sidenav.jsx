@@ -4,7 +4,9 @@ import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import { submenu } from "../utilities/Submenu";
 import { useState } from "react";
 import styles from "./sidenav.module.css"
-import logo from "../../assets/img/sideBarLogo.png"
+import logocl from "../../assets/img/TS.png";
+import logo from "../../assets/img/tsLogo.png";
+import {Link} from 'react-router-dom';
 
 export default function Sidenav() {
     const [open, setopen] = useState(true)
@@ -14,14 +16,16 @@ export default function Sidenav() {
     const Profile = "Profile";
   return (
     <>
-    <div className={open?styles.sidenav:styles.sidenavClosed} id="sidenav">
+    <div className={open?styles.sidenav :styles.sidenavClosed} id="sidenav">
         <button className={styles.menuBtn} onClick={toggleOpen}>
             {open? <FormatListBulletedOutlinedIcon />: <CloseOutlinedIcon />}
         </button>
         <NavLink className="navlinklogo d-inline-block">
-          <a href="#" className="ps-3 d-inline-block">
-            {/* <img src= {logo} alt="teamsavvy logo" className="tslogo overflow-hidden  mb-3"/> */}
-            </a>
+          <Link to="#" className="ps-3 d-inline-block">
+          {open?  <img src= {logo} alt="teamsavvy logo" className="tslogo overflow-hidden  mb-3"/>
+          : <img src= {logocl} alt="teamsavvy logo" className="tslogo overflow-hidden  mb-3"/> }
+           
+            </Link>
         </NavLink>
         {submenu.map(item =>{
             return `${item.text}` === "Profile" ? 

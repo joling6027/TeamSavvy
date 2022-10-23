@@ -19,10 +19,10 @@ const Task = () => {
 
     return (
         <>
-            <div className="content">
-                <div className="card-task ">
+            <div className="container p-3">
+                <div className="">
                     <div className="row">
-                        <div className='col-4'>
+                        <div className='p-2 col-sm-12 col-md-4'>
                             <div className='card task-list-card'>
                                 <h5 className='task-card-title'>Assigned Task<hr /></h5>
 
@@ -87,7 +87,7 @@ const Task = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className='col-4'>
+                        <div className='mt-md-0 mt-sm-2 p-2 col-sm-12 col-md-4'>
                             <div className='card task-list-card'>
                                 <h5 className='task-card-title'>In progress<hr /></h5>
                                 <div className="card-body">
@@ -122,7 +122,7 @@ const Task = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className='col-4'>
+                        <div className='mt-md-0 mt-sm-2 p-2 col-sm-12 col-md-4'>
                             <div className='card task-list-card'>
                                 <h5 className='task-card-title'>Completed<hr /></h5>
                                 <div className="card-body">

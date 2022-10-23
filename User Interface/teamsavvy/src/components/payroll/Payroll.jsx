@@ -43,8 +43,8 @@ const Payroll = ({ columns, data }) => {
 
     return (
         <>
-            <div className='content'>
-                <div className="card card-payroll">
+            <div className='container'>
+                <div className="card col-md-12 p-2 mb-5">
                     {/* <div className='col md-12'> */}
                     {/* <div className="card"> */}
                     <div className='card-header card-header-payroll'>
@@ -53,7 +53,7 @@ const Payroll = ({ columns, data }) => {
                         <h4 className='card-title' tag="h4">Paylips</h4>
                     </div>
                     <div className='card-body'>
-                        <table className='table table-striped paylips-table'>
+                        <table className='table table-striped paylips-table mb-5'>
                             <thead className="text-primary">
                                 <tr>
                                     <th className="text-center" scope="col">Pay Date</th>

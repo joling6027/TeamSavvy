@@ -1,7 +1,6 @@
 import React, { Component, useState, useEffect } from 'react';
 import '../../assets/css/bootstrap.min.css'
-import { Modal } from 'react-bootstrap';
-import { Button } from 'react-bootstrap';
+import { Modal,Button } from 'reactstrap';
 import { Form, FormGroup, Label, Input, FormFeedback, FormText, Container, Row, Col } from 'reactstrap';
 
 const TaskModal = (props) => {

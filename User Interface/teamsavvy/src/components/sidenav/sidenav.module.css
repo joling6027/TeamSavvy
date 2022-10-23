@@ -7,10 +7,10 @@
     background-size: cover;
     padding: 20px 0;
     position:relative;
-
+    z-index:9999;
 }
 
-.sidenav > button{position: absolute;color:#000;right:-50px}
+.sidenav > button{position: absolute;color:#000;right:-50px;z-index:5}
 
 .sidenavClosed {
     composes: sidenav;
@@ -27,6 +27,7 @@
     text-decoration: none;
     overflow: hidden;
 }
+.w{width:1%!important}
 
 .sidenav .sideitem:nth-of-type(2){
   margin:0 10px;

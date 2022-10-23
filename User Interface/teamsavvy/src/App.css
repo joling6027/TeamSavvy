@@ -1,14 +1,20 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #000000;
+  background-color: #F4F5F8;
+  width:100%;
+  
 }
 .App {
   display: flex;
 }
 main {
-background-color:#F4F5F8
+background-color:#F4F5F8;
+max-height: 100vh;
+overflow: auto;
 }
+
+.bg-header{background-color:#F4F5F8;z-index:-2}
 
 /* #sidenav{position:relative}
 

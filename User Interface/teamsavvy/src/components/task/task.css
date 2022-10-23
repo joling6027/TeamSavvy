@@ -18,9 +18,9 @@
 
 .card-task{
   width: 80vw;
-  height: 90%;
-  overflow-x: hidden;
-  overflow-y: auto;
+  /* height: 90%; */
+  /* overflow-x: hidden;
+  overflow-y: auto; */
   /* position: absolute; */
   /* margin-left: 3%; */
   padding: 2% 2%;

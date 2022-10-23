@@ -1,9 +1,12 @@
-import React, { Component } from 'react';
-import pic from "../../assets/img/Profilepic.png"
-import bg from "../../assets/img/bg-profile.png"
+import React, { Component, useState } from 'react';
+import pic from "../../assets/img/Profilepic.png";
+import bg from "../../assets/img/bg-profile.png";
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
-
-import './profile.css'
+import MailOutlineOutlinedIcon from '@mui/icons-material/MailOutlineOutlined';
+import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
+import {Link} from 'react-router-dom';
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+import './profile.css';
 import {
     Button,
     Card,
@@ -23,21 +26,31 @@ import {
     ListGroupItem,
     Label,
     Badge,
-    Table
+    Modal,
+    ModalHeader,
+    ModalBody,
+    ModalFooter
   } from "reactstrap";
   
   const Profile = () => {
+    const [modal, setModal] = useState(false);
+    const toggle = () => setModal(!modal);
+    const handleDelete = (event) => {
+    console.log(event);
+    }
+
+    
     return (
       <>
-      <Container className="d-flex">
-        <div className="col-3">
+      <Container className="d-flex flex-wrap">
+        <div className="col-md-3 col-sm-12">
 
             {/* profile card */}
             <Card style={{}} className="text-center prCard">
                 <CardBody className="profile-card" >
-                    <a href="#pablo" onClick={(e) => e.preventDefault()}>
+                    <Link to="#" onClick={(e) => e.preventDefault()}>
                         <img alt="..."className="avatar mt-5" src={pic} />
-                    </a>
+                    </Link>
                     <CardTitle tag="h5"> Jenny Doe </CardTitle>
                 <CardSubtitle className="mb-2 text-muted" tag="h6"> Id: E-134578
                 <p>Position, dept, location</p>
@@ -49,36 +62,53 @@ import {
             </Card>
 
             {/* team members */}
-            <Card style={{}} className="mt-4 prCard">
+            <Card style={{}} className="mt-4 mb-md-4 mb-sm-0 prCard">
                 <CardBody>
                 <CardTitle tag="h6"> Team Members</CardTitle>
                 <ListGroup flush>
-                    <ListGroupItem className="px-0">  <p className="p-0 m-0"> Dan <p className="float-end">Team Lead</p></p>
-                    <a href="mailto:dan@teamsavvy.com" className="text-decoration-none p-0 d-inline-block ">Dan@teamsavvy.com</a>
+                    <ListGroupItem className="px-0 justify-content-between">  <p className="p-0 m-0"><strong>Dan Kayger</strong>  <p className="float-end">Team Lead</p></p>
+                    <Link to="mailto:dan@teamsavvy.com" className="mail text-decoration-none p-0 d-inline-block position-relative"><MailOutlineOutlinedIcon fontSize='small'/>
+                    <span className="d-none showmail position-absolute top-0 p-1 fsmall bg-light start-0">Dan@teamsavvy.com</span></Link>
+                    <Link to="tel:12345" className="mail text-decoration-none p-0 d-inline-block position-relative ms-2 "><LocalPhoneOutlinedIcon fontSize='small'/>
+                    <span className="d-none showmail position-absolute top-0 p-1 fsmall bg-light start-0">12345</span></Link>
                     </ListGroupItem>
-                    <ListGroupItem className="px-0"> <p className="p-0 m-0"> Kartik <p className="float-end">Manager</p></p>
-                    <a href="mailto:kartik@teamsavvy.com"  className="text-decoration-none p-0 d-inline-block ">kartik@teamsavvy.com</a>
+                    <ListGroupItem className="px-0"> <p className="p-0 m-0"> <strong>Kartik</strong> <p className="float-end">Manager</p></p>
+                    <Link to="mailto:dan@teamsavvy.com" className="mail text-decoration-none p-0 d-inline-block position-relative"><MailOutlineOutlinedIcon fontSize='small'/>
+                    <span className="d-none showmail position-absolute top-0 p-1 fsmall bg-light start-0">Dan@teamsavvy.com</span></Link>
+                    <Link to="tel:12345" className="mail text-decoration-none p-0 d-inline-block position-relative ms-2 "><LocalPhoneOutlinedIcon fontSize='small'/>
+                    <span className="d-none showmail position-absolute top-0 p-1 fsmall bg-light start-0">12345</span></Link>
                     </ListGroupItem>
-                    <ListGroupItem className="px-0"> <p className="p-0 m-0"> Peter Danial <p className="float-end">Software Dev</p></p>
-                    <a href="mailto:peter@teamsavvy.com"  className="text-decoration-none p-0 d-inline-block">peter@teamsavvy.com</a>
+                    <ListGroupItem className="px-0"> <p className="p-0 m-0"> <strong>Peter Danial</strong> <p className="float-end">Software Dev</p></p>
+                    <Link to="mailto:dan@teamsavvy.com" className="mail text-decoration-none p-0 d-inline-block position-relative"><MailOutlineOutlinedIcon fontSize='small'/>
+                    <span className="d-none showmail position-absolute top-0 p-1 fsmall bg-light start-0">Dan@teamsavvy.com</span></Link>
+                    <Link to="tel:12345" className="mail text-decoration-none p-0 d-inline-block position-relative ms-2 "><LocalPhoneOutlinedIcon fontSize='small'/>
+                    <span className="d-none showmail position-absolute top-0 p-1 fsmall bg-light start-0">12345</span></Link>
                     </ListGroupItem>
-                    <ListGroupItem className="px-0"><p className="p-0 m-0"> Dan <p className="float-end">Designer</p></p>
-                    <a href="mailto:dan@teamsavvy.com"  className="text-decoration-none p-0 d-inline-block">dan@teamsavvy.com</a>
+                    <ListGroupItem className="px-0"><p className="p-0 m-0"> <strong>Dan Kayger</strong>  <p className="float-end">Designer</p></p>
+                    <Link to="mailto:dan@teamsavvy.com" className="mail text-decoration-none p-0 d-inline-block position-relative"><MailOutlineOutlinedIcon fontSize='small'/>
+                    <span className="d-none showmail position-absolute top-0 p-1 fsmall bg-light start-0">Dan@teamsavvy.com</span></Link>
+                    <Link to="tel:12345" className="mail text-decoration-none p-0 d-inline-block position-relative ms-2 "><LocalPhoneOutlinedIcon fontSize='small'/>
+                    <span className="d-none showmail position-absolute top-0 p-1 fsmall bg-light start-0">12345</span></Link>
                     </ListGroupItem>
-                    <ListGroupItem className="px-0"> <p className="p-0 m-0"> Kartik <p className="float-end">Software Dev 2</p></p>
-                    <a href="mailto:peter@teamsavvy.com"  className="text-decoration-none p-0 d-inline-block">kartik@teamsavvy.com</a>
-                    </ListGroupItem>
-                    <ListGroupItem className="px-0"> <p className="p-0 m-0"> Dan <p className="float-end">Tester</p></p>
-                    <a href="mailto:dan@teamsavvy.com"  className="text-decoration-none p-0 d-inline-block">dan@teamsavvy.com</a>
+                    <ListGroupItem className="px-0"> <p className="p-0 m-0">  <strong>Kartik</strong> <p className="float-end">Software Dev 2</p></p>
+                    <Link to="mailto:dan@teamsavvy.com" className="mail text-decoration-none p-0 d-inline-block position-relative"><MailOutlineOutlinedIcon fontSize='small'/>
+                    <span className="d-none showmail position-absolute top-0 p-1 fsmall bg-light start-0">Dan@teamsavvy.com</span></Link>
+                    <Link to="tel:12345" className="mail text-decoration-none p-0 d-inline-block position-relative ms-2 "><LocalPhoneOutlinedIcon fontSize='small'/>
+                    <span className="d-none showmail position-absolute top-0 p-1 fsmall bg-light start-0">12345</span></Link>                    </ListGroupItem>
+                    <ListGroupItem className="px-0"> <p className="p-0 m-0">  <strong>Dan</strong> <p className="float-end">Tester</p></p>
+                    <Link to="mailto:dan@teamsavvy.com" className="mail text-decoration-none p-0 d-inline-block position-relative"><MailOutlineOutlinedIcon fontSize='small'/>
+                    <span className="d-none showmail position-absolute top-0 p-1 fsmall bg-light start-0">Dan@teamsavvy.com</span></Link>
+                    <Link to="tel:12345" className="mail text-decoration-none p-0 d-inline-block position-relative ms-2 "><LocalPhoneOutlinedIcon fontSize='small'/>
+                    <span className="d-none showmail position-absolute top-0 p-1 fsmall bg-light start-0">12345</span></Link>
                     </ListGroupItem>
                 </ListGroup>
                 </CardBody>
             </Card>
         </div>
-        <div className="col-9">
-
+        <div className="col-md-9 col-sm-12">
+            
             {/* personal details */}
-            <Card className="ms-4 col-9 prCard">
+            <Card className="ms-md-4 ms-sm-0 mt-sm-4 mt-md-0 col-9 prCard">
             <CardBody>
             <CardTitle tag="h5"> Personal Details </CardTitle>
             
@@ -280,27 +310,107 @@ import {
 
             
             {/* skill set */}
-            <Card style={{}} className="ms-4 mt-4 prCard">
+            <Card style={{}} className="ms-md-4 ms-sm-0 mt-4 prCard">
                 <CardBody className="" >
                 <CardTitle tag="h5" className="mb-3"> Skill Set </CardTitle>
-                <div className="d-flex flex-wrap ">
-                <Badge className="skillPill rounded-pill me-2 mb-3" pill> C# </Badge>  
-                <Badge className="skillPill rounded-pill me-2 mb-3" pill> Java </Badge>   
-                <Badge className="skillPill rounded-pill me-2 mb-3" pill> Manual Testing </Badge>  
-                <Badge className="skillPill rounded-pill me-2 mb-3" pill> Automation Testing </Badge>
-                <Badge className="skillPill rounded-pill me-2 mb-3" pill> Manual Testing </Badge>    
-                <Badge className="skillPill rounded-pill me-2 mb-3" pill> C# </Badge>  
-                <Badge className="skillPill rounded-pill me-2 mb-3" pill> Java </Badge>   
-                <Badge className="skillPill rounded-pill me-2 mb-3" pill> Manual Testing </Badge>  
-                <Badge className="skillPill rounded-pill me-2 mb-3" pill> Automation Testing </Badge>
-                <Badge className="skillPill rounded-pill me-2 mb-3" pill> Manual Testing </Badge>              
+                <div className="d-flex flex-wrap">
+                    <div class="skill position-relative" >
+                <Badge className="skillPill rounded-pill me-3 mb-3 " pill> C# </Badge> 
+                <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge " key={1} onClick={(event) => handleDelete(event.target.value)}> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
+                    </div>
+                    <div class="skill position-relative">
+                <Badge className="skillPill rounded-pill me-3 mb-3" pill> Java </Badge>  
+                <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge "> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
+                    </div> 
+                    <div class="skill position-relative">
+                <Badge className="skillPill rounded-pill me-3 mb-3" pill> Manual Testing </Badge> 
+                <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge "> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
+                    </div> 
+                    <div class="skill position-relative"> 
+                <Badge className="skillPill rounded-pill me-3 mb-3" pill> Automation Testing </Badge>
+                <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge "> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
+                    </div>
+                    <div class="skill position-relative"> 
+                     
+                <Badge className="skillPill rounded-pill me-3 mb-3" pill> Manual Testing </Badge>    
+                     <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge "> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
+                    </div>  
+                    <div class="skill position-relative"> 
+                     
+                <Badge className="skillPill rounded-pill me-3 mb-3" pill> C# </Badge>  
+                     <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge "> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
+                    </div>  
+                    <div class="skill position-relative"> 
+                <Badge className="skillPill rounded-pill me-3 mb-3" pill> Java </Badge>   
+                     
+                     <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge "> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
+                    </div>  
+                    <div class="skill position-relative"> 
+                <Badge className="skillPill rounded-pill me-3 mb-3" pill> Manual Testing </Badge>  
+                     
+                     <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge "> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
+                    </div>  
+                    <div class="skill position-relative"> 
+                <Badge className="skillPill rounded-pill me-3 mb-3" pill> Automation Testing </Badge>
+                     
+                     <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge "> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
+                    </div>  
+                    <div class="skill position-relative"> 
+                     
+                <Badge className="skillPill rounded-pill me-3 mb-3" pill> Manual Testing </Badge>              
+                     <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge "> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
+                    </div>  
                 </div>
-                <a href="#" className="alert-link text-decoration-none text-center" target="_blank"><AddOutlinedIcon/> ADD</a>
+                <Link to="" className="alert-link text-decoration-none text-center"  onClick={toggle}> <AddOutlinedIcon/> ADD</Link>
+                {/* add skill popup */}
+                <Modal isOpen={modal} toggle={toggle} backdrop="static" centered>
+                    <ModalHeader>  <h4>Add Skills</h4> </ModalHeader>
+                    <ModalBody>
+                        <Form>
+                        <FormGroup>
+                            <Label className="mt-3 mb-2"  for="skills">
+                            Select Skills
+                            </Label>
+                            <Input
+                            id="skills"
+                            name="skilld"
+                            type="select"
+                            multiple
+                            >
+                            <option>
+                                JavaScript
+                            </option>
+                            <option>
+                                Work Management
+                            </option>
+                            <option>
+                                UX Design
+                            </option>
+                            <option>
+                                Communication
+                            </option>
+                            <option>
+                                Client Handling
+                            </option>
+                            </Input>
+                        </FormGroup>
+                    </Form>
+                    <div className="d-flex justify-content-center mt-5">
+                    <Button className="me-3" color="primary" onClick={toggle}>
+                        Submit
+                    </Button>{' '}
+                    <Button color="secondary" onClick={toggle}>
+                        Cancel
+                    </Button>
+                    </div>
+                    </ModalBody>
+                    
+                </Modal>
                 </CardBody>
             </Card>
             
             {/* Bank details */}
-            <Card className="ms-4 col-9 mt-4 prCard">
+            <Card className="ms-sm-0 ms-md-4 col-9 mt-4 prCard">
             <CardBody>
             <CardTitle tag="h5"> Bank Details </CardTitle>
             <Form>
@@ -484,25 +594,26 @@ import {
             </Card> */}
 
 
-            <Card className="d-flex ms-4 mt-4 moremargin prCard">
+            <Card className="d-flex ms-md-4 ms-sm-0 mt-4 prCard">
                 <CardBody className="d-flex justify-content-between">
                 <CardTitle tag="h5" className="mb-3"> Resignation </CardTitle>
                 <Button className="btn-primary bg-primary float-end">Resign</Button>
                 </CardBody>
             </Card>
            
-        
-        </div>
-        <div className="position-fixed bottom-0 end-0 w-100 bg-light text-center p-3">
+            <span className="ms-2 bg-light mt-3 d-inline-block text-center p-3">
                 <Button className="d-inline-block bg-primary btn-primary"> Submit Changes</Button>
                 <Button className="d-inline-block bg-danger btn-primary ms-2"> Cancel</Button>
             
-            </div>
+            </span>
+        </div>
+       
     </Container>
              
               
       </>
     );
   };
+  
   
   export default Profile;
