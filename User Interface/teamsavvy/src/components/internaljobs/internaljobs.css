@@ -1,0 +1,54 @@
+.jobs-card, .card-job-detail{
+  overflow-y: auto;
+  width: 100%;
+  height: 85vh;
+}
+
+.job-card{
+  width: auto;
+  border: none;
+  margin-top: 2%;
+
+}
+
+.job-card-title{
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.job-subtitle{
+  font-weight: bold;
+  margin: 2vh 0;
+}
+
+.job-card > .job-subtitle{
+  margin-top: 0;
+}
+
+.btn-view-job-detail{
+  text-align: left;
+  padding-left: 0;
+  text-decoration: none;
+}
+
+.card-job-detail{
+  overflow-y: auto;
+  position: relative;
+}
+
+.createAndApply-btn{
+  float: right;
+  text-decoration: none;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.job-detail-payAndDealine{
+  /* position: absolute;
+  bottom: 0; */
+}
+
+
+.job-detail-payAndDealine > span:nth-of-type(2){
+  float: right;  
+}

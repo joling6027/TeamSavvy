@@ -1,5 +1,6 @@
 import React, { Component, useState, useEffect } from 'react';
-import TaskModal from './Task-modal';
+import TaskModal from './TaskModal';
+import UpdateStatusModal from './UpdateStatusModal';
 // import { Form, FormGroup, Label, Input, FormFeedback, FormText, Container, Row, Col } from 'reactstrap';
 import QueryBuilderIcon from '@mui/icons-material/QueryBuilder';
 import '../../assets/css/bootstrap.min.css'
@@ -7,6 +8,7 @@ import './task.css'
 
 const Task = () => {
     const [show, setShow] = useState(false);
+    const [showUpdate, setShowUpdate] = useState(false);
 
     const saveTaskDataHandler = (enteredTaskData) => {
         const taskData = {
@@ -96,11 +98,11 @@ const Task = () => {
                                         <button
                                             className='task-btn'
                                             type="button"
-                                            onClick={() => setShow(true)}
+                                            onClick={() => setShowUpdate(true)}
                                         >
-                                            MODIFY TASK
+                                            UPDATE STATUS
                                         </button>
-                                        <TaskModal onSaveTaskData={saveTaskDataHandler} show={show} close={() => setShow(false)} />
+                                        <UpdateStatusModal onSaveTaskData={saveTaskDataHandler} show={showUpdate} close={() => setShowUpdate(false)} />
                                         <hr />
                                     </div>
                                     <div className="in-progress-task">
@@ -110,11 +112,11 @@ const Task = () => {
                                         <button
                                             className='task-btn'
                                             type="button"
-                                            onClick={() => setShow(true)}
+                                            onClick={() => setShowUpdate(true)}
                                         >
-                                            MODIFY TASK
+                                            UPDATE STATUS
                                         </button>
-                                        <TaskModal onSaveTaskData={saveTaskDataHandler} show={show} close={() => setShow(false)} />
+                                        <UpdateStatusModal onSaveTaskData={saveTaskDataHandler} show={showUpdate} close={() => setShowUpdate(false)} />
                                         <hr />
                                     </div>
                                 </div>

@@ -17,7 +17,7 @@ const TaskModal = (props) => {
 
   const titleChangeHandler = (event) => {
     setEnteredTitle(event.target.value)
-    setValidate(false);
+    // setValidate(false);
   }
 
   const descriptionChangeHandler = (event) => {
@@ -116,8 +116,8 @@ const TaskModal = (props) => {
               </Container>
             </FormGroup>
             <Modal.Footer>
-              <Button onClick={props.close} style={{ color: '#FD8787', backgroundColor: 'white', border: 'none' }}>Cancel</Button>
-              <Button type='submit' style={{ color: '#367FFF', backgroundColor: 'white', border: 'none' }}>Apply Changes</Button>{''}
+              <Button onClick={props.close} style={{ color: '#FD8787', backgroundColor: 'white', border: 'none', textTransform: 'uppercase' }}>Cancel</Button>
+              <Button type='submit' style={{ color: '#367FFF', backgroundColor: 'white', border: 'none', textTransform: 'uppercase' }}>Apply Changes</Button>{''}
             </Modal.Footer>
           </Form>
         </Modal.Body>

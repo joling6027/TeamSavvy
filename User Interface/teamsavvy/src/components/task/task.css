@@ -52,3 +52,18 @@
   opacity: 0.2;
 }
 
+/* Update status modal */
+.status-modal-style{
+  width: 35vw;
+  margin: auto;
+}
+
+.status-modal-container{
+  margin-top: 3%;
+  height: 200px;
+}
+
+.status-modal-footer{
+  border: none;
+
+}
