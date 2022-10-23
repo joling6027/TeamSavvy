@@ -25,7 +25,7 @@ import {
   const ForgotPasswordOtp = () => {
     return ( <>
       <div className="loginBody d-inline-block position-absolute h-100 w-100">
-      <Card className= "card">
+      <Card className= "loginCard">
         <img src={loginbg} className="mb-2 cardImg" alt="forget password background image"  />
         <CardBody className="border-none">
           <h2 className="card-title mt-5 pb-3"><strong>Forgot Password</strong></h2>

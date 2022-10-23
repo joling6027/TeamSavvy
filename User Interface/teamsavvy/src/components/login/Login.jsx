@@ -35,7 +35,7 @@ const Login = () => {
     return (
       <>
           <div className="loginBody d-inline-block position-absolute h-100 w-100">
-            <Card className= "card" style={{}}>
+            <Card className= "loginCard" style={{}}>
             <img src={loginbg} className="mb-2 cardImg" alt="login back ground" />
             <CardBody className="border-none">
               <h2 className="card-title mt-5 pb-3"><strong>Login</strong></h2>
