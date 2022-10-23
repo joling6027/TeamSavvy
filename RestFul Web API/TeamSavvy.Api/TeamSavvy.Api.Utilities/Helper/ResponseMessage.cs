@@ -23,7 +23,7 @@ namespace TeamSavvy.Api.BusinessModel.Helper
         public ResponseMessage(bool success = false, object data = null, Message message = null)
         {
             Success = success;
-            Data = data;
+            Response = data;
             Message = message;
         }
         #endregion
@@ -36,7 +36,7 @@ namespace TeamSavvy.Api.BusinessModel.Helper
         /// <summary>
         /// Data will be passed in a custom class as per Api. Data will be used on the angular side.
         /// </summary>
-        public object Data { get; }
+        public object Response { get; }
 
         /// <summary>
         /// A Message response.

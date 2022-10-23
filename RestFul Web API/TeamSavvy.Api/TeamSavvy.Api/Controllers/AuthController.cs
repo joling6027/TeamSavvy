@@ -34,23 +34,26 @@ namespace TeamSavvy.Api.Entities.Controllers
         // GET api/values  
         [HttpPost, Route("login")]
         [EnableCors("AllowOrigin")]
-        public IActionResult Login([FromBody] LoginDto user)
+        public IActionResult Login([FromBody] AuthDto auth)
         {
             ActionResult response;
             ResponseMessage responseMessage;
-            if (user == null)
+            if (!ModelState.IsValid)
             {
                 response = BadRequest(new ResponseMessage(false, null, new Message(HttpStatusCode.BadRequest, "User name or password is incorrect.")));
             }
-
-            var authUser = _authService.Authenticate(user.EmployeeId, user.Password);
-            if (authUser == null)
-            {
-                response = NotFound(new ResponseMessage(false, null, new Message(HttpStatusCode.NotFound, "User name or password is incorrect.")));
-            }
             else
             {
-                response = Ok(new ResponseMessage(true, authUser, new Message(HttpStatusCode.OK)));
+                var authUser = _authService.Authenticate(auth.EmployeeId, auth.Password);
+                if (authUser == null)
+                {
+                    response = NotFound(new ResponseMessage(false, null, new Message(HttpStatusCode.NotFound, "User name or password is incorrect.")));
+                }
+                else
+                {
+                    response = Ok(new ResponseMessage(true, authUser, new Message(HttpStatusCode.OK)));
+                }
+
             }
             return response;
         }

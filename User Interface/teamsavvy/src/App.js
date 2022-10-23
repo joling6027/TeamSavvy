@@ -5,12 +5,7 @@ import ForgotPasswordOtp from './components/forgetPassword/ForgetPasswordOtp';
 import ResetPassword from './components/forgetPassword/ResetPassword';
 import Sidenav from './components/sidenav/Sidenav';
 import Dashboard from './components/dashboard/Dashboard';
-
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-} from "react-router-dom";
+import { Routes, Route} from "react-router-dom";
 import Profile from './components/profile/Profile';
 import Task from './components/task/Task';
 import Payroll from './components/payroll/Payroll';
@@ -18,38 +13,34 @@ import Timesheet from './components/timesheet/Timesheet';
 import InternalJobs from './components/internaljobs/InternalJobs';
 import Header from './components/header/Header';
 import Paystub from './components/payroll/PayStub';
+// import AuthService from './components/services/authService/AuthService';
 
 import data from './data.json'
 import {COLUMNS} from './column'
+import AuthService from './components/services/authService';
 
 
 
 function App() {
+  const {getToken} = AuthService();
+  if(!getToken())
+  {
+    return (
+      <>
+         <div className="App">
+         <Routes>
+           <Route path="/" element={<Login />}/>
+           <Route path="/login" element={<Login />}/>
+           <Route path="/forgetPassword" element={<ForgotPasswordOtp />}/>
+           <Route path="/resetpassword" element={<ResetPassword />}/>
+           <Route path='*' element={<Login />}/>
+          </Routes>
+         </div>
+      </>
+    )
+  }
   return (
-    // <div className="App">
-    //   <header className="App-header">
-    //     <img src={logo} className="App-logo" alt="logo" />
-    //     <p>
-    //       Edit <code>src/App.js</code> and save to reload.
-    //     </p>
-    //     <a
-    //       className="App-link"
-    //       href="https://reactjs.org"
-    //       target="_blank"
-    //       rel="noopener noreferrer"
-    //     >
-    //       Learn React
-    //     </a>
-    //   </header>
-    // </div>
     <>
-    {/* <Login/> */}
-    {/* <ForgotPasswordOtp/> */}
-    {/* <ResetPassword/> */}
-    {/* <Profile/> */}
-    {/* <Sidebar/> */}
-    
-
     <div className="App">
      <Sidenav/>
       <main className="d-inline-block w-100">
@@ -57,8 +48,10 @@ function App() {
       <Header/>
       </header>
       <Routes>
+        <Route path="/resetpassword" element={<ResetPassword />}/>
         <Route path="/profile" element={<Profile/>}/>
         <Route path="/" element={<Dashboard />}/>
+        <Route path="/dashboard" element={<Dashboard />}/>
         <Route path="/timesheet" element={<Timesheet/>} />
         <Route path="/task" element={<Task/>}/>
         <Route path="/payroll" element={<Payroll data={data} columns={COLUMNS} />} />
@@ -66,13 +59,7 @@ function App() {
         <Route path='/paystub' element={<Paystub/>} />
       </Routes>
       </main> 
-
-     
     </div>
-    {/* <ResetPassword/> */}
-    
-    
-
     </>
   );
 }

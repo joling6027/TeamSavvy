@@ -56,7 +56,6 @@ namespace TeamSavvy.Api.Services.Services
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             user.Token = tokenHandler.WriteToken(token);
-            user.Password = null;
 
             return user;
         }
@@ -79,7 +78,6 @@ namespace TeamSavvy.Api.Services.Services
                          FirstName = x.Employee.EmployeeFirstname,
                          LastName = x.Employee.EmployeeLastname,
                          EmployeeId = x.Employee.EmployeeId,
-                         Password = x.Employee.Password
                      }).FirstOrDefault();
 
                 if (userDetail != null)

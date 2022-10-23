@@ -4,6 +4,7 @@ import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
 import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
 import BusinessCenterOutlinedIcon from '@mui/icons-material/BusinessCenterOutlined';
 import AssignmentTurnedInOutlinedIcon from '@mui/icons-material/AssignmentTurnedInOutlined';
+import LogoutIcon from '@mui/icons-material/Logout';
 import pic from "../../assets/img/Profilepic.png"
 
 export const submenu = [
@@ -38,11 +39,16 @@ export const submenu = [
         text: "Payroll",
         link: "payroll"
     },
-   
-  {
+    {
     id: 5,
     icon: <BusinessCenterOutlinedIcon/>,
     text: "Jobs",
     link: "jobs"
-}
+    },
+    {
+    id: 6,
+    icon: <LogoutIcon/>,
+    text: "Logout",
+    link: "logout"
+    }
 ]

@@ -7,13 +7,21 @@ import styles from "./sidenav.module.css"
 import logocl from "../../assets/img/TS.png";
 import logo from "../../assets/img/tsLogo.png";
 import {Link} from 'react-router-dom';
+import AuthService from "../services/authService";
 
 export default function Sidenav() {
+
+    const {token, logout} = AuthService();
     const [open, setopen] = useState(true)
     const toggleOpen = () => {
         setopen(!open)
     }
-    const Profile = "Profile";
+    const handleLogout =()=>
+    {
+       if(token != undefined){
+        logout();
+       }
+    }
   return (
     <>
     <div className={open?styles.sidenav :styles.sidenavClosed} id="sidenav">
@@ -34,10 +42,16 @@ export default function Sidenav() {
             <span className={styles.linkText}>{item.text}</span>
         </NavLink>
         :
-        <NavLink key={item.id} className={styles.sideitem} to={item.link}>
-            {item.icon}
-            <span className={styles.linkText}>{item.text}</span>
-        </NavLink>
+          `${item.text}` === "Logout" ? 
+          <span key={item.id} className={styles.sideitem} onClick={handleLogout}>
+          {item.icon}
+          <span className={styles.linkText}>{item.text}</span>
+          </span>
+          :
+          <NavLink key={item.id} className={styles.sideitem} to={item.link}>
+              {item.icon}
+              <span className={styles.linkText}>{item.text}</span>
+          </NavLink>
         })}
     </div>
     </>
