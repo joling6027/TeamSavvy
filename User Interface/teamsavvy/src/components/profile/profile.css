@@ -1,7 +1,6 @@
 .profile-card{background:url("../../assets/img/bg-profile.png")no-repeat;background-position:center top }
 .prCard{transform:translate(0); left:0; top:0; width:auto !important; Height:auto !important}
-.skillPill{background-color: #F0A86A;font-size: 14px}
-/* body{background: #000} */
+.skillPill{background-color: #F0A86A!important;font-size: 14px}
 .moremargin{margin-bottom:100px}
 .fsmall{font-size:12px;}
 .mail:hover .showmail{display: inline-block!important; z-index:999}

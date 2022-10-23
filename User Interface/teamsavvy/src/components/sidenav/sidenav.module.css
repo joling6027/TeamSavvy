@@ -36,13 +36,18 @@
   border-bottom: 1px solid rgba(255,255,255,0.5);
 }
 
+.sidenav .sideitem:last-child{position: fixed;
+    bottom:10px;border-top:1px solid rgba(255,255,255,0.5);
+    margin:0 15px;
+    width:185px;
+}
+
 .linkText {
     padding-left: 16px;
 }
 
 .sideitem:hover {
     background-color: #244f7d1c;
-
 }
 .menuBtn {
     align-self: center;
@@ -63,6 +68,12 @@
     max-width: 40px;
     overflow:hidden;
 }
+.sidenavClosed .sideitem:last-child{
+   width:10px;
+    border-top:1px solid transparent;
+   margin:0;
+}
+
 
 .sidebarprofile{height:35px; width:auto; display:inline-block}
 
