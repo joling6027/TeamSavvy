@@ -38,7 +38,8 @@ const AuthService = () => {
     const http = axios.create({
         baseURL:"https://localhost:44362/api",
         headers:{
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
         }
     });
     return{
