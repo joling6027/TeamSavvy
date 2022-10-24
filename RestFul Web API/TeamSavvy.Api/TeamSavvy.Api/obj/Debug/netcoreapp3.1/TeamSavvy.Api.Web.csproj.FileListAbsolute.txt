@@ -151,3 +151,14 @@ D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api\obj\Debug\netc
 D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api\obj\Debug\netcoreapp3.1\TeamSavvy.Api.Web.dll
 D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api\obj\Debug\netcoreapp3.1\TeamSavvy.Api.Web.pdb
 D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api\obj\Debug\netcoreapp3.1\TeamSavvy.Api.Web.genruntimeconfig.cache
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api\bin\Debug\netcoreapp3.1\MailKit.dll
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api\bin\Debug\netcoreapp3.1\MimeKit.dll
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api\bin\Debug\netcoreapp3.1\BouncyCastle.Crypto.dll
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api\bin\Debug\netcoreapp3.1\System.Formats.Asn1.dll
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api\bin\Debug\netcoreapp3.1\System.Runtime.CompilerServices.Unsafe.dll
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api\bin\Debug\netcoreapp3.1\System.Security.Cryptography.Cng.dll
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api\bin\Debug\netcoreapp3.1\System.Security.Cryptography.Pkcs.dll
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api\bin\Debug\netcoreapp3.1\System.Text.Encoding.CodePages.dll
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Security.Cryptography.Cng.dll
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.1\System.Security.Cryptography.Pkcs.dll
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.1\System.Text.Encoding.CodePages.dll

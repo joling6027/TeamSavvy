@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "DkIttKSmosXVLYG2OHINjQCAeXAwRCqKUQWxuFs2jPS3L/VQRtt5owFhQgomesQHcMJmdeILU2NxAhq/+TGV8A==",
+  "dgSpecHash": "PwJ2xJGZX+u2ix6AY+BCCObeBey4IgVvM6ER8XMqxASSw1VWMmV87MojGBjxpDt01o/KBGwe5qEO5pF6lpmn6g==",
   "success": true,
   "projectFilePath": "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.Utilities\\TeamSavvy.Api.Utilities.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\jaspa\\.nuget\\packages\\automapper\\9.0.0\\automapper.9.0.0.nupkg.sha512",
+    "C:\\Users\\jaspa\\.nuget\\packages\\microsoft.aspnetcore.http.features\\2.2.0\\microsoft.aspnetcore.http.features.2.2.0.nupkg.sha512",
     "C:\\Users\\jaspa\\.nuget\\packages\\microsoft.aspnetcore.webutilities\\2.2.0\\microsoft.aspnetcore.webutilities.2.2.0.nupkg.sha512",
     "C:\\Users\\jaspa\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.0\\microsoft.bcl.asyncinterfaces.1.1.0.nupkg.sha512",
     "C:\\Users\\jaspa\\.nuget\\packages\\microsoft.bcl.hashcode\\1.1.0\\microsoft.bcl.hashcode.1.1.0.nupkg.sha512",

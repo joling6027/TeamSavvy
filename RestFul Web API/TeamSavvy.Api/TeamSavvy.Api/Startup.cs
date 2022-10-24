@@ -18,6 +18,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TeamSavvy.Api.BusinessModel.AuthModel;
+using TeamSavvy.Api.BusinessModel.EmailModel;
 using TeamSavvy.Api.Entities.Context;
 using TeamSavvy.Api.Entities.GenericRepo;
 using TeamSavvy.Api.Middleware.Configuration;
@@ -134,6 +135,9 @@ namespace TeamSavvy.Api
             services.AddScoped<ISalaryService, SalaryService>();
             services.AddScoped<ILeavesService, LeavesService>();
             services.AddScoped<IDropdownsService, DropdownsService>();
+
+            services.Configure<MailSetting>(Configuration.GetSection("MailSetting"));
+            services.AddScoped<IMailService, MailService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

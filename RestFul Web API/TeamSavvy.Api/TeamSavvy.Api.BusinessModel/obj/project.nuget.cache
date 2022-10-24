@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "BDaQFQ9AN27hRZUUXqOTPU62ESA+IWEH3EpRLeFQR4J4zNt9hGDTzGhMFUwveUwHWIdOVNgB8hycYMK6j3DGwQ==",
+  "dgSpecHash": "1FGO9qEP7OFZdTU+gknrASc0fu3T0KNuFzzXfaYFX1ZNK3vz41Xe/pGO8/jshlJjMzQbg0N1A/sZC9zMEZFyyg==",
   "success": true,
   "projectFilePath": "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.BusinessModel\\TeamSavvy.Api.BusinessModel.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\jaspa\\.nuget\\packages\\microsoft.aspnetcore.http.features\\2.2.0\\microsoft.aspnetcore.http.features.2.2.0.nupkg.sha512",
     "C:\\Users\\jaspa\\.nuget\\packages\\microsoft.aspnetcore.webutilities\\2.2.0\\microsoft.aspnetcore.webutilities.2.2.0.nupkg.sha512",
     "C:\\Users\\jaspa\\.nuget\\packages\\microsoft.extensions.primitives\\2.2.0\\microsoft.extensions.primitives.2.2.0.nupkg.sha512",
     "C:\\Users\\jaspa\\.nuget\\packages\\microsoft.net.http.headers\\2.2.0\\microsoft.net.http.headers.2.2.0.nupkg.sha512",

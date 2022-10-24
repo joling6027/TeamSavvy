@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Ee6XGvMeg8U4FgK+GL04sw2ttMxCUgCycD5ocrck6OmoxPQHCKT5kf43ILx7eC9B/Ff7nlFhqjvJHpiCa73H7A==",
+  "dgSpecHash": "2jPx6A0qefWuh/voeGVKu/m3xLbikBHH+vZR7ADLFTSkfV5OjVIOEsJLMB7DMlava0+hU1MWwp8x50DKOi3hHg==",
   "success": true,
   "projectFilePath": "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.Middleware\\TeamSavvy.Api.Middleware.csproj",
   "expectedPackageFiles": [

@@ -2288,6 +2288,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
+          "Microsoft.AspNetCore.Http.Features": "2.2.0",
           "Microsoft.AspNetCore.WebUtilities": "2.2.0",
           "Newtonsoft.Json": "13.0.1"
         },
