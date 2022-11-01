@@ -42,8 +42,8 @@ import {
     
     return (
       <>
-      <Container className="d-flex flex-wrap">
-        <div className="col-md-3 col-sm-12">
+      <Container className="d-flex flex-wrap position-relative">
+        <div className="col-md-3 col-sm-12 profileleft">
 
             {/* profile card */}
             <Card style={{}} className="text-center prCard">
@@ -62,10 +62,10 @@ import {
             </Card>
 
             {/* team members */}
-            <Card style={{}} className="mt-4 mb-md-4 mb-sm-0 prCard">
+            <Card style={{}} className="mt-4 mb-md-4 mb-sm-0 prCard ">
                 <CardBody>
                 <CardTitle tag="h6"> Team Members</CardTitle>
-                <ListGroup flush>
+                <ListGroup flush className="teamMem">
                     <ListGroupItem className="px-0 justify-content-between">  <p className="p-0 m-0"><strong>Dan Kayger</strong>  <p className="float-end">Team Lead</p></p>
                     <Link to="mailto:dan@teamsavvy.com" className="mail text-decoration-none p-0 d-inline-block position-relative"><MailOutlineOutlinedIcon fontSize='small'/>
                     <span className="d-none showmail position-absolute top-0 p-1 fsmall bg-light start-0">Dan@teamsavvy.com</span></Link>
@@ -105,7 +105,7 @@ import {
                 </CardBody>
             </Card>
         </div>
-        <div className="col-md-9 col-sm-12">
+        <div className="col-md-9 col-sm-12 profileright">
             
             {/* personal details */}
             <Card className="ms-md-4 ms-sm-0 mt-sm-4 mt-md-0 col-9 prCard">
