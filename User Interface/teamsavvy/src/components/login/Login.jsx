@@ -15,6 +15,7 @@ import {
     Label,
   } from "reactstrap";
 import AuthService from '../services/authService';
+import { GetEndPoints } from '../utilities/EndPoints';
 
 const Login = () => {
   const {http, setToken} = AuthService();
@@ -24,7 +25,7 @@ const Login = () => {
   
   const handleSubmit = (e) =>{
     e.preventDefault();
-    http.post('/Auth/login', {employeeId: parseInt(employeeId), password: password})
+    http.post(GetEndPoints().login, {employeeId: parseInt(employeeId), password: password})
         .then((res) =>{
            if(res.data.success){
              setToken(res.data.response, res.data.response.token);

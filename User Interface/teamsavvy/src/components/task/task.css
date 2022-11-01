@@ -9,12 +9,12 @@
   overflow: auto;
 }
 
-.card{
+/* .card{
   top: 0%;
   left: 0%;
   transform: none;
   margin-right: 5%;
-}
+} */
 
 .card-task{
   width: 80vw;
