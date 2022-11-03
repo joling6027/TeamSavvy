@@ -30,13 +30,23 @@ const AuthService = () => {
         navigate('/dashboard');
     };
 
+    const setDropdown = (data) =>{
+        sessionStorage.setItem('dropdown', JSON.stringify(data));
+    };
+
+    const getDropdown = () =>{
+        const dd_data =  sessionStorage.getItem('dropdown');
+        const dd_detail =  JSON.parse(dd_data);
+        return dd_detail;
+    }
+
     const logout = () =>{
         sessionStorage.clear();
         navigate('/login')
     };
 
     const http = axios.create({
-        baseURL:"https://localhost:5001/api",
+        baseURL:"https://localhost:44362/api/",
         headers:{
             "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`
@@ -47,6 +57,8 @@ const AuthService = () => {
         token,
         user,
         getToken, 
+        getDropdown,
+        setDropdown,
         logout,
         http
     }

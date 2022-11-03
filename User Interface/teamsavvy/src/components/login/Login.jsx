@@ -18,10 +18,11 @@ import AuthService from '../services/authService';
 import { GetEndPoints } from '../utilities/EndPoints';
 
 const Login = () => {
-  const {http, setToken} = AuthService();
+  const {http, setToken, setDropdown} = AuthService();
   const [employeeId, setEmployeeId] = useState();
   const [password, setPassword] = useState();
 
+  
   
   const handleSubmit = (e) =>{
     e.preventDefault();
@@ -30,7 +31,15 @@ const Login = () => {
            if(res.data.success){
              setToken(res.data.response, res.data.response.token);
            }
-        });
+        })
+        .then(
+          http.get(GetEndPoints().dropdown)
+          .then((res) =>{
+             if(res.data.success){
+              setDropdown(res.data.response);
+             }
+          })
+        );
   };
 
     return (

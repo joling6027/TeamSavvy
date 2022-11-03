@@ -7,7 +7,6 @@ using TeamSavvy.Api.BusinessModel.DataTransferModel;
 using TeamSavvy.Api.BusinessModel.DataTransferModel.DropdownDtos;
 using TeamSavvy.Api.Entities.Context;
 using TeamSavvy.Api.Entities.GenericRepo;
-using TeamSavvy.Api.Entities.Models;
 using TeamSavvy.Api.Services.IServices;
 
 namespace TeamSavvy.Api.Services.Services

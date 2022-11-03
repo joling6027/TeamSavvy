@@ -23,8 +23,8 @@ namespace TeamSavvy.Api.Entities.Models
         public int EmployeeId { get; set; }
         public string EmployeeFirstname { get; set; }
         public string EmployeeLastname { get; set; }
-        public DateTime Dateofbirth { get; set; }
-        public DateTime? Hiredate { get; set; }
+        public string Dateofbirth { get; set; }
+        public string Hiredate { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
         public int AddressId { get; set; }
@@ -36,6 +36,8 @@ namespace TeamSavvy.Api.Entities.Models
         public int JobLocationId { get; set; }
         public byte[] EmployeeImage { get; set; }
         public string Password { get; set; }
+        public string Bankname { get; set; }
+        public string Bankcode { get; set; }
 
         public virtual JobLocation JobLocation { get; set; }
         public virtual Role Role { get; set; }

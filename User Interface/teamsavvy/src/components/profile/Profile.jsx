@@ -1,6 +1,5 @@
 import React, { Component, useState } from 'react';
 import pic from "../../assets/img/Profilepic.png";
-import bg from "../../assets/img/bg-profile.png";
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import MailOutlineOutlinedIcon from '@mui/icons-material/MailOutlineOutlined';
 import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
@@ -10,9 +9,7 @@ import './profile.css';
 import {
     Button,
     Card,
-    CardHeader,
     CardBody,
-    CardFooter,
     CardText,
     FormGroup,
     Form,
@@ -29,17 +26,117 @@ import {
     Modal,
     ModalHeader,
     ModalBody,
-    ModalFooter
   } from "reactstrap";
+
+import AuthService from '../services/authService';
+import { GetEndPoints } from '../utilities/EndPoints';
+import { useEffect } from 'react';
   
   const Profile = () => {
+    const initialValue ={
+      employeeId: null,
+      employeeFirstname: "",
+      employeeLastname: "",
+      dateofbirth: "",
+      hiredate: "",
+      phone: "",
+      email: "",
+      extension: null,
+      departmentId: null,
+      roleId: null,
+      statusId: null,
+      bankaccount: "",
+      bankcode: "",
+      bankname: "",
+      jobLocationId: null,
+      employeeImage: null,
+      address: {
+        addressId: null,
+        apartment: null,
+        cityId: 5,
+        postcode: ""
+      },
+      skills: [
+        {
+          employeeSkillId: 0,
+          employeeId: 0,
+          skillId: 0,
+          isactive: null 
+        }
+      ]
+    };
+
+    const {http, user, getDropdown} = AuthService();
+    const dropdownData = getDropdown();
+    let obj = {};
+    const res = dropdownData.map(({countryId, provinces}) => {
+            provinces.map(({provinceId, cities}) => {
+                cities.filter(({cityId}) =>{
+                    if(cityId === parseInt('29'))
+                    {
+                        obj.countryId = countryId;
+                        obj.provinceId = provinceId;
+                        obj.cityId = cityId;
+                    }})}) 
+        return obj;
+    });
+
+    const [selectedCountry, setSelectedCountry] = useState(res[0].countryId);
+    const [selectedProvince, setSelectedProvince] = useState(res[0].provinceId);
+    const [selectedCity, setSelectedCity] = useState(res[0].cityId);
+    let {provinces : prov} = dropdownData.find((c) => c.countryId ===  parseInt(res[0].countryId));
+    let {cities:availCities} = prov.find((p) => p.provinceId ===  parseInt(res[0].provinceId));
+    const [availableProvinces, setAvailableProvinces] = useState(prov);
+    const [availableCities, setAvailableCities] = useState(availCities);
+    const [formValue, setFormValue] = useState(initialValue);
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
-    const handleDelete = (event) => {
-    console.log(event);
+
+    const GetEmployee = () => {
+        http.get(GetEndPoints().employee + '/' + user.employeeId)
+        .then((res) =>{
+            if(res.data.success){
+                let response = res.data.response;
+                setFormValue({...formValue, ...response})
+            }
+         })
     }
 
+    useEffect(()=>{
+        GetEmployee()
+    },[user.employeeId]);
+
+    const handleDelete = (event) => {
+    // console.log(data);
+    }
+
+    console.log(formValue);
+
+    const handleCountryChange = e =>{
+        setSelectedCountry(e.target.value);
+        let {provinces} = dropdownData.find((c) => c.countryId ===  parseInt(e.target.value));
+        let [{cities:availCities}] = provinces;
+        setAvailableProvinces(provinces);
+        setAvailableCities(availCities);
+    }
+
+    const handleProvinceChange = e =>{
+        setSelectedProvince(e.target.value);
+        let {cities:availCities} = availableProvinces?.find((c) => c.provinceId ===  parseInt(e.target.value));
+        setAvailableCities(availCities);
+    }
     
+    const handleChange = event => {
+        const {name, value} = event.target;
+        setFormValue({...formValue, [name]: value});
+    };
+
+    const handSubmit = event =>{
+        event.preventDefault();
+        // setFormErrors(validate(formValues));
+        // setIsSubmit(true);
+    };
+
     return (
       <>
       <Container className="d-flex flex-wrap position-relative">
@@ -51,13 +148,12 @@ import {
                     <Link to="#" onClick={(e) => e.preventDefault()}>
                         <img alt="..."className="avatar mt-5" src={pic} />
                     </Link>
-                    <CardTitle tag="h5"> Jenny Doe </CardTitle>
-                <CardSubtitle className="mb-2 text-muted" tag="h6"> Id: E-134578
-                <p>Position, dept, location</p>
+                    <CardTitle tag="h5"> {formValue.employeeFirstname + " " + formValue.employeeLastname} </CardTitle>
+                <CardSubtitle className="mb-2 text-muted" tag="h6"><small> <strong>ID: </strong>  E-{formValue.employeeId}</small>
+                {/* <p>Position, dept, location</p> */}
+                <p className="mb-0"><small>{formValue.roleId}, {formValue.departmentId}, {formValue.jobLocationId}</small></p>
+                <small className="lh-1 me-2"><strong>Ext: </strong> {formValue.extension}</small>
                 </CardSubtitle>
-                <CardText>
-                    Intro: Some quick example text to build on the card title and make up the bulk of the card‘s content.
-                </CardText>
                 </CardBody>
             </Card>
 
@@ -121,8 +217,10 @@ import {
                     </Label>
                     <Input
                     id="firstname"
-                    name="firstname"
+                    name="employeeFirstname"
                     type="text"
+                    value={formValue.employeeFirstname}
+                    onChange={handleChange}
                     />
                 </FormGroup>
                 </Col>
@@ -133,8 +231,10 @@ import {
                     </Label>
                     <Input
                     id="lastname"
-                    name="lastname"
+                    name="employeeLastname"
                     type="text"
+                    value={formValue.employeeLastname}
+                    onChange={handleChange}
                     />
                 </FormGroup>
                 </Col>
@@ -150,6 +250,8 @@ import {
                 name="email"
                 placeholder="with a placeholder"
                 disabled
+                value={formValue.email}
+                onChange={handleChange}
                 />
             </FormGroup>
             </Col>
@@ -161,9 +263,11 @@ import {
                 <Input
                 disabled
                 id="date"
-                name="date"
+                name="hiredate"
                 placeholder="01/09/2022"
                 type="date"
+                value={formValue.hiredate}
+                onChange={handleChange}
                 />
             </FormGroup>       
             </Col>
@@ -176,9 +280,11 @@ import {
                 </Label>
                 <Input
                 id="dobdate"
-                name="dobdate"
+                name="dateofbirth"
                 placeholder="01/09/2022"
                 type="date"
+                value={formValue.dateofbirth}
+                onChange={handleChange}
                 />
                 </FormGroup>    
                 </Col>
@@ -189,9 +295,11 @@ import {
                     </Label>
                     <Input
                     id="phone"
-                    name="number"
+                    name="phone"
                     placeholder="phone"
                     type="number"
+                    value={formValue.phone}
+                    onChange={handleChange}
                     />
                 </FormGroup>
                 </Col>
@@ -204,8 +312,10 @@ import {
                 </Label>
                 <Input
                 id="address"
-                name="address"
+                name="apartment"
                 placeholder="1234 Main St"
+                value={formValue.address.apartment}
+                onChange={handleChange}
                 />
             </FormGroup>
             </Col>
@@ -218,22 +328,12 @@ import {
                 id="country"
                 name="country"
                 type="select"
+                value={selectedCountry}
+                onChange={handleCountryChange}
                 >
-                <option>
-                    Canada
-                </option>
-                <option>
-                    India
-                </option>
-                <option>
-                    US
-                </option>
-                <option>
-                    China
-                </option>
-                <option>
-                    England
-                </option>
+                {
+                   dropdownData.map((country, index) => <option key={index} value={country.countryId}>{country.countryName}</option>)
+                }
                 </Input>
             </FormGroup>
             </Col>
@@ -248,19 +348,12 @@ import {
                 id="province"
                 name="province"
                 type="select"
+                value={selectedProvince}
+                onChange={handleProvinceChange}
                 >
-                <option>
-                    British Columbia
-                </option>
-                <option>
-                    Ontario
-                </option>
-                <option>
-                    Nova Scotia
-                </option>
-                <option>
-                    Quebec
-                </option>
+                {
+                   availableProvinces?.map((province, index) => <option key={index} value={province.provinceId}>{province.provinceName}</option>)
+                }
                 </Input>
             </FormGroup>
             </Col>
@@ -273,36 +366,30 @@ import {
                 id="city"
                 name="city"
                 type="select"
+                value={selectedCity}
+                onChange={(e) => setSelectedCity(e.target.value)}
                 >
-                <option>
-                    Burnaby
-                </option>
-                <option>
-                    Vancouver
-                </option>
-                <option>
-                    New Westminster
-                </option>
-                <option>
-                    Surrey
-                </option>
-                <option>
-                    Richmond
-                </option>
+                {
+                   availableCities?.map((city) => <option key={city.cityId} value={city.cityId}>{city.cityName}</option>)
+                }
                 </Input>
             </FormGroup>
             </Col>
             </Row>
             <Row>
-            <FormGroup>
-                <Label className="mt-3 mb-2" for="description">About   </Label>
-                <Input
-                id="description"
-                name="description"
-                placeholder="Add your intro here"
-                type="textarea"
-                />
-            </FormGroup>
+                <Col md={6}>
+                <FormGroup>
+                    <Label className="mt-2 mb-1" for="postalCode">
+                    Postal Code
+                    </Label>
+                    <Input
+                    id="postalCode"
+                    name="postcode"
+                    value={formValue.address.postcode}
+                    onChange={handleChange}
+                    />
+                </FormGroup>
+                </Col>
             </Row>
             </Form>
             </CardBody>
@@ -318,44 +405,44 @@ import {
                 <Badge className="skillPill rounded-pill me-3 mb-3 " pill> C# </Badge> 
                 <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge " key={1} onClick={(event) => handleDelete(event.target.value)}> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
                     </div>
-                    <div class="skill position-relative">
+                    <div className="skill position-relative">
                 <Badge className="skillPill rounded-pill me-3 mb-3" pill> Java </Badge>  
                 <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge "> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
                     </div> 
-                    <div class="skill position-relative">
+                    <div className="skill position-relative">
                 <Badge className="skillPill rounded-pill me-3 mb-3" pill> Manual Testing </Badge> 
                 <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge "> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
                     </div> 
-                    <div class="skill position-relative"> 
+                    <div className="skill position-relative"> 
                 <Badge className="skillPill rounded-pill me-3 mb-3" pill> Automation Testing </Badge>
                 <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge "> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
                     </div>
-                    <div class="skill position-relative"> 
+                    <div className="skill position-relative"> 
                      
                 <Badge className="skillPill rounded-pill me-3 mb-3" pill> Manual Testing </Badge>    
                      <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge "> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
                     </div>  
-                    <div class="skill position-relative"> 
+                    <div className="skill position-relative"> 
                      
                 <Badge className="skillPill rounded-pill me-3 mb-3" pill> C# </Badge>  
                      <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge "> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
                     </div>  
-                    <div class="skill position-relative"> 
+                    <div className="skill position-relative"> 
                 <Badge className="skillPill rounded-pill me-3 mb-3" pill> Java </Badge>   
                      
                      <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge "> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
                     </div>  
-                    <div class="skill position-relative"> 
+                    <div className="skill position-relative"> 
                 <Badge className="skillPill rounded-pill me-3 mb-3" pill> Manual Testing </Badge>  
                      
                      <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge "> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
                     </div>  
-                    <div class="skill position-relative"> 
+                    <div className="skill position-relative"> 
                 <Badge className="skillPill rounded-pill me-3 mb-3" pill> Automation Testing </Badge>
                      
                      <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge "> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
                     </div>  
-                    <div class="skill position-relative"> 
+                    <div className="skill position-relative"> 
                      
                 <Badge className="skillPill rounded-pill me-3 mb-3" pill> Manual Testing </Badge>              
                      <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge "> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
@@ -425,6 +512,8 @@ import {
                     name="bankname"
                     type="text"
                     disabled
+                    value={formValue.bankname}
+                    onChange={handleChange}
                     />
                 </FormGroup>
                 </Col>
@@ -435,9 +524,11 @@ import {
                     </Label>
                     <Input
                     id="accountnum"
-                    name="accountnum"
+                    name="bankaccount"
                     type="text"
                     disabled
+                    value={formValue.bankaccount}
+                    onChange={handleChange}
                     />
                 </FormGroup>
                 </Col>
@@ -453,6 +544,8 @@ import {
                 name="bankcode"
                 type="text"
                 disabled
+                value={formValue.bankcode}
+                onChange={handleChange}
                 />
             </FormGroup>
             </Col>
@@ -460,140 +553,6 @@ import {
             </Form>
             </CardBody>
             </Card>
-
-            {/* Compansation */}
-            {/* <Card className="ms-4 col-9 mt-4">
-                <CardBody>
-                    <CardTitle tag="h5" className="mb-3">Compansation</CardTitle>
-                    <p className="text-uppercase">Earnings</p>
-                    <Table striped>
-                        <thead>
-                            <tr>
-                            <th>
-                                Type
-                            </th>
-                            <th>
-                                Hours
-                            </th>
-                            <th>
-                                Rate
-                            </th>
-                            <th>
-                                Amount
-                            </th>
-                            <th>
-                                YTD
-                            </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                            <th scope="row">
-                                Reg Hours
-                            </th>
-                            <td>
-                                80
-                            </td>
-                            <td>
-                                23
-                            </td>
-                            <td>
-                                1840
-                            </td>
-                            <td>
-                                3800
-                            </td>
-                            </tr>
-                            <tr>
-                            <th scope="row">
-                                Sick
-                            </th>
-                            <td>
-                                6.00
-                            </td>
-                            <td>
-                                20
-                            </td>
-                            <td>
-                                180
-                            </td>
-                            <td>
-                                350
-                            </td>
-                            </tr>
-                            <tr>
-                            <th scope="row">
-                                Vac Pay
-                            </th>
-                            <td>
-                                0.00
-                            </td>
-                            <td>
-                                30.00
-                            </td>
-                            <td>
-                                30.00
-                            </td>
-                            <td>
-                                30.00
-                            </td>
-                            </tr>
-                        </tbody>
-                    </Table>
-
-                    <p className="text-uppercase mt-4">Net</p>
-                    <Table striped>
-                        <thead>
-                            <tr>
-                            <th>
-                                Summary
-                            </th>
-                            <th>
-                                Gross Pay
-                            </th>
-                            <th>
-                                Deductions
-                            </th>
-                            <th>
-                                Net Pay
-                            </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                            <th scope="row">
-                                Current
-                            </th>
-                            <td>
-                                3800
-                            </td>
-                            <td>
-                                500
-                            </td>
-                            <td>
-                                3200
-                            </td>
-                            </tr>
-                            <tr>
-                            <th scope="row">
-                                Year to Date
-                            </th>
-                            <td>
-                                2000
-                            </td>
-                            <td>
-                                3500
-                            </td>
-                            <td>
-                                16500
-                            </td>
-                            </tr>
-                        </tbody>
-                        </Table>
-                </CardBody>
-            </Card> */}
-
-
             <Card className="d-flex ms-md-4 ms-sm-0 mt-4 prCard">
                 <CardBody className="d-flex justify-content-between">
                 <CardTitle tag="h5" className="mb-3"> Resignation </CardTitle>
@@ -601,7 +560,7 @@ import {
                 </CardBody>
             </Card>
            
-            <span className="ms-2 bg-light mt-3 d-inline-block text-center p-3">
+            <span className="ms-2 mt-3 d-inline-block text-center p-3">
                 <Button className="d-inline-block bg-primary btn-primary"> Submit Changes</Button>
                 <Button className="d-inline-block bg-danger btn-primary ms-2"> Cancel</Button>
             

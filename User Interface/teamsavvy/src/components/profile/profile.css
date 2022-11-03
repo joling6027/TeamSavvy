@@ -8,4 +8,4 @@
 .skill:hover .close-badge{display: inline-block;}
 .profileright{width: 74%; position: absolute; right: 20px;}
 .profileleft{position: fixed; width:20%;}
-.profileleft .teamMem{height:300px!important; overflow:auto}
+.profileleft .teamMem{height:250px!important; overflow:auto}
