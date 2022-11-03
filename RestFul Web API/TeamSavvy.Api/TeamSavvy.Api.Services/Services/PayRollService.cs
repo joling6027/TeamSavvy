@@ -88,7 +88,7 @@ namespace TeamSavvy.Api.Services.Services
             try
             {
                 var payrol = _unitOfWork.Context.Payroll.Where(x=>x.EmployeeId == employeeId).ToList();
-                if (payrolls.Any())
+                if (payrol.Any())
                 {
                     payrolls = _mapper.Map<List<PayrollDto>>(payrol);
                 }
@@ -107,7 +107,7 @@ namespace TeamSavvy.Api.Services.Services
             try
             {
                 var payrol = _unitOfWork.Context.Payroll.Where(x => x.PayrollId == payrollId).FirstOrDefault();
-                if (payroll != null)
+                if (payrol != null)
                 {
                     payroll = _mapper.Map<PayrollDto>(payrol);
                 }
@@ -126,7 +126,7 @@ namespace TeamSavvy.Api.Services.Services
             try
             {
                 var payrol = _unitOfWork.Context.Payroll.ToList();
-                if (payrolls.Any())
+                if (payrol.Any())
                 {
                     payrolls = _mapper.Map<List<PayrollDto>>(payrol);
                 }
@@ -145,7 +145,7 @@ namespace TeamSavvy.Api.Services.Services
             try
             {
                 var payrol = _unitOfWork.Context.Payroll.Where(x => x.EmployeeId == employeeId).FirstOrDefault();
-                if (payroll != null)
+                if (payrol != null)
                 {
                     payroll = _mapper.Map<PayrollDto>(payrol);
                 }
