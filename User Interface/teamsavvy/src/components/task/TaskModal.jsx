@@ -1,10 +1,12 @@
 import React, { Component, useState, useEffect } from 'react';
 import '../../assets/css/bootstrap.min.css'
-import { Modal,Button } from 'reactstrap';
+import { Modal } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { Form, FormGroup, Label, Input, FormFeedback, FormText, Container, Row, Col } from 'reactstrap';
 
 const TaskModal = (props) => {
 
+  console.log(props.onOpen().taskName)
   const [enteredTitle, setEnteredTitle] = useState('');
   const [enteredDescription, setEnteredDescription] = useState('');
   const [enteredHours, setEnteredHours] = useState('');
@@ -62,32 +64,30 @@ const TaskModal = (props) => {
         show={props.show}
         onHide={props.close}
         backdrop={true}
-        aria-labelledby='contained-modal-title-vcenter'
       >
         <Modal.Header closeButton>
-          <Modal.Title id='contained-modal-title-vcenter'>Modify Task</Modal.Title>
+          <Modal.Title>Modify Task</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form 
+          <Form
             onSubmit={submitHandler}
-            
-            >
+          >
             <FormGroup>
               <Container>
                 <Row>
                   <Label for='task-title'>Title</Label>
-                  <Input type='text' name='task-title' id='task-title' onChange={titleChangeHandler} value={enteredTitle} invalid={validate} />
+                  <Input type='text' name='task-title' id='task-title' onChange={titleChangeHandler} defaultValue={props.onOpen().taskName} invalid={validate} />
                   <FormFeedback>Title cannot be blank</FormFeedback>
                 </Row>
                 <Row>
                   <Label for='task-desc'>Description</Label>
-                  <Input type='text' name='task-desc' id='task-desc' onChange={descriptionChangeHandler} value={enteredDescription} invalid={validate} />
+                  <Input type='text' name='task-desc' id='task-desc' onChange={descriptionChangeHandler} defaultValue={props.onOpen().taskDesc} invalid={validate} />
                   <FormFeedback valid>Sweet! Description can be blank</FormFeedback>
                 </Row>
                 <Row>
                   <Col>
                     <Label for='task-hour'>Hours</Label>
-                    <Input type='number' name='task-hour' id='task-hour' onChange={HoursChangeHandler} value={enteredHours} min={0} invalid={validate} />
+                    <Input type='number' name='task-hour' id='task-hour' onChange={HoursChangeHandler} defaultValue={props.onOpen().taskTotalHours} min={0} invalid={validate} />
                     <FormFeedback>Task hours cannot be blank</FormFeedback>
                     {/* <FormText>Please remember to set reasonable hours to the task</FormText> */}
                   </Col>
@@ -120,11 +120,10 @@ const TaskModal = (props) => {
             </Modal.Footer>
           </Form>
         </Modal.Body>
-        
+
       </Modal>
     </div>
   )
 
 }
 export default TaskModal;
-

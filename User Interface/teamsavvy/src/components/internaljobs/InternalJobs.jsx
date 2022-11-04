@@ -4,9 +4,19 @@ import '../../assets/css/bootstrap.min.css'
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import {
     Container, Row, Col, Card, CardImg, CardText, CardBody, CardLink,
-    CardTitle, CardSubtitle, Button, ListGroup, ListGroupItem, List, Badge } from 'reactstrap';
+    CardTitle, CardSubtitle, Button, ListGroup, ListGroupItem, List, Badge
+} from 'reactstrap';
+import { useEffect } from 'react';
+import AuthService from '../services/authService';
 
 const InternalJobs = () => {
+
+    const { http } = AuthService();
+
+    useEffect(() => {
+
+    })
+
     return (
         <>
             <div className="content">
@@ -32,18 +42,18 @@ const InternalJobs = () => {
                                         <CardSubtitle className='job-subtitle'>Assistant Manager Dept-C</CardSubtitle>
                                         <CardText>With supporting text below as a natural lead-in to additional content.</CardText>
                                         <Button className='btn-view-job-detail' color="link">VIEW</Button>
-                                        <hr/>
+                                        <hr />
                                     </Card>
-                                    
+
                                 </Card>
                             </Col>
                             <Col sm="8">
                                 <Card className='card-job-detail' body>
                                     <CardTitle className='job-card-title'>Assistant Manager<Button className='createAndApply-btn' color="link">Apply Now</Button></CardTitle>
-                                    
+
                                     <CardText>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsum mollitia necessitatibus ducimus nisi ipsam possimus quas impedit eius accusantium nobis minus perspiciatis, nesciunt rem et vitae. Distinctio commodi maiores possimus.Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsum mollitia necessitatibus ducimus nisi ipsam possimus quas impedit eius accusantium nobis minus perspiciatis, nesciunt rem et vitae. Distinctio commodi maiores possimus.</CardText>
                                     <CardSubtitle className='job-subtitle'>Responsibility</CardSubtitle>
-                                    <br/>
+                                    <br />
                                     <List>
                                         <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</li>
                                         <li>Ipsum mollitia necessitatibus ducimus nisi ipsam possimus quas impedit eius accusantium nobis minus perspiciatis</li>

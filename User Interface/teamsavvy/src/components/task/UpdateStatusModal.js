@@ -5,13 +5,13 @@ import { Button } from 'react-bootstrap';
 import { Form, FormGroup, Label, Input, FormFeedback, FormText, Container, Row, Col } from 'reactstrap';
 
 const UpdateStatusModal = (props) => {
-  
+
 
   const submitHandler = (e) => {
 
   }
 
-  return(
+  return (
     <>
       <Modal
         className='task-modal'
@@ -32,12 +32,12 @@ const UpdateStatusModal = (props) => {
           >
             <FormGroup>
               <Container className='status-modal-container'>
-                    <Label for='task-status'>Status</Label>
-                    <Input type='select' name='task-status' id='task-status'>
-                      <option>Assigned</option>
-                      <option selected>In Progress</option>
-                      <option>Completed</option>
-                    </Input>
+                <Label for='task-status'>Status</Label>
+                <Input type='select' name='task-status' id='task-status'>
+                  <option>Assigned</option>
+                  <option defaultValue>In Progress</option>
+                  <option>Completed</option>
+                </Input>
               </Container>
             </FormGroup>
             <Modal.Footer className='status-modal-footer'>
@@ -57,4 +57,4 @@ const UpdateStatusModal = (props) => {
   )
 }
 
-export default UpdateStatusModal
+export default UpdateStatusModal;
