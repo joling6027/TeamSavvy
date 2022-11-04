@@ -6,8 +6,8 @@ using System.Text;
 using TeamSavvy.Api.BusinessModel.DataTransferModel;
 using TeamSavvy.Api.Entities.Context;
 using TeamSavvy.Api.Entities.GenericRepo;
-using TeamSavvy.Api.Entities.Models;
 using TeamSavvy.Api.Services.IServices;
+using TeamSavvy.Api.Entities.Models;
 
 namespace TeamSavvy.Api.Services.Services
 {

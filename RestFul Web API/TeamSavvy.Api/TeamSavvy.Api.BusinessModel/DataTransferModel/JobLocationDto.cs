@@ -9,6 +9,7 @@ namespace TeamSavvy.Api.BusinessModel.DataTransferModel
         public int JobLocationId { get; set; }
         public string Location { get; set; }
         public string Postcode { get; set; }
-        public int CityId { get; set; }
+        //public int CityId { get; set; }
+        public CityDto City { get; set; }
     }
 }

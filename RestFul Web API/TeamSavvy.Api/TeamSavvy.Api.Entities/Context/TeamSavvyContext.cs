@@ -33,6 +33,7 @@ namespace TeamSavvy.Api.Entities.Context
         public virtual DbSet<JobApplied> JobApplied { get; set; }
         public virtual DbSet<JobCategory> JobCategory { get; set; }
         public virtual DbSet<JobLocation> JobLocation { get; set; }
+        public virtual DbSet<JobSkills> JobSkills { get; set; }
         public virtual DbSet<Leave> Leave { get; set; }
         public virtual DbSet<Payroll> Payroll { get; set; }
         public virtual DbSet<Project> Project { get; set; }
@@ -318,41 +319,33 @@ namespace TeamSavvy.Api.Entities.Context
 
                 entity.Property(e => e.CreatedOn)
                     .HasColumnName("CREATED_ON")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.DepartmentId).HasColumnName("DEPARTMENT_ID");
-
-                entity.Property(e => e.JobCategoryId).HasColumnName("JOB_CATEGORY_ID");
-
-                entity.Property(e => e.JobDesc)
-                    .IsRequired()
-                    .HasColumnName("JOB_DESC")
+                    .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.JobLocationId).HasColumnName("JOB_LOCATION_ID");
+                entity.Property(e => e.Deadline)
+                    .HasColumnName("DEADLINE")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Details)
+                    .HasColumnName("DETAILS")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Isdelete).HasColumnName("ISDELETE");
 
                 entity.Property(e => e.JobPosition)
-                    .IsRequired()
                     .HasColumnName("JOB_POSITION")
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.JobSalary).HasColumnName("JOB_SALARY");
-
-                entity.Property(e => e.Qualification)
-                    .IsRequired()
-                    .HasColumnName("QUALIFICATION")
+                entity.Property(e => e.Responsibilities)
+                    .HasColumnName("RESPONSIBILITIES")
                     .IsUnicode(false);
 
-                entity.HasOne(d => d.JobCategory)
-                    .WithMany(p => p.Job)
-                    .HasForeignKey(d => d.JobCategoryId)
-                    .HasConstraintName("FK_Job_Job_Category");
-
-                entity.HasOne(d => d.JobLocation)
-                    .WithMany(p => p.Job)
-                    .HasForeignKey(d => d.JobLocationId)
-                    .HasConstraintName("FK_Job_Job_Location");
+                entity.Property(e => e.Salary)
+                    .HasColumnName("SALARY")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<JobApplied>(entity =>
@@ -426,6 +419,31 @@ namespace TeamSavvy.Api.Entities.Context
                     .HasForeignKey(d => d.CityId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Job_Location_City");
+            });
+
+            modelBuilder.Entity<JobSkills>(entity =>
+            {
+                entity.HasKey(e => e.Jobskillid);
+
+                entity.ToTable("Job_Skills");
+
+                entity.Property(e => e.Jobskillid).HasColumnName("JOBSKILLID");
+
+                entity.Property(e => e.Jobid).HasColumnName("JOBID");
+
+                entity.Property(e => e.Skillid).HasColumnName("SKILLID");
+
+                entity.HasOne(d => d.Job)
+                    .WithMany(p => p.JobSkills)
+                    .HasForeignKey(d => d.Jobid)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Job_Skills_Job");
+
+                entity.HasOne(d => d.Skill)
+                    .WithMany(p => p.JobSkills)
+                    .HasForeignKey(d => d.Skillid)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Job_Skills_Skill");
             });
 
             modelBuilder.Entity<Leave>(entity =>

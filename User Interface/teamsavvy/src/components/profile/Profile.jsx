@@ -6,98 +6,35 @@ import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
 import {Link} from 'react-router-dom';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import './profile.css';
-import {
-    Button,
-    Card,
-    CardBody,
-    CardText,
-    FormGroup,
-    Form,
-    Input,
-    Row,
-    Col,
-    Container,
-    CardTitle,
-    CardSubtitle,
-    ListGroup,
-    ListGroupItem,
-    Label,
-    Badge,
-    Modal,
-    ModalHeader,
-    ModalBody,
-  } from "reactstrap";
-
+import { Button,Card,CardBody, FormGroup,Form,Input,Row, Col, Container, CardTitle, CardSubtitle, ListGroup,
+    ListGroupItem,  Label, Badge, Modal, ModalHeader, ModalBody, } from "reactstrap";
 import AuthService from '../services/authService';
 import { GetEndPoints } from '../utilities/EndPoints';
 import { useEffect } from 'react';
-  
+import { employeeInitialValue } from '../models/employee.model';
+
   const Profile = () => {
-    const initialValue ={
-      employeeId: null,
-      employeeFirstname: "",
-      employeeLastname: "",
-      dateofbirth: "",
-      hiredate: "",
-      phone: "",
-      email: "",
-      extension: null,
-      departmentId: null,
-      roleId: null,
-      statusId: null,
-      bankaccount: "",
-      bankcode: "",
-      bankname: "",
-      jobLocationId: null,
-      employeeImage: null,
-      address: {
-        addressId: null,
-        apartment: null,
-        cityId: 5,
-        postcode: ""
-      },
-      skills: [
-        {
-          employeeSkillId: 0,
-          employeeId: 0,
-          skillId: 0,
-          isactive: null 
-        }
-      ]
-    };
 
     const {http, user, getDropdown} = AuthService();
     const dropdownData = getDropdown();
-    let obj = {};
-    const res = dropdownData.map(({countryId, provinces}) => {
-            provinces.map(({provinceId, cities}) => {
-                cities.filter(({cityId}) =>{
-                    if(cityId === parseInt('29'))
-                    {
-                        obj.countryId = countryId;
-                        obj.provinceId = provinceId;
-                        obj.cityId = cityId;
-                    }})}) 
-        return obj;
-    });
-
-    const [selectedCountry, setSelectedCountry] = useState(res[0].countryId);
-    const [selectedProvince, setSelectedProvince] = useState(res[0].provinceId);
-    const [selectedCity, setSelectedCity] = useState(res[0].cityId);
-    let {provinces : prov} = dropdownData.find((c) => c.countryId ===  parseInt(res[0].countryId));
-    let {cities:availCities} = prov.find((p) => p.provinceId ===  parseInt(res[0].provinceId));
-    const [availableProvinces, setAvailableProvinces] = useState(prov);
-    const [availableCities, setAvailableCities] = useState(availCities);
-    const [formValue, setFormValue] = useState(initialValue);
-    const [modal, setModal] = useState(false);
-    const toggle = () => setModal(!modal);
-
+    const [formValue, setFormValue] = useState(employeeInitialValue);
     const GetEmployee = () => {
         http.get(GetEndPoints().employee + '/' + user.employeeId)
         .then((res) =>{
             if(res.data.success){
                 let response = res.data.response;
                 setFormValue({...formValue, ...response})
+                let countryId = response.address.city.province.country.countryId;
+                let provinceId = response.address.city.province.provinceId;
+                let cityId = response.address.city.cityId;
+                let {provinces} = dropdownData.find((c) => c.countryId ===  parseInt(countryId));
+                let {cities} = provinces.find((p) => p.provinceId ===  parseInt(provinceId));
+                setAvailableProvinces(provinces);
+                setAvailableCities(cities);
+                setSelectedCity(cityId);
+                setSelectedCountry(countryId);
+                setSelectedProvince(provinceId);
+                setSkills(response.skills)
             }
          })
     }
@@ -106,11 +43,19 @@ import { useEffect } from 'react';
         GetEmployee()
     },[user.employeeId]);
 
+    const [selectedCountry, setSelectedCountry] = useState();
+    const [selectedProvince, setSelectedProvince] = useState();
+    const [selectedCity, setSelectedCity] = useState();
+    const [availableProvinces, setAvailableProvinces] = useState();
+    const [availableCities, setAvailableCities] = useState();
+    const [modal, setModal] = useState(false);
+    const toggle = () => setModal(!modal);
+
+    const [skills, setSkills] = useState(formValue.skills);
+    console.log(skills)
     const handleDelete = (event) => {
     // console.log(data);
     }
-
-    console.log(formValue);
 
     const handleCountryChange = e =>{
         setSelectedCountry(e.target.value);
@@ -151,7 +96,7 @@ import { useEffect } from 'react';
                     <CardTitle tag="h5"> {formValue.employeeFirstname + " " + formValue.employeeLastname} </CardTitle>
                 <CardSubtitle className="mb-2 text-muted" tag="h6"><small> <strong>ID: </strong>  E-{formValue.employeeId}</small>
                 {/* <p>Position, dept, location</p> */}
-                <p className="mb-0"><small>{formValue.roleId}, {formValue.departmentId}, {formValue.jobLocationId}</small></p>
+                <p className="mb-0"><small>{formValue.role?.roleType}, {formValue.department?.departmentName}, {formValue.jobLocation?.location}</small></p>
                 <small className="lh-1 me-2"><strong>Ext: </strong> {formValue.extension}</small>
                 </CardSubtitle>
                 </CardBody>
@@ -402,10 +347,13 @@ import { useEffect } from 'react';
                 <CardTitle tag="h5" className="mb-3"> Skill Set </CardTitle>
                 <div className="d-flex flex-wrap">
                     <div class="skill position-relative" >
+                        {
+
+                        }
                 <Badge className="skillPill rounded-pill me-3 mb-3 " pill> C# </Badge> 
                 <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge " key={1} onClick={(event) => handleDelete(event.target.value)}> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
                     </div>
-                    <div className="skill position-relative">
+                    {/* <div className="skill position-relative">
                 <Badge className="skillPill rounded-pill me-3 mb-3" pill> Java </Badge>  
                 <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge "> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
                     </div> 
@@ -446,7 +394,7 @@ import { useEffect } from 'react';
                      
                 <Badge className="skillPill rounded-pill me-3 mb-3" pill> Manual Testing </Badge>              
                      <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge "> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
-                    </div>  
+                    </div>   */}
                 </div>
                 <Link to="" className="alert-link text-decoration-none text-center"  onClick={toggle}> <AddOutlinedIcon/> ADD</Link>
                 {/* add skill popup */}

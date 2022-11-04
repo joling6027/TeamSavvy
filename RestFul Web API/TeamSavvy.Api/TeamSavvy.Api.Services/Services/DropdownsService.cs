@@ -71,5 +71,25 @@ namespace TeamSavvy.Api.Services.Services
             }
             return counProvCityDdl;
         }
+
+        public List<SkillDto> GetSkills()
+        {
+            List<SkillDto> skills = null;
+            try
+            {
+                var sk = _unitOfWork.Context.Skill.ToList();
+                if(sk.Any())
+                {
+                    skills = _mapper.Map<List<SkillDto>>(sk);
+                }
+
+            }
+            catch(Exception ex)
+            {
+                skills = null;
+            }
+
+            return skills;
+        }
     }
 }

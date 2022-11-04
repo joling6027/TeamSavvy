@@ -13,8 +13,10 @@ namespace TeamSavvy.Api.Utilities.MapperRegistration
         public TeamSavvyProfiler()
         {
             //Employee endpoint
-            CreateMap<EmployeeDto, Employee>().ReverseMap();
-            CreateMap<EmployeeSkillDto, EmployeeSkill>().ReverseMap();
+            CreateMap<EmployeeDto, Employee>()
+                .ReverseMap();
+            CreateMap<EmployeeSkillDto, EmployeeSkill>()
+                .ReverseMap();
 
             //Address
             CreateMap<AddressDto, Address>().ReverseMap();
@@ -42,6 +44,16 @@ namespace TeamSavvy.Api.Utilities.MapperRegistration
             CreateMap<EmployeeLeave, EmployeeLeaveDto>()
                     .ReverseMap();
 
+            //job endpoint
+            CreateMap<JobDto, Job>()
+                  .ReverseMap();
+            CreateMap<JobSkillsDto, JobSkills>()
+                 .ReverseMap();
+
+
+            //skill endpoint
+            CreateMap<Skill, SkillDto>()
+                 .ReverseMap();
         }
     }
 }

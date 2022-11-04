@@ -12,7 +12,6 @@ namespace TeamSavvy.Api.Entities.Models
         public JobLocation()
         {
             Employee = new HashSet<Employee>();
-            Job = new HashSet<Job>();
         }
 
         public int JobLocationId { get; set; }
@@ -22,6 +21,5 @@ namespace TeamSavvy.Api.Entities.Models
 
         public virtual City City { get; set; }
         public virtual ICollection<Employee> Employee { get; set; }
-        public virtual ICollection<Job> Job { get; set; }
     }
 }

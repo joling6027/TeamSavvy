@@ -12,11 +12,13 @@ namespace TeamSavvy.Api.Entities.Models
         public Skill()
         {
             EmployeeSkill = new HashSet<EmployeeSkill>();
+            JobSkills = new HashSet<JobSkills>();
         }
 
         public int SkillId { get; set; }
         public string SkillName { get; set; }
 
         public virtual ICollection<EmployeeSkill> EmployeeSkill { get; set; }
+        public virtual ICollection<JobSkills> JobSkills { get; set; }
     }
 }

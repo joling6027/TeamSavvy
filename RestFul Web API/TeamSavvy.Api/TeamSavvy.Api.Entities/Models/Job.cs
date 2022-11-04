@@ -12,20 +12,19 @@ namespace TeamSavvy.Api.Entities.Models
         public Job()
         {
             JobApplied = new HashSet<JobApplied>();
+            JobSkills = new HashSet<JobSkills>();
         }
 
         public int JobId { get; set; }
-        public int JobCategoryId { get; set; }
-        public int JobLocationId { get; set; }
-        public int DepartmentId { get; set; }
         public string JobPosition { get; set; }
-        public int JobSalary { get; set; }
-        public string JobDesc { get; set; }
-        public string Qualification { get; set; }
-        public DateTime CreatedOn { get; set; }
+        public string Salary { get; set; }
+        public string Details { get; set; }
+        public string Responsibilities { get; set; }
+        public string CreatedOn { get; set; }
+        public string Deadline { get; set; }
+        public bool Isdelete { get; set; }
 
-        public virtual JobCategory JobCategory { get; set; }
-        public virtual JobLocation JobLocation { get; set; }
         public virtual ICollection<JobApplied> JobApplied { get; set; }
+        public virtual ICollection<JobSkills> JobSkills { get; set; }
     }
 }

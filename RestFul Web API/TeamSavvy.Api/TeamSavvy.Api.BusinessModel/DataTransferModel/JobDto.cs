@@ -7,13 +7,13 @@ namespace TeamSavvy.Api.BusinessModel.DataTransferModel
     public class JobDto
     {
         public int JobId { get; set; }
-        public int JobCategoryId { get; set; }
-        public int JobLocationId { get; set; }
-        public int DepartmentId { get; set; }
         public string JobPosition { get; set; }
-        public decimal JobSalary { get; set; }
-        public string JobDesc { get; set; }
-        public string Qualification { get; set; }
-        public DateTime CreatedOn { get; set; }
+        public string Salary { get; set; }
+        public string Details { get; set; }
+        public string Responsibilities { get; set; }
+        public string CreatedOn { get; set; }
+        public string Deadline { get; set; }
+        public bool Isdelete { get; set; }
+        public List<JobSkillsDto> JobSkills { get; set; }
     }
 }

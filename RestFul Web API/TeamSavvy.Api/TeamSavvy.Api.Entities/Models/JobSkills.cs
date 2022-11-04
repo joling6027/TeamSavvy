@@ -7,10 +7,13 @@ using System.Collections.Generic;
 
 namespace TeamSavvy.Api.Entities.Models
 {
-    public partial class JobCategory
+    public partial class JobSkills
     {
-        public int JobCategoryId { get; set; }
-        public string JobCategoryName { get; set; }
-        public string JobCategoryValue { get; set; }
+        public int Jobskillid { get; set; }
+        public int Jobid { get; set; }
+        public int Skillid { get; set; }
+
+        public virtual Job Job { get; set; }
+        public virtual Skill Skill { get; set; }
     }
 }

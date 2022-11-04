@@ -32,6 +32,7 @@ namespace TeamSavvy.Api.Services.Services
 
         public bool AddEmployee(EmployeeDto employee)
         {
+            //need to work on it
             bool isSuccess = false;
             try
             {
@@ -77,7 +78,11 @@ namespace TeamSavvy.Api.Services.Services
                              {
                                  EmployeeId = x.EmpSk.EmployeeId,
                                  EmployeeSkillId = x.EmpSk.EmployeeSkillId,
-                                 SkillId = x.EmpSk.SkillId,
+                                 Skills = new SkillDto
+                                 {
+                                     SkillId = x.Sk.SkillId,
+                                     SkillName = x.Sk.SkillName,
+                                 },
                                  Isactive = x.EmpSk.Isactive
                              })
                              .ToList();
@@ -87,31 +92,82 @@ namespace TeamSavvy.Api.Services.Services
                        emp => emp.AddressId,
                        addr => addr.AddressId,
                        (emp, addr) => new { Emp = emp, Addr = addr })
+                      .Join(_unitOfWork.Context.JobLocation,
+                       em => em.Emp.JobLocationId,
+                       jobAddr => jobAddr.JobLocationId,
+                       (em, jobAddr) => new { Em = em, JobAddr = jobAddr })
                       .Select(x => new EmployeeDto
                       {
-                          EmployeeId = x.Emp.EmployeeId,
-                          EmployeeFirstname = x.Emp.EmployeeFirstname.Trim(),
-                          EmployeeLastname = x.Emp.EmployeeLastname.Trim(),
-                          Dateofbirth = x.Emp.Dateofbirth,
-                          Email = x.Emp.Email.Trim(),
-                          Hiredate = x.Emp.Hiredate,
-                          DepartmentId = x.Emp.DepartmentId,
-                          JobLocationId = x.Emp.JobLocationId,
-                          Extension = x.Emp.Extension,
-                          Phone = x.Emp.Phone.Trim(),
-                          Bankaccount = x.Emp.Bankaccount.Trim(),
-                          Bankcode = x.Emp.Bankcode.Trim(),
-                          Bankname = x.Emp.Bankname.Trim(),
-                          RoleId = x.Emp.RoleId,
-                          StatusId = x.Emp.StatusId,
-                          EmployeeImage = x.Emp.EmployeeImage,
+
+                          EmployeeId = x.Em.Emp.EmployeeId,
+                          EmployeeFirstname = x.Em.Emp.EmployeeFirstname.Trim(),
+                          EmployeeLastname = x.Em.Emp.EmployeeLastname.Trim(),
+                          Dateofbirth = x.Em.Emp.Dateofbirth,
+                          Email = x.Em.Emp.Email.Trim(),
+                          Hiredate = x.Em.Emp.Hiredate,
+                          //DepartmentId = x.Em.Emp.DepartmentId,
+                          Department = _unitOfWork.Context.Department.Where(y => y.DepartmentId == x.Em.Emp.DepartmentId).Select(x => new DepartmentDto { DepartmentId = x.DepartmentId, DepartmentName = x.DepartmentName }).FirstOrDefault(),
+                          Extension = x.Em.Emp.Extension,
+                          Phone = x.Em.Emp.Phone.Trim(),
+                          Bankaccount = x.Em.Emp.Bankaccount.Trim(),
+                          Bankname = x.Em.Emp.Bankname.Trim(),
+                          Bankcode = x.Em.Emp.Bankcode.Trim(),
+                          Role = _unitOfWork.Context.Role.Where(y => y.RoleId == x.Em.Emp.RoleId).Select(x => new RoleDto { RoleId = x.RoleId, RoleType = x.RoleType }).FirstOrDefault(),
+                          Status = _unitOfWork.Context.Status.Where(y => y.StatusId == x.Em.Emp.StatusId).Select(x => new StatusDto { StatusId = x.StatusId, StatusType = x.StatusType }).FirstOrDefault(),
+                          //RoleId = x.Em.Emp.RoleId,
+                          //StatusId = x.Em.Emp.StatusId,
+                          EmployeeImage = x.Em.Emp.EmployeeImage,
+                          JobLocation = new JobLocationDto
+                          {
+                              JobLocationId = x.Em.Emp.JobLocationId,
+                              Location = x.JobAddr.Location,
+                              City = _unitOfWork.Context.City.Where(y => y.CityId == x.JobAddr.CityId)
+                              .Select(x => new CityDto
+                              {
+                                  CityId = x.CityId,
+                                  CityName = x.CityName,
+                                  Province = _unitOfWork.Context.Province.Where(p => p.ProvinceId == x.ProvinceId).Select(s => new ProvinceDto
+                                  {
+                                      ProvinceId = s.ProvinceId,
+                                      ProvinceAbbr = s.ProvinceAbbr,
+                                      ProvinceName = s.ProvinceName,
+                                      Country = _unitOfWork.Context.Country.Where(y => y.CountryId == s.CountryId).Select(c => new CountryDto
+                                      {
+                                          CountryId = c.CountryId,
+                                          CountryName = c.CountryName,
+                                      }).FirstOrDefault(),
+                                  }).FirstOrDefault()
+
+                              }).FirstOrDefault(),
+                              //CityId = x.JobAddr.CityId,
+                              Postcode = x.JobAddr.Postcode
+                          },
                           Address = new AddressDto
                           {
-                              AddressId = x.Emp.AddressId,
-                              Apartment = x.Addr.Apartment,
-                              Postcode = x.Addr.Postcode,
-                              CityId = x.Addr.CityId
+                              AddressId = x.Em.Emp.AddressId,
+                              Apartment = x.Em.Addr.Apartment,
+                              Postcode = x.Em.Addr.Postcode,
+                              City = _unitOfWork.Context.City.Where(y => y.CityId == x.Em.Addr.CityId)
+                              .Select(x => new CityDto
+                              {
+                                  CityId = x.CityId,
+                                  CityName = x.CityName,
+                                  Province = _unitOfWork.Context.Province.Where(p => p.ProvinceId == x.ProvinceId).Select(s => new ProvinceDto
+                                  {
+                                      ProvinceId = s.ProvinceId,
+                                      ProvinceAbbr = s.ProvinceAbbr,
+                                      ProvinceName = s.ProvinceName,
+                                      Country = _unitOfWork.Context.Country.Where(y => y.CountryId == s.CountryId).Select(c => new CountryDto
+                                      {
+                                          CountryId = c.CountryId,
+                                          CountryName = c.CountryName,
+                                      }).FirstOrDefault(),
+                                  }).FirstOrDefault()
+
+                              }).FirstOrDefault(),
+                              //CityId = x.Em.Addr.CityId
                           }
+
                       })
                       .ToList();
 
@@ -138,7 +194,11 @@ namespace TeamSavvy.Api.Services.Services
                              {
                                  EmployeeId = x.EmpSk.EmployeeId,
                                  EmployeeSkillId = x.EmpSk.EmployeeSkillId,
-                                 SkillId = x.EmpSk.SkillId,
+                                 Skills = new SkillDto
+                                 {
+                                     SkillId = x.Sk.SkillId,
+                                     SkillName = x.Sk.SkillName,
+                                 },
                                  Isactive = x.EmpSk.Isactive
                              })
                              .ToList();
@@ -148,31 +208,80 @@ namespace TeamSavvy.Api.Services.Services
                        emp => emp.AddressId,
                        addr => addr.AddressId,
                        (emp, addr) => new { Emp = emp, Addr = addr })
-                      .Where(x => x.Emp.EmployeeId == id)
+                      .Join(_unitOfWork.Context.JobLocation,
+                       em => em.Emp.JobLocationId,
+                       jobAddr => jobAddr.JobLocationId,
+                       (em, jobAddr) => new {Em = em, JobAddr = jobAddr })
+                      .Where(x => x.Em.Emp.EmployeeId == id)
                       .Select(x => new EmployeeDto
                       {
-                          EmployeeId = x.Emp.EmployeeId,
-                          EmployeeFirstname = x.Emp.EmployeeFirstname.Trim(),
-                          EmployeeLastname = x.Emp.EmployeeLastname.Trim(),
-                          Dateofbirth = x.Emp.Dateofbirth,
-                          Email = x.Emp.Email.Trim(),
-                          Hiredate = x.Emp.Hiredate,
-                          DepartmentId = x.Emp.DepartmentId,
-                          JobLocationId = x.Emp.JobLocationId,
-                          Extension = x.Emp.Extension,
-                          Phone = x.Emp.Phone.Trim(),
-                          Bankaccount = x.Emp.Bankaccount.Trim(),
-                          Bankname = x.Emp.Bankname.Trim(),
-                          Bankcode = x.Emp.Bankcode.Trim(),
-                          RoleId = x.Emp.RoleId,
-                          StatusId = x.Emp.StatusId,
-                          EmployeeImage = x.Emp.EmployeeImage,
+                          EmployeeId = x.Em.Emp.EmployeeId,
+                          EmployeeFirstname = x.Em.Emp.EmployeeFirstname.Trim(),
+                          EmployeeLastname = x.Em.Emp.EmployeeLastname.Trim(),
+                          Dateofbirth = x.Em.Emp.Dateofbirth,
+                          Email = x.Em.Emp.Email.Trim(),
+                          Hiredate = x.Em.Emp.Hiredate,
+                          //DepartmentId = x.Em.Emp.DepartmentId,
+                          Department = _unitOfWork.Context.Department.Where(y => y.DepartmentId == x.Em.Emp.DepartmentId).Select(x => new DepartmentDto { DepartmentId = x.DepartmentId, DepartmentName = x.DepartmentName }).FirstOrDefault(),
+                          Extension = x.Em.Emp.Extension,
+                          Phone = x.Em.Emp.Phone.Trim(),
+                          Bankaccount = x.Em.Emp.Bankaccount.Trim(),
+                          Bankname = x.Em.Emp.Bankname.Trim(),
+                          Bankcode = x.Em.Emp.Bankcode.Trim(),
+                          Role = _unitOfWork.Context.Role.Where(y=>y.RoleId == x.Em.Emp.RoleId).Select(x => new RoleDto { RoleId = x.RoleId, RoleType= x.RoleType}).FirstOrDefault(),
+                          Status = _unitOfWork.Context.Status.Where(y => y.StatusId == x.Em.Emp.StatusId).Select(x => new StatusDto { StatusId = x.StatusId, StatusType = x.StatusType }).FirstOrDefault(),
+                          //RoleId = x.Em.Emp.RoleId,
+                          //StatusId = x.Em.Emp.StatusId,
+                          EmployeeImage = x.Em.Emp.EmployeeImage,
+                          JobLocation = new JobLocationDto
+                          {
+                              JobLocationId = x.Em.Emp.JobLocationId,
+                              Location = x.JobAddr.Location,
+                              City = _unitOfWork.Context.City.Where(y => y.CityId == x.JobAddr.CityId)
+                              .Select(x => new CityDto 
+                              {
+                                  CityId = x.CityId,
+                                  CityName = x.CityName,
+                                  Province = _unitOfWork.Context.Province.Where(p => p.ProvinceId == x.ProvinceId).Select(s => new ProvinceDto
+                                  {
+                                      ProvinceId = s.ProvinceId,
+                                      ProvinceAbbr = s.ProvinceAbbr,
+                                      ProvinceName = s.ProvinceName,
+                                      Country = _unitOfWork.Context.Country.Where(y => y.CountryId == s.CountryId).Select(c => new CountryDto
+                                      { 
+                                          CountryId = c.CountryId,
+                                          CountryName = c.CountryName,
+                                      }).FirstOrDefault(),
+                                  }).FirstOrDefault()
+                                  
+                              }).FirstOrDefault(),
+                              //CityId = x.JobAddr.CityId,
+                              Postcode = x.JobAddr.Postcode
+                          },
                           Address = new AddressDto
                           {
-                              AddressId = x.Emp.AddressId,
-                              Apartment = x.Addr.Apartment,
-                              Postcode = x.Addr.Postcode,
-                              CityId = x.Addr.CityId
+                              AddressId = x.Em.Emp.AddressId,
+                              Apartment = x.Em.Addr.Apartment,
+                              Postcode = x.Em.Addr.Postcode,
+                              City = _unitOfWork.Context.City.Where(y => y.CityId == x.Em.Addr.CityId)
+                              .Select(x => new CityDto
+                              {
+                                  CityId = x.CityId,
+                                  CityName = x.CityName,
+                                  Province = _unitOfWork.Context.Province.Where(p => p.ProvinceId == x.ProvinceId).Select(s => new ProvinceDto
+                                  {
+                                      ProvinceId = s.ProvinceId,
+                                      ProvinceAbbr = s.ProvinceAbbr,
+                                      ProvinceName = s.ProvinceName,
+                                      Country = _unitOfWork.Context.Country.Where(y => y.CountryId == s.CountryId).Select(c => new CountryDto
+                                      {
+                                          CountryId = c.CountryId,
+                                          CountryName = c.CountryName,
+                                      }).FirstOrDefault(),
+                                  }).FirstOrDefault()
+
+                              }).FirstOrDefault(),
+                              //CityId = x.Em.Addr.CityId
                           }
                       })
                       .FirstOrDefault();
@@ -192,17 +301,50 @@ namespace TeamSavvy.Api.Services.Services
             {
                 if (employee != null)
                 {
-                    var addr = _mapper.Map<Address>(employee.Address);
+
+
+
+                    var addr = new Address
+                    {
+                        AddressId = employee.Address.AddressId,
+                        Apartment = employee.Address.Apartment,
+                        Postcode = employee.Address.Postcode,
+                        CityId = employee.Address.City.CityId
+                    };
+                        //_mapper.Map<Address>(employee.Address);
 
                     _unitOfWork.Repository<Address>().Update(addr);
                     if (addr.AddressId > 0)
                     {
-                        var empUpdate = _mapper.Map<EmployeeDto, Employee>(employee);
-                        empUpdate.AddressId = addr.AddressId;
+                        var empUpdate = new Employee
+                        {
+                            AddressId = employee.Address.AddressId,
+                            Bankaccount = employee.Bankaccount,
+                            Bankcode = employee.Bankcode,
+                            Bankname = employee.Bankname,
+                            Dateofbirth = employee.Dateofbirth,
+                            DepartmentId = employee.Department.DepartmentId,
+                            Email = employee.Email,
+                            EmployeeFirstname = employee.EmployeeFirstname,
+                            EmployeeId = employee.EmployeeId,
+                            EmployeeLastname = employee.EmployeeLastname,
+                            EmployeeImage = employee.EmployeeImage,
+                            Extension = employee.Extension,
+                            Hiredate = employee.Hiredate,
+                            JobLocationId = employee.JobLocation.JobLocationId,
+                            Password = employee.Password,
+                            Phone = employee.Phone,
+                            RoleId =employee.Role.RoleId,
+                            StatusId = employee.Status.StatusId,
+                        };
+                            //_mapper.Map<EmployeeDto, Employee>(employee);
+                        //empUpdate.AddressId = addr.AddressId;
                         _unitOfWork.Context.Update(empUpdate);
                     }
 
                     var skills = _mapper.Map<List<EmployeeSkill>>(employee.Skills);
+                   
+                    //skills.ForEach(skill =>  employee.Skills.ForEach(s => skill.SkillId = s.Skills.SkillId));
                     _unitOfWork.Repository<EmployeeSkill>().Update(skills);
                     _unitOfWork.SaveChanges();
                     isSuccess = true;
