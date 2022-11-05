@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import pic from "../../assets/img/Profilepic.png";
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import MailOutlineOutlinedIcon from '@mui/icons-material/MailOutlineOutlined';
@@ -10,7 +10,6 @@ import { Button,Card,CardBody, FormGroup,Form,Input,Row, Col, Container, CardTit
     ListGroupItem,  Label, Badge, Modal, ModalHeader, ModalBody, } from "reactstrap";
 import AuthService from '../services/authService';
 import { GetEndPoints } from '../utilities/EndPoints';
-import { useEffect } from 'react';
 import { employeeInitialValue } from '../models/employee.model';
 
   const Profile = () => {

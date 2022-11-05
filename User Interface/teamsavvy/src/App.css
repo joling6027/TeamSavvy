@@ -27,3 +27,7 @@ overflow: auto;
   height:30px!important;
   overflow:hidden;
 } */
+
+.linkStyle{font-size:0.9rem;line-height: 2em;}
+th{font-weight:400;font-size:0.8rem;}
+thead{border-top:1px solid #b6b6b6!important;border-bottom:1px solid #b6b6b6!important;}
