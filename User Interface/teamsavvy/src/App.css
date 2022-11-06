@@ -31,3 +31,7 @@ overflow: auto;
 .linkStyle{font-size:0.9rem;line-height: 2em;}
 th{font-weight:400;font-size:0.8rem;}
 thead{border-top:1px solid #b6b6b6!important;border-bottom:1px solid #b6b6b6!important;}
+
+.yellow-bg{background:linear-gradient(to right,#F5B337,#F8D28B)}
+.orange-bg{background:linear-gradient(to right,#FF8539,#FCB484)}
+.green-bg{background:linear-gradient(to right,#63A9A9,#95E3E3)}
