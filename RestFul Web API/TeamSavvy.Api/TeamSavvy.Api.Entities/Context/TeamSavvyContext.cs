@@ -520,6 +520,8 @@ namespace TeamSavvy.Api.Entities.Context
 
                 entity.Property(e => e.TotalHours).HasColumnName("TOTAL_HOURS");
 
+                entity.Property(e => e.Totalworkingdays).HasColumnName("TOTALWORKINGDAYS");
+
                 entity.HasOne(d => d.Employee)
                     .WithMany(p => p.Payroll)
                     .HasForeignKey(d => d.EmployeeId)

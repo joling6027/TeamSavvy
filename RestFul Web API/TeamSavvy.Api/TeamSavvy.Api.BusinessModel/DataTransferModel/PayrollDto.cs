@@ -8,6 +8,7 @@ namespace TeamSavvy.Api.BusinessModel.DataTransferModel
     {
         public int PayrollId { get; set; }
         public int EmployeeId { get; set; }
+        public int SalaryId { get; set; }
         public DateTime PayDate { get; set; }
         public string PayType { get; set; }
         public int? TotalHours { get; set; }
@@ -17,6 +18,6 @@ namespace TeamSavvy.Api.BusinessModel.DataTransferModel
         public string PayVacation { get; set; }
         public string PaySick { get; set; }
         public string Deduction { get; set; }
-        public int SalaryId { get; set; }
+        public int? Totalworkingdays { get; set; }
     }
 }
