@@ -8,3 +8,13 @@ D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.BusinessModel\
 D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.BusinessModel\obj\Debug\netcoreapp3.1\TeamSavvy.Api.BusinessModel.csproj.CoreCompileInputs.cache
 D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.BusinessModel\obj\Debug\netcoreapp3.1\TeamSavvy.Api.BusinessModel.dll
 D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.BusinessModel\obj\Debug\netcoreapp3.1\TeamSavvy.Api.BusinessModel.pdb
+C:\Users\seahorse\Documents\GitHub\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.BusinessModel\bin\Debug\netcoreapp3.1\TeamSavvy.Api.BusinessModel.deps.json
+C:\Users\seahorse\Documents\GitHub\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.BusinessModel\bin\Debug\netcoreapp3.1\TeamSavvy.Api.BusinessModel.dll
+C:\Users\seahorse\Documents\GitHub\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.BusinessModel\bin\Debug\netcoreapp3.1\TeamSavvy.Api.BusinessModel.pdb
+C:\Users\seahorse\Documents\GitHub\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.BusinessModel\obj\Debug\netcoreapp3.1\TeamSavvy.Api.BusinessModel.csproj.AssemblyReference.cache
+C:\Users\seahorse\Documents\GitHub\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.BusinessModel\obj\Debug\netcoreapp3.1\TeamSavvy.Api.BusinessModel.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\seahorse\Documents\GitHub\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.BusinessModel\obj\Debug\netcoreapp3.1\TeamSavvy.Api.BusinessModel.AssemblyInfoInputs.cache
+C:\Users\seahorse\Documents\GitHub\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.BusinessModel\obj\Debug\netcoreapp3.1\TeamSavvy.Api.BusinessModel.AssemblyInfo.cs
+C:\Users\seahorse\Documents\GitHub\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.BusinessModel\obj\Debug\netcoreapp3.1\TeamSavvy.Api.BusinessModel.csproj.CoreCompileInputs.cache
+C:\Users\seahorse\Documents\GitHub\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.BusinessModel\obj\Debug\netcoreapp3.1\TeamSavvy.Api.BusinessModel.dll
+C:\Users\seahorse\Documents\GitHub\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.BusinessModel\obj\Debug\netcoreapp3.1\TeamSavvy.Api.BusinessModel.pdb

@@ -8,14 +8,30 @@ import {
 } from 'reactstrap';
 import { useEffect } from 'react';
 import AuthService from '../services/authService';
+import { useState } from 'react';
+import { GetEndPoints } from '../utilities/EndPoints';
 
 const InternalJobs = () => {
 
-    const { http } = AuthService();
+    const { http, user } = AuthService();
+    const [jobs, setjobs] = useState();
+    const [jobItem, setJobItem] = useState();
 
+    console.log(user);
     useEffect(() => {
+        http.get(GetEndPoints().internalJob)
+        .then((res) => {
+            if(res.data.success){
+                console.log(res.data.response)
+                setjobs(res.data.response)
+                setJobItem(res.data.response[0])
+                console.log(jobItem)
+            }
+        })
+        .catch((err) => console.log(err.message))
 
-    })
+
+    }, [])
 
     return (
         <>
@@ -25,23 +41,25 @@ const InternalJobs = () => {
                         <Row>
                             <Col sm="4">
                                 <Card className='jobs-card' body>
-                                    <CardTitle className='job-card-title'>Jobs<Button className='createAndApply-btn' color="link"><AddOutlinedIcon /> Create Job</Button></CardTitle>
-                                    <Card className='job-card'>
-                                        <CardSubtitle className='job-subtitle'>Assistant Manager Dept-A</CardSubtitle>
-                                        <CardText>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsum mollitia necessitatibus ducimus nisi ipsam possimus quas impedit eius accusantium</CardText>
-                                        <Button className='btn-view-job-detail' color="link">VIEW</Button>
+                                    <CardTitle className='job-card-title'>Jobs
+                                        {(user.role === 'HR' ? (<Button className='createAndApply-btn' color="link"><AddOutlinedIcon /> Create Job
+                                        </Button>): "")}
+                                    </CardTitle>
+                                    {jobs && jobs.map((job) => (
+                                        <Card className='job-card' key={job.jobId}>
+                                        <CardSubtitle className='job-subtitle'>{job.jobPosition}</CardSubtitle>
+                                        <CardText>{job.details}</CardText>
+                                        <Button className='btn-view-job-detail' color="link"
+                                        onClick={() => setJobItem(job)}>VIEW</Button>
                                         <hr />
-                                    </Card>
-                                    <Card className='job-card'>
-                                        <CardSubtitle className='job-subtitle'>Assistant Manager Dept-B</CardSubtitle>
-                                        <CardText>With supporting text below as a natural lead-in to additional content.</CardText>
-                                        <Button className='btn-view-job-detail' color="link">VIEW</Button>
-                                        <hr />
-                                    </Card>
+                                    </Card>))}
+                                    
                                     <Card className='job-card'>
                                         <CardSubtitle className='job-subtitle'>Assistant Manager Dept-C</CardSubtitle>
                                         <CardText>With supporting text below as a natural lead-in to additional content.</CardText>
-                                        <Button className='btn-view-job-detail' color="link">VIEW</Button>
+                                        <Button 
+                                        className='btn-view-job-detail' color="link"
+                                        >VIEW</Button>
                                         <hr />
                                     </Card>
 
@@ -49,7 +67,9 @@ const InternalJobs = () => {
                             </Col>
                             <Col sm="8">
                                 <Card className='card-job-detail' body>
-                                    <CardTitle className='job-card-title'>Assistant Manager<Button className='createAndApply-btn' color="link">Apply Now</Button></CardTitle>
+                                    <CardTitle className='job-card-title'>
+                                    {}
+                                    <Button className='createAndApply-btn' color="link">Apply Now</Button></CardTitle>
 
                                     <CardText>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsum mollitia necessitatibus ducimus nisi ipsam possimus quas impedit eius accusantium nobis minus perspiciatis, nesciunt rem et vitae. Distinctio commodi maiores possimus.Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsum mollitia necessitatibus ducimus nisi ipsam possimus quas impedit eius accusantium nobis minus perspiciatis, nesciunt rem et vitae. Distinctio commodi maiores possimus.</CardText>
                                     <CardSubtitle className='job-subtitle'>Responsibility</CardSubtitle>

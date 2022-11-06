@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.BusinessModel\\TeamSavvy.Api.BusinessModel.csproj": {}
+    "C:\\Users\\seahorse\\Documents\\GitHub\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.BusinessModel\\TeamSavvy.Api.BusinessModel.csproj": {}
   },
   "projects": {
-    "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.BusinessModel\\TeamSavvy.Api.BusinessModel.csproj": {
+    "C:\\Users\\seahorse\\Documents\\GitHub\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.BusinessModel\\TeamSavvy.Api.BusinessModel.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.BusinessModel\\TeamSavvy.Api.BusinessModel.csproj",
+        "projectUniqueName": "C:\\Users\\seahorse\\Documents\\GitHub\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.BusinessModel\\TeamSavvy.Api.BusinessModel.csproj",
         "projectName": "TeamSavvy.Api.BusinessModel",
-        "projectPath": "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.BusinessModel\\TeamSavvy.Api.BusinessModel.csproj",
-        "packagesPath": "C:\\Users\\jaspa\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.BusinessModel\\obj\\",
+        "projectPath": "C:\\Users\\seahorse\\Documents\\GitHub\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.BusinessModel\\TeamSavvy.Api.BusinessModel.csproj",
+        "packagesPath": "C:\\Users\\seahorse\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\seahorse\\Documents\\GitHub\\TeamSavvy\\RestFul Web API\\TeamSavvy.Api\\TeamSavvy.Api.BusinessModel\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\jaspa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\seahorse\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -59,8 +59,7 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -69,7 +68,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.408\\RuntimeIdentifierGraph.json"
         }
       }
     }

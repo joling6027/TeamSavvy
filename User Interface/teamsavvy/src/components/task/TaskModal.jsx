@@ -7,7 +7,7 @@ import { Form, FormGroup, Label, Input, FormFeedback, FormText, Container, Row, 
 
 const TaskModal = (props) => {
 
-  console.log(props.onOpen().taskName)
+  console.log(props)
   const [enteredTitle, setEnteredTitle] = useState('');
   const [enteredDescription, setEnteredDescription] = useState('');
   const [enteredHours, setEnteredHours] = useState('');
@@ -51,8 +51,9 @@ const TaskModal = (props) => {
     setEnteredStatus('');
     setEnteredStartDate('');
     setEnteredEndDate('');
-    setValidate(true)
+    setValidate(true);
 
+    props.close(false);
   }
 
 

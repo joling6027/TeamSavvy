@@ -8,7 +8,10 @@ const UpdateStatusModal = (props) => {
 
 
   const submitHandler = (e) => {
+    e.preventDefault();
 
+
+    props.close(false);
   }
 
   return (

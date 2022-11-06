@@ -4,7 +4,9 @@ const enpoints = {
   dropdown: 'Dropdowns/countyProvinceCity',
   payrollList: 'Payroll/list/employeeId',
   paystub: 'Payroll/payrollId',
-  employeeTask: 'EmployeeTask/employeeId'
+  employeeTask: 'EmployeeTask/employeeId',
+  updateTask: 'EmployeeTask/updateTask',
+  internalJob: 'Job'
 }
 
 export function GetEndPoints(){

@@ -8,8 +8,9 @@ import './payroll.css'
 const Paystub = () => {
 
   const data = useLocation();
-  console.log('payroll -')
-  console.log(data.state.payrollItem)
+  // console.log(data.state.payrollItem)
+
+  
 
   return (
     <>

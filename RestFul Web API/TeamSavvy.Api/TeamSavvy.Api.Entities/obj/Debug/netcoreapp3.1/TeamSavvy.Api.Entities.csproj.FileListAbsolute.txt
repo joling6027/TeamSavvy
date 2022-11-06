@@ -11,3 +11,16 @@ D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Entities\obj\D
 D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Entities\obj\Debug\netcoreapp3.1\TeamSavvy.Api.Entities.dll
 D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Entities\obj\Debug\netcoreapp3.1\TeamSavvy.Api.Entities.pdb
 D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Entities\obj\Debug\netcoreapp3.1\TeamSavvy.Api.Entities.genruntimeconfig.cache
+C:\Users\seahorse\Documents\GitHub\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Entities\bin\Debug\netcoreapp3.1\TeamSavvy.Api.Entities.deps.json
+C:\Users\seahorse\Documents\GitHub\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Entities\bin\Debug\netcoreapp3.1\TeamSavvy.Api.Entities.runtimeconfig.json
+C:\Users\seahorse\Documents\GitHub\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Entities\bin\Debug\netcoreapp3.1\TeamSavvy.Api.Entities.runtimeconfig.dev.json
+C:\Users\seahorse\Documents\GitHub\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Entities\bin\Debug\netcoreapp3.1\TeamSavvy.Api.Entities.dll
+C:\Users\seahorse\Documents\GitHub\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Entities\bin\Debug\netcoreapp3.1\TeamSavvy.Api.Entities.pdb
+C:\Users\seahorse\Documents\GitHub\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Entities\obj\Debug\netcoreapp3.1\TeamSavvy.Api.Entities.csproj.AssemblyReference.cache
+C:\Users\seahorse\Documents\GitHub\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Entities\obj\Debug\netcoreapp3.1\TeamSavvy.Api.Entities.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\seahorse\Documents\GitHub\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Entities\obj\Debug\netcoreapp3.1\TeamSavvy.Api.Entities.AssemblyInfoInputs.cache
+C:\Users\seahorse\Documents\GitHub\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Entities\obj\Debug\netcoreapp3.1\TeamSavvy.Api.Entities.AssemblyInfo.cs
+C:\Users\seahorse\Documents\GitHub\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Entities\obj\Debug\netcoreapp3.1\TeamSavvy.Api.Entities.csproj.CoreCompileInputs.cache
+C:\Users\seahorse\Documents\GitHub\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Entities\obj\Debug\netcoreapp3.1\TeamSavvy.Api.Entities.dll
+C:\Users\seahorse\Documents\GitHub\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Entities\obj\Debug\netcoreapp3.1\TeamSavvy.Api.Entities.pdb
+C:\Users\seahorse\Documents\GitHub\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Entities\obj\Debug\netcoreapp3.1\TeamSavvy.Api.Entities.genruntimeconfig.cache

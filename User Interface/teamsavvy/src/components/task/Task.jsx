@@ -16,13 +16,12 @@ const Task = () => {
     const { http, user } = AuthService();
 
     useEffect(() => {
-        // const user = sessionStorage.getItem('user');
-        // const user_detail = JSON.parse(user);
-        // console.log(user);
         http.get(GetEndPoints().employeeTask + "/" + user.employeeId).then((res) => {
             console.log(res.data.response)
             setTasks(res.data.response);
         }).catch((err) => console.log(err.message));
+
+        // http.put(GetEndPoints().updateTask)
     }, [])
 
     const saveTaskDataHandler = (enteredTaskData) => {
@@ -30,6 +29,7 @@ const Task = () => {
             ...enteredTaskData,
             id: Math.random().toString()
         }
+        console.log(taskData)
     }
 
     const populateData = (task) => {
@@ -153,12 +153,16 @@ const Task = () => {
                             <div className='card task-list-card'>
                                 <h5 className='task-card-title'>Completed<hr /></h5>
                                 <div className="card-body">
-                                    <div className="completed-task">
+                                    {tasks && tasks.map((task) =>
+                                    (task.taskStatus === 'Completed' ?
+                                    (<div className="completed-task">
                                         <h6>Create model for database</h6>
                                         <p>Tables reuqired for database are Employee levels. Payroll. Think about topics and colums.</p>
                                         <p><i className="tim-icons icon-refresh-01" /><QueryBuilderIcon /> Hours 12</p>
                                         <hr />
                                     </div>
+                                    ):"")
+                                    )}
                                 </div>
                             </div>
                         </div>
