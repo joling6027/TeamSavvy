@@ -1,11 +1,11 @@
 import React, { Component, useState, useEffect } from 'react';
-import pic from "../../assets/img/Profilepic.png";
+import addnew from "../../assets/img/addbutton.png";
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import MailOutlineOutlinedIcon from '@mui/icons-material/MailOutlineOutlined';
 import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
 import {Link} from 'react-router-dom';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
-import './profile.css';
+import './addEmployee.css';
 import { Button,Card,CardBody, FormGroup,Form,Input,Row, Col, Container, CardTitle, CardSubtitle, ListGroup,
     ListGroupItem,  Label, Badge, Modal, ModalHeader, ModalBody, } from "reactstrap";
 import AuthService from '../services/authService';
@@ -14,68 +14,67 @@ import { employeeInitialValue } from '../models/employee.model';
 
   const Profile = () => {
 
-       const {http, user, getDropdown} = AuthService();
-       const dropdownData = getDropdown();
+    //    const {http, user, getDropdown} = AuthService();
+    //    const dropdownData = getDropdown();
        const [formValue, setFormValue] = useState(employeeInitialValue);
-    const GetEmployee = () => {
-        http.get(GetEndPoints().employee + '/' + user.employeeId)
-        .then((res) =>{
-            if(res.data.success){
-                let response = res.data.response;
-                setFormValue({...formValue, ...response})
-                let countryId = response.address.city.province.country.countryId;
-                let provinceId = response.address.city.province.provinceId;
-                let cityId = response.address.city.cityId;
-                let {provinces} = dropdownData.find((c) => c.countryId ===  parseInt(countryId));
-                let {cities} = provinces.find((p) => p.provinceId ===  parseInt(provinceId));
-                setAvailableProvinces(provinces);
-                setAvailableCities(cities);
-                setSelectedCity(cityId);
-                setSelectedCountry(countryId);
-                setSelectedProvince(provinceId);
-                setSkills(response.skills)
-            }
-         })
-    }
+    // const GetEmployee = () => {
+    //     http.get(GetEndPoints().employee + '/' + user.employeeId)
+    //     .then((res) =>{
+    //         if(res.data.success){
+    //             let response = res.data.response;
+    //             setFormValue({...formValue, ...response})
+    //             let countryId = response.address.city.province.country.countryId;
+    //             let provinceId = response.address.city.province.provinceId;
+    //             let cityId = response.address.city.cityId;
+    //             let {provinces} = dropdownData.find((c) => c.countryId ===  parseInt(countryId));
+    //             let {cities} = provinces.find((p) => p.provinceId ===  parseInt(provinceId));
+    //             setAvailableProvinces(provinces);
+    //             setAvailableCities(cities);
+    //             setSelectedCity(cityId);
+    //             setSelectedCountry(countryId);
+    //             setSelectedProvince(provinceId);
+    //             setSkills(response.skills)
+    //         }
+    //      })
+    // }
 
-    useEffect(()=>{
-        GetEmployee()
-    },[user.employeeId]);
+    // useEffect(()=>{
+    //     GetEmployee()
+    // },[user.employeeId]);
 
     const [selectedCountry, setSelectedCountry] = useState();
     const [selectedProvince, setSelectedProvince] = useState();
     const [selectedCity, setSelectedCity] = useState();
     const [availableProvinces, setAvailableProvinces] = useState();
     const [availableCities, setAvailableCities] = useState();
-
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
     
     const [profileModal, setproModal] = useState(false);
     const protoggle = () => setproModal(!profileModal);
-    
-    const [resignmodal, setresignModal] = useState(false);
-    const resigntoggle = () => setresignModal(!resignmodal);
-    
+
+    const [assignProject, setassignModal] = useState(false);
+    const assigntoggle = () => setassignModal(!assignProject);
+
     const [skills, setSkills] = useState(formValue.skills);
     console.log(skills)
     const handleDelete = (event) => {
     // console.log(data);
     }
 
-    const handleCountryChange = e =>{
-        setSelectedCountry(e.target.value);
-        let {provinces} = dropdownData.find((c) => c.countryId ===  parseInt(e.target.value));
-        let [{cities:availCities}] = provinces;
-        setAvailableProvinces(provinces);
-        setAvailableCities(availCities);
-    }
+    // const handleCountryChange = e =>{
+    //     setSelectedCountry(e.target.value);
+    //     let {provinces} = dropdownData.find((c) => c.countryId ===  parseInt(e.target.value));
+    //     let [{cities:availCities}] = provinces;
+    //     setAvailableProvinces(provinces);
+    //     setAvailableCities(availCities);
+    // }
 
-    const handleProvinceChange = e =>{
-        setSelectedProvince(e.target.value);
-        let {cities:availCities} = availableProvinces?.find((c) => c.provinceId ===  parseInt(e.target.value));
-        setAvailableCities(availCities);
-    }
+    // const handleProvinceChange = e =>{
+    //     setSelectedProvince(e.target.value);
+    //     let {cities:availCities} = availableProvinces?.find((c) => c.provinceId ===  parseInt(e.target.value));
+    //     setAvailableCities(availCities);
+    // }
     
     const handleChange = event => {
         const {name, value} = event.target;
@@ -97,9 +96,8 @@ import { employeeInitialValue } from '../models/employee.model';
             <Card style={{}} className="text-center prCard">
                 <CardBody className="profile-card" >
                     <Link to="#" onClick={protoggle}>
-                        <img alt="..."className="avatar mt-5" src={pic} />
+                        <img alt="..."className="avatar mt-5" src={addnew} />
                     </Link>
-
                     <CardTitle tag="h5"> {formValue.employeeFirstname + " " + formValue.employeeLastname} </CardTitle>
                 <CardSubtitle className="mb-2 text-muted" tag="h6"><small> <strong>ID: </strong>  E-{formValue.employeeId}</small>
                 {/* <p>Position, dept, location</p> */}
@@ -109,7 +107,7 @@ import { employeeInitialValue } from '../models/employee.model';
                 </CardBody>
             </Card>
 
-
+            {/* set profile modal */}
             <Modal isOpen={profileModal} toggle={protoggle} backdrop="static" centered>
                     <ModalHeader>  <h4>Add Profile Pic</h4> </ModalHeader>
                     <ModalBody>
@@ -142,46 +140,77 @@ import { employeeInitialValue } from '../models/employee.model';
             {/* team members */}
             <Card style={{}} className="mt-4 mb-md-4 mb-sm-0 prCard ">
                 <CardBody>
-                <CardTitle tag="h6"> Team Members</CardTitle>
-                <ListGroup flush className="teamMem">
-                    <ListGroupItem className="px-0 justify-content-between">  <p className="p-0 m-0"><strong>Dan Kayger</strong>  <p className="float-end">Team Lead</p></p>
-                    <Link to="mailto:dan@teamsavvy.com" className="mail text-decoration-none p-0 d-inline-block position-relative"><MailOutlineOutlinedIcon fontSize='small'/>
-                    <span className="d-none showmail position-absolute top-0 p-1 fsmall bg-light start-0">Dan@teamsavvy.com</span></Link>
-                    <Link to="tel:12345" className="mail text-decoration-none p-0 d-inline-block position-relative ms-2 "><LocalPhoneOutlinedIcon fontSize='small'/>
-                    <span className="d-none showmail position-absolute top-0 p-1 fsmall bg-light start-0">12345</span></Link>
-                    </ListGroupItem>
-                    <ListGroupItem className="px-0"> <p className="p-0 m-0"> <strong>Kartik</strong> <p className="float-end">Manager</p></p>
-                    <Link to="mailto:dan@teamsavvy.com" className="mail text-decoration-none p-0 d-inline-block position-relative"><MailOutlineOutlinedIcon fontSize='small'/>
-                    <span className="d-none showmail position-absolute top-0 p-1 fsmall bg-light start-0">Dan@teamsavvy.com</span></Link>
-                    <Link to="tel:12345" className="mail text-decoration-none p-0 d-inline-block position-relative ms-2 "><LocalPhoneOutlinedIcon fontSize='small'/>
-                    <span className="d-none showmail position-absolute top-0 p-1 fsmall bg-light start-0">12345</span></Link>
-                    </ListGroupItem>
-                    <ListGroupItem className="px-0"> <p className="p-0 m-0"> <strong>Peter Danial</strong> <p className="float-end">Software Dev</p></p>
-                    <Link to="mailto:dan@teamsavvy.com" className="mail text-decoration-none p-0 d-inline-block position-relative"><MailOutlineOutlinedIcon fontSize='small'/>
-                    <span className="d-none showmail position-absolute top-0 p-1 fsmall bg-light start-0">Dan@teamsavvy.com</span></Link>
-                    <Link to="tel:12345" className="mail text-decoration-none p-0 d-inline-block position-relative ms-2 "><LocalPhoneOutlinedIcon fontSize='small'/>
-                    <span className="d-none showmail position-absolute top-0 p-1 fsmall bg-light start-0">12345</span></Link>
-                    </ListGroupItem>
-                    <ListGroupItem className="px-0"><p className="p-0 m-0"> <strong>Dan Kayger</strong>  <p className="float-end">Designer</p></p>
-                    <Link to="mailto:dan@teamsavvy.com" className="mail text-decoration-none p-0 d-inline-block position-relative"><MailOutlineOutlinedIcon fontSize='small'/>
-                    <span className="d-none showmail position-absolute top-0 p-1 fsmall bg-light start-0">Dan@teamsavvy.com</span></Link>
-                    <Link to="tel:12345" className="mail text-decoration-none p-0 d-inline-block position-relative ms-2 "><LocalPhoneOutlinedIcon fontSize='small'/>
-                    <span className="d-none showmail position-absolute top-0 p-1 fsmall bg-light start-0">12345</span></Link>
-                    </ListGroupItem>
-                    <ListGroupItem className="px-0"> <p className="p-0 m-0">  <strong>Kartik</strong> <p className="float-end">Software Dev 2</p></p>
-                    <Link to="mailto:dan@teamsavvy.com" className="mail text-decoration-none p-0 d-inline-block position-relative"><MailOutlineOutlinedIcon fontSize='small'/>
-                    <span className="d-none showmail position-absolute top-0 p-1 fsmall bg-light start-0">Dan@teamsavvy.com</span></Link>
-                    <Link to="tel:12345" className="mail text-decoration-none p-0 d-inline-block position-relative ms-2 "><LocalPhoneOutlinedIcon fontSize='small'/>
-                    <span className="d-none showmail position-absolute top-0 p-1 fsmall bg-light start-0">12345</span></Link>                    </ListGroupItem>
-                    <ListGroupItem className="px-0"> <p className="p-0 m-0">  <strong>Dan</strong> <p className="float-end">Tester</p></p>
-                    <Link to="mailto:dan@teamsavvy.com" className="mail text-decoration-none p-0 d-inline-block position-relative"><MailOutlineOutlinedIcon fontSize='small'/>
-                    <span className="d-none showmail position-absolute top-0 p-1 fsmall bg-light start-0">Dan@teamsavvy.com</span></Link>
-                    <Link to="tel:12345" className="mail text-decoration-none p-0 d-inline-block position-relative ms-2 "><LocalPhoneOutlinedIcon fontSize='small'/>
-                    <span className="d-none showmail position-absolute top-0 p-1 fsmall bg-light start-0">12345</span></Link>
-                    </ListGroupItem>
-                </ListGroup>
+                <Button className="btn bg-primary w-100" onClick={assigntoggle}>Assign Project</Button>
                 </CardBody>
             </Card>
+
+            {/* assign project modal */}
+            <Modal isOpen={assignProject} toggle={assigntoggle} backdrop="static" centered>
+                    <ModalHeader>  <h4>Assign Project</h4> </ModalHeader>
+                    <ModalBody>
+                        <Form>
+                            <Row>
+                                <Col>
+                                 <FormGroup>
+                                    <Label className="mt-2 mb-1" for="employee">
+                                    Employee name
+                                    </Label>
+                                    <Input
+                                    id="empname"
+                                    name="empname"
+                                    type="text"
+                                    valid
+                                    />
+                                </FormGroup>
+                                </Col>
+                            </Row>
+                            <Row>
+                        <Col>
+                        <FormGroup>
+                        <Label className=""  for="projectname">
+                                Project
+                                    </Label>
+                                    <Input
+                                    id="projectname"
+                                    name="projectname"
+                                    type="select"
+                                    >
+                                    <option>
+                                        Project 1                                        
+                                    </option>
+                                    <option>
+                                        Project 2
+                                    </option>
+                                    <option>
+                                        Project 3
+                                    </option>
+                                    <option>
+                                        Project 4
+                                    </option>
+                                    <option>
+                                        Project 5
+                                    </option>
+                                    </Input>
+                        </FormGroup>
+                        </Col>
+                        </Row>
+                        <Row>
+                        <h6 className="text-muted">Project Description</h6>
+                        <p className="text-muted"> Lorem ipsum dolor sit amet. Nam voluptatibus tempore et distinctio natus eum magni quae est accusamus aspernatur.</p>
+                        <p className="text-muted">Project Manager <strong>Ben Darek</strong> <span className="ms-2">Team Member <strong> 12</strong></span></p>
+                        </Row>
+                    </Form>
+                    <div className="d-flex justify-content-center mt-5">
+                    <Button className="me-3" color="primary" onClick={assigntoggle}>
+                        Assign 
+                    </Button>{' '}
+                    <Button color="secondary" onClick={assigntoggle}>
+                        Cancel
+                    </Button>
+                    </div>
+                    </ModalBody>
+                    
+            </Modal>
         </div>
         <div className="col-md-9 col-sm-12 profileright">
             
@@ -189,7 +218,6 @@ import { employeeInitialValue } from '../models/employee.model';
             <Card className="ms-md-4 ms-sm-0 mt-sm-4 mt-md-0 col-9 prCard">
             <CardBody>
             <CardTitle tag="h5"> Personal Details </CardTitle>
-            
             <Form>
             <Row>
                 <Col md={6}>
@@ -230,8 +258,7 @@ import { employeeInitialValue } from '../models/employee.model';
                 <Input
                 id="email"
                 name="email"
-                placeholder="with a placeholder"
-                disabled
+                placeholder="jake@teamsavvy.com"
                 value={formValue.email}
                 onChange={handleChange}
                 />
@@ -243,7 +270,6 @@ import { employeeInitialValue } from '../models/employee.model';
                 Hire date
                 </Label>
                 <Input
-                disabled
                 id="date"
                 name="hiredate"
                 placeholder="01/09/2022"
@@ -310,11 +336,11 @@ import { employeeInitialValue } from '../models/employee.model';
                 id="country"
                 name="country"
                 type="select"
-                value={selectedCountry}
-                onChange={handleCountryChange}
+                // value={selectedCountry}
+                // onChange={handleCountryChange}
                 >
                 {
-                   dropdownData.map((country, index) => <option key={index} value={country.countryId}>{country.countryName}</option>)
+                //    dropdownData.map((country, index) => <option key={index} value={country.countryId}>{country.countryName}</option>)
                 }
                 </Input>
             </FormGroup>
@@ -330,11 +356,11 @@ import { employeeInitialValue } from '../models/employee.model';
                 id="province"
                 name="province"
                 type="select"
-                value={selectedProvince}
-                onChange={handleProvinceChange}
+                // value={selectedProvince}
+                // onChange={handleProvinceChange}
                 >
                 {
-                   availableProvinces?.map((province, index) => <option key={index} value={province.provinceId}>{province.provinceName}</option>)
+                //    availableProvinces?.map((province, index) => <option key={index} value={province.provinceId}>{province.provinceName}</option>)
                 }
                 </Input>
             </FormGroup>
@@ -348,11 +374,11 @@ import { employeeInitialValue } from '../models/employee.model';
                 id="city"
                 name="city"
                 type="select"
-                value={selectedCity}
-                onChange={(e) => setSelectedCity(e.target.value)}
+                // value={selectedCity}
+                // onChange={(e) => setSelectedCity(e.target.value)}
                 >
                 {
-                   availableCities?.map((city) => <option key={city.cityId} value={city.cityId}>{city.cityName}</option>)
+                //    availableCities?.map((city) => <option key={city.cityId} value={city.cityId}>{city.cityName}</option>)
                 }
                 </Input>
             </FormGroup>
@@ -376,7 +402,161 @@ import { employeeInitialValue } from '../models/employee.model';
             </Form>
             </CardBody>
             </Card>
-
+            
+            {/* Office Deatils */}
+            <Card className="ms-md-4 ms-sm-0 mt-sm-4 col-9 prCard">
+            <CardBody>
+            <CardTitle tag="h5"> Office Details </CardTitle>
+            <Form>
+            <Row>
+                <Col md={6}>
+                <FormGroup>
+                    <Label className="mt-2 mb-1" for="department">
+                    Department
+                    </Label>
+                    <Input
+                    id="department"
+                    name="department"
+                    type="select"
+                    // value={formValue.employeeFirstname}
+                    // onChange={handleChange}
+                    >
+                     <option>
+                         IT
+                    </option>
+                    <option>
+                         Finance
+                    </option>
+                    <option>
+                         Management
+                    </option>
+                    </Input>
+                </FormGroup>
+                </Col>
+                <Col md={6}>
+                <FormGroup>
+                    <Label className="mt-2 mb-1" for="role">
+                    Role
+                    </Label>
+                    <Input
+                    id="role"
+                    name="role"
+                    type="select"
+                    // value={formValue.employeeFirstname}
+                    // onChange={handleChange}
+                    >
+                     <option>
+                         Software Engineer
+                    </option>
+                    <option>
+                         Jr Software Engineer
+                    </option>
+                    <option>
+                         Sr Software Engineer
+                    </option>
+                    <option>
+                         Tester
+                    </option>
+                    <option>
+                        Jr Tester
+                    </option>
+                    <option>
+                        Sr Tester
+                    </option>
+                    <option>
+                         Graphic Designer
+                    </option>
+                    <option>
+                        UI designer
+                    </option>
+                    <option>
+                        UI UX designer
+                    </option>
+                    <option>
+                        Team Lead
+                    </option>
+                    <option>
+                        Project Manager
+                    </option>
+                    </Input>
+                </FormGroup>
+                </Col>
+            </Row>
+            <Row>
+            <Col md={6}> 
+            <FormGroup>
+                <Label className="mt-3  mb-1" for="extension" >
+                Extension
+                </Label>
+                <Input
+                id="email"
+                name="email"
+                placeholder="jake@teamsavvy.com"
+                value={formValue.email}
+                onChange={handleChange}
+                />
+            </FormGroup>
+            </Col>
+            <Col md={6}>
+            <FormGroup>
+                <Label className="mt-3" for="country">
+                Country
+                </Label>
+                <Input
+                id="country"
+                name="country"
+                type="select"
+                // value={selectedCountry}
+                // onChange={handleCountryChange}
+                >
+                {
+                //    dropdownData.map((country, index) => <option key={index} value={country.countryId}>{country.countryName}</option>)
+                }
+                </Input>
+            </FormGroup>   
+            </Col>
+            </Row>
+            <Row>
+            <Col md={6}>
+            <FormGroup>
+                <Label className="mt-3  mb-1" for="province">
+                Province
+                </Label>
+                <Input
+                id="province"
+                name="province"
+                type="select"
+                // value={selectedProvince}
+                // onChange={handleProvinceChange}
+                >
+                {
+                //    availableProvinces?.map((province, index) => <option key={index} value={province.provinceId}>{province.provinceName}</option>)
+                }
+                </Input>
+            </FormGroup>  
+                </Col>
+                <Col md={6}>
+                <FormGroup>
+                <Label className="mt-3  mb-1" for="city">
+                City
+                </Label>
+                <Input
+                id="city"
+                name="city"
+                type="select"
+                // value={selectedCity}
+                // onChange={(e) => setSelectedCity(e.target.value)}
+                >
+                {
+                //    availableCities?.map((city) => <option key={city.cityId} value={city.cityId}>{city.cityName}</option>)
+                }
+                </Input>
+            </FormGroup>
+                </Col>
+            </Row>
+            </Form>
+            </CardBody>
+            </Card>
             
             {/* skill set */}
             <Card style={{}} className="ms-md-4 ms-sm-0 mt-4 prCard">
@@ -385,53 +565,8 @@ import { employeeInitialValue } from '../models/employee.model';
                 <div className="d-flex flex-wrap">
                     <div class="skill position-relative" >
                         {
-
                         }
-                <Badge className="skillPill rounded-pill me-3 mb-3 " pill> C# </Badge> 
-                <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge " key={1} onClick={(event) => handleDelete(event.target.value)}> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
                     </div>
-                    {/* <div className="skill position-relative">
-                <Badge className="skillPill rounded-pill me-3 mb-3" pill> Java </Badge>  
-                <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge "> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
-                    </div> 
-                    <div className="skill position-relative">
-                <Badge className="skillPill rounded-pill me-3 mb-3" pill> Manual Testing </Badge> 
-                <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge "> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
-                    </div> 
-                    <div className="skill position-relative"> 
-                <Badge className="skillPill rounded-pill me-3 mb-3" pill> Automation Testing </Badge>
-                <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge "> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
-                    </div>
-                    <div className="skill position-relative"> 
-                     
-                <Badge className="skillPill rounded-pill me-3 mb-3" pill> Manual Testing </Badge>    
-                     <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge "> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
-                    </div>  
-                    <div className="skill position-relative"> 
-                     
-                <Badge className="skillPill rounded-pill me-3 mb-3" pill> C# </Badge>  
-                     <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge "> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
-                    </div>  
-                    <div className="skill position-relative"> 
-                <Badge className="skillPill rounded-pill me-3 mb-3" pill> Java </Badge>   
-                     
-                     <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge "> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
-                    </div>  
-                    <div className="skill position-relative"> 
-                <Badge className="skillPill rounded-pill me-3 mb-3" pill> Manual Testing </Badge>  
-                     
-                     <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge "> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
-                    </div>  
-                    <div className="skill position-relative"> 
-                <Badge className="skillPill rounded-pill me-3 mb-3" pill> Automation Testing </Badge>
-                     
-                     <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge "> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
-                    </div>  
-                    <div className="skill position-relative"> 
-                     
-                <Badge className="skillPill rounded-pill me-3 mb-3" pill> Manual Testing </Badge>              
-                     <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge "> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
-                    </div>   */}
                 </div>
                 <Link to="" className="alert-link text-decoration-none text-center"  onClick={toggle}> <AddOutlinedIcon/> ADD</Link>
                 {/* add skill popup */}
@@ -496,7 +631,7 @@ import { employeeInitialValue } from '../models/employee.model';
                     id="bankname"
                     name="bankname"
                     type="text"
-                    disabled
+                    
                     value={formValue.bankname}
                     onChange={handleChange}
                     />
@@ -511,7 +646,7 @@ import { employeeInitialValue } from '../models/employee.model';
                     id="accountnum"
                     name="bankaccount"
                     type="text"
-                    disabled
+                    
                     value={formValue.bankaccount}
                     onChange={handleChange}
                     />
@@ -528,7 +663,7 @@ import { employeeInitialValue } from '../models/employee.model';
                 id="bankcode"
                 name="bankcode"
                 type="text"
-                disabled
+                
                 value={formValue.bankcode}
                 onChange={handleChange}
                 />
@@ -539,29 +674,28 @@ import { employeeInitialValue } from '../models/employee.model';
             </CardBody>
             </Card>
             <Card className="d-flex ms-md-4 ms-sm-0 mt-4 prCard">
-                <CardBody className="d-flex justify-content-between">
-                <CardTitle tag="h5" className="mb-3"> Resignation </CardTitle>
-                <Button onClick={resigntoggle} className="btn-primary bg-primary float-end">Resign</Button>
+                <CardBody className="">
+                <CardTitle tag="h5" className="mb-3"> Pay scale </CardTitle>
+                <Row>
+                <Form>
+                   
+                        <Col md={6}>
+                        <FormGroup>
+                            <Label className="mt-2 mb-1" for="salary">
+                            Salary per month
+                            </Label>
+                            <Input
+                            id="salary"
+                            name="salary"
+                            type="text"
+                            />
+                        </FormGroup>
+                        </Col>
+                  
+                </Form>
+                </Row>
                 </CardBody>
             </Card>
-            
-            {/* resign popup  */}
-            <Modal isOpen={resignmodal} toggle={resigntoggle} backdrop="static" centered>
-                    <ModalHeader>  <h4>Resignation </h4> </ModalHeader>
-                    <ModalBody>
-                        <p>This will initiate your resignation process from 'Nov 2, 2022' and notify your manager. 
-                            (if required) You need to serve 15 days notice period. </p>
-                    <div className="d-flex justify-content-center mt-5">
-                    <Button className="me-3" color="primary" onClick={resigntoggle}>
-                        Submit
-                    </Button>{' '}
-                    <Button color="secondary" onClick={resigntoggle}>
-                        Cancel
-                    </Button>
-                    </div>
-                    </ModalBody>
-                    
-                </Modal>
            
             <span className="ms-2 mt-3 d-inline-block text-center p-3">
                 <Button className="d-inline-block bg-primary btn-primary"> Submit Changes</Button>
