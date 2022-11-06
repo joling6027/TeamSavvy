@@ -5,18 +5,12 @@ import { useLocation } from "react-router-dom";
 import '../../assets/css/bootstrap.min.css'
 import './payroll.css'
 
-const Paystub = ({ data }) => {
+const Paystub = () => {
 
+  const data = useLocation();
   console.log('payroll -')
-  console.log(data)
-  const location = useLocation();
-  // const history = userHistory();
-  // const { payrollItem = '1' } = location.state || {}
-  useEffect(() => {
+  console.log(data.state.payrollItem)
 
-  })
-
-  console.log(location)
   return (
     <>
       <div className="container">

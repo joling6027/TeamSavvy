@@ -91,12 +91,12 @@ const Payroll = ({ columns, data }) => {
                                         <td className="text-center">${payrollItem.earning}</td>
                                         <td className="text-center">${payrollItem.netpay}</td>
                                         <td className="text-center view-file">
-                                            <Link to={{ pathname: `/payroll/payrollId/${payrollItem.payrollId}`, state: payrollItem }}
-                                                key={payrollItem.payrollId}
-                                                data={payrollItem}>VIEW FILE</Link>
-                                            {/* <Routes>
-                                            <Route path='/payroll/:id' element={<Paystub/>} />
-                                            </Routes> */}
+                                            {/* <Link to={`/payroll/payrollId/${payrollItem.payrollId}`}
+                                                >VIEW FILE</Link> */}
+                                            <Link 
+                                                to={`/payroll/${payrollItem.payrollId}`}
+                                                state={{payrollItem}}
+                                            >VIEW FILE</Link>
                                         </td>
                                     </tr>
                                 ))}

@@ -53,9 +53,9 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/timesheet" element={<Timesheet />} />
             <Route path="/task" element={<Task />} />
-            <Route path="/payroll" element={<Payroll data={data} columns={COLUMNS} />} />
+            <Route path="/payroll" exact element={<Payroll data={data} columns={COLUMNS} />} />
             <Route path="/jobs" element={<InternalJobs />} />
-            <Route path='/payroll/payrollId/:id' element={<Paystub />} />
+            <Route path='/payroll/:payrollid' element={<Paystub />} />
           </Routes>
         </main>
       </div>

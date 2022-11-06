@@ -1,4 +1,5 @@
 import React, { Component, useState, useEffect } from 'react';
+import moment from 'moment/moment';
 import '../../assets/css/bootstrap.min.css'
 import { Modal } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
@@ -103,12 +104,12 @@ const TaskModal = (props) => {
                 <Row>
                   <Col>
                     <Label for="task-start-date">Start Date</Label>
-                    <Input type='date' name='task-start-date' id='task-start-date' invalid={validate} />
+                    <Input type='date' name='task-start-date' id='task-start-date' invalid={validate} defaultValue={moment(props.onOpen().taskStartDate).format("YYYY-MM-DD")}/>
                     <FormFeedback>The start date cannnot be blank</FormFeedback>
                   </Col>
                   <Col>
                     <Label for="task-end-date">End Date</Label>
-                    <Input type='date' name='task-end-date' id='task-end-date' invalid={validate} />
+                    <Input type='date' name='task-end-date' id='task-end-date' invalid={validate} defaultValue={moment(props.onOpen().tastEndDate).format("YYYY-MM-DD")} />
                     <FormFeedback>The start date cannnot be blank</FormFeedback>
                   </Col>
                 </Row>
