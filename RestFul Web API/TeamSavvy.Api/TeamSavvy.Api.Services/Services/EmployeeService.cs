@@ -8,6 +8,7 @@ using TeamSavvy.Api.Entities.GenericRepo;
 using TeamSavvy.Api.Services.IServices;
 using TeamSavvy.Api.Entities.Context;
 using TeamSavvy.Api.Entities.Models;
+using TeamSavvy.Api.Utilities.Helper;
 
 namespace TeamSavvy.Api.Services.Services
 {
@@ -32,27 +33,58 @@ namespace TeamSavvy.Api.Services.Services
 
         public bool AddEmployee(EmployeeDto employee)
         {
-            //need to work on it
             bool isSuccess = false;
             try
             {
                 if (employee != null)
                 {
 
-                    var addr = _mapper.Map<Address>(employee.Address);
+                    var addr = new Address
+                    {
+                        Apartment = employee.Address.Apartment,
+                        Postcode = employee.Address.Postcode,
+                        CityId = employee.Address.City.CityId
+                    };
                     _unitOfWork.Repository<Address>().Insert(addr);
                     _unitOfWork.SaveChanges();
-                    var emp = _mapper.Map<Employee>(employee);
-                    emp.AddressId = addr.AddressId;
-
+                    var emp = new Employee
+                    {
+                        AddressId = addr.AddressId,
+                        Bankaccount = employee.Bankaccount,
+                        Bankcode = employee.Bankcode,
+                        Bankname = employee.Bankname,
+                        Dateofbirth = employee.Dateofbirth,
+                        DepartmentId = employee.Department.DepartmentId,
+                        Email = employee.Email,
+                        EmployeeFirstname = employee.EmployeeFirstname,
+                        EmployeeId = employee.EmployeeId,
+                        EmployeeLastname = employee.EmployeeLastname,
+                        EmployeeImage = employee.EmployeeImage,
+                        Extension = employee.Extension,
+                        Hiredate = employee.Hiredate,
+                        JobLocationId = employee.JobLocation.JobLocationId,
+                        Password = employee.Password,
+                        Phone = employee.Phone,
+                        RoleId = employee.Role.RoleId,
+                        StatusId = employee.Status.StatusId,
+                    };
+                  
                     _unitOfWork.Repository<Employee>().Insert(emp);
                     _unitOfWork.SaveChanges();
 
-                    var skills = _mapper.Map<List<EmployeeSkill>>(employee.Skills);
-                    skills.ForEach(skill => skill.EmployeeId = emp.EmployeeId);
+                    var skills = new List<EmployeeSkill>();
+                    foreach(var skill in employee.Skills)
+                    {
+                        skills.Add(new EmployeeSkill
+                        {
+                            EmployeeId = emp.EmployeeId,
+                            Isactive = skill.Isactive,
+                            SkillId = skill.SkillId,
+                        });
+                    }
+
                     _unitOfWork.Repository<EmployeeSkill>().Insert(skills);
                     _unitOfWork.SaveChanges();
-
 
                     if (emp.EmployeeId > 0 && skills.Any() && addr.AddressId > 0)
                     {
@@ -74,6 +106,7 @@ namespace TeamSavvy.Api.Services.Services
                              empsk => empsk.SkillId,
                              sk => sk.SkillId,
                              (empsk, sk) => new { EmpSk = empsk, Sk = sk })
+                             .Where(x => x.EmpSk.Isactive == true)
                              .Select(x => new EmployeeSkillDto
                              {
                                  EmployeeId = x.EmpSk.EmployeeId,
@@ -96,6 +129,7 @@ namespace TeamSavvy.Api.Services.Services
                        em => em.Emp.JobLocationId,
                        jobAddr => jobAddr.JobLocationId,
                        (em, jobAddr) => new { Em = em, JobAddr = jobAddr })
+                      .Where(x => x.Em.Emp.StatusId == 1)
                       .Select(x => new EmployeeDto
                       {
 
@@ -105,7 +139,6 @@ namespace TeamSavvy.Api.Services.Services
                           Dateofbirth = x.Em.Emp.Dateofbirth,
                           Email = x.Em.Emp.Email.Trim(),
                           Hiredate = x.Em.Emp.Hiredate,
-                          //DepartmentId = x.Em.Emp.DepartmentId,
                           Department = _unitOfWork.Context.Department.Where(y => y.DepartmentId == x.Em.Emp.DepartmentId).Select(x => new DepartmentDto { DepartmentId = x.DepartmentId, DepartmentName = x.DepartmentName }).FirstOrDefault(),
                           Extension = x.Em.Emp.Extension,
                           Phone = x.Em.Emp.Phone.Trim(),
@@ -114,8 +147,6 @@ namespace TeamSavvy.Api.Services.Services
                           Bankcode = x.Em.Emp.Bankcode.Trim(),
                           Role = _unitOfWork.Context.Role.Where(y => y.RoleId == x.Em.Emp.RoleId).Select(x => new RoleDto { RoleId = x.RoleId, RoleType = x.RoleType }).FirstOrDefault(),
                           Status = _unitOfWork.Context.Status.Where(y => y.StatusId == x.Em.Emp.StatusId).Select(x => new StatusDto { StatusId = x.StatusId, StatusType = x.StatusType }).FirstOrDefault(),
-                          //RoleId = x.Em.Emp.RoleId,
-                          //StatusId = x.Em.Emp.StatusId,
                           EmployeeImage = x.Em.Emp.EmployeeImage,
                           JobLocation = new JobLocationDto
                           {
@@ -139,7 +170,6 @@ namespace TeamSavvy.Api.Services.Services
                                   }).FirstOrDefault()
 
                               }).FirstOrDefault(),
-                              //CityId = x.JobAddr.CityId,
                               Postcode = x.JobAddr.Postcode
                           },
                           Address = new AddressDto
@@ -165,7 +195,6 @@ namespace TeamSavvy.Api.Services.Services
                                   }).FirstOrDefault()
 
                               }).FirstOrDefault(),
-                              //CityId = x.Em.Addr.CityId
                           }
 
                       })
@@ -189,7 +218,7 @@ namespace TeamSavvy.Api.Services.Services
                              empsk => empsk.SkillId,
                              sk => sk.SkillId,
                              (empsk, sk) => new { EmpSk = empsk, Sk = sk })
-                             .Where(x => x.EmpSk.EmployeeId == id)
+                             .Where(x => x.EmpSk.EmployeeId == id && x.EmpSk.Isactive == true)
                              .Select(x => new EmployeeSkillDto
                              {
                                  EmployeeId = x.EmpSk.EmployeeId,
@@ -212,7 +241,7 @@ namespace TeamSavvy.Api.Services.Services
                        em => em.Emp.JobLocationId,
                        jobAddr => jobAddr.JobLocationId,
                        (em, jobAddr) => new {Em = em, JobAddr = jobAddr })
-                      .Where(x => x.Em.Emp.EmployeeId == id)
+                      .Where(x => x.Em.Emp.EmployeeId == id && x.Em.Emp.StatusId == 1)
                       .Select(x => new EmployeeDto
                       {
                           EmployeeId = x.Em.Emp.EmployeeId,
@@ -221,7 +250,6 @@ namespace TeamSavvy.Api.Services.Services
                           Dateofbirth = x.Em.Emp.Dateofbirth,
                           Email = x.Em.Emp.Email.Trim(),
                           Hiredate = x.Em.Emp.Hiredate,
-                          //DepartmentId = x.Em.Emp.DepartmentId,
                           Department = _unitOfWork.Context.Department.Where(y => y.DepartmentId == x.Em.Emp.DepartmentId).Select(x => new DepartmentDto { DepartmentId = x.DepartmentId, DepartmentName = x.DepartmentName }).FirstOrDefault(),
                           Extension = x.Em.Emp.Extension,
                           Phone = x.Em.Emp.Phone.Trim(),
@@ -230,8 +258,6 @@ namespace TeamSavvy.Api.Services.Services
                           Bankcode = x.Em.Emp.Bankcode.Trim(),
                           Role = _unitOfWork.Context.Role.Where(y=>y.RoleId == x.Em.Emp.RoleId).Select(x => new RoleDto { RoleId = x.RoleId, RoleType= x.RoleType}).FirstOrDefault(),
                           Status = _unitOfWork.Context.Status.Where(y => y.StatusId == x.Em.Emp.StatusId).Select(x => new StatusDto { StatusId = x.StatusId, StatusType = x.StatusType }).FirstOrDefault(),
-                          //RoleId = x.Em.Emp.RoleId,
-                          //StatusId = x.Em.Emp.StatusId,
                           EmployeeImage = x.Em.Emp.EmployeeImage,
                           JobLocation = new JobLocationDto
                           {
@@ -255,7 +281,6 @@ namespace TeamSavvy.Api.Services.Services
                                   }).FirstOrDefault()
                                   
                               }).FirstOrDefault(),
-                              //CityId = x.JobAddr.CityId,
                               Postcode = x.JobAddr.Postcode
                           },
                           Address = new AddressDto
@@ -281,7 +306,6 @@ namespace TeamSavvy.Api.Services.Services
                                   }).FirstOrDefault()
 
                               }).FirstOrDefault(),
-                              //CityId = x.Em.Addr.CityId
                           }
                       })
                       .FirstOrDefault();
@@ -311,7 +335,6 @@ namespace TeamSavvy.Api.Services.Services
                         Postcode = employee.Address.Postcode,
                         CityId = employee.Address.City.CityId
                     };
-                        //_mapper.Map<Address>(employee.Address);
 
                     _unitOfWork.Repository<Address>().Update(addr);
                     if (addr.AddressId > 0)
@@ -337,16 +360,51 @@ namespace TeamSavvy.Api.Services.Services
                             RoleId =employee.Role.RoleId,
                             StatusId = employee.Status.StatusId,
                         };
-                            //_mapper.Map<EmployeeDto, Employee>(employee);
-                        //empUpdate.AddressId = addr.AddressId;
-                        _unitOfWork.Context.Update(empUpdate);
+                        _unitOfWork.Repository<Employee>().Update(empUpdate);
                     }
 
-                    var skills = _mapper.Map<List<EmployeeSkill>>(employee.Skills);
-                   
-                    //skills.ForEach(skill =>  employee.Skills.ForEach(s => skill.SkillId = s.Skills.SkillId));
-                    _unitOfWork.Repository<EmployeeSkill>().Update(skills);
+
+                    var skillsDelete = new List<EmployeeSkill>();
+                    var skillsAdd = new List<EmployeeSkill>();
+                    foreach (var skill in employee.Skills)
+                    {
+                        if(skill.Isactive)
+                        {
+                            skillsAdd.Add(new EmployeeSkill
+                            {
+                                EmployeeId = skill.EmployeeId,
+                                Isactive = skill.Isactive,
+                                SkillId = skill.SkillId <= 0 ? skill.Skills.SkillId : skill.SkillId,
+                            });
+                        }
+                        if(!skill.Isactive)
+                        {
+                            skillsDelete.Add(new EmployeeSkill
+                            {
+                                EmployeeSkillId = skill.EmployeeSkillId,
+                                EmployeeId = skill.EmployeeId,
+                                Isactive = skill.Isactive,
+                                SkillId = skill.SkillId <= 0 ? skill.Skills.SkillId : skill.SkillId,
+                            });
+
+                        }
+                       
+                    }
+
+
+                    if(skillsDelete.Any())
+                    {
+                        _unitOfWork.Repository<EmployeeSkill>().Delete(skillsDelete);
+                        _unitOfWork.SaveChanges();
+                    }
+
+                    if (skillsAdd.Any())
+                    {
+                        _unitOfWork.Repository<EmployeeSkill>().Insert(skillsAdd);
+                        _unitOfWork.SaveChanges();
+                    }
                     _unitOfWork.SaveChanges();
+
                     isSuccess = true;
                 }
             }
@@ -358,7 +416,7 @@ namespace TeamSavvy.Api.Services.Services
             return isSuccess;
         }
 
-        public bool DeleteEmployee(int id, string status)
+        public bool DeleteEmployee(int id)
         {
 
             bool isSuccess = false;
@@ -370,10 +428,11 @@ namespace TeamSavvy.Api.Services.Services
                     if (employee != null)
                     {
                         var statusId = _unitOfWork.Context.Status
-                                                        .Where(x => x.StatusType == status)
+                                                        .Where(x => x.StatusType == EmployeeStatus.Resigned)
                                                         .Select(x => x.StatusId)
                                                         .FirstOrDefault();
                         employee.StatusId = statusId;
+                        employee.Resigneddate = DateTime.Now.ToString("yyyy-MM-dd");
                     }
 
                     _unitOfWork.Context.Update(employee);

@@ -181,15 +181,14 @@ namespace TeamSavvy.Api.Entities.Controllers
             return response;
         }
 
-        // DELETE api/<EmployeeController>/5
-        [Route("deleteEmployee/{id}/{status}")]
+        [Route("deleteEmployee/{id}")]
         [HttpDelete]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ResponseMessage), 200)]
         [ProducesResponseType(typeof(ResponseMessage), 400)]
         [ProducesResponseType(typeof(ResponseMessage), 401)]
         [ProducesResponseType(typeof(ResponseMessage), 404)]
-        public IActionResult Delete([FromRoute] int id, [FromRoute] string status)
+        public IActionResult Delete([FromRoute] int id)
         {
             ActionResult response;
             ResponseMessage responseMessage;
@@ -200,7 +199,7 @@ namespace TeamSavvy.Api.Entities.Controllers
             }
             else
             {
-                bool isSuccess = _employeeService.DeleteEmployee(id, status);
+                bool isSuccess = _employeeService.DeleteEmployee(id);
                 if (!isSuccess)
                 {
                     response = NotFound(new ResponseMessage(false, null, new Message(HttpStatusCode.NotFound, "No record is deleted in database.")));

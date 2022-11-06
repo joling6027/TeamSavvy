@@ -30,14 +30,24 @@ const AuthService = () => {
         navigate('/dashboard');
     };
 
-    const setDropdown = (data) =>{
-        sessionStorage.setItem('dropdown', JSON.stringify(data));
+    const setDropdownCont = (data) =>{
+        sessionStorage.setItem('dropdownCont', JSON.stringify(data));
     };
 
-    const getDropdown = () =>{
-        const dd_data =  sessionStorage.getItem('dropdown');
+    const getDropdownCont = () =>{
+        const dd_data =  sessionStorage.getItem('dropdownCont');
         const dd_detail =  JSON.parse(dd_data);
         return dd_detail;
+    }
+
+    const setSkillLst = (data) =>{
+        sessionStorage.setItem('skills', JSON.stringify(data));
+    };
+
+    const getSkillsLst = () =>{
+        const sk_data =  sessionStorage.getItem('skills');
+        const sk_detail =  JSON.parse(sk_data);
+        return sk_detail;
     }
 
     const logout = () =>{
@@ -57,8 +67,10 @@ const AuthService = () => {
         token,
         user,
         getToken, 
-        getDropdown,
-        setDropdown,
+        getDropdownCont,
+        setDropdownCont,
+        getSkillsLst,
+        setSkillLst,
         logout,
         http
     }

@@ -18,7 +18,7 @@ import AuthService from '../services/authService';
 import { GetEndPoints } from '../utilities/EndPoints';
 
 const Login = () => {
-  const {http, setToken, setDropdown} = AuthService();
+  const {http, setToken, setDropdownCont, setSkillLst} = AuthService();
   const [employeeId, setEmployeeId] = useState();
   const [password, setPassword] = useState();
 
@@ -33,10 +33,18 @@ const Login = () => {
            }
         })
         .then(
-          http.get(GetEndPoints().dropdown)
+          http.get(GetEndPoints().dropdownCont)
           .then((res) =>{
              if(res.data.success){
-              setDropdown(res.data.response);
+              setDropdownCont(res.data.response);
+             }
+          })
+        )
+        .then(
+          http.get(GetEndPoints().dropdownSkills)
+          .then((res) =>{
+             if(res.data.success){
+              setSkillLst(res.data.response);
              }
           })
         );

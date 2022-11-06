@@ -51,8 +51,8 @@ namespace TeamSavvy.Api.Entities.Context
         {
             if (!optionsBuilder.IsConfigured)
             {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-//                optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Database=TeamSavvy;Trusted_Connection=True;");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Database=TeamSavvy;Trusted_Connection=True;");
             }
         }
 
@@ -216,6 +216,11 @@ namespace TeamSavvy.Api.Entities.Context
                     .HasMaxLength(15)
                     .IsUnicode(false);
 
+                entity.Property(e => e.Resigneddate)
+                    .HasColumnName("RESIGNEDDATE")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.RoleId).HasColumnName("ROLE_ID");
 
                 entity.Property(e => e.StatusId).HasColumnName("STATUS_ID");
@@ -307,6 +312,11 @@ namespace TeamSavvy.Api.Entities.Context
 
                 entity.Property(e => e.SkillId).HasColumnName("SKILL_ID");
 
+                entity.HasOne(d => d.Employee)
+                    .WithMany(p => p.EmployeeSkill)
+                    .HasForeignKey(d => d.EmployeeId)
+                    .HasConstraintName("FK_Employee_Skill_Employee");
+
                 entity.HasOne(d => d.Skill)
                     .WithMany(p => p.EmployeeSkill)
                     .HasForeignKey(d => d.SkillId)
@@ -367,7 +377,6 @@ namespace TeamSavvy.Api.Entities.Context
                 entity.HasOne(d => d.Employee)
                     .WithMany(p => p.JobApplied)
                     .HasForeignKey(d => d.EmployeeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Job_Applied_Employee");
 
                 entity.HasOne(d => d.Job)
@@ -429,6 +438,8 @@ namespace TeamSavvy.Api.Entities.Context
 
                 entity.Property(e => e.Jobskillid).HasColumnName("JOBSKILLID");
 
+                entity.Property(e => e.Isactive).HasColumnName("ISACTIVE");
+
                 entity.Property(e => e.Jobid).HasColumnName("JOBID");
 
                 entity.Property(e => e.Skillid).HasColumnName("SKILLID");
@@ -436,13 +447,11 @@ namespace TeamSavvy.Api.Entities.Context
                 entity.HasOne(d => d.Job)
                     .WithMany(p => p.JobSkills)
                     .HasForeignKey(d => d.Jobid)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Job_Skills_Job");
 
                 entity.HasOne(d => d.Skill)
                     .WithMany(p => p.JobSkills)
                     .HasForeignKey(d => d.Skillid)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Job_Skills_Skill");
             });
 
@@ -670,8 +679,10 @@ namespace TeamSavvy.Api.Entities.Context
                     .IsUnicode(false);
 
                 entity.Property(e => e.AssignedDate)
+                    .IsRequired()
                     .HasColumnName("ASSIGNED_DATE")
-                    .HasColumnType("date");
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.AssignedTo)
                     .HasColumnName("ASSIGNED_TO")
@@ -693,7 +704,8 @@ namespace TeamSavvy.Api.Entities.Context
 
                 entity.Property(e => e.TaskStartDate)
                     .HasColumnName("TASK_START_DATE")
-                    .HasColumnType("date");
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.TaskStatus)
                     .HasColumnName("TASK_STATUS")
@@ -707,7 +719,8 @@ namespace TeamSavvy.Api.Entities.Context
 
                 entity.Property(e => e.TastEndDate)
                     .HasColumnName("TAST_END_DATE")
-                    .HasColumnType("date");
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.HasOne(d => d.Employee)
                     .WithMany(p => p.Task)

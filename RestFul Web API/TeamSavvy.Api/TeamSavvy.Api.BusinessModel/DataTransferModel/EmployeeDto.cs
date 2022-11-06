@@ -11,12 +11,10 @@ namespace TeamSavvy.Api.BusinessModel.DataTransferModel
         public string EmployeeLastname { get; set; }
         public string Dateofbirth { get; set; }
         public string Hiredate { get; set; }
+        public string Resigneddate { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
         public int Extension { get; set; }
-        //public int DepartmentId { get; set; }
-        //public int RoleId { get; set; }
-        //public int StatusId { get; set; }
         public string Bankaccount { get; set; }
         public byte[] EmployeeImage { get; set; }
         public string Password { get; set; }

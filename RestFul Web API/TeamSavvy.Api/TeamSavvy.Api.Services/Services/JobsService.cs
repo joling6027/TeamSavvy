@@ -42,10 +42,6 @@ namespace TeamSavvy.Api.Services.Services
                     {
                         _unitOfWork.Repository<Job>().Insert(jb);
                         _unitOfWork.SaveChanges();
-                        //var skills = _mapper.Map<List<JobSkills>>(job.JobSkills);
-                        //skills.ForEach(skill => skill.Jobid = jb.JobId);
-                        //_unitOfWork.Repository<JobSkills>().Insert(skills);
-                        //_unitOfWork.SaveChanges();
                         isSuccess = true;
                     }
 
@@ -72,8 +68,7 @@ namespace TeamSavvy.Api.Services.Services
                         var jb = _mapper.Map<Job>(job);
                         if (jb != null)
                         {
-                             jb.Isdelete = true;
-                            _unitOfWork.Repository<Job>().Update(jb);
+                            _unitOfWork.Repository<Job>().Delete(jb);
                             _unitOfWork.SaveChanges();
                             isSuccess = true;
                         }
@@ -86,6 +81,51 @@ namespace TeamSavvy.Api.Services.Services
             }
 
             return isSuccess;
+        }
+
+        public List<EmployeeDto> GetEmployeesAppliedJob(int id)
+        {
+            List<EmployeeDto> employees = null;
+            try
+            {
+                var emps = _unitOfWork.Context.JobApplied
+                    .Where(x => x.JobId == id)
+                    .Select(e => e.EmployeeId).ToList();
+                if(emps.Any())
+                {
+                    employees = new List<EmployeeDto>();
+                    foreach (var empId in emps)
+                    {
+                        var emp = _unitOfWork.Context.Employee.Where(x => x.EmployeeId == empId)
+                                   .Select(e => new EmployeeDto
+                                   {
+                                       EmployeeId = empId,
+                                       EmployeeFirstname = e.EmployeeFirstname.Trim(),
+                                       EmployeeLastname = e.EmployeeLastname.Trim(),
+                                       Email = e.Email,
+                                       Department = _unitOfWork.Context.Department.Where(d => d.DepartmentId == e.DepartmentId)
+                                       .Select(s => new DepartmentDto
+                                       {
+                                           DepartmentId = s.DepartmentId,
+                                           DepartmentName = s.DepartmentName.Trim(),
+                                       }).FirstOrDefault(),
+                                       Role = _unitOfWork.Context.Role.Where(r => r.RoleId == e.RoleId)
+                                       .Select(r => new RoleDto
+                                       {
+                                           RoleId = r.RoleId,
+                                           RoleType = r.RoleType.Trim(),
+                                       }).FirstOrDefault()
+                                   }).FirstOrDefault();
+                        employees.Add(emp);
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                employees = null;
+            }
+
+            return employees;
         }
 
         public JobDto GetJobById(int id)
@@ -197,14 +237,61 @@ namespace TeamSavvy.Api.Services.Services
             {
                 if (job != null)
                 {
-                    var jb = _mapper.Map<Job>(job);
+                    var jb = new Job
+                    {
+                        JobId = job.JobId,
+                        Details = job.Details,
+                        Responsibilities = job.Responsibilities,
+                        Salary = job.Salary,
+                        CreatedOn = job.CreatedOn,
+                        JobPosition = job.JobPosition,
+                        Deadline = job.Deadline,
+                        Isdelete = job.Isdelete,
+                    };
+
                     if (jb != null)
                     {
+
                         _unitOfWork.Repository<Job>().Update(jb);
-                        _unitOfWork.SaveChanges();
-                        //need to work on this
-                        var skills = _mapper.Map<List<JobSkills>>(job.JobSkills);
-                        _unitOfWork.Repository<JobSkills>().Update(skills);
+                        var skillsDelete = new List<JobSkills>();
+                        var skillsAdd = new List<JobSkills>();
+                        foreach (var jobSkill in job.JobSkills)
+                        {
+                            if (jobSkill.Isactive)
+                            {
+                                skillsAdd.Add(new JobSkills
+                                {
+                                    Jobid = jobSkill.Jobid,
+                                    Isactive = jobSkill.Isactive,
+                                    Skillid = jobSkill.Skillid <= 0 ? jobSkill.Skills.SkillId : jobSkill.Skillid,
+
+                                });
+                            }
+                            if (!jobSkill.Isactive)
+                            {
+                                skillsDelete.Add(new JobSkills
+                                {
+                                    Jobskillid = jobSkill.Jobskillid,
+                                    Jobid = jobSkill.Jobid,
+                                    Isactive = jobSkill.Isactive,
+                                    Skillid = jobSkill.Skillid <= 0 ? jobSkill.Skills.SkillId : jobSkill.Skillid,
+                                });
+
+                            }
+                        }
+
+                        if (skillsDelete.Any())
+                        {
+                            _unitOfWork.Repository<JobSkills>().Delete(skillsDelete);
+                            _unitOfWork.SaveChanges();
+                        }
+
+                        if (skillsAdd.Any())
+                        {
+                            _unitOfWork.Repository<JobSkills>().Insert(skillsAdd);
+                            _unitOfWork.SaveChanges();
+                        }
+          
                         _unitOfWork.SaveChanges();
                         isSuccess = true;
                     }

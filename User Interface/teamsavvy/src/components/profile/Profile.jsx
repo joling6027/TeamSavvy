@@ -11,12 +11,15 @@ import { Button,Card,CardBody, FormGroup,Form,Input,Row, Col, Container, CardTit
 import AuthService from '../services/authService';
 import { GetEndPoints } from '../utilities/EndPoints';
 import { employeeInitialValue } from '../models/employee.model';
+import ConvertToBase64 from '../utilities/uploadImage';
 
-  const Profile = () => {
-
-       const {http, user, getDropdown} = AuthService();
-       const dropdownData = getDropdown();
-       const [formValue, setFormValue] = useState(employeeInitialValue);
+const Profile = () => {
+    const resignationStr = `This will initiate your resignation process from ${new Date().toDateString()} and notify your manager.`+ 
+                           `(if required) You need to serve 15 days notice period.`
+    const {http, user, getDropdownCont, getSkillsLst} = AuthService();
+    const dropdownData = getDropdownCont();
+    const skillsData = getSkillsLst();
+    const [formValue, setFormValue] = useState(employeeInitialValue);
     const GetEmployee = () => {
         http.get(GetEndPoints().employee + '/' + user.employeeId)
         .then((res) =>{
@@ -38,8 +41,18 @@ import { employeeInitialValue } from '../models/employee.model';
          })
     }
 
+    const GetTeamMembers = () =>{
+        http.get(GetEndPoints().teams + '/' + user.employeeId)
+        .then((res) =>{
+            if(res.data.success){
+               setTeamMembers(res.data.response)
+            }
+         })
+    };
+
     useEffect(()=>{
-        GetEmployee()
+        GetEmployee();
+        GetTeamMembers();
     },[user.employeeId]);
 
     const [selectedCountry, setSelectedCountry] = useState();
@@ -58,10 +71,9 @@ import { employeeInitialValue } from '../models/employee.model';
     const resigntoggle = () => setresignModal(!resignmodal);
     
     const [skills, setSkills] = useState(formValue.skills);
-    console.log(skills)
-    const handleDelete = (event) => {
-    // console.log(data);
-    }
+    const [selectOptions, setSelectOptions] = useState([]);
+
+    const [teamMembers, setTeamMembers] = useState([])
 
     const handleCountryChange = e =>{
         setSelectedCountry(e.target.value);
@@ -80,7 +92,64 @@ import { employeeInitialValue } from '../models/employee.model';
     const handleChange = event => {
         const {name, value} = event.target;
         setFormValue({...formValue, [name]: value});
+        console.log(formValue)
     };
+
+    const handleSkillChange = event =>{
+        let target = event.target
+        let value = Array.from(target.selectedOptions, option => option.value);
+        setSelectOptions(value);
+    };
+
+    const resignCancel = () =>{ resigntoggle();}
+    const resignSubmit = () =>{ resigntoggle();}
+    const skillCancel = () =>{ setSelectOptions([]); toggle();}
+    const skillSubmit = () =>{
+        toggle();
+        let skObjs = [];
+        skObjs = selectOptions.map((id, index) =>{
+           let skRes = skillsData.find((s) => s.skillId === parseInt(id));
+            return {
+                employeeSkillId:0,
+                employeeId:user.employeeId,
+                skillId:skRes.skillId,
+                isactive: true, 
+                skills: {
+                    skillId:id,
+                    skillName:skRes.skillName,
+                },
+            }
+        })
+        
+       let skArr = [...skills, ...skObjs];
+       setSkills(skArr);
+       formValue.skills = [...skArr]
+       setFormValue(formValue)
+       setSelectOptions([]); 
+
+    }
+
+    const handleDelete = (skillId) => {
+        let newSkills = skills.map((s) => {
+            if(s.skills.skillId == parseInt(skillId))
+            {
+                s.isactive = false;
+            }
+            return s;
+        })
+        formValue.skills = [...newSkills]
+        setFormValue(formValue)
+        setSkills(newSkills);
+
+       
+    }
+
+    const handleImage = async (e) =>{
+        const file = e.target.files[0];
+        const base64 = await ConvertToBase64(file);
+        setFormValue({...formValue, employeeImage: base64});
+        protoggle();
+    }
 
     const handSubmit = event =>{
         event.preventDefault();
@@ -97,7 +166,7 @@ import { employeeInitialValue } from '../models/employee.model';
             <Card style={{}} className="text-center prCard">
                 <CardBody className="profile-card" >
                     <Link to="#" onClick={protoggle}>
-                        <img alt="..."className="avatar mt-5" src={pic} />
+                        <img alt="..."className="avatar mt-5 rounded-circle" style={{width:100}} src={`${formValue.employeeImage ? formValue.employeeImage : pic}`} />
                     </Link>
 
                     <CardTitle tag="h5"> {formValue.employeeFirstname + " " + formValue.employeeLastname} </CardTitle>
@@ -120,15 +189,16 @@ import { employeeInitialValue } from '../models/employee.model';
                             </Label>
                             <Input
                             id="profilepic"
-                            name="profilepic"
+                            name="employeeImage"
                             type="file"
                             accept="image/png, image/gif, image/jpeg"
+                            onChange={handleImage}
                             >
                             </Input>
                         </FormGroup>
                     </Form>
                     <div className="d-flex justify-content-center mt-5">
-                    <Button className="me-3" color="primary" onClick={protoggle}>
+                    <Button className="me-3" color="primary" onClick={handleImage}>
                         Submit
                     </Button>{' '}
                     <Button color="secondary" onClick={protoggle}>
@@ -144,41 +214,19 @@ import { employeeInitialValue } from '../models/employee.model';
                 <CardBody>
                 <CardTitle tag="h6"> Team Members</CardTitle>
                 <ListGroup flush className="teamMem">
-                    <ListGroupItem className="px-0 justify-content-between">  <p className="p-0 m-0"><strong>Dan Kayger</strong>  <p className="float-end">Team Lead</p></p>
-                    <Link to="mailto:dan@teamsavvy.com" className="mail text-decoration-none p-0 d-inline-block position-relative"><MailOutlineOutlinedIcon fontSize='small'/>
-                    <span className="d-none showmail position-absolute top-0 p-1 fsmall bg-light start-0">Dan@teamsavvy.com</span></Link>
-                    <Link to="tel:12345" className="mail text-decoration-none p-0 d-inline-block position-relative ms-2 "><LocalPhoneOutlinedIcon fontSize='small'/>
-                    <span className="d-none showmail position-absolute top-0 p-1 fsmall bg-light start-0">12345</span></Link>
-                    </ListGroupItem>
-                    <ListGroupItem className="px-0"> <p className="p-0 m-0"> <strong>Kartik</strong> <p className="float-end">Manager</p></p>
-                    <Link to="mailto:dan@teamsavvy.com" className="mail text-decoration-none p-0 d-inline-block position-relative"><MailOutlineOutlinedIcon fontSize='small'/>
-                    <span className="d-none showmail position-absolute top-0 p-1 fsmall bg-light start-0">Dan@teamsavvy.com</span></Link>
-                    <Link to="tel:12345" className="mail text-decoration-none p-0 d-inline-block position-relative ms-2 "><LocalPhoneOutlinedIcon fontSize='small'/>
-                    <span className="d-none showmail position-absolute top-0 p-1 fsmall bg-light start-0">12345</span></Link>
-                    </ListGroupItem>
-                    <ListGroupItem className="px-0"> <p className="p-0 m-0"> <strong>Peter Danial</strong> <p className="float-end">Software Dev</p></p>
-                    <Link to="mailto:dan@teamsavvy.com" className="mail text-decoration-none p-0 d-inline-block position-relative"><MailOutlineOutlinedIcon fontSize='small'/>
-                    <span className="d-none showmail position-absolute top-0 p-1 fsmall bg-light start-0">Dan@teamsavvy.com</span></Link>
-                    <Link to="tel:12345" className="mail text-decoration-none p-0 d-inline-block position-relative ms-2 "><LocalPhoneOutlinedIcon fontSize='small'/>
-                    <span className="d-none showmail position-absolute top-0 p-1 fsmall bg-light start-0">12345</span></Link>
-                    </ListGroupItem>
-                    <ListGroupItem className="px-0"><p className="p-0 m-0"> <strong>Dan Kayger</strong>  <p className="float-end">Designer</p></p>
-                    <Link to="mailto:dan@teamsavvy.com" className="mail text-decoration-none p-0 d-inline-block position-relative"><MailOutlineOutlinedIcon fontSize='small'/>
-                    <span className="d-none showmail position-absolute top-0 p-1 fsmall bg-light start-0">Dan@teamsavvy.com</span></Link>
-                    <Link to="tel:12345" className="mail text-decoration-none p-0 d-inline-block position-relative ms-2 "><LocalPhoneOutlinedIcon fontSize='small'/>
-                    <span className="d-none showmail position-absolute top-0 p-1 fsmall bg-light start-0">12345</span></Link>
-                    </ListGroupItem>
-                    <ListGroupItem className="px-0"> <p className="p-0 m-0">  <strong>Kartik</strong> <p className="float-end">Software Dev 2</p></p>
-                    <Link to="mailto:dan@teamsavvy.com" className="mail text-decoration-none p-0 d-inline-block position-relative"><MailOutlineOutlinedIcon fontSize='small'/>
-                    <span className="d-none showmail position-absolute top-0 p-1 fsmall bg-light start-0">Dan@teamsavvy.com</span></Link>
-                    <Link to="tel:12345" className="mail text-decoration-none p-0 d-inline-block position-relative ms-2 "><LocalPhoneOutlinedIcon fontSize='small'/>
-                    <span className="d-none showmail position-absolute top-0 p-1 fsmall bg-light start-0">12345</span></Link>                    </ListGroupItem>
-                    <ListGroupItem className="px-0"> <p className="p-0 m-0">  <strong>Dan</strong> <p className="float-end">Tester</p></p>
-                    <Link to="mailto:dan@teamsavvy.com" className="mail text-decoration-none p-0 d-inline-block position-relative"><MailOutlineOutlinedIcon fontSize='small'/>
-                    <span className="d-none showmail position-absolute top-0 p-1 fsmall bg-light start-0">Dan@teamsavvy.com</span></Link>
-                    <Link to="tel:12345" className="mail text-decoration-none p-0 d-inline-block position-relative ms-2 "><LocalPhoneOutlinedIcon fontSize='small'/>
-                    <span className="d-none showmail position-absolute top-0 p-1 fsmall bg-light start-0">12345</span></Link>
-                    </ListGroupItem>
+                    {
+                        teamMembers.map((teamMember, index) => 
+                        <ListGroupItem className="px-0 justify-content-between" key={index}> 
+                        <p className="p-0 m-0"><strong>{teamMember.name}</strong>  
+                        <p className="float-end">{teamMember.position}</p></p>
+                        <a href={`mailto:${teamMember.email}`} className="mail text-decoration-none p-0 d-inline-block position-relative">
+                        <MailOutlineOutlinedIcon fontSize='small'/>
+                        <span className="d-none showmail position-absolute top-0 p-1 fsmall bg-light start-0">{teamMember.email}</span></a>
+                        <a href={`tel:${teamMember.extension}`} className="mail text-decoration-none p-0 d-inline-block position-relative ms-2 "><LocalPhoneOutlinedIcon fontSize='small'/>
+                        <span className="d-none showmail position-absolute top-0 p-1 fsmall bg-light start-0">{teamMember.extension}</span></a>
+                        </ListGroupItem>
+                        )
+                    }
                 </ListGroup>
                 </CardBody>
             </Card>
@@ -383,55 +431,14 @@ import { employeeInitialValue } from '../models/employee.model';
                 <CardBody className="" >
                 <CardTitle tag="h5" className="mb-3"> Skill Set </CardTitle>
                 <div className="d-flex flex-wrap">
-                    <div class="skill position-relative" >
-                        {
-
-                        }
-                <Badge className="skillPill rounded-pill me-3 mb-3 " pill> C# </Badge> 
-                <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge " key={1} onClick={(event) => handleDelete(event.target.value)}> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
-                    </div>
-                    {/* <div className="skill position-relative">
-                <Badge className="skillPill rounded-pill me-3 mb-3" pill> Java </Badge>  
-                <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge "> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
-                    </div> 
-                    <div className="skill position-relative">
-                <Badge className="skillPill rounded-pill me-3 mb-3" pill> Manual Testing </Badge> 
-                <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge "> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
-                    </div> 
-                    <div className="skill position-relative"> 
-                <Badge className="skillPill rounded-pill me-3 mb-3" pill> Automation Testing </Badge>
-                <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge "> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
-                    </div>
-                    <div className="skill position-relative"> 
-                     
-                <Badge className="skillPill rounded-pill me-3 mb-3" pill> Manual Testing </Badge>    
-                     <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge "> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
-                    </div>  
-                    <div className="skill position-relative"> 
-                     
-                <Badge className="skillPill rounded-pill me-3 mb-3" pill> C# </Badge>  
-                     <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge "> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
-                    </div>  
-                    <div className="skill position-relative"> 
-                <Badge className="skillPill rounded-pill me-3 mb-3" pill> Java </Badge>   
-                     
-                     <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge "> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
-                    </div>  
-                    <div className="skill position-relative"> 
-                <Badge className="skillPill rounded-pill me-3 mb-3" pill> Manual Testing </Badge>  
-                     
-                     <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge "> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
-                    </div>  
-                    <div className="skill position-relative"> 
-                <Badge className="skillPill rounded-pill me-3 mb-3" pill> Automation Testing </Badge>
-                     
-                     <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge "> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
-                    </div>  
-                    <div className="skill position-relative"> 
-                     
-                <Badge className="skillPill rounded-pill me-3 mb-3" pill> Manual Testing </Badge>              
-                     <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge "> <CloseOutlinedIcon sx={{fontSize: 13 }}/> </Badge>
-                    </div>   */}
+                    {
+                        skills.map((skill, index) => 
+                           skill.isactive && <div class="skill position-relative" key={index}>
+                            <Badge className="skillPill rounded-pill me-3 mb-3 " pill > {skill.skills.skillName} </Badge> 
+                            <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge" onClick={()=>handleDelete(skill.skills.skillId)}> <CloseOutlinedIcon sx={{fontSize: 13 }} /> </Badge>
+                            </div>
+                        )
+                    }
                 </div>
                 <Link to="" className="alert-link text-decoration-none text-center"  onClick={toggle}> <AddOutlinedIcon/> ADD</Link>
                 {/* add skill popup */}
@@ -445,33 +452,23 @@ import { employeeInitialValue } from '../models/employee.model';
                             </Label>
                             <Input
                             id="skills"
-                            name="skilld"
+                            name="selectOptions"
                             type="select"
-                            multiple
+                            value={selectOptions}
+                            onChange={handleSkillChange}
+                            multiple={true}
                             >
-                            <option>
-                                JavaScript
-                            </option>
-                            <option>
-                                Work Management
-                            </option>
-                            <option>
-                                UX Design
-                            </option>
-                            <option>
-                                Communication
-                            </option>
-                            <option>
-                                Client Handling
-                            </option>
+                            {
+                                skillsData.map(({skillId, skillName}, index) => <option key={index} value={skillId}>{skillName}</option>)
+                            }
                             </Input>
                         </FormGroup>
                     </Form>
                     <div className="d-flex justify-content-center mt-5">
-                    <Button className="me-3" color="primary" onClick={toggle}>
+                    <Button className="me-3" color="primary" onClick={skillSubmit}>
                         Submit
                     </Button>{' '}
-                    <Button color="secondary" onClick={toggle}>
+                    <Button color="secondary" onClick={skillCancel}>
                         Cancel
                     </Button>
                     </div>
@@ -549,13 +546,12 @@ import { employeeInitialValue } from '../models/employee.model';
             <Modal isOpen={resignmodal} toggle={resigntoggle} backdrop="static" centered>
                     <ModalHeader>  <h4>Resignation </h4> </ModalHeader>
                     <ModalBody>
-                        <p>This will initiate your resignation process from 'Nov 2, 2022' and notify your manager. 
-                            (if required) You need to serve 15 days notice period. </p>
+                        <p>{resignationStr}</p>
                     <div className="d-flex justify-content-center mt-5">
-                    <Button className="me-3" color="primary" onClick={resigntoggle}>
+                    <Button className="me-3" color="primary" onClick={resignSubmit}>
                         Submit
                     </Button>{' '}
-                    <Button color="secondary" onClick={resigntoggle}>
+                    <Button color="secondary" onClick={resignCancel}>
                         Cancel
                     </Button>
                     </div>

@@ -10,7 +10,7 @@ using TeamSavvy.Api.Entities.Controllers;
 using TeamSavvy.Api.Services.IServices;
 using TeamSavvy.Api.Services.Services;
 
-namespace TeamSavvy.Api.Web.Controllers
+namespace TeamSavvy.Api.Entities.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -70,6 +70,38 @@ namespace TeamSavvy.Api.Web.Controllers
             else
             {
                 var job = _jobsService.GetJobById(jobId);
+                if (job == null)
+                {
+                    response = NotFound(new ResponseMessage(false, null, new Message(HttpStatusCode.NotFound, $"There is no record in database against job id {jobId}")));
+                }
+                else
+                {
+                    response = Ok(new ResponseMessage(true, job, new Message(HttpStatusCode.OK)));
+                }
+            }
+
+            return response;
+        }
+
+        [Route("jobApplied/{jobId:int}")]
+        [HttpGet /*Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = Access.Employee)*/]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ResponseMessage), 200)]
+        [ProducesResponseType(typeof(ResponseMessage), 400)]
+        [ProducesResponseType(typeof(ResponseMessage), 401)]
+        [ProducesResponseType(typeof(ResponseMessage), 404)]
+        public ActionResult<List<EmployeeDto>> GetEmployeesAppliedJob([FromRoute] int jobId)
+        {
+            ActionResult response;
+            ResponseMessage responseMessage;
+            if (jobId <= 0)
+            {
+                responseMessage = new ResponseMessage(false, null, new Message(HttpStatusCode.BadRequest, "Please enter valid job id."));
+                response = BadRequest(responseMessage);
+            }
+            else
+            {
+                var job = _jobsService.GetEmployeesAppliedJob(jobId);
                 if (job == null)
                 {
                     response = NotFound(new ResponseMessage(false, null, new Message(HttpStatusCode.NotFound, $"There is no record in database against job id {jobId}")));

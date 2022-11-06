@@ -12,6 +12,6 @@ namespace TeamSavvy.Api.Services.IServices
         //List<EmployeeDto> GetEmployeeByFirstName(string name);
         bool AddEmployee(EmployeeDto employee);
         bool UpdateEmployee(EmployeeDto employee);
-        bool DeleteEmployee(int id, string status);
+        bool DeleteEmployee(int id);
     }
 }

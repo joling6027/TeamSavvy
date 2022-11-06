@@ -136,6 +136,7 @@ namespace TeamSavvy.Api
             services.AddScoped<ILeavesService, LeavesService>();
             services.AddScoped<IDropdownsService, DropdownsService>();
             services.AddScoped<IJobsService, JobsService>();
+            services.AddScoped<ITeamsService, TeamsService>();
 
             services.Configure<MailSetting>(Configuration.GetSection("MailSetting"));
             services.AddScoped<IMailService, MailService>();

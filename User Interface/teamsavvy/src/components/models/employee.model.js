@@ -63,11 +63,13 @@ export const employeeInitialValue ={
       {
         employeeSkillId: null,
         employeeId: null,
+        skillId: 0,
+        isactive: null, 
         skills: {
-            skillId:null,
+            skillId:0,
             skillName:"",
         },
-        isactive: null 
+        
       }
     ]
   };

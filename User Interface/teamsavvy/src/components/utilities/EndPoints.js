@@ -1,12 +1,14 @@
 const enpoints = {
   login:'auth/login',
   employee:'Employee',
-  dropdown: 'Dropdowns/countyProvinceCity',
+  dropdownCont: 'Dropdowns/countyProvinceCity',
+  dropdownSkills:'Dropdowns/skills',
   payrollList: 'Payroll/list/employeeId',
   paystub: 'Payroll/payrollId',
   employeeTask: 'EmployeeTask/employeeId',
   updateTask: 'EmployeeTask/updateTask',
-  internalJob: 'Job'
+  internalJob: 'Job',
+  teams:'Teams'
 }
 
 export function GetEndPoints(){

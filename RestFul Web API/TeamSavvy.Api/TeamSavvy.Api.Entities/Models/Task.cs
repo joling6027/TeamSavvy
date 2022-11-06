@@ -14,12 +14,12 @@ namespace TeamSavvy.Api.Entities.Models
         public int ProjectId { get; set; }
         public string TaskName { get; set; }
         public string TaskDesc { get; set; }
-        public DateTime? TaskStartDate { get; set; }
-        public DateTime? TastEndDate { get; set; }
+        public string TaskStartDate { get; set; }
+        public string TastEndDate { get; set; }
         public string TaskTotalHours { get; set; }
         public string AssignedBy { get; set; }
         public string AssignedTo { get; set; }
-        public DateTime AssignedDate { get; set; }
+        public string AssignedDate { get; set; }
         public string TaskStatus { get; set; }
 
         public virtual Employee Employee { get; set; }

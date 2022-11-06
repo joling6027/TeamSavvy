@@ -13,6 +13,7 @@ namespace TeamSavvy.Api.Entities.Models
         {
             Dashboard = new HashSet<Dashboard>();
             EmployeeProject = new HashSet<EmployeeProject>();
+            EmployeeSkill = new HashSet<EmployeeSkill>();
             JobApplied = new HashSet<JobApplied>();
             Payroll = new HashSet<Payroll>();
             Salary = new HashSet<Salary>();
@@ -38,12 +39,14 @@ namespace TeamSavvy.Api.Entities.Models
         public string Password { get; set; }
         public string Bankname { get; set; }
         public string Bankcode { get; set; }
+        public string Resigneddate { get; set; }
 
         public virtual JobLocation JobLocation { get; set; }
         public virtual Role Role { get; set; }
         public virtual Status Status { get; set; }
         public virtual ICollection<Dashboard> Dashboard { get; set; }
         public virtual ICollection<EmployeeProject> EmployeeProject { get; set; }
+        public virtual ICollection<EmployeeSkill> EmployeeSkill { get; set; }
         public virtual ICollection<JobApplied> JobApplied { get; set; }
         public virtual ICollection<Payroll> Payroll { get; set; }
         public virtual ICollection<Salary> Salary { get; set; }
