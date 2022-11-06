@@ -18,7 +18,7 @@ export default function Sidenav() {
     }
     const handleLogout =()=>
     {
-       if(token != undefined){
+       if(token !== undefined){
         logout();
        }
     }
