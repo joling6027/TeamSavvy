@@ -12,7 +12,7 @@ const enpoints = {
   addEmployee: 'Employee/addEmployee',
   updateEmployee: 'Employee/updateEmployee',
   resignation:'Email/resign',
-  deleteEmployee:
+  deleteEmployee:'Employee/deleteEmployee',
 }
 
 export function GetEndPoints(){
