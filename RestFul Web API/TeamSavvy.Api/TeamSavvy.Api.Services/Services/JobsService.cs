@@ -259,13 +259,18 @@ namespace TeamSavvy.Api.Services.Services
                         {
                             if (jobSkill.Isactive)
                             {
-                                skillsAdd.Add(new JobSkills
+                                var IsExist = _unitOfWork.Context.JobSkills.Where(sk => sk.Skillid == (jobSkill.Skillid <= 0 ? jobSkill.Skills.SkillId : jobSkill.Skillid) && sk.Jobid == jobSkill.Jobid).Any();
+                                if(!IsExist)
                                 {
-                                    Jobid = jobSkill.Jobid,
-                                    Isactive = jobSkill.Isactive,
-                                    Skillid = jobSkill.Skillid <= 0 ? jobSkill.Skills.SkillId : jobSkill.Skillid,
+                                    skillsAdd.Add(new JobSkills
+                                    {
+                                        Jobid = jobSkill.Jobid,
+                                        Isactive = jobSkill.Isactive,
+                                        Skillid = jobSkill.Skillid <= 0 ? jobSkill.Skills.SkillId : jobSkill.Skillid,
 
-                                });
+                                    });
+                                }
+                               
                             }
                             if (!jobSkill.Isactive)
                             {

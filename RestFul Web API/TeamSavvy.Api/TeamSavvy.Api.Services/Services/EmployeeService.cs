@@ -148,6 +148,7 @@ namespace TeamSavvy.Api.Services.Services
                           Role = _unitOfWork.Context.Role.Where(y => y.RoleId == x.Em.Emp.RoleId).Select(x => new RoleDto { RoleId = x.RoleId, RoleType = x.RoleType }).FirstOrDefault(),
                           Status = _unitOfWork.Context.Status.Where(y => y.StatusId == x.Em.Emp.StatusId).Select(x => new StatusDto { StatusId = x.StatusId, StatusType = x.StatusType }).FirstOrDefault(),
                           EmployeeImage = x.Em.Emp.EmployeeImage,
+                          Password = x.Em.Emp.Password,
                           JobLocation = new JobLocationDto
                           {
                               JobLocationId = x.Em.Emp.JobLocationId,
@@ -259,6 +260,7 @@ namespace TeamSavvy.Api.Services.Services
                           Role = _unitOfWork.Context.Role.Where(y=>y.RoleId == x.Em.Emp.RoleId).Select(x => new RoleDto { RoleId = x.RoleId, RoleType= x.RoleType}).FirstOrDefault(),
                           Status = _unitOfWork.Context.Status.Where(y => y.StatusId == x.Em.Emp.StatusId).Select(x => new StatusDto { StatusId = x.StatusId, StatusType = x.StatusType }).FirstOrDefault(),
                           EmployeeImage = x.Em.Emp.EmployeeImage,
+                          Password = x.Em.Emp.Password,
                           JobLocation = new JobLocationDto
                           {
                               JobLocationId = x.Em.Emp.JobLocationId,
@@ -370,12 +372,16 @@ namespace TeamSavvy.Api.Services.Services
                     {
                         if(skill.Isactive)
                         {
-                            skillsAdd.Add(new EmployeeSkill
+                            var  IsExist = _unitOfWork.Context.EmployeeSkill.Where(sk => sk.SkillId == (skill.SkillId <= 0 ? skill.Skills.SkillId : skill.SkillId) && sk.EmployeeId == skill.EmployeeId).Any();
+                            if(!IsExist)
                             {
-                                EmployeeId = skill.EmployeeId,
-                                Isactive = skill.Isactive,
-                                SkillId = skill.SkillId <= 0 ? skill.Skills.SkillId : skill.SkillId,
-                            });
+                                skillsAdd.Add(new EmployeeSkill
+                                {
+                                    EmployeeId = skill.EmployeeId,
+                                    Isactive = skill.Isactive,
+                                    SkillId = skill.SkillId <= 0 ? skill.Skills.SkillId : skill.SkillId,
+                                });
+                            }
                         }
                         if(!skill.Isactive)
                         {

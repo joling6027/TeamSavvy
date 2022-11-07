@@ -35,7 +35,7 @@ namespace TeamSavvy.Api.Entities.Models
         public int StatusId { get; set; }
         public string Bankaccount { get; set; }
         public int JobLocationId { get; set; }
-        public byte[] EmployeeImage { get; set; }
+        public string EmployeeImage { get; set; }
         public string Password { get; set; }
         public string Bankname { get; set; }
         public string Bankcode { get; set; }

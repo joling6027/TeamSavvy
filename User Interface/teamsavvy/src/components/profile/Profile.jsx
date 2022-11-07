@@ -12,6 +12,7 @@ import AuthService from '../services/authService';
 import { GetEndPoints } from '../utilities/EndPoints';
 import { employeeInitialValue } from '../models/employee.model';
 import ConvertToBase64 from '../utilities/uploadImage';
+import SweetAlert from "react-bootstrap-sweetalert";
 
 const Profile = () => {
     const resignationStr = `This will initiate your resignation process from ${new Date().toDateString()} and notify your manager.`+ 
@@ -74,6 +75,7 @@ const Profile = () => {
     const [selectOptions, setSelectOptions] = useState([]);
 
     const [teamMembers, setTeamMembers] = useState([])
+    const [alert, setAlert] = useState(null);
 
     const handleCountryChange = e =>{
         setSelectedCountry(e.target.value);
@@ -102,7 +104,11 @@ const Profile = () => {
     };
 
     const resignCancel = () =>{ resigntoggle();}
-    const resignSubmit = () =>{ resigntoggle();}
+    const resignSubmit = () =>{
+         resigntoggle();
+         ResignationInitiation();
+    }
+
     const skillCancel = () =>{ setSelectOptions([]); toggle();}
     const skillSubmit = () =>{
         toggle();
@@ -115,7 +121,7 @@ const Profile = () => {
                 skillId:skRes.skillId,
                 isactive: true, 
                 skills: {
-                    skillId:id,
+                    skillId:skRes.skillId,
                     skillName:skRes.skillName,
                 },
             }
@@ -126,7 +132,7 @@ const Profile = () => {
        formValue.skills = [...skArr]
        setFormValue(formValue)
        setSelectOptions([]); 
-
+       console.log(formValue)
     }
 
     const handleDelete = (skillId) => {
@@ -151,15 +157,81 @@ const Profile = () => {
         protoggle();
     }
 
-    const handSubmit = event =>{
-        event.preventDefault();
+    const handleAddress = event =>{
+        const {name, value} = event.target;
+        setFormValue((formValue) =>{
+            let newValues = {...formValue}
+            newValues.address[name] = value
+            return newValues
+        })
+    };
+
+    const UpdateEmployee = () =>{
+        http.put(GetEndPoints().updateEmployee, {...formValue})
+        .then((res) => {
+            if(res.data.success){
+                setAlert(
+                    <SweetAlert
+                        success
+                        style={{ display: "block", marginTop: "-100px" }}
+                        title="Updated!"
+                        onConfirm={() => hideAlert()}
+                        onCancel={() => hideAlert()}
+                        confirmBtnBsStyle="success"
+                        btnSize=""
+                    >
+                     Data has been updated!!</SweetAlert>
+                )
+            }
+        })
+    }
+
+    const ResignationInitiation = () =>{
+        http.post(GetEndPoints().resignation, {
+            employeeId: formValue.employeeId,
+            body: resignationStr
+          })
+        .then((res) => {
+            console.log(res);
+            if(res.data.success){
+                setAlert(
+                    <SweetAlert
+                        success
+                        style={{ display: "block", marginTop: "-100px" }}
+                        title="Initiated!"
+                        onConfirm={() => hideAlert()}
+                        onCancel={() => hideAlert()}
+                        confirmBtnBsStyle="danger"
+                        btnSize=""
+                    >
+                     Sad to here this. Please contact to your manager and HR.</SweetAlert>
+                )
+            }
+        })
+    }
+
+    const hideAlert = () => {
+        setAlert(null);
+      };
+
+    const handleSubmit = event =>{
+       event.preventDefault();
+       //need to do validation
         // setFormErrors(validate(formValues));
         // setIsSubmit(true);
+        UpdateEmployee();
+    };
+
+    const handleCancel = event =>{
+        event.preventDefault();
+        console.log("cancel")
+        GetEmployee();
     };
 
     return (
       <>
       <Container className="d-flex flex-wrap position-relative">
+        {alert}
         <div className="col-md-3 col-sm-12 profileleft">
 
             {/* profile card */}
@@ -345,7 +417,7 @@ const Profile = () => {
                 name="apartment"
                 placeholder="1234 Main St"
                 value={formValue.address.apartment}
-                onChange={handleChange}
+                onChange={handleAddress}
                 />
             </FormGroup>
             </Col>
@@ -413,10 +485,10 @@ const Profile = () => {
                     Postal Code
                     </Label>
                     <Input
-                    id="postalCode"
+                    id="postCode"
                     name="postcode"
                     value={formValue.address.postcode}
-                    onChange={handleChange}
+                    onChange={handleAddress}
                     />
                 </FormGroup>
                 </Col>
@@ -560,16 +632,12 @@ const Profile = () => {
                 </Modal>
            
             <span className="ms-2 mt-3 d-inline-block text-center p-3">
-                <Button className="d-inline-block bg-primary btn-primary"> Submit Changes</Button>
-                <Button className="d-inline-block bg-danger btn-primary ms-2"> Cancel</Button>
+                <Button className="d-inline-block bg-primary btn-primary" onClick={handleSubmit}> Submit Changes</Button>
+                <Button className="d-inline-block bg-danger btn-primary ms-2" onClick={handleCancel}> Cancel</Button>
             
             </span>
         </div>
-        
-       
     </Container>
-             
-              
       </>
     );
   };

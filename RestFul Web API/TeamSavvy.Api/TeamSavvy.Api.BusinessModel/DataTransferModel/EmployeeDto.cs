@@ -16,7 +16,7 @@ namespace TeamSavvy.Api.BusinessModel.DataTransferModel
         public string Email { get; set; }
         public int Extension { get; set; }
         public string Bankaccount { get; set; }
-        public byte[] EmployeeImage { get; set; }
+        public string EmployeeImage { get; set; }
         public string Password { get; set; }
         public string Bankname { get; set; }
         public string Bankcode { get; set; }

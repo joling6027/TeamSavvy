@@ -9,5 +9,7 @@ namespace TeamSavvy.Api.Services.IServices
     public interface IMailService
     {
         Task SendEmilAsync(string body);
+        Task SendResignationEmail(ResignationEmail resignation);
+        Task<string> SendOTPAsync(string email);
     }
 }

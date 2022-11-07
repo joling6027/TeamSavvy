@@ -51,8 +51,8 @@ namespace TeamSavvy.Api.Entities.Context
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Database=TeamSavvy;Trusted_Connection=True;");
+//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+//                optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Database=TeamSavvy;Trusted_Connection=True;");
             }
         }
 
@@ -189,7 +189,9 @@ namespace TeamSavvy.Api.Entities.Context
                     .HasMaxLength(20)
                     .IsFixedLength();
 
-                entity.Property(e => e.EmployeeImage).HasColumnName("EMPLOYEE_IMAGE");
+                entity.Property(e => e.EmployeeImage)
+                    .HasColumnName("EMPLOYEE_IMAGE")
+                    .IsUnicode(false);
 
                 entity.Property(e => e.EmployeeLastname)
                     .IsRequired()

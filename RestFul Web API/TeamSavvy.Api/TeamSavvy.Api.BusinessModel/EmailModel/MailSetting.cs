@@ -11,5 +11,6 @@ namespace TeamSavvy.Api.BusinessModel.EmailModel
         public string Password { get; set; }
         public string Host { get; set; }
         public int Port { get; set; }
+        public string EmailUserName { get; set; }
     }
 }
