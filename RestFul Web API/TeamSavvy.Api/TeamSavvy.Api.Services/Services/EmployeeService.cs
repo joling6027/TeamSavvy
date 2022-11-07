@@ -9,6 +9,7 @@ using TeamSavvy.Api.Services.IServices;
 using TeamSavvy.Api.Entities.Context;
 using TeamSavvy.Api.Entities.Models;
 using TeamSavvy.Api.Utilities.Helper;
+using TeamSavvy.Api.BusinessModel.DataTransferModel.ChangePassword;
 
 namespace TeamSavvy.Api.Services.Services
 {
@@ -439,6 +440,32 @@ namespace TeamSavvy.Api.Services.Services
                                                         .FirstOrDefault();
                         employee.StatusId = statusId;
                         employee.Resigneddate = DateTime.Now.ToString("yyyy-MM-dd");
+                    }
+
+                    _unitOfWork.Context.Update(employee);
+                    _unitOfWork.SaveChanges();
+                    isSuccess = true;
+                }
+            }
+            catch (Exception e)
+            {
+                isSuccess = false;
+            }
+
+            return isSuccess;
+        }
+
+        public bool ChangePassword(ChangePassword changePassword)
+        {
+            bool isSuccess = false;
+            try
+            {
+                if (changePassword.EmployeeId > 0)
+                {
+                    Employee employee = _unitOfWork.Context.Employee.Where(x => x.EmployeeId == changePassword.EmployeeId).FirstOrDefault();
+                    if (employee != null)
+                    {
+                        employee.Password = changePassword.Password;
                     }
 
                     _unitOfWork.Context.Update(employee);

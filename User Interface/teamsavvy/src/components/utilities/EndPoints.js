@@ -11,7 +11,8 @@ const enpoints = {
   teams:'Teams',
   addEmployee: 'Employee/addEmployee',
   updateEmployee: 'Employee/updateEmployee',
-  resignation:'Email/resign'
+  resignation:'Email/resign',
+  deleteEmployee:
 }
 
 export function GetEndPoints(){

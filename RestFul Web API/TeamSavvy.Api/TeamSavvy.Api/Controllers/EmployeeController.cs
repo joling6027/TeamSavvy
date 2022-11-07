@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using TeamSavvy.Api.BusinessModel.DataTransferModel;
+using TeamSavvy.Api.BusinessModel.DataTransferModel.ChangePassword;
 using TeamSavvy.Api.BusinessModel.Helper;
 using TeamSavvy.Api.Services.IServices;
 using TeamSavvy.Api.Utilities.Helper;
@@ -180,6 +181,39 @@ namespace TeamSavvy.Api.Entities.Controllers
 
             return response;
         }
+
+        [Route("chnagepassword")]
+        [HttpPut]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ResponseMessage), 200)]
+        [ProducesResponseType(typeof(ResponseMessage), 400)]
+        [ProducesResponseType(typeof(ResponseMessage), 401)]
+        [ProducesResponseType(typeof(ResponseMessage), 404)]
+        public IActionResult ChangePassword([FromBody] ChangePassword changePassword)
+        {
+            ActionResult response;
+            ResponseMessage responseMessage;
+            if (!ModelState.IsValid)
+            {
+                responseMessage = new ResponseMessage(false, null, new Message(HttpStatusCode.BadRequest, "There is invalid entry."));
+                response = BadRequest(responseMessage);
+            }
+            else
+            {
+                bool isSuccess = _employeeService.ChangePassword(changePassword);
+                if (!isSuccess)
+                {
+                    response = NotFound(new ResponseMessage(false, null, new Message(HttpStatusCode.NotFound, "No record is updated in database.")));
+                }
+                else
+                {
+                    response = Ok(new ResponseMessage(true, isSuccess, new Message(HttpStatusCode.OK, "Updated! Your record has been updated. success")));
+                }
+            }
+
+            return response;
+        }
+
 
         [Route("deleteEmployee/{id}")]
         [HttpDelete]

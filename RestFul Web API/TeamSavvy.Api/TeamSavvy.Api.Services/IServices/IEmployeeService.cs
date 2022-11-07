@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using TeamSavvy.Api.BusinessModel.DataTransferModel;
+using TeamSavvy.Api.BusinessModel.DataTransferModel.ChangePassword;
 
 namespace TeamSavvy.Api.Services.IServices
 {
@@ -9,7 +10,7 @@ namespace TeamSavvy.Api.Services.IServices
     {
         EmployeeDto GetEmployeeById(int id);
         List<EmployeeDto> GetAllEmployees();
-        //List<EmployeeDto> GetEmployeeByFirstName(string name);
+        bool ChangePassword(ChangePassword changePassword);
         bool AddEmployee(EmployeeDto employee);
         bool UpdateEmployee(EmployeeDto employee);
         bool DeleteEmployee(int id);

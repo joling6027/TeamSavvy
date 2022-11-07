@@ -51,8 +51,8 @@ namespace TeamSavvy.Api.Entities.Context
         {
             if (!optionsBuilder.IsConfigured)
             {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-//                optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Database=TeamSavvy;Trusted_Connection=True;");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Database=TeamSavvy;Trusted_Connection=True;");
             }
         }
 
@@ -701,6 +701,11 @@ namespace TeamSavvy.Api.Entities.Context
                     .HasColumnName("TASK_DESC")
                     .IsUnicode(false);
 
+                entity.Property(e => e.TaskEndDate)
+                    .HasColumnName("TASK_END_DATE")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.TaskName)
                     .IsRequired()
                     .HasColumnName("TASK_NAME")
@@ -718,11 +723,6 @@ namespace TeamSavvy.Api.Entities.Context
 
                 entity.Property(e => e.TaskTotalHours)
                     .HasColumnName("TASK_TOTAL_HOURS")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.TastEndDate)
-                    .HasColumnName("TAST_END_DATE")
                     .HasMaxLength(50)
                     .IsUnicode(false);
 

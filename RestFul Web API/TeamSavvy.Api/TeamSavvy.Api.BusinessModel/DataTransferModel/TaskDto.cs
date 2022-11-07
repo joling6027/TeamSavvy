@@ -12,7 +12,7 @@ namespace TeamSavvy.Api.BusinessModel.DataTransferModel
         public string TaskName { get; set; }
         public string TaskDesc { get; set; }
         public string TaskStartDate { get; set; }
-        public string TastEndDate { get; set; }
+        public string TaskEndDate { get; set; }
         public string TaskTotalHours { get; set; }
         public string AssignedBy { get; set; }
         public string AssignedTo { get; set; }
