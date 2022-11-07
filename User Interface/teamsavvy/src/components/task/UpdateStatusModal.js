@@ -4,13 +4,23 @@ import { Modal } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import { Form, FormGroup, Label, Input, FormFeedback, FormText, Container, Row, Col } from 'reactstrap';
 
+
+
 const UpdateStatusModal = (props) => {
 
+  console.log(props)
+  const [status, setStatus] = useState();
+
+  const statusChangeHandler = (e) => {
+    setStatus(e.target.value);
+    console.log(status)
+
+  }
 
   const submitHandler = (e) => {
     e.preventDefault();
-
-
+    console.log(status);
+    props.onSaveTaskData(status);
     props.close(false);
   }
 
@@ -36,9 +46,9 @@ const UpdateStatusModal = (props) => {
             <FormGroup>
               <Container className='status-modal-container'>
                 <Label for='task-status'>Status</Label>
-                <Input type='select' name='task-status' id='task-status'>
+                <Input type='select' name='task-status' id='task-status' defaultValue="In Progress" onChange={statusChangeHandler}>
                   <option>Assigned</option>
-                  <option defaultValue>In Progress</option>
+                  <option>In Progress</option>
                   <option>Completed</option>
                 </Input>
               </Container>

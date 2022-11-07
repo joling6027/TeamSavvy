@@ -136,7 +136,7 @@ const TaskModal = (props) => {
                 <Row>
                   <Label for='task-desc'>Description</Label>
                   <Input type='text' name='task-desc' id='task-desc' onChange={descriptionChangeHandler} defaultValue={props.onOpen().taskDesc} invalid={descValidate} />
-                  <FormFeedback valid>Sweet! Description can be blank</FormFeedback>
+                  <FormFeedback>Description cannot be blank</FormFeedback>
                 </Row>
                 <Row>
                   <Col>
@@ -164,7 +164,7 @@ const TaskModal = (props) => {
                   <Col>
                     <Label for="task-end-date">End Date</Label>
                     <Input type='date' name='task-end-date' id='task-end-date' 
-                      defaultValue={props.onOpen().tastEndDate} onChange={endDateChangeHandler}/>
+                      defaultValue={props.onOpen().taskEndDate} onChange={endDateChangeHandler}/>
                     <FormFeedback>The start date cannnot be blank</FormFeedback>
                   </Col>
                 </Row>
