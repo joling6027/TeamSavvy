@@ -8,11 +8,7 @@ const enpoints = {
   employeeTask: 'EmployeeTask/employeeId',
   updateTask: 'EmployeeTask/updateTask',
   internalJob: 'Job',
-  teams:'Teams',
-  addEmployee: 'Employee/addEmployee',
-  updateEmployee: 'Employee/updateEmployee',
-  resignation:'Email/resign',
-  deleteEmployee:
+  teams:'Teams'
 }
 
 export function GetEndPoints(){

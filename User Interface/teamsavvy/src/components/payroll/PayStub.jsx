@@ -1,16 +1,41 @@
 import React from "react";
-import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
-
+import { useEffect, useState } from "react";
+import { useLocation, useParams } from "react-router-dom";
+import AuthService from '../services/authService';
+import { GetEndPoints } from "../utilities/EndPoints";
+import moment from 'moment/moment';
 import '../../assets/css/bootstrap.min.css'
 import './payroll.css'
 
 const Paystub = () => {
-
+  // console.log(props)
+  const { http, user } = AuthService();
+  const [emp, setEmployee] = useState();
   const data = useLocation();
-  // console.log(data.state.payrollItem)
+  const [payrollItem, setPayrollItem] = useState();
 
+  console.log(data.state.payrollItem)
   
+  // console.log(data.state.payrollItem)
+  useEffect(() => {
+    http.get(GetEndPoints().employee + "/" + user.employeeId).then((res) => {
+
+      const response = res.data.response
+      setEmployee(response)
+      console.log(response)
+      setPayrollItem(data.state.payrollItem)
+      
+    }).catch((err) => console.log(err.message));
+
+  }, [])
+
+  console.log(emp)
+
+  if(emp === undefined){
+    return(
+      <>Still loading...</>
+    )
+  }else{
 
   return (
     <>
@@ -18,10 +43,10 @@ const Paystub = () => {
         <div className="card col-md-12 mb-5">
           <div className='card-header'>
             <div className="row">
-              <h5 className="title col-sm">Joling Weng</h5>
-              <h5 className="title col-sm">Employee#300335548</h5>
-              <h5 className="title col-sm">Department: IT</h5>
-              <h5 className="title col-sm text-right">Start Date  1-Jan-2022</h5>
+              <h5 className="title col-sm">{emp.employeeFirstname} {emp.employeeLastname}</h5>
+              <h5 className="title col-sm">Employee#{emp.employeeId}</h5>
+              <h5 className="title col-sm">Department: {emp.department.departmentName}</h5>
+              <h5 className="title col-sm text-right">Start Date  {moment(emp.payDate).format('DD-MMM-YYYY')}</h5>
               <h5 className="title col-sm text-right">End Date  </h5>
             </div>
             <hr />
@@ -30,14 +55,11 @@ const Paystub = () => {
             <div className="row">
               <div className="col-8">
                 <h5>Address</h5>
-                <p>12546, 56 Ave
-                  Surrey, BC, H76Y76</p>
+                <p>{emp.address.apartment}, {emp.address.city.cityName}, {emp.address.city.province.provinceAbbr}, {emp.address.postcode}</p>
               </div>
               <div className="col-4">
                 <h5>Organization</h5>
-                <p>Organization name
-                  1868, XYZ road,
-                  Ontario, ON, D54F54</p>
+                <p>{emp.jobLocation.location}, {emp.jobLocation.city.cityName}, {emp.jobLocation.city.province.provinceAbbr}, {emp.jobLocation.postcode}</p>
                 <p></p>
               </div>
               <hr />
@@ -51,11 +73,11 @@ const Paystub = () => {
                       Type
                     </th>
                     <th>
-                      Hours
+                      Total Working days
                     </th>
-                    <th>
+                    {/* <th>
                       Rate
-                    </th>
+                    </th> */}
                     <th>
                       Amount
                     </th>
@@ -67,22 +89,22 @@ const Paystub = () => {
                 <tbody>
                   <tr>
                     <th scope="row">
-                      Reg Hours
+                      {payrollItem.payType}
                     </th>
                     <td>
                       80
                     </td>
-                    <td>
+                    {/* <td>
                       23
+                    </td> */}
+                    <td>
+                      ${payrollItem.netpay}
                     </td>
                     <td>
-                      1840
-                    </td>
-                    <td>
-                      3800
+                      ${payrollItem.payYtd}
                     </td>
                   </tr>
-                  <tr>
+                  {/* <tr>
                     <th scope="row">
                       Sick
                     </th>
@@ -98,8 +120,8 @@ const Paystub = () => {
                     <td>
                       350
                     </td>
-                  </tr>
-                  <tr>
+                  </tr> */}
+                  {/* <tr>
                     <th scope="row">
                       Vac Pay
                     </th>
@@ -115,11 +137,11 @@ const Paystub = () => {
                     <td>
                       30.00
                     </td>
-                  </tr>
+                  </tr> */}
                 </tbody>
               </table>
             </div>
-            <div className="paystub-inner-card">
+            {/* <div className="paystub-inner-card">
               <h6 className='paystub-inner-table-caption'>NET</h6>
               <table className="table table-striped">
                 <thead>
@@ -169,7 +191,7 @@ const Paystub = () => {
                   </tr>
                 </tbody>
               </table>
-            </div>
+            </div> */}
             <div className="paystub-inner-card">
               <h6 className='paystub-inner-table-caption'>PAY DISTRIBUTION</h6>
               <table className="table table-striped">
@@ -195,16 +217,16 @@ const Paystub = () => {
                       Electronic bank transfers
                     </th>
                     <td>
-                      $3100
+                      ${payrollItem.netpay}
                     </td>
                     <td>
-                      1240-1102-1111
+                      {emp.bankaccount}
                     </td>
                     <td>
-                      CIBC
+                      {emp.bankname}
                     </td>
                   </tr>
-                  <tr>
+                  {/* <tr>
                     <th scope="row">
                       Electronic bank transfer
                     </th>
@@ -217,7 +239,7 @@ const Paystub = () => {
                     <td>
                       RBC
                     </td>
-                  </tr>
+                  </tr> */}
                 </tbody>
               </table>
             </div>
@@ -226,7 +248,8 @@ const Paystub = () => {
       </div>
       {/* </div> */}
     </>
-  )
+    )
+  }
 }
 
 export default Paystub;

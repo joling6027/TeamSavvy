@@ -7,51 +7,103 @@ import { Form, FormGroup, Label, Input, FormFeedback, FormText, Container, Row, 
 
 const TaskModal = (props) => {
 
-  console.log(props)
-  const [enteredTitle, setEnteredTitle] = useState('');
-  const [enteredDescription, setEnteredDescription] = useState('');
-  const [enteredHours, setEnteredHours] = useState('');
-  const [enteredStatus, setEnteredStatus] = useState('');
-  const [enteredStartDate, setEnteredStartDate] = useState('');
-  const [enteredEndDate, setEnteredEndDate] = useState('');
+  console.log(props.onOpen())
+  const [enteredTitle, setEnteredTitle] = useState(props.onOpen().taskName);
+  const [enteredDescription, setEnteredDescription] = useState(props.onOpen().taskDesc);
+  const [enteredHours, setEnteredHours] = useState(props.onOpen().taskTotalHours);
+  const [enteredStatus, setEnteredStatus] = useState(props.onOpen().taskStatus);
+  const [enteredStartDate, setEnteredStartDate] = useState(props.onOpen().taskStartDate);
+  const [enteredEndDate, setEnteredEndDate] = useState(props.onOpen().tastEndDate);
+  const [taskId, setTaskId] = useState(props.onOpen().taskId);
+  const [projectId, setProjectId] = useState(props.onOpen().projectId);
+  const [enteredAssignedBy, setEnteredAssignedBy] = useState(props.onOpen().assignedBy);
+  const [enteredAssignedTo, setEnteredAssignedTo] = useState(props.onOpen().assignedTo);
+  const [assignedDate, setAssignedDate] = useState(props.onOpen().assignedDate);
 
-  const [validate, setValidate] = useState(true);
+
+  //validation
+  const [titleValidate, setTitleValidate] = useState(false);
+  const [descValidate, setDescTitleValidate] = useState(false);
+  const [hourValidate, setHourValidate] = useState(false)
 
   const titleChangeHandler = (event) => {
-    setEnteredTitle(event.target.value)
-    // setValidate(false);
+    
+    if(event.target.value !== ''){
+      setTitleValidate(false);
+      setEnteredTitle(event.target.value)
+    }else{
+      setTitleValidate(true)
+    }
+    
   }
 
   const descriptionChangeHandler = (event) => {
-    setEnteredDescription(event.target.value)
+    if(event.target.value !== ''){
+      setDescTitleValidate(false);
+      setEnteredDescription(event.target.value)
+    }else{
+      setDescTitleValidate(true);
+    }
+    
   }
 
   const HoursChangeHandler = (event) => {
-    setEnteredHours(event.target.value)
+    if(event.target.value <= 0){
+      setHourValidate(true);
+    }else{
+      setHourValidate(false);
+      setEnteredHours(event.target.value);
+    }
+    
   }
+
+  const statusChangeHandler = (e) => {
+    setEnteredStatus(e.target.value)
+  }
+
+  const startDateChangeHandler = (e) => {
+    setEnteredStartDate(e.target.value)
+    console.log(e.target.value)
+  }
+
+  const endDateChangeHandler = (e) => {
+    setEnteredEndDate(e.target.value)
+  }
+
 
   const submitHandler = (e) => {
     e.preventDefault();
 
+    if (titleValidate || descValidate){
+      return;
+    }
+    
     console.log(e.target)
     const taskData = {
-      title: enteredTitle,
-      description: enteredDescription,
-      hour: enteredHours,
-      status: enteredStatus,
-      StartDate: new Date(enteredStartDate),
-      EndDate: new Date(enteredEndDate)
+      taskId: taskId,
+      projectId: projectId,
+      taskName: enteredTitle,
+      taskDesc: enteredDescription,
+      taskStartDate: enteredStartDate,
+      taskEndDate: enteredEndDate,
+      taskTotalHours: enteredHours,
+      assignedBy: enteredAssignedBy,
+      assignedTo: enteredAssignedTo,
+      assignedDate: assignedDate,
+      taskStatus: enteredStatus,
     }
+
+    console.log(enteredStartDate)
 
     props.onSaveTaskData(taskData);
 
-    setEnteredTitle('');
-    setEnteredDescription('');
-    setEnteredHours('');
-    setEnteredStatus('');
-    setEnteredStartDate('');
-    setEnteredEndDate('');
-    setValidate(true);
+    // setEnteredTitle('');
+    // setEnteredDescription('');
+    // setEnteredHours('');
+    // setEnteredStatus('');
+    // setEnteredStartDate('');
+    // setEnteredEndDate('');
+    // setValidate(true);
 
     props.close(false);
   }
@@ -78,24 +130,24 @@ const TaskModal = (props) => {
               <Container>
                 <Row>
                   <Label for='task-title'>Title</Label>
-                  <Input type='text' name='task-title' id='task-title' onChange={titleChangeHandler} defaultValue={props.onOpen().taskName} invalid={validate} />
+                  <Input type='text' name='task-title' id='task-title' onChange={titleChangeHandler} defaultValue={props.onOpen().taskName} invalid={titleValidate} />
                   <FormFeedback>Title cannot be blank</FormFeedback>
                 </Row>
                 <Row>
                   <Label for='task-desc'>Description</Label>
-                  <Input type='text' name='task-desc' id='task-desc' onChange={descriptionChangeHandler} defaultValue={props.onOpen().taskDesc} invalid={validate} />
+                  <Input type='text' name='task-desc' id='task-desc' onChange={descriptionChangeHandler} defaultValue={props.onOpen().taskDesc} invalid={descValidate} />
                   <FormFeedback valid>Sweet! Description can be blank</FormFeedback>
                 </Row>
                 <Row>
                   <Col>
                     <Label for='task-hour'>Hours</Label>
-                    <Input type='number' name='task-hour' id='task-hour' onChange={HoursChangeHandler} defaultValue={props.onOpen().taskTotalHours} min={0} invalid={validate} />
-                    <FormFeedback>Task hours cannot be blank</FormFeedback>
+                    <Input type='number' name='task-hour' id='task-hour' onChange={HoursChangeHandler} defaultValue={props.onOpen().taskTotalHours} invalid={hourValidate} />
+                    <FormFeedback>Task hours cannot be blank or 0</FormFeedback>
                     {/* <FormText>Please remember to set reasonable hours to the task</FormText> */}
                   </Col>
                   <Col>
                     <Label for='task-status'>Status</Label>
-                    <Input type='select' name='task-status' id='task-status'>
+                    <Input type='select' name='task-status' id='task-status' onChange={statusChangeHandler}>
                       <option>Assigned</option>
                       <option>In Progress</option>
                       <option>Completed</option>
@@ -105,15 +157,20 @@ const TaskModal = (props) => {
                 <Row>
                   <Col>
                     <Label for="task-start-date">Start Date</Label>
-                    <Input type='date' name='task-start-date' id='task-start-date' invalid={validate} defaultValue={moment(props.onOpen().taskStartDate).format("YYYY-MM-DD")}/>
+                    <Input type='date' name='task-start-date' id='task-start-date' 
+                      defaultValue={props.onOpen().taskStartDate} onChange={startDateChangeHandler}/>
                     <FormFeedback>The start date cannnot be blank</FormFeedback>
                   </Col>
                   <Col>
                     <Label for="task-end-date">End Date</Label>
-                    <Input type='date' name='task-end-date' id='task-end-date' invalid={validate} defaultValue={moment(props.onOpen().tastEndDate).format("YYYY-MM-DD")} />
+                    <Input type='date' name='task-end-date' id='task-end-date' 
+                      defaultValue={props.onOpen().tastEndDate} onChange={endDateChangeHandler}/>
                     <FormFeedback>The start date cannnot be blank</FormFeedback>
                   </Col>
                 </Row>
+                {/* <Input type='hidden' name="assignedBy" defaultValue={props.onOpen().assignedBy}/>
+                <Input type='hidden' name="projectId" defaultValue={props.onOpen().projectId}/>
+                <Input type='hidden' name="assignedDate" defaultValue={props.onOpen().assignedDate}/> */}
               </Container>
             </FormGroup>
             <Modal.Footer>

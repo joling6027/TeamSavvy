@@ -1,4 +1,5 @@
 import React, { Component, useState, useEffect, useMemo } from 'react';
+import { DataGrid } from '@mui/x-data-grid';
 import AuthService from '../services/authService';
 import {
     BrowserRouter,
@@ -15,17 +16,32 @@ import { GetEndPoints } from '../utilities/EndPoints';
 
 
 
-const Payroll = ({ columns, data }) => {
+const Payroll = () => {
 
     const [payrollItems, setPayrollItems] = useState();
-    const [employeeId, setEmployeeId] = useState();
+    // const [employeeId, setEmployeeId] = useState();
     const { http, user } = AuthService();
+
+    const columns = [
+        { field: 'id', headerName: 'Pay Date', width: 200 },
+        {
+            field: 'empname', headerName: 'Pay Type',
+            width: 200,
+        },
+        { field: 'email', headerName: 'Total Hours', width: 200 },
+        { field: 'dept', headerName: 'Earnings', width: 200 },
+        { field: 'position', headerName: 'Net Pay', width: 200 },
+        { field: 'details', headerName: 'File', width: 200, renderCell: (params) => <Link to="${params.row.id}">View</Link> },
+    ];
 
 
     useEffect(() => {
-        setEmployeeId(user.employeeId);
+        // setEmployeeId(user.employeeId);
         // console.log(`employee ID: ${employeeId}`)
         // console.log(`${GetEndPoints().payrollList}/${user_detail.employeeId}`);
+
+        
+
         http.get(GetEndPoints().payrollList + "/" + user.employeeId).then((res) => {
             if (res.data.success) {
                 console.log(res.data.response[0])
@@ -35,31 +51,31 @@ const Payroll = ({ columns, data }) => {
 
     }, [])
 
-    const {
-        getTableProps,
-        getTableBodyProps,
-        headerGroups,
-        page,
-        nextPage,
-        previousPage,
-        canPreviousPage,
-        canNextPage,
-        pageOptions,
-        state,
-        gotoPage,
-        pageCount,
-        setPageSize,
-        prepareRow
-    } = useTable(
-        {
-            columns,
-            data,
-            initialState: { pageIndex: 2 }
-        },
-        usePagination
-    );
+    // const {
+    //     getTableProps,
+    //     getTableBodyProps,
+    //     headerGroups,
+    //     page,
+    //     nextPage,
+    //     previousPage,
+    //     canPreviousPage,
+    //     canNextPage,
+    //     pageOptions,
+    //     state,
+    //     gotoPage,
+    //     pageCount,
+    //     setPageSize,
+    //     prepareRow
+    // } = useTable(
+    //     {
+    //         columns,
+    //         data,
+    //         initialState: { pageIndex: 2 }
+    //     },
+    //     usePagination
+    // );
 
-    const { pageIndex, pageSize } = state;
+    // const { pageIndex, pageSize } = state;
 
     return (
         <>
@@ -125,7 +141,7 @@ const Payroll = ({ columns, data }) => {
                                         <Link to={"/paystub"}>VIEW FILE</Link>
                                     </td>
                                 </tr>
-                                <tr>
+                                {/* <tr>
                                     <td className="text-center">
                                         31-JAN-2022
 
@@ -189,10 +205,10 @@ const Payroll = ({ columns, data }) => {
                                     <td className="text-center view-file">
                                         <Link to={"/paystub"}>VIEW FILE</Link>
                                     </td>
-                                </tr>
+                                </tr> */}
                             </tbody>
                         </table>
-                        <div className='payroll-pagination'>
+                        {/* <div className='payroll-pagination'>
                             <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
                                 {"<<"}
                             </button>{" "}
@@ -235,7 +251,7 @@ const Payroll = ({ columns, data }) => {
                                     </option>
                                 ))}
                             </select>
-                        </div>
+                        </div> */}
                     </div>
                     <div className='card-footer card-footer-payroll'>
                         {/* <h6>Rows per page</h6> */}

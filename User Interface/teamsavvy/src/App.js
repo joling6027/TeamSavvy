@@ -13,6 +13,7 @@ import Timesheet from './components/timesheet/Timesheet';
 import InternalJobs from './components/internaljobs/InternalJobs';
 import Header from './components/header/Header';
 import Paystub from './components/payroll/PayStub';
+import JobAppliedEmployees from './components/jobAppliedEmployees/JobAppliedEmployees'
 // import AuthService from './components/services/authService/AuthService';
 
 import data from './data.json'
@@ -56,6 +57,7 @@ function App() {
             <Route path="/payroll" exact element={<Payroll data={data} columns={COLUMNS} />} />
             <Route path="/jobs" element={<InternalJobs />} />
             <Route path='/payroll/:payrollid' element={<Paystub />} />
+            <Route path="/JobAppliedEmployees" element={<JobAppliedEmployees/>} />
           </Routes>
         </main>
       </div>

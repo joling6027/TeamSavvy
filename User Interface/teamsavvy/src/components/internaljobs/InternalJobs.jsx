@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import './internaljobs.css'
 import '../../assets/css/bootstrap.min.css'
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
@@ -69,7 +70,8 @@ const InternalJobs = () => {
                                 <Card className='card-job-detail' body>
                                     <CardTitle className='job-card-title'>
                                     {}
-                                    <Button className='createAndApply-btn' color="link">Apply Now</Button></CardTitle>
+                                    <Button className='createAndApply-btn' color="link">Apply Now</Button>
+                                        <Link to={"/JobAppliedEmployees"}>Applied</Link></CardTitle>
 
                                     <CardText>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsum mollitia necessitatibus ducimus nisi ipsam possimus quas impedit eius accusantium nobis minus perspiciatis, nesciunt rem et vitae. Distinctio commodi maiores possimus.Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsum mollitia necessitatibus ducimus nisi ipsam possimus quas impedit eius accusantium nobis minus perspiciatis, nesciunt rem et vitae. Distinctio commodi maiores possimus.</CardText>
                                     <CardSubtitle className='job-subtitle'>Responsibility</CardSubtitle>

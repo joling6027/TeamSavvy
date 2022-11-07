@@ -21,15 +21,22 @@ const Task = () => {
             setTasks(res.data.response);
         }).catch((err) => console.log(err.message));
 
+        
         // http.put(GetEndPoints().updateTask)
     }, [])
 
     const saveTaskDataHandler = (enteredTaskData) => {
         const taskData = {
             ...enteredTaskData,
-            id: Math.random().toString()
+            employeeId: user.employeeId
+            
         }
+        // window.alert(taskData)
+        console.log("inside")
         console.log(taskData)
+        http.put(GetEndPoints().updateTask, {taskData}).then((res) => {
+            console.log(res.data.response)
+        }).catch((err) => console.log(err.message));
     }
 
     const populateData = (task) => {
