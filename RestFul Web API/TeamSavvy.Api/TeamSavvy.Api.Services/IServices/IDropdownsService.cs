@@ -10,6 +10,8 @@ namespace TeamSavvy.Api.Services.IServices
     {
         List<CountryDdl> GetCountryProvCity();
         List<SkillDto> GetSkills();
-
+        List<RoleDto> GetRoles();
+        List<DepartmentDto> GetDepartments();
+        List<CompanyLocations> GetCompanyLocations();
     }
 }

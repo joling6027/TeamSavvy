@@ -29,6 +29,8 @@ namespace TeamSavvy.Api.Services.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
+
+       
         #endregion
 
         public bool AddProject(ProjectDto project)
@@ -41,22 +43,7 @@ namespace TeamSavvy.Api.Services.Services
                     var proj = _mapper.Map<Project>(project);
                     _unitOfWork.Repository<Project>().Insert(proj);
                     _unitOfWork.SaveChanges();
-                    if(proj.ProjectId > 0)
-                    {
-
-                        EmployeeProject empProj = new EmployeeProject
-                        {
-                            ProjectId = proj.ProjectId,
-                            EmployeeId = project.EmployeeId,
-                            Status = project.EmployeeProjectStatus
-                        };
-                        _unitOfWork.Repository<EmployeeProject>().Insert(empProj);
-                        _unitOfWork.SaveChanges();
-                        if(empProj.EmployeeProjectId > 0)
-                        {
-                            isSuccess = true;
-                        }
-                    }
+                    isSuccess = true;
                     
                 }
             }
@@ -64,6 +51,59 @@ namespace TeamSavvy.Api.Services.Services
             {   
                 isSuccess = false;
             }
+            return isSuccess;
+        }
+
+        public bool AddEmployeeOnProject(EmployeeProjectDto employeeProject)
+        {
+            bool isSuccess = false;
+            try
+            {
+                if (employeeProject != null)
+                {
+                    var employeeIsExist = _unitOfWork.Context.EmployeeProject.Where(e => e.EmployeeId == employeeProject.EmployeeId && e.ProjectId == employeeProject.ProjectId && e.Status == false).FirstOrDefault();
+                    if (employeeIsExist != null)
+                    {
+                        employeeIsExist.Status = false;
+                        _unitOfWork.Repository<EmployeeProject>().Update(employeeIsExist);
+                        _unitOfWork.SaveChanges();
+                        isSuccess = true;
+                    }
+                    else
+                    {
+                        var employeeProj = _mapper.Map<EmployeeProject>(employeeProject);
+                        _unitOfWork.Repository<EmployeeProject>().Insert(employeeProj);
+                        _unitOfWork.SaveChanges();
+                        isSuccess = true;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                isSuccess = false;
+            }
+            return isSuccess;
+        }
+
+        public bool DeleteEmployeeFromProject(int employeeId)
+        {
+            bool isSuccess = false;
+            try
+            {
+                if (employeeId > 0)
+                {
+                    var employeeProj = _unitOfWork.Context.EmployeeProject.Where(x => x.EmployeeId == employeeId).FirstOrDefault();
+                    employeeProj.Status = false;
+                    _unitOfWork.Repository<EmployeeProject>().Update(employeeProj);
+                    _unitOfWork.SaveChanges();
+                    isSuccess = true;
+                }
+            }
+            catch (Exception e)
+            {
+                isSuccess = false;
+            }
+
             return isSuccess;
         }
 
@@ -95,14 +135,10 @@ namespace TeamSavvy.Api.Services.Services
             try
             {
                 var proj = (from pro in _unitOfWork.Context.Project
-                            join empPro in _unitOfWork.Context.EmployeeProject on pro.ProjectId equals empPro.ProjectId
                             where pro.ProjectId == projectId
                             select new ProjectDto
                             {
                                 ProjectId = pro.ProjectId,
-                                EmployeeId = empPro.EmployeeId,
-                                EmployeeProjectId = empPro.EmployeeProjectId,
-                                EmployeeProjectStatus = empPro.Status,
                                 ProjectBudget = pro.ProjectBudget,
                                 ProjectClient = pro.ProjectClient,
                                 ProjectDesc = pro.ProjectDesc,
@@ -135,14 +171,10 @@ namespace TeamSavvy.Api.Services.Services
             try
             {
                 var proj = (from pro in _unitOfWork.Context.Project
-                             join empPro in _unitOfWork.Context.EmployeeProject on pro.ProjectId equals empPro.ProjectId
                              where pro.ProjectName == projectName
                              select new ProjectDto
                              {
                                  ProjectId = pro.ProjectId,
-                                 EmployeeId = empPro.EmployeeId,
-                                 EmployeeProjectId = empPro.EmployeeProjectId,
-                                 EmployeeProjectStatus = empPro.Status,
                                  ProjectBudget = pro.ProjectBudget,
                                  ProjectClient = pro.ProjectClient,
                                  ProjectDesc = pro.ProjectDesc,
@@ -175,13 +207,9 @@ namespace TeamSavvy.Api.Services.Services
             try
             {
                 var proj = (from pro in _unitOfWork.Context.Project
-                           join empPro in _unitOfWork.Context.EmployeeProject on pro.ProjectId equals empPro.ProjectId
                            select new ProjectDto
                            {
                                ProjectId = pro.ProjectId,
-                               EmployeeId = empPro.EmployeeId,
-                               EmployeeProjectId = empPro.EmployeeProjectId,
-                               EmployeeProjectStatus = empPro.Status,
                                ProjectBudget = pro.ProjectBudget,
                                ProjectClient = pro.ProjectClient,
                                ProjectDesc = pro.ProjectDesc,
@@ -220,9 +248,6 @@ namespace TeamSavvy.Api.Services.Services
                              select new ProjectDto
                              {
                                  ProjectId = pro.ProjectId,
-                                 EmployeeId = empPro.EmployeeId,
-                                 EmployeeProjectId = empPro.EmployeeProjectId,
-                                 EmployeeProjectStatus = empPro.Status,
                                  ProjectBudget = pro.ProjectBudget,
                                  ProjectClient = pro.ProjectClient,
                                  ProjectDesc = pro.ProjectDesc,
@@ -258,14 +283,10 @@ namespace TeamSavvy.Api.Services.Services
                 if (project != null)
                 {
                     var proj = (from pro in _unitOfWork.Context.Project
-                                join empPro in _unitOfWork.Context.EmployeeProject on pro.ProjectId equals empPro.ProjectId
                                 where pro.ProjectId == project.ProjectId
                                 select new ProjectDto
                                 {
                                     ProjectId = pro.ProjectId,
-                                    EmployeeId = empPro.EmployeeId,
-                                    EmployeeProjectId = empPro.EmployeeProjectId,
-                                    EmployeeProjectStatus = empPro.Status,
                                     ProjectBudget = pro.ProjectBudget,
                                     ProjectClient = pro.ProjectClient,
                                     ProjectDesc = pro.ProjectDesc,
@@ -284,17 +305,6 @@ namespace TeamSavvy.Api.Services.Services
                         var projUpdate = _mapper.Map<Project>(project);
                         _unitOfWork.Repository<Project>().Update(projUpdate);
                         _unitOfWork.SaveChanges();
-                        if(proj.EmployeeProjectStatus != project.EmployeeProjectStatus)
-                        {
-                            var empPro = _unitOfWork.Context.EmployeeProject.Where(x => x.ProjectId == projUpdate.ProjectId).FirstOrDefault();
-                            if(empPro != null)
-                            {
-                                empPro.Status = project.EmployeeProjectStatus;
-                                _unitOfWork.Repository<EmployeeProject>().Update(empPro);
-                                _unitOfWork.SaveChanges();
-                            }
-                          
-                        }
                         isSuccess = true;
                     }
                   
