@@ -124,7 +124,7 @@ namespace TeamSavvy.Api.Entities.Controllers
         [ProducesResponseType(typeof(ResponseMessage), 400)]
         [ProducesResponseType(typeof(ResponseMessage), 401)]
         [ProducesResponseType(typeof(ResponseMessage), 404)]
-        public ActionResult<int> AddEmployeeDetails([FromBody] EmployeeDto employee)
+        public IActionResult AddEmployeeDetails([FromBody] EmployeeDto employee)
         {
             ActionResult response;
             ResponseMessage responseMessage;
@@ -135,14 +135,14 @@ namespace TeamSavvy.Api.Entities.Controllers
             }
             else
             {
-                int empId = _employeeService.AddEmployee(employee);
-                if (empId <= 0)
+                bool isSuccess = _employeeService.AddEmployee(employee);
+                if (!isSuccess)
                 {
                     response = NotFound(new ResponseMessage(false, null, new Message(HttpStatusCode.NotFound, "No record is add in database.")));
                 }
                 else
                 {
-                    response = Ok(new ResponseMessage(true, empId, new Message(HttpStatusCode.OK)));
+                    response = Ok(new ResponseMessage(true, isSuccess, new Message(HttpStatusCode.OK)));
                 }
             }
 
@@ -182,7 +182,7 @@ namespace TeamSavvy.Api.Entities.Controllers
             return response;
         }
 
-        [Route("changepassword")]
+        [Route("chnagepassword")]
         [HttpPut]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ResponseMessage), 200)]

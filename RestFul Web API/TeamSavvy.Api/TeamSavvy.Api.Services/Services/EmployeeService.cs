@@ -32,18 +32,14 @@ namespace TeamSavvy.Api.Services.Services
         #endregion
 
 
-        public int AddEmployee(EmployeeDto employee)
+        public bool AddEmployee(EmployeeDto employee)
         {
-            int empId = 0;
+            bool isSuccess = false;
             try
             {
                 if (employee != null)
                 {
 
-                    var statusId = _unitOfWork.Context.Status
-                                                       .Where(x => x.StatusType == EmployeeStatus.Active)
-                                                       .Select(x => x.StatusId)
-                                                       .FirstOrDefault();
                     var addr = new Address
                     {
                         Apartment = employee.Address.Apartment,
@@ -71,7 +67,7 @@ namespace TeamSavvy.Api.Services.Services
                         Password = employee.Password,
                         Phone = employee.Phone,
                         RoleId = employee.Role.RoleId,
-                        StatusId = statusId,
+                        StatusId = employee.Status.StatusId,
                     };
                   
                     _unitOfWork.Repository<Employee>().Insert(emp);
@@ -93,15 +89,15 @@ namespace TeamSavvy.Api.Services.Services
 
                     if (emp.EmployeeId > 0 && skills.Any() && addr.AddressId > 0)
                     {
-                        empId = emp.EmployeeId;
+                        isSuccess = true;
                     }
                 }
             }
             catch (Exception e)
             {
-                empId = 0;
+                isSuccess = false;
             }
-            return empId;
+            return isSuccess;
         }
 
         public List<EmployeeDto> GetAllEmployees()

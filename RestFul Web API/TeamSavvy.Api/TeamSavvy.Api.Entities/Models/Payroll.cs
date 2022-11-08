@@ -12,7 +12,7 @@ namespace TeamSavvy.Api.Entities.Models
         public int PayrollId { get; set; }
         public int EmployeeId { get; set; }
         public int SalaryId { get; set; }
-        public string PayDate { get; set; }
+        public DateTime PayDate { get; set; }
         public string PayType { get; set; }
         public int? TotalHours { get; set; }
         public string Earning { get; set; }

@@ -62,7 +62,7 @@ namespace TeamSavvy.Api.Services.Services
             //smtp.Disconnect(true);
         }
 
-        public async Task<string> SendOTPAsync(int employeeId)
+        public async Task<string> SendOTPAsync(string email)
         {
 
             var otp = GenerateRandomOTP(4);

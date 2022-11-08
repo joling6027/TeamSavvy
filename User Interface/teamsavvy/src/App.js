@@ -19,7 +19,6 @@ import JobAppliedEmployees from './components/jobAppliedEmployees/JobAppliedEmpl
 import data from './data.json'
 import { COLUMNS } from './column'
 import AuthService from './components/services/authService';
-import AddEmployee from './components/addEmployee/AddEmployee';
 
 
 
@@ -35,9 +34,6 @@ function App() {
             <Route path="/forgetPassword" element={<ForgotPasswordOtp />} />
             <Route path="/resetpassword" element={<ResetPassword />} />
             <Route path='*' element={<Login />} />
-            <Route path="/dashboard" element={<Dashboard />}>
-              <Route path='/dashboard/addemployee' element={<AddEmployee/>}/>
-            </Route>
           </Routes>
         </div>
       </>
@@ -55,9 +51,7 @@ function App() {
             <Route path="/resetpassword" element={<ResetPassword />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/" element={<Dashboard />} />
-            <Route path="/dashboard" element={<Dashboard />}>
-              <Route path='/dashboard/addemployee' element={<AddEmployee/>}/>
-            </Route>
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/timesheet" element={<Timesheet />} />
             <Route path="/task" element={<Task />} />
             <Route path="/payroll" exact element={<Payroll data={data} columns={COLUMNS} />} />

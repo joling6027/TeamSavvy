@@ -51,8 +51,8 @@ namespace TeamSavvy.Api.Entities.Context
         {
             if (!optionsBuilder.IsConfigured)
             {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-//                optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Database=TeamSavvy;Trusted_Connection=True;");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Database=TeamSavvy;Trusted_Connection=True;");
             }
         }
 
@@ -471,6 +471,10 @@ namespace TeamSavvy.Api.Entities.Context
 
             modelBuilder.Entity<Payroll>(entity =>
             {
+                entity.HasIndex(e => e.PayDate)
+                    .HasName("UNQ_Payroll")
+                    .IsUnique();
+
                 entity.Property(e => e.PayrollId).HasColumnName("PAYROLL_ID");
 
                 entity.Property(e => e.Deduction)
@@ -491,10 +495,8 @@ namespace TeamSavvy.Api.Entities.Context
                     .IsUnicode(false);
 
                 entity.Property(e => e.PayDate)
-                    .IsRequired()
                     .HasColumnName("PAY_DATE")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                    .HasColumnType("date");
 
                 entity.Property(e => e.PaySick)
                     .HasColumnName("PAY_SICK")
@@ -618,6 +620,10 @@ namespace TeamSavvy.Api.Entities.Context
 
             modelBuilder.Entity<Salary>(entity =>
             {
+                entity.HasIndex(e => e.SalaryIncrementDate)
+                    .HasName("UNQ_Salary")
+                    .IsUnique();
+
                 entity.Property(e => e.SalaryId).HasColumnName("SALARY_ID");
 
                 entity.Property(e => e.EmployeeId).HasColumnName("EMPLOYEE_ID");
