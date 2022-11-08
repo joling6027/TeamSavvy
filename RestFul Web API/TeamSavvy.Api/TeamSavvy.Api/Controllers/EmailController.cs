@@ -86,7 +86,7 @@ namespace TeamSavvy.Api.Entities.Controllers
 
         [Route("otp")]
         [HttpPost]
-        public IActionResult SendOTP([FromBody] string email)
+        public IActionResult SendOTP([FromBody] int emaiemployeeIdl)
         {
 
             ActionResult response;
@@ -97,7 +97,7 @@ namespace TeamSavvy.Api.Entities.Controllers
             }
             else
             {
-                var res = _mailService.SendOTPAsync(email);
+                var res = _mailService.SendOTPAsync(emaiemployeeIdl);
                 if (res == null)
                 {
                     response = NotFound(new ResponseMessage(false, null, new Message(HttpStatusCode.NotFound, "Email body is incorrect.")));
