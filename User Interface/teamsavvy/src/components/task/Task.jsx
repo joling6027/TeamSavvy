@@ -19,12 +19,13 @@ const Task = () => {
 
     useEffect(() => {
         http.get(GetEndPoints().employeeTask + "/" + user.employeeId).then((res) => {
-            // console.log(res.data.response)
+            console.log(res.data.response)
             setTasks(res.data.response);
+
         }).catch((err) => console.log(err.message));
         
         // http.put(GetEndPoints().updateTask)
-    }, [modalData, updateData])
+    }, [])
 
     const saveTaskDataHandler = (enteredTaskData) => {
         const taskData = {
@@ -58,8 +59,8 @@ const Task = () => {
             taskStatus: enteredStatus,
             taskTotalHours: taskItem.taskTotalHours
         }
-        console.log(taskData)
-        http.put(GetEndPoints().updateTask, { taskData }).then((res) => {
+        console.log('Line 62' + taskData)
+        http.put(GetEndPoints().updateTask, { ...taskData }).then((res) => {
             console.log(res.data.response)
             // window.location.reload();
         }).catch((err) => console.log(err.message));
@@ -78,6 +79,13 @@ const Task = () => {
     //     return updateData;
     // }
 
+    if(tasks === undefined){
+        return(
+            <>Loading</>
+        )
+    }else{
+
+ 
     return (
         <>
             <div className="container p-3">
@@ -209,9 +217,9 @@ const Task = () => {
                                     {tasks && tasks.map((task) =>
                                     (task.taskStatus === 'Completed' ?
                                     (<div className="completed-task">
-                                        <h6>Create model for database</h6>
-                                        <p>Tables reuqired for database are Employee levels. Payroll. Think about topics and colums.</p>
-                                        <p><i className="tim-icons icon-refresh-01" /><QueryBuilderIcon /> Hours 12</p>
+                                        <h6>{task.taskName}</h6>
+                                        <p>{task.taskDesc}</p>
+                                        <p><i className="tim-icons icon-refresh-01" /><QueryBuilderIcon /> Hours {task.taskTotalHours}</p>
                                         <hr />
                                     </div>
                                     ):"")
@@ -224,6 +232,7 @@ const Task = () => {
             </div>
         </>
     )
+    }
 }
 
 export default Task;

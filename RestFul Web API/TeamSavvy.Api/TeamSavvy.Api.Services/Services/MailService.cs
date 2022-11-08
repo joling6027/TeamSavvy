@@ -104,6 +104,7 @@ namespace TeamSavvy.Api.Services.Services
             var empEmail = _unitOfWork.Context.Employee.Where(e => e.EmployeeId == resignationEmail.EmployeeId).FirstOrDefault().Email;
             var projId = _unitOfWork.Context.EmployeeProject.Where(p => p.EmployeeId == resignationEmail.EmployeeId).FirstOrDefault().ProjectId;
             var managerId = _unitOfWork.Context.Project.Where(p => p.ProjectId == projId).FirstOrDefault().ProjectManagerId;
+            
             var managerEmail = _unitOfWork.Context.Employee.Where(e => e.EmployeeId == managerId).FirstOrDefault().Email;
             //var empIds = _unitOfWork.Context.EmployeeProject.Where(p => p.ProjectId == projId).Select(e => e.EmployeeId).ToList();
             //var managerRoleId = _unitOfWork.Context.Role.Where(r => r.RoleType == Access.Manager).FirstOrDefault().RoleId;
