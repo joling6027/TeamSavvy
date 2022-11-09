@@ -84,6 +84,38 @@ namespace TeamSavvy.Api.Entities.Controllers
             return response;
         }
 
+        [Route("tasklist/{managerId:int}")]
+        [HttpGet /*Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = Access.Employee)*/]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ResponseMessage), 200)]
+        [ProducesResponseType(typeof(ResponseMessage), 400)]
+        [ProducesResponseType(typeof(ResponseMessage), 401)]
+        [ProducesResponseType(typeof(ResponseMessage), 404)]
+        public ActionResult<List<TaskDto>> GetTaskByManagerId([FromRoute] int managerId)
+        {
+            ActionResult response;
+            ResponseMessage responseMessage;
+            if (managerId <= 0)
+            {
+                responseMessage = new ResponseMessage(false, null, new Message(HttpStatusCode.BadRequest, "Please enter valid employee id."));
+                response = BadRequest(responseMessage);
+            }
+            else
+            {
+                var tasks = _employeeTasksService.GetTaskByManagerId(managerId);
+                if (tasks == null)
+                {
+                    response = NotFound(new ResponseMessage(false, null, new Message(HttpStatusCode.NotFound, $"There is no record in database against employee id {managerId}")));
+                }
+                else
+                {
+                    response = Ok(new ResponseMessage(true, tasks, new Message(HttpStatusCode.OK)));
+                }
+            }
+
+            return response;
+        }
+
         [Route("{taskName}")]
         [HttpGet/*, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = Access.Employee)*/]
         [Produces("application/json")]

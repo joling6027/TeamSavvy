@@ -11,6 +11,8 @@ namespace TeamSavvy.Api.Services.IServices
         TaskDto GetTaskByName(string taskName);
         List<TaskDto> GetTasks();
         List<TaskDto> GetTasksByEmployeeId(int employeeId);
+
+        List<TaskDto> GetTaskByManagerId(int managerId);
         bool AddTask(TaskDto task);
         bool AddTasks(List<TaskDto> tasks);
         bool UpdateTask(TaskDto task);

@@ -40,6 +40,7 @@ namespace TeamSavvy.Api.Services.Services
                     _unitOfWork.SaveChanges();
                     if (addTask.TaskId > 0)
                     {
+
                         isSuccess = true;
                     }
 
@@ -113,6 +114,36 @@ namespace TeamSavvy.Api.Services.Services
             return task;
         }
 
+        public List<TaskDto> GetTaskByManagerId(int managerId)
+        {
+            List<TaskDto> task = null;
+            try
+            {
+                var projectIds = _unitOfWork.Context.EmployeeProject.Where(e => e.EmployeeId == managerId).Select(p => p.ProjectId).ToList();
+                List<Task> tasks = new List<Task>();
+                foreach (var projId in projectIds)
+                {
+                    var taskRes = _unitOfWork.Context.Task.Where(x => x.ProjectId == projId).ToList();
+                    if (taskRes.Any())
+                    {
+                        tasks.AddRange(taskRes);
+                    }
+                  
+                }
+               
+                if (tasks.Any())
+                {
+                    task = _mapper.Map<List<TaskDto>>(tasks);
+                }
+
+            }
+            catch (Exception e)
+            {
+                task = null;
+            }
+            return task;
+        }
+
         public TaskDto GetTaskByName(string taskName)
         {
             TaskDto task = null;
@@ -169,6 +200,7 @@ namespace TeamSavvy.Api.Services.Services
             }
             return task;
         }
+
 
         public bool UpdateTask(TaskDto task)
         {

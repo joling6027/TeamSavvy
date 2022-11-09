@@ -33,8 +33,7 @@ namespace TeamSavvy.Api.Services.Services
 
         public List<Teams> GetTeams(int employeeId)
         {
-            List<Teams> teams = null;
-
+            List<Teams> teams = new List<Teams>();
             try
             {
 
@@ -47,10 +46,11 @@ namespace TeamSavvy.Api.Services.Services
                     var empId = _unitOfWork.Context.EmployeeProject.Where(p => p.ProjectId == projId).Select(e => e.EmployeeId).ToList();
                     empIds.AddRange(empId);
                 }
-
-                foreach (var empId in empIds)
+               var  distEmpIds = empIds.Distinct();
+                foreach (var empId in distEmpIds)
                 {
-                    teams = _unitOfWork.Context.Employee.Where(e => e.EmployeeId == empId)
+
+                   var teamList = _unitOfWork.Context.Employee.Where(e => e.EmployeeId == empId)
                             .Select(e => new Teams
                             {
                                 Email = e.Email,
@@ -58,6 +58,7 @@ namespace TeamSavvy.Api.Services.Services
                                 Name = e.EmployeeFirstname.Trim() + " " + e.EmployeeLastname.Trim(),
                                 Position = _unitOfWork.Context.Role.Where(r => r.RoleId == e.RoleId).FirstOrDefault().RoleType,
                             }).ToList();
+                    teams.AddRange(teamList);
                 }
                         
 

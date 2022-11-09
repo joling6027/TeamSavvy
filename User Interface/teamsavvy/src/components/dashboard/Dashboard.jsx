@@ -9,23 +9,31 @@ const Dashboard = () => {
 
     const {http, user} = AuthService();
     const [totalProjects, setTotalProjects] = useState();
+    const [totalTasks, setTotalTasks] = useState();
 
-    console.log(GetEndPoints().projectsByEmployeeId+'/'+user.employeeId)
     const GetProjects = () => {
         http.get(GetEndPoints().projectsByEmployeeId+'/'+user.employeeId)
         .then((res) =>{
            if(res.data.success){
-            console.log(res.data.response.length)
             setTotalProjects(res.data.response.length);
+           }
+        })
+    }
+
+    const GetTaskListByManagerId = () => {
+        http.get(GetEndPoints().taskListByManagerId+'/'+user.employeeId)
+        .then((res) =>{
+           if(res.data.success){
+            setTotalTasks(res.data.response.length);
            }
         })
     }
 
     useEffect(() =>{
         GetProjects();
+        GetTaskListByManagerId();
     },user.employeeId)
 
-    console.log(user.role)
     return ( 
         <>
          <Container className="px-3">
@@ -57,7 +65,7 @@ const Dashboard = () => {
             </Col>
             <Col className="py-2 px-3 green-bg rounded d-flex align-items-center m-2">
                 <h5 className="text-white flex-grow-1">Task Created</h5>
-                <h2 className="text-white fw-bold">40</h2>
+                <h2 className="text-white fw-bold">{totalTasks}</h2>
             </Col>
         </div>
         }
