@@ -213,7 +213,7 @@ namespace TeamSavvy.Api.Services.Services
                                 TotalCompletedCount = pro.TotalCompletedCount,
                                 TotalTaskCount = pro.TotalTaskCount
                             }).ToList();
-                if (proj != null && proj.Any())
+                if (proj != null)
                 {
                     project = proj;
                 }
@@ -248,7 +248,7 @@ namespace TeamSavvy.Api.Services.Services
                                 TotalCompletedCount = pro.TotalCompletedCount,
                                 TotalTaskCount = pro.TotalTaskCount
                             }).ToList();
-                if (proj != null && proj.Any())
+                if (proj != null)
                 {
                     project = proj;
                 }

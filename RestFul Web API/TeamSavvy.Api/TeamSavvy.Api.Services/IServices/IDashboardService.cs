@@ -10,6 +10,7 @@ namespace TeamSavvy.Api.Services.IServices
         List<TeamMembers> GetTeamMembers(int managerId);
         int GetTeamMembersCount(int managerId);
         List<Project> GetProjects(int managerId);
+        List<Project> GetProjects();
         TaskCount GetTaskCount(int projectId);
     }
 }

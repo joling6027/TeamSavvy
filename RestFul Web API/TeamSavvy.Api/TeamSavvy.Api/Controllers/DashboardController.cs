@@ -58,6 +58,30 @@ namespace TeamSavvy.Api.Web.Controllers
             return response;
         }
 
+        [Route("projects")]
+        [HttpGet /*Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = Access.Employee)*/]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ResponseMessage), 200)]
+        [ProducesResponseType(typeof(ResponseMessage), 400)]
+        [ProducesResponseType(typeof(ResponseMessage), 401)]
+        [ProducesResponseType(typeof(ResponseMessage), 404)]
+        public ActionResult<List<Project>> GetProjects()
+        {
+            ActionResult response;
+            ResponseMessage responseMessage;
+           
+                var res = _dashboardService.GetProjects();
+                if (res == null)
+                {
+                    response = NotFound(new ResponseMessage(false, null, new Message(HttpStatusCode.NotFound, $"There is no record in database")));
+                }
+                else
+                {
+                    response = Ok(new ResponseMessage(true, res, new Message(HttpStatusCode.OK)));
+                }
+            return response;
+        }
+
         [Route("taskcount/{projectId:int}")]
         [HttpGet /*Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = Access.Employee)*/]
         [Produces("application/json")]

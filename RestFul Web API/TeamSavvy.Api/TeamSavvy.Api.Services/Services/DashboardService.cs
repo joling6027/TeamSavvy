@@ -69,6 +69,39 @@ namespace TeamSavvy.Api.Services.Services
             return projects;
         }
 
+        public List<Project> GetProjects()
+        {
+            List<Project> projects = new List<Project>();
+            try
+            {
+                var proj = _unitOfWork.Context.Project.ToList();
+                if (proj != null)
+                {
+                    foreach (var project in proj)
+                    {
+                        var totalTeamMember = _unitOfWork.Context.EmployeeProject.Where(e => e.ProjectId == project.ProjectId && e.Status == true).ToList().Count();
+                        var tasks = _unitOfWork.Context.Task.Where(t => t.ProjectId == project.ProjectId).ToList().Count();
+                        projects.Add(new Project
+                        {
+                            ProjectId = project.ProjectId,
+                            ProjectBudget = project.ProjectBudget,
+                            ProjectDesc = project.ProjectDesc,
+                            ProjectName = project.ProjectName,
+                            TotalTasks = tasks,
+                            TotalTeamMember = totalTeamMember
+                        });
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                projects = null;
+            }
+
+            return projects;
+        }
+
         public TaskCount GetTaskCount(int projectId)
         {
             TaskCount taskCount = null;

@@ -39,6 +39,14 @@ const Dashboard = () => {
         })
     }
 
+    const GetProjectFOrHR = () => {
+        http.get(GetEndPoints().projects)
+        .then((res) =>{
+           if(res.data.success){
+            console.log(res.data.response);
+           }
+        })
+    }
     useEffect(() =>{
         GetProjects();
         GetTaskListByManagerId();
