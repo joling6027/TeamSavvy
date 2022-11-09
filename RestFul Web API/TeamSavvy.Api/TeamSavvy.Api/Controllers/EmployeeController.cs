@@ -10,7 +10,6 @@ using TeamSavvy.Api.BusinessModel.DataTransferModel.ChangePassword;
 using TeamSavvy.Api.BusinessModel.Helper;
 using TeamSavvy.Api.Services.IServices;
 using TeamSavvy.Api.Utilities.Helper;
-
 namespace TeamSavvy.Api.Entities.Controllers
 {
     [Route("api/[controller]")]
@@ -21,7 +20,6 @@ namespace TeamSavvy.Api.Entities.Controllers
         private readonly ILogger<EmployeeController> _logger;
         private readonly IEmployeeService _employeeService;
         #endregion
-
         #region Constructors
         public EmployeeController(IEmployeeService employeeService, ILogger<EmployeeController> logger)
         {
@@ -29,7 +27,6 @@ namespace TeamSavvy.Api.Entities.Controllers
             _logger = logger;
         }
         #endregion
-
         [HttpGet/*, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = Access.Employee)*/]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ResponseMessage), 200)]
@@ -49,10 +46,8 @@ namespace TeamSavvy.Api.Entities.Controllers
             {
                 response = Ok(new ResponseMessage(true, employeeRecords, new Message(HttpStatusCode.OK)));
             }
-
             return response;
         }
-
         [Route("{employeeId:int}")]
         [HttpGet /*Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = Access.Employee)*/]
         [Produces("application/json")]
@@ -81,10 +76,8 @@ namespace TeamSavvy.Api.Entities.Controllers
                     response = Ok(new ResponseMessage(true, employeeRecords, new Message(HttpStatusCode.OK)));
                 }
             }
-
             return response;
         }
-
         //[Route("{employeeFirstName}")]
         //[HttpGet/*, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = Access.Employee)*/]
         //[Produces("application/json")]
@@ -113,10 +106,8 @@ namespace TeamSavvy.Api.Entities.Controllers
         //            response = Ok(new ResponseMessage(true, employeeRecords, new Message(HttpStatusCode.OK)));
         //        }
         //    }
-
         //    return response;
         //}
-
         [Route("addEmployee")]
         [HttpPost]
         [Produces("application/json")]
@@ -124,7 +115,7 @@ namespace TeamSavvy.Api.Entities.Controllers
         [ProducesResponseType(typeof(ResponseMessage), 400)]
         [ProducesResponseType(typeof(ResponseMessage), 401)]
         [ProducesResponseType(typeof(ResponseMessage), 404)]
-        public IActionResult AddEmployeeDetails([FromBody] EmployeeDto employee)
+        public ActionResult<int> AddEmployeeDetails([FromBody] EmployeeDto employee)
         {
             ActionResult response;
             ResponseMessage responseMessage;
@@ -135,20 +126,19 @@ namespace TeamSavvy.Api.Entities.Controllers
             }
             else
             {
-                bool isSuccess = _employeeService.AddEmployee(employee);
-                if (!isSuccess)
+                int empId = _employeeService.AddEmployee(employee);
+                if (empId <= 0)
                 {
                     response = NotFound(new ResponseMessage(false, null, new Message(HttpStatusCode.NotFound, "No record is add in database.")));
                 }
                 else
                 {
-                    response = Ok(new ResponseMessage(true, isSuccess, new Message(HttpStatusCode.OK)));
+                    response = Ok(new ResponseMessage(true, empId, new Message(HttpStatusCode.OK)));
                 }
             }
 
             return response;
         }
-
         // PUT api/<EmployeeController>/5
         [Route("updateEmployee")]
         [HttpPut]
@@ -178,11 +168,10 @@ namespace TeamSavvy.Api.Entities.Controllers
                     response = Ok(new ResponseMessage(true, isSuccess, new Message(HttpStatusCode.OK, "Updated! Your record has been updated. success")));
                 }
             }
-
             return response;
         }
 
-        [Route("chnagepassword")]
+        [Route("changepassword")]
         [HttpPut]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ResponseMessage), 200)]
@@ -210,11 +199,8 @@ namespace TeamSavvy.Api.Entities.Controllers
                     response = Ok(new ResponseMessage(true, isSuccess, new Message(HttpStatusCode.OK, "Updated! Your record has been updated. success")));
                 }
             }
-
             return response;
         }
-
-
         [Route("deleteEmployee/{id}")]
         [HttpDelete]
         [Produces("application/json")]
@@ -243,7 +229,6 @@ namespace TeamSavvy.Api.Entities.Controllers
                     response = Ok(new ResponseMessage(true, isSuccess, new Message(HttpStatusCode.OK, "Deleted! Your record has been deleted. success")));
                 }
             }
-
             return response;
         }
     }

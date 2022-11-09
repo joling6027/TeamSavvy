@@ -11,7 +11,7 @@ namespace TeamSavvy.Api.Services.IServices
         EmployeeDto GetEmployeeById(int id);
         List<EmployeeDto> GetAllEmployees();
         bool ChangePassword(ChangePassword changePassword);
-        bool AddEmployee(EmployeeDto employee);
+        int AddEmployee(EmployeeDto employee);
         bool UpdateEmployee(EmployeeDto employee);
         bool DeleteEmployee(int id);
     }

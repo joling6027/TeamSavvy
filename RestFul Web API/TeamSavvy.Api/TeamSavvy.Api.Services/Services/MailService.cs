@@ -62,15 +62,15 @@ namespace TeamSavvy.Api.Services.Services
             //smtp.Disconnect(true);
         }
 
-        public async Task<string> SendOTPAsync(string email)
+        public async Task<string> SendOTPAsync(int employeeId)
         {
 
             var otp = GenerateRandomOTP(4);
-
+            var empEmail = _unitOfWork.Context.Employee.Where(e => e.EmployeeId == employeeId).FirstOrDefault().Email;
             MailMessage message = new MailMessage();
             message.From = new MailAddress(_mailSettings.EmailUserName);
             message.Subject = "NEW OTP";
-            message.To.Add(new MailAddress(email));
+            message.To.Add(new MailAddress(empEmail));
             message.Body = "Please donot share your otp with anyone else and this will destroy once you use it <br>OTP: " + otp;
             message.IsBodyHtml = true;
             var smtpClient = new SmtpClient(_mailSettings.Host)

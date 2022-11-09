@@ -83,14 +83,51 @@ const Profile = () => {
         let [{cities:availCities}] = provinces;
         setAvailableProvinces(provinces);
         setAvailableCities(availCities);
+        let countr = dropdownData.find(( c) => c.countryId === parseInt(e.target.value));
+        setFormValue((formValue) =>{
+            let newValues = {...formValue}
+            newValues.address.city.province.country.countryId = countr.countryId;
+            newValues.address.city.province.country.countryName = countr.countryName;
+            newValues.address.city.province.provinceId = provinces[0].provinceId;
+            newValues.address.city.province.provinceName = provinces[0].provinceName;
+            newValues.address.city.province.provinceAbbr = provinces[0].provinceAbbr;
+            newValues.address.city.cityId = availCities[0].cityId;
+            newValues.address.city.cityName = availCities[0].cityName;
+            return newValues
+        })
+        console.log(formValue) 
     }
 
     const handleProvinceChange = e =>{
         setSelectedProvince(e.target.value);
         let {cities:availCities} = availableProvinces?.find((c) => c.provinceId ===  parseInt(e.target.value));
         setAvailableCities(availCities);
+        let provin = availableProvinces.find(( c) => c.provinceId === parseInt(e.target.value));
+        setFormValue((formValue) =>{
+            let newValues = {...formValue}
+            newValues.address.city.province.provinceId = provin.provinceId;
+            newValues.address.city.province.provinceName = provin.provinceName;
+            newValues.address.city.province.provinceAbbr = provin.provinceAbbr;
+            newValues.address.city.cityId = availCities[0].cityId;
+            newValues.address.city.cityName = availCities[0].cityName;
+            return newValues
+        })
+        console.log(formValue)
     }
     
+    const handleCityChange = e => {
+        const {name, value} = e.target;
+        setSelectedCity(value);
+        let city = availableCities.find(( c) => c.cityId === parseInt(value));
+        setFormValue((formValue) =>{
+            let newValues = {...formValue}
+            newValues.address.city.cityId = city.cityId;
+            newValues.address.city.cityName = city.cityName;
+            return newValues
+        })
+        console.log(formValue) 
+    }
+
     const handleChange = event => {
         const {name, value} = event.target;
         setFormValue({...formValue, [name]: value});
@@ -100,7 +137,7 @@ const Profile = () => {
     const handleSkillChange = event =>{
         let target = event.target
         let value = Array.from(target.selectedOptions, option => option.value);
-        setSelectOptions(value);
+        setSelectOptions(value); 
     };
 
     const resignCancel = () =>{ resigntoggle();}
@@ -208,6 +245,15 @@ const Profile = () => {
                 )
             }
         })
+        .then(
+            http.delete(GetEndPoints().deleteEmployee + '/' + formValue.employeeId)
+            .then((res) => {
+                if(res.data.success)
+                {
+                    console.log(res);
+                }
+            })
+        )
     }
 
     const hideAlert = () => {
@@ -466,10 +512,10 @@ const Profile = () => {
                 </Label>
                 <Input
                 id="city"
-                name="city"
+                name="cityId"
                 type="select"
                 value={selectedCity}
-                onChange={(e) => setSelectedCity(e.target.value)}
+                onChange={handleCityChange}
                 >
                 {
                    availableCities?.map((city) => <option key={city.cityId} value={city.cityId}>{city.cityName}</option>)

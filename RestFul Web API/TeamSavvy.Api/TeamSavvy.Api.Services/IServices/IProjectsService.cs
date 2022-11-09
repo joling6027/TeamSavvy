@@ -15,5 +15,8 @@ namespace TeamSavvy.Api.Services.IServices
         bool UpdateProject(ProjectDto project);
         bool DeleteProject(int id);
 
+        bool DeleteEmployeeFromProject(int employeeId);
+        bool AddEmployeeOnProject(EmployeeProjectDto employeeProject);
+
     }
 }

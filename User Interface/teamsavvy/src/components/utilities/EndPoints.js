@@ -13,6 +13,15 @@ const enpoints = {
   updateEmployee: 'Employee/updateEmployee',
   resignation:'Email/resign',
   deleteEmployee:'Employee/deleteEmployee',
+  projectsByEmployeeId:'Projects/employeeId',
+  addSalary:'Salary/addSalary',
+  addEmployeeOnProject:'Projects/addEmployeeOnProject',
+  otp:'Email/otp',
+  changePassword:'Employee/changepassword',
+  dropdownRoles :'Dropdowns/roles',
+  dropdownDepartments:'Dropdowns/departments',
+  dropdownCompanies:'Dropdowns/companylocations',
+  projects:'Projects',
 }
 
 export function GetEndPoints(){

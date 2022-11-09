@@ -72,6 +72,76 @@ namespace TeamSavvy.Api.Services.Services
             return counProvCityDdl;
         }
 
+        public List<DepartmentDto> GetDepartments()
+        {
+            List<DepartmentDto> departments = null;
+            try
+            {
+                var depart = _unitOfWork.Context.Department.ToList();
+                if (depart.Any())
+                {
+                    departments = _mapper.Map<List<DepartmentDto>>(depart);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                departments = null;
+            }
+
+            return departments;
+        }
+
+
+        public List<RoleDto> GetRoles()
+        {
+            List<RoleDto> roles = null;
+            try
+            {
+                var rl = _unitOfWork.Context.Role.ToList();
+                if (rl.Any())
+                {
+                    roles = _mapper.Map<List<RoleDto>>(rl);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                roles = null;
+            }
+
+            return roles;
+        }
+
+        public List<CompanyLocations> GetCompanyLocations()
+        {
+
+            List<CompanyLocations> companies = null;
+            try
+            {
+                var locations = _unitOfWork.Context.JobLocation.ToList();
+                if (locations.Any())
+                {
+                    companies = new List<CompanyLocations>();
+                    foreach (var location in locations)
+                    {
+                        companies.Add(new CompanyLocations
+                        {
+                            JobLocationId = location.JobLocationId,
+                            Location = location.Location,
+                        });
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                companies = null;
+            }
+
+            return companies;
+        }
+
         public List<SkillDto> GetSkills()
         {
             List<SkillDto> skills = null;

@@ -35,6 +35,8 @@ namespace TeamSavvy.Api.Utilities.MapperRegistration
             //Payroll endpoint
             CreateMap<Payroll, PayrollDto>()
                     .ReverseMap();
+            CreateMap<EmployeeProject, EmployeeProjectDto>()
+            .ReverseMap();
 
             //Salary endpoint
             CreateMap<Salary, SalaryDto>()
@@ -53,6 +55,20 @@ namespace TeamSavvy.Api.Utilities.MapperRegistration
 
             //skill endpoint
             CreateMap<Skill, SkillDto>()
+                 .ReverseMap();
+
+
+            //role endpoint
+            CreateMap<Role, RoleDto>()
+                 .ReverseMap();
+
+            //role endpoint
+            CreateMap<Department, DepartmentDto>()
+                 .ReverseMap();
+
+            CreateMap<Salary, SalaryDto>()
+                 .ReverseMap();
+            CreateMap<Payroll, PayrollDto>()
                  .ReverseMap();
         }
     }

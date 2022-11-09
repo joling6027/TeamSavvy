@@ -67,7 +67,8 @@ const Login = () => {
                 <Label htmlFor="password" className="form-label mt-2">Password</Label>
                   <Input type="password" className="form-control " id="password" name='password'
                   onChange={e => setPassword(e.target.value)}/>
-                  <Link href={forgetpass} className="alert-link mb-5 font-weight-light float-end text-secondary" to="/forgetPassword"><small>Forgot Password?</small></Link>
+                <Link to={'/forgetPassword/' + employeeId} className="alert-link mb-5 font-weight-light float-end text-secondary" >
+                  <small>Forgot Password?</small></Link>
                 </FormGroup>
                 <div className="w-100 text-center d-inline-block">
                 <Button>LETS GO</Button>
