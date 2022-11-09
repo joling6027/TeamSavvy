@@ -54,7 +54,7 @@ const InternalJobs = () => {
                                 <Col sm="4">
                                     <Card className='jobs-card' body>
                                         <CardTitle className='job-card-title'>Jobs
-                                            {(user.role === 'HR' ? (<Button className='createAndApply-btn' color="link" onClick={() => {setIsCreateJob(true); }}>
+                                            {(user.role === 'HR' || user.role === 'Admin' ? (<Button className='createAndApply-btn' color="link" onClick={() => {setIsCreateJob(true); }}>
                                                 <AddOutlinedIcon /> Create Job
                                             </Button>) : "")}
                                         </CardTitle>
@@ -62,7 +62,7 @@ const InternalJobs = () => {
                                             <Card className='job-card' key={job.jobId}>
                                                 <CardSubtitle className='job-subtitle'>{job.jobPosition}</CardSubtitle>
                                                 <CardText>{job.details}</CardText>
-                                                {(user.role === 'HR' ? ( 
+                                                {(user.role === 'HR' || user.role === 'Admin' ? ( 
                                                     /* <Button className='btn-view-job-detail' color="link"
                                                     onClick={() => { setJobItem(job) }}>VIEW</Button> */
                                                     
@@ -139,7 +139,7 @@ const InternalJobs = () => {
                                     ) :
                                         (<>
                                             <CardTitle className='job-card-title'>
-                                                {(user.role === 'HR' ? (<Link className='createAndApply-btn' color="link" to={"/JobAppliedEmployees"}>Applied</Link>) : (<Button className='createAndApply-btn' color="link">Apply Now</Button>))}
+                                                    {(user.role === 'HR' || user.role === 'Admin' ? (<Link className='createAndApply-btn' color="link" to={"/JobAppliedEmployees"}>Applied</Link>) : (<Button className='createAndApply-btn' color="link">Apply Now</Button>))}
                                                 {jobItem.jobPosition}
                                             </CardTitle>
                                             <CardText>{jobItem.details}</CardText>
