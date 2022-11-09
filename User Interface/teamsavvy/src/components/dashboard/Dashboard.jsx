@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {Container, Row, Col} from 'reactstrap';
 import { Link, Outlet } from 'react-router-dom';
-
 import AuthService from '../services/authService';
 import { GetEndPoints } from '../utilities/EndPoints';
 import { useEffect } from 'react';

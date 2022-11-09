@@ -77,7 +77,6 @@ import { GetEndPoints } from '../utilities/EndPoints';
         }
         else
         {
-
          setAlert( <SweetAlert
             success
             style={{ display: "block", marginTop: "-100px" }}
