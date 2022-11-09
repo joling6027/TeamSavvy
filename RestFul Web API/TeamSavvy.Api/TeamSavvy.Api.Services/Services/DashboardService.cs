@@ -7,7 +7,6 @@ using System.Text;
 using TeamSavvy.Api.BusinessModel.DashboardModels;
 using TeamSavvy.Api.Entities.Context;
 using TeamSavvy.Api.Entities.GenericRepo;
-using TeamSavvy.Api.Entities.Models;
 using TeamSavvy.Api.Services.IServices;
 using Project = TeamSavvy.Api.BusinessModel.DashboardModels.Project;
 

@@ -12,7 +12,7 @@ namespace TeamSavvy.Api.Entities.Models
         public int JobAppliedId { get; set; }
         public int EmployeeId { get; set; }
         public int JobId { get; set; }
-        public DateTime AppliedOn { get; set; }
+        public string AppliedOn { get; set; }
 
         public virtual Employee Employee { get; set; }
         public virtual Job Job { get; set; }

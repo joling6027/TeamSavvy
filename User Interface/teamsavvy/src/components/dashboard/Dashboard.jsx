@@ -9,8 +9,11 @@ const Dashboard = () => {
 
     const {http, user} = AuthService();
     const [totalProjects, setTotalProjects] = useState();
+    const [totalProjectsForHr, setTotalProjectsForHr] = useState();
     const [totalTasks, setTotalTasks] = useState();
     const [totalTeamMembers, setTotalTeamMember] = useState();
+    const [totalEmployees, setTotalEmployees] =  useState();
+    const [totalJobs, setTotalJos] =  useState();
 
     const GetProjects = () => {
         http.get(GetEndPoints().projectsByEmployeeId+'/'+user.employeeId)
@@ -39,18 +42,51 @@ const Dashboard = () => {
         })
     }
 
-    const GetProjectFOrHR = () => {
-        http.get(GetEndPoints().projects)
+    const GetProjectForHR = () => {
+        http.get(GetEndPoints().projectsForHR)
         .then((res) =>{
            if(res.data.success){
+            setTotalProjectsForHr(res.data.response.length);
+           }
+        })
+    }
+
+    const GetEmployeesForHR = () => {
+        http.get(GetEndPoints().employee)
+        .then((res) =>{
+           if(res.data.success){
+            setTotalEmployees(res.data.response.length);
+           }
+        })
+    }
+
+    const GetJobsForHR = () => {
+        http.get(GetEndPoints().job)
+        .then((res) =>{
+           if(res.data.success){
+            setTotalJos(res.data.response.length);
+            console.log(res.data.response.length);
             console.log(res.data.response);
            }
         })
     }
     useEffect(() =>{
-        GetProjects();
-        GetTaskListByManagerId();
-        GetTeamMembersByManagerId();
+        //for Manager
+        if(user.role && user.role == "Manager")
+        {
+            GetProjects();
+            GetTaskListByManagerId();
+            GetTeamMembersByManagerId();
+        }
+
+        //for HR
+        if(user.role && user.role == "HR")
+        {
+            GetProjectForHR();
+            GetEmployeesForHR();
+            GetJobsForHR();
+        }
+   
     },user.employeeId)
 
     return ( 
@@ -60,15 +96,15 @@ const Dashboard = () => {
             user.role && user.role == "HR" && <div className=" d-flex justify-content-between">
             <Col className="py-2 px-3 yellow-bg rounded d-flex align-items-center m-2">
                 <h5 className="text-white flex-grow-1">Project in compoany</h5>
-                <h2 className="text-white fw-bold">150</h2>
+                <h2 className="text-white fw-bold">{totalProjectsForHr}</h2>
             </Col>
             <Col className="py-2 px-3 orange-bg rounded d-flex align-items-center m-2">
                 <h5 className="text-white flex-grow-1">Employee List</h5>
-                <h2 className="text-white fw-bold">105</h2>
+                <h2 className="text-white fw-bold">{totalEmployees}</h2>
             </Col>
             <Col className="py-2 px-3 green-bg rounded d-flex align-items-center m-2">
                 <h5 className="text-white flex-grow-1">Jobs Created</h5>
-                <h2 className="text-white fw-bold">40</h2>
+                <h2 className="text-white fw-bold">{totalJobs}</h2>
             </Col>
         </div>
         }
@@ -90,7 +126,6 @@ const Dashboard = () => {
             </Col>
         </div>
         }
-        {/* <Outlet/> */}
         </Container>
         </>
      );

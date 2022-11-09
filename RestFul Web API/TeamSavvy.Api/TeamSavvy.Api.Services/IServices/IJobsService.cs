@@ -10,6 +10,7 @@ namespace TeamSavvy.Api.Services.IServices
         JobDto GetJobById(int id);
         List<EmployeeDto> GetEmployeesAppliedJob(int id);
         List<JobDto> GetJobs();
+        bool AppliedJob(JobAppliedDto applied);
         bool AddJob(JobDto job);
         bool UpdateJob(JobDto job);
         bool DeleteJob(int id);

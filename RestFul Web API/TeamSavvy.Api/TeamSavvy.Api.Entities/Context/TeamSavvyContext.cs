@@ -314,11 +314,6 @@ namespace TeamSavvy.Api.Entities.Context
 
                 entity.Property(e => e.SkillId).HasColumnName("SKILL_ID");
 
-                entity.HasOne(d => d.Employee)
-                    .WithMany(p => p.EmployeeSkill)
-                    .HasForeignKey(d => d.EmployeeId)
-                    .HasConstraintName("FK_Employee_Skill_Employee");
-
                 entity.HasOne(d => d.Skill)
                     .WithMany(p => p.EmployeeSkill)
                     .HasForeignKey(d => d.SkillId)
@@ -364,13 +359,13 @@ namespace TeamSavvy.Api.Entities.Context
             {
                 entity.ToTable("Job_Applied");
 
-                entity.Property(e => e.JobAppliedId)
-                    .HasColumnName("JOB_APPLIED_ID")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.JobAppliedId).HasColumnName("JOB_APPLIED_ID");
 
                 entity.Property(e => e.AppliedOn)
+                    .IsRequired()
                     .HasColumnName("APPLIED_ON")
-                    .HasColumnType("date");
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.EmployeeId).HasColumnName("EMPLOYEE_ID");
 

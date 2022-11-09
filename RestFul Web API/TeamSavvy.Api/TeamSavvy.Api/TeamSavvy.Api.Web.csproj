@@ -29,8 +29,4 @@
   <ProjectReference Include="..\TeamSavvy.Api.Services\TeamSavvy.Api.Services.csproj" />
 </ItemGroup>
 
-<ItemGroup>
-  <Folder Include="Model\" />
-</ItemGroup>
-
 </Project>

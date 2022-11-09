@@ -24,7 +24,9 @@ const enpoints = {
   projects:'Projects',
   taskListByManagerId: 'EmployeeTask/tasklist',
   teamMembers:'Dashboard/teammemberscount',
-  getTeamMembers:'Dashboard/teammembers'
+  getTeamMembers:'Dashboard/teammembers',
+  projectsForHR:'Dashboard/projects',
+  job:'Job',
 }
 
 export function GetEndPoints(){

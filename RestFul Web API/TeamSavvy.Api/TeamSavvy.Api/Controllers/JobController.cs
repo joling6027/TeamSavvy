@@ -148,6 +148,38 @@ namespace TeamSavvy.Api.Entities.Controllers
             return response;
         }
 
+        [Route("applyjob")]
+        [HttpPost]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ResponseMessage), 200)]
+        [ProducesResponseType(typeof(ResponseMessage), 400)]
+        [ProducesResponseType(typeof(ResponseMessage), 401)]
+        [ProducesResponseType(typeof(ResponseMessage), 404)]
+        public IActionResult AddEmployeeDetails([FromBody] JobAppliedDto job)
+        {
+            ActionResult response;
+            ResponseMessage responseMessage;
+            if (!ModelState.IsValid)
+            {
+                responseMessage = new ResponseMessage(false, null, new Message(HttpStatusCode.BadRequest, "There is invalid entry in job record."));
+                response = BadRequest(responseMessage);
+            }
+            else
+            {
+                bool isSuccess = _jobsService.AppliedJob(job);
+                if (!isSuccess)
+                {
+                    response = NotFound(new ResponseMessage(false, null, new Message(HttpStatusCode.NotFound, "No record is add in database.")));
+                }
+                else
+                {
+                    response = Ok(new ResponseMessage(true, isSuccess, new Message(HttpStatusCode.OK)));
+                }
+            }
+
+            return response;
+        }
+
         [Route("updateJob")]
         [HttpPut]
         [Produces("application/json")]

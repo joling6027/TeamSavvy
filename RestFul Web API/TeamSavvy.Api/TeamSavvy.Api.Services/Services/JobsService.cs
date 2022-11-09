@@ -9,6 +9,7 @@ using TeamSavvy.Api.Services.IServices;
 using TeamSavvy.Api.Entities.Models;
 using System.Linq;
 using Microsoft.EntityFrameworkCore.Internal;
+using JobApplied = TeamSavvy.Api.Entities.Models.JobApplied;
 
 namespace TeamSavvy.Api.Services.Services
 {
@@ -41,6 +42,31 @@ namespace TeamSavvy.Api.Services.Services
                     if (jb != null)
                     {
                         _unitOfWork.Repository<Job>().Insert(jb);
+                        _unitOfWork.SaveChanges();
+                        isSuccess = true;
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                isSuccess = false;
+            }
+
+            return isSuccess;
+        }
+
+        public bool AppliedJob(JobAppliedDto applied)
+        {
+            bool isSuccess = false;
+            try
+            {
+                if (applied != null)
+                {
+                    var jb = _mapper.Map<JobApplied>(applied);
+                    if (jb != null)
+                    {
+                        _unitOfWork.Repository<JobApplied>().Insert(jb);
                         _unitOfWork.SaveChanges();
                         isSuccess = true;
                     }

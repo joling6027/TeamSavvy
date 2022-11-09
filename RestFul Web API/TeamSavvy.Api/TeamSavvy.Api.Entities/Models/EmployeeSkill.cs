@@ -14,7 +14,6 @@ namespace TeamSavvy.Api.Entities.Models
         public int SkillId { get; set; }
         public bool Isactive { get; set; }
 
-        public virtual Employee Employee { get; set; }
         public virtual Skill Skill { get; set; }
     }
 }

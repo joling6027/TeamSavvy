@@ -51,7 +51,8 @@ namespace TeamSavvy.Api.Utilities.MapperRegistration
                   .ReverseMap();
             CreateMap<JobSkillsDto, JobSkills>()
                  .ReverseMap();
-
+            CreateMap<JobAppliedDto, JobApplied>()
+                 .ReverseMap();
 
             //skill endpoint
             CreateMap<Skill, SkillDto>()
