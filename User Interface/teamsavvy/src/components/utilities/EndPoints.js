@@ -22,7 +22,9 @@ const enpoints = {
   dropdownDepartments:'Dropdowns/departments',
   dropdownCompanies:'Dropdowns/companylocations',
   projects:'Projects',
-  taskListByManagerId: 'EmployeeTask/tasklist'
+  taskListByManagerId: 'EmployeeTask/tasklist',
+  teamMembers:'Dashboard/teammemberscount',
+  getTeamMembers:'Dashboard/teammembers'
 }
 
 export function GetEndPoints(){

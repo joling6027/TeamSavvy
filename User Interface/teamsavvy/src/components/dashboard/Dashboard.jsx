@@ -10,6 +10,7 @@ const Dashboard = () => {
     const {http, user} = AuthService();
     const [totalProjects, setTotalProjects] = useState();
     const [totalTasks, setTotalTasks] = useState();
+    const [totalTeamMembers, setTotalTeamMember] = useState();
 
     const GetProjects = () => {
         http.get(GetEndPoints().projectsByEmployeeId+'/'+user.employeeId)
@@ -29,9 +30,19 @@ const Dashboard = () => {
         })
     }
 
+    const GetTeamMembersByManagerId = () => {
+        http.get(GetEndPoints().teamMembers+'/'+user.employeeId)
+        .then((res) =>{
+           if(res.data.success){
+            setTotalTeamMember(res.data.response);
+           }
+        })
+    }
+
     useEffect(() =>{
         GetProjects();
         GetTaskListByManagerId();
+        GetTeamMembersByManagerId();
     },user.employeeId)
 
     return ( 
@@ -60,8 +71,10 @@ const Dashboard = () => {
                 <h2 className="text-white fw-bold">{totalProjects}</h2>
             </Col>
             <Col className="py-2 px-3 orange-bg rounded d-flex align-items-center m-2">
-                <h5 className="text-white flex-grow-1">Team Memebers</h5>
-                <h2 className="text-white fw-bold">105</h2>
+                <Link to={'/dashboard/teammembers'} className='text-mute text-decoration-none inline-block'>
+                    <h5 className="text-white flex-grow-1">Team Memebers</h5>
+                    <h2 className="text-white fw-bold">{totalTeamMembers}</h2>
+                </Link>
             </Col>
             <Col className="py-2 px-3 green-bg rounded d-flex align-items-center m-2">
                 <h5 className="text-white flex-grow-1">Task Created</h5>
@@ -69,12 +82,7 @@ const Dashboard = () => {
             </Col>
         </div>
         }
-        
-        
-        <div>
-            <Link to='/dashboard/addemployee'>Add New Employee</Link>
-        </div>
-        <Outlet/>
+        {/* <Outlet/> */}
         </Container>
         </>
      );

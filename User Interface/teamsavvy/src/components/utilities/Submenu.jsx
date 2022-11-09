@@ -19,7 +19,7 @@ export const submenu = [
         id: 1,
         icon: <BarChartIcon/>,
         text: "Dashboard",
-        link: "/"
+        link: "dashboard"
     },
     {
         id: 2,
