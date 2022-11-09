@@ -1,0 +1,7 @@
+
+*.dll
+*.dll
+*.vsidx
+*.pdb
+*.cache
+*.editorconfig
