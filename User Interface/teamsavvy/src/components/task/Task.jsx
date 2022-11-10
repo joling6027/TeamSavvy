@@ -37,7 +37,7 @@ const Task = () => {
         console.log("inside")
         console.log(taskData)
         http.put(GetEndPoints().updateTask, {...taskData}).then((res) => {
-            console.log(res.data.response)
+            // console.log(res.data.response)
             // window.location.reload();
         }).catch((err) => console.log(err.message));
     }
@@ -99,7 +99,7 @@ const Task = () => {
                                     {tasks && tasks.map((task) =>
                                     (task.taskStatus === 'Assigned' ?
                                         (< div className="assigned-task" key={task.taskId}>
-                                            <h6>{task.taskName}</h6>
+                                            <h6 style={{fontWeight:"bold"}}>{task.taskName}</h6>
                                             <p>{task.taskDesc}</p>
 
                                             <button
@@ -119,8 +119,7 @@ const Task = () => {
                                             < hr />
                                         </div>) : "")
                                     )}
-                                    
-                                    <div className="assigned-task">
+                                    {/* <div className="assigned-task">
                                         <h6>Create model for database</h6>
                                         <p>Tables reuqired for database are Employee levels. Payroll. Think about topics and colums.</p>
                                         <button
@@ -130,38 +129,10 @@ const Task = () => {
                                         >
                                             MODIFY TASK
                                         </button>
-                                        {/* <TaskModal onSaveTaskData={saveTaskDataHandler} show={show} close={() => setShow(false)} /> */}
-                                        {/* <Link to={"#"}>MODIFY TASK</Link> */}
+                                        <TaskModal onSaveTaskData={saveTaskDataHandler} show={show} close={() => setShow(false)} />
+                                        <Link to={"#"}>MODIFY TASK</Link>
                                         <hr />
-                                    </div>
-                                    <div className="assigned-task">
-                                        <h6>Create model for database</h6>
-                                        <p>Tables reuqired for database are Employee levels. Payroll. Think about topics and colums.</p>
-                                        <button
-                                            className='task-btn'
-                                            type="button"
-                                            onClick={() => setShow(true)}
-                                        >
-                                            MODIFY TASK
-                                        </button>
-                                        {/* <TaskModal onSaveTaskData={saveTaskDataHandler} show={show} close={() => setShow(false)} /> */}
-                                        {/* <Link to={"#"}>MODIFY TASK</Link> */}
-                                        <hr />
-                                    </div>
-                                    <div className="assigned-task">
-                                        <h6>Create model for database</h6>
-                                        <p>Tables reuqired for database are Employee levels. Payroll. Think about topics and colums.</p>
-                                        <button
-                                            className='task-btn'
-                                            type="button"
-                                            onClick={() => setShow(true)}
-                                        >
-                                            MODIFY TASK
-                                        </button>
-                                        {/* <TaskModal onSaveTaskData={saveTaskDataHandler} show={show} close={() => setShow(false)} /> */}
-                                        {/* <Link to={"#"}>MODIFY TASK</Link> */}
-                                        <hr />
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>
@@ -172,7 +143,7 @@ const Task = () => {
                                     {tasks && tasks.map((task) => (
                                         (task.taskStatus === 'In Progress'? 
                                             (<div className="in-progress-task" key={task.taskId}>
-                                                <h6>{task.taskName}</h6>
+                                                <h6 style={{ fontWeight: "bold" }}>{task.taskName}</h6>
                                                 <p>{task.taskDesc}</p>
                                                 <p><i className="tim-icons icon-refresh-01" /><QueryBuilderIcon />  Hours {task.taskTotalHours}</p>
                                                 <button
@@ -217,7 +188,7 @@ const Task = () => {
                                     {tasks && tasks.map((task) =>
                                     (task.taskStatus === 'Completed' ?
                                     (<div className="completed-task">
-                                        <h6>{task.taskName}</h6>
+                                        <h6 style={{ fontWeight: "bold" }}>{task.taskName}</h6>
                                         <p>{task.taskDesc}</p>
                                         <p><i className="tim-icons icon-refresh-01" /><QueryBuilderIcon /> Hours {task.taskTotalHours}</p>
                                         <hr />

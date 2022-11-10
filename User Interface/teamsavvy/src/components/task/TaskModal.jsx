@@ -20,11 +20,11 @@ const TaskModal = (props) => {
   const [enteredAssignedTo, setEnteredAssignedTo] = useState(props.onOpen().assignedTo);
   const [assignedDate, setAssignedDate] = useState(props.onOpen().assignedDate);
 
-
   //validation
   const [titleValidate, setTitleValidate] = useState(false);
   const [descValidate, setDescTitleValidate] = useState(false);
   const [hourValidate, setHourValidate] = useState(false)
+  const [endDateValidate, setEndDateValidate] = useState(false);
 
   const titleChangeHandler = (event) => {
     
@@ -73,12 +73,20 @@ const TaskModal = (props) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    
+    const dateStartDate = Date.parse(enteredStartDate);
+    const dateEndDate = Date.parse(enteredEndDate);
 
-    if (titleValidate || descValidate){
+    if(dateEndDate < dateStartDate){
+      console.log("Wrong date");
+      setEndDateValidate(true);
+    }
+
+    if (titleValidate || descValidate || endDateValidate){
       return;
     }
     
-    console.log(e.target)
+    // console.log(e.target)
     const taskData = {
       taskId: taskId,
       projectId: projectId,
@@ -164,7 +172,7 @@ const TaskModal = (props) => {
                   <Col>
                     <Label for="task-end-date">End Date</Label>
                     <Input type='date' name='task-end-date' id='task-end-date' 
-                      defaultValue={props.onOpen().taskEndDate} onChange={endDateChangeHandler}/>
+                      defaultValue={props.onOpen().taskEndDate} onChange={endDateChangeHandler} invalid={endDateValidate}/>
                     <FormFeedback>The start date cannnot be blank</FormFeedback>
                   </Col>
                 </Row>
