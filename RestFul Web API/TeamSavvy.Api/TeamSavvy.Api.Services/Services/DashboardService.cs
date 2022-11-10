@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using TeamSavvy.Api.BusinessModel.DashboardModels;
+using TeamSavvy.Api.BusinessModel.DataTransferModel.Charts;
 using TeamSavvy.Api.Entities.Context;
 using TeamSavvy.Api.Entities.GenericRepo;
 using TeamSavvy.Api.Services.IServices;
@@ -33,8 +34,99 @@ namespace TeamSavvy.Api.Services.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
+
+       
         #endregion
 
+        public List<LeaveApproval> GetEmployeesLeavesByManagerId(int managerId)
+        {
+            List<LeaveApproval> leaveApprovals = new List<LeaveApproval>();
+            try
+            {
+                var projs = _unitOfWork.Context.Project.Where(p => p.ProjectManagerId == managerId).ToList();
+                if(projs != null)
+                {
+                    foreach (var item in projs)
+                    {
+                        var empIds = _unitOfWork.Context.EmployeeProject.Where(p => p.ProjectId == item.ProjectId).ToList();
+
+                        if(empIds != null)
+                        {
+                            foreach (var empId in empIds)
+                            {
+                                var leave = _unitOfWork.Context.EmployeeLeave.Where(e => e.EmployeeId == empId.EmployeeId && String.IsNullOrEmpty(e.LeaveStatus)).FirstOrDefault();
+                                if (leave != null)
+                                {
+                                    LeaveApproval leaveApproval = new LeaveApproval
+                                    {
+                                        ProjectName = item.ProjectName,
+                                        TotalLeaveDays = leave.LeaveDays,
+                                        LeaveStartDate = leave.LeaveStart,
+                                        LeaveEndDate = leave.LeaveEnds,
+                                        Id = empId.EmployeeId
+                                    };
+
+                                    leaveApprovals.Add(leaveApproval);
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                leaveApprovals = null;
+            }
+
+            return leaveApprovals;
+        }
+
+        public List<LeaveApproval> GetEmployeesLeaves()
+        {
+            List<LeaveApproval> leaveApprovals = new List<LeaveApproval>();
+            try
+            {
+                var projs = _unitOfWork.Context.Project.ToList();
+                if (projs != null)
+                {
+                    foreach (var item in projs)
+                    {
+                       
+                        var empIds = _unitOfWork.Context.EmployeeProject.Where(p => p.ProjectId == item.ProjectId).ToList();
+
+                        if (empIds != null)
+                        {
+                            foreach (var empId in empIds)
+                            {
+                                var leave = _unitOfWork.Context.EmployeeLeave.Where(e => e.EmployeeId == empId.EmployeeId && String.IsNullOrEmpty(e.LeaveStatus)).FirstOrDefault();
+                                if(leave != null)
+                                {
+                                    LeaveApproval leaveApproval = new LeaveApproval
+                                    {
+                                        ProjectName = item.ProjectName,
+                                        TotalLeaveDays = leave.LeaveDays,
+                                        LeaveStartDate = leave.LeaveStart,
+                                        LeaveEndDate = leave.LeaveEnds,
+                                        Id = empId.EmployeeId
+                                    };
+
+                                    leaveApprovals.Add(leaveApproval);
+                                }
+                                
+
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                leaveApprovals = null;
+            }
+
+            return leaveApprovals;
+        }
         public List<Project> GetProjects(int managerId)
         {
             List<Project> projects = new List<Project>();
@@ -281,5 +373,28 @@ namespace TeamSavvy.Api.Services.Services
             return totalCount;
         }
 
+        public Chart GetTopFiveProjects()
+        {
+            Chart chart = new Chart();
+
+            try
+            {
+                chart.Labels = new List<string>();
+                chart.Data = new List<int>();
+                var res = _unitOfWork.Context.Project.OrderByDescending(p => p.ProjectBudget).ToList().Take(5);
+
+                foreach (var item in res)
+                {
+                    chart.Labels.Add(item.ProjectName);
+                    chart.Data.Add(Int32.Parse(item.ProjectBudget));
+                }
+            }
+            catch(Exception ex)
+            {
+                chart = new Chart();
+            }
+
+            return chart;
+        }
     }
 }

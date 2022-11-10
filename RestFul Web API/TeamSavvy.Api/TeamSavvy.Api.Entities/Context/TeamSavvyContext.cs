@@ -259,17 +259,22 @@ namespace TeamSavvy.Api.Entities.Context
 
                 entity.Property(e => e.LeaveApprovalDate)
                     .HasColumnName("LEAVE_APPROVAL_DATE")
-                    .HasColumnType("date");
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.LeaveDays).HasColumnName("LEAVE_DAYS");
 
                 entity.Property(e => e.LeaveEnds)
+                    .IsRequired()
                     .HasColumnName("LEAVE_ENDS")
-                    .HasColumnType("date");
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.LeaveStart)
+                    .IsRequired()
                     .HasColumnName("LEAVE_START")
-                    .HasColumnType("date");
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.LeaveStatus)
                     .HasColumnName("LEAVE_STATUS")

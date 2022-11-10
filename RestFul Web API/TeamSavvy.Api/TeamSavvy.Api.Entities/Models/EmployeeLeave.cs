@@ -12,11 +12,11 @@ namespace TeamSavvy.Api.Entities.Models
         public int EmployeeLeaveId { get; set; }
         public int EmployeeId { get; set; }
         public int LeaveTypeId { get; set; }
-        public DateTime LeaveStart { get; set; }
-        public DateTime LeaveEnds { get; set; }
+        public string LeaveStart { get; set; }
+        public string LeaveEnds { get; set; }
         public int? LeaveDays { get; set; }
         public bool IsApproved { get; set; }
-        public DateTime? LeaveApprovalDate { get; set; }
+        public string LeaveApprovalDate { get; set; }
         public string LeaveApprovalBy { get; set; }
         public string LeaveStatus { get; set; }
     }

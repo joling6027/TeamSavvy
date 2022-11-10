@@ -87,7 +87,7 @@ namespace TeamSavvy.Api.Services.Services
             try
             {
                 var leave = _unitOfWork.Context.EmployeeLeave.Where(x => x.EmployeeLeaveId == leaveId).FirstOrDefault();
-                if (empLeave != null)
+                if (leave != null)
                 {
                     empLeave = _mapper.Map<EmployeeLeaveDto>(leave);
                 }
@@ -107,7 +107,7 @@ namespace TeamSavvy.Api.Services.Services
             try
             {
                 var empLeaves = _unitOfWork.Context.EmployeeLeave.Where(x => x.EmployeeId == employeeId).ToList();
-                if (leaves.Any())
+                if (empLeaves != null)
                 {
                     leaves = _mapper.Map<List<EmployeeLeaveDto>>(empLeaves);
                 }
