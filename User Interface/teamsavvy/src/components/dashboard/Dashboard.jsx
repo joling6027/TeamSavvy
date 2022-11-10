@@ -99,8 +99,10 @@ const Dashboard = () => {
                 <h2 className="text-white fw-bold">{totalProjectsForHr}</h2>
             </Col>
             <Col className="py-2 px-3 orange-bg rounded d-flex align-items-center m-2">
-                <h5 className="text-white flex-grow-1">Employee List</h5>
-                <h2 className="text-white fw-bold">{totalEmployees}</h2>
+                <Link to={'/dashboard/teammembers'} className='text-mute text-decoration-none inline-block'>
+                    <h5 className="text-white flex-grow-1">Employee List</h5>
+                    <h2 className="text-white fw-bold">{totalEmployees}</h2>
+                </Link>
             </Col>
             <Col className="py-2 px-3 green-bg rounded d-flex align-items-center m-2">
                 <h5 className="text-white flex-grow-1">Jobs Created</h5>

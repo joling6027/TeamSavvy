@@ -191,6 +191,72 @@ namespace TeamSavvy.Api.Services.Services
         }
 
 
+        public List<TeamMembers> GetTeamMembers()
+        {
+            List<TeamMembers> teamMembers = new List<TeamMembers>();
+            try
+            {
+                var projs = _unitOfWork.Context.Project.ToList();
+                if (projs != null)
+                {
+                    foreach (var project in projs)
+                    {
+                        TeamMembers teamMember = new TeamMembers
+                        {
+                            ProjectName = project.ProjectName,
+                            ProjectId = project.ProjectId
+                        };
+                        var employees = _unitOfWork.Context.Employee
+                                          .Join(_unitOfWork.Context.EmployeeProject,
+                                           emp => emp.EmployeeId,
+                                           empProj => empProj.EmployeeId,
+                                           (emp, empProj) => new { Emp = emp, EmpProj = empProj })
+                                          .Where(x => x.EmpProj.ProjectId == project.ProjectId && String.IsNullOrEmpty(x.Emp.Resigneddate))
+                                          .Select(x => new { x.Emp, x.EmpProj }).ToList();
+                        if (employees != null)
+                        {
+                            teamMember.EmployeeList = new List<ProjectEmployee>();
+                            var totalTask = _unitOfWork.Context.Task.Where(t => t.ProjectId == project.ProjectId).ToList().Count();
+                            foreach (var emp in employees)
+                            {
+                                var tasks = _unitOfWork.Context.Task.Where(t => t.ProjectId == emp.EmpProj.ProjectId && t.EmployeeId == emp.EmpProj.EmployeeId).ToList();
+                                var completed = tasks.Where(t => t.TaskStatus == "Completed").Count();
+                                var empSalary = _unitOfWork.Context.Salary.Where(s => s.EmployeeId == emp.Emp.EmployeeId).ToList().OrderByDescending(s => s.Employeesalary);
+                                int progress = 0;
+                                if (totalTask > 0)
+                                {
+                                    progress = (completed / totalTask) * 100;
+                                }
+
+                                teamMember.EmployeeList.Add(new ProjectEmployee
+                                {
+                                    Id = emp.Emp.EmployeeId,
+                                    Department = _unitOfWork.Context.Department.Where(x => x.DepartmentId == emp.Emp.DepartmentId).FirstOrDefault().DepartmentName,
+                                    EmployeeName = emp.Emp.EmployeeFirstname.Trim() + " " + emp.Emp.EmployeeLastname.Trim(),
+                                    Progress = progress,
+                                    Salary = empSalary.Select(s => s.Employeesalary).FirstOrDefault(),
+                                    Status = emp.EmpProj.Status ? "Active" : "Bench",
+                                    Position = _unitOfWork.Context.Role.Where(r => r.RoleId == emp.Emp.RoleId).FirstOrDefault().RoleType,
+                                });
+
+
+                            }
+                        }
+
+                        teamMembers.Add(teamMember);
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                teamMembers = null;
+            }
+
+            return teamMembers;
+        }
+
+
         public int GetTeamMembersCount(int managerId)
         {
             int totalCount = 0;

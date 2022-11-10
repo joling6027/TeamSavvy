@@ -5,6 +5,8 @@ import Tabs from 'react-bootstrap/Tabs';
 import Timesheet from '../timesheet/Timesheet'
 import Task from '../task/Task'
 import Profile from '../profile/Profile'
+import ProfileView from './ProfileView';
+import TaskView from './TaskView';
 
 const EmployeeDetails = () => {
     return ( 
@@ -23,10 +25,10 @@ const EmployeeDetails = () => {
                 <Timesheet/>
             </Tab>
             <Tab eventKey="profile" title="Task">
-                {/* <Task/> */}
+                <TaskView/>
             </Tab>
             <Tab eventKey="contact" title="Profile" >
-                {/* <Profile/> */}
+                <ProfileView/>
             </Tab>
             </Tabs>
 
