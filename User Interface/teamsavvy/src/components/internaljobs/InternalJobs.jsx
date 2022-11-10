@@ -153,16 +153,17 @@ const InternalJobs = () => {
     }
 
     const detailChangeHandler = (e) => {
+        console.log(e.target.value)
         if (e.target.value !== '') {
             setJobDetailValidate(false);
             setJobDetail(e.target.value)
         } else {
             setJobDetailValidate(true);
         }
-
     }
 
     const responsibilityChangeHandler = (e) => {
+        console.log(e.target.value)
         if (e.target.value !== '') {
             setJobResponsibilityValidate(false);
             setJobResponsibility(e.target.value)
@@ -296,9 +297,11 @@ const InternalJobs = () => {
                                                             <Label for='newJob_name'>Position Name</Label>
                                                             <Input type='text' name='newJob_name' id='newJob_name' onChange={nameChangeHandler} invalid={jobNameValidate} />
                                                             <FormFeedback>Position name cannot be blank</FormFeedback>
+                                                            
                                                             <Label for='newJob_detail'>Details</Label>
                                                             <Input type='text' name='newJob_detail' id='newJob_detail' onChange={detailChangeHandler} invalid={jobDetailValidate} />
                                                             <FormFeedback>Detail cannot be blank</FormFeedback>
+
                                                             <Label for='newJob_responsibility'>Responsibilities</Label>
                                                             <Input type='text' name='newJob_responsibility' id='newJob_responsibility' onChange={responsibilityChangeHandler} invalid={jobResponsibilityValidate} />
                                                             <FormFeedback>Responsibilities cannot be blank</FormFeedback>

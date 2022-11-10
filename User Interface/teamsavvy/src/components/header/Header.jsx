@@ -1,9 +1,10 @@
 import React, { Component, useState  } from 'react';
+import { Link, Route, useParams, useNavigate, useLocation } from "react-router-dom";
 import "../../assets/css/bootstrap.min.css";
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import './header.css';
-import {Link} from 'react-router-dom';
+// import {Link} from 'react-router-dom';
 
 import {
   Collapse,
@@ -31,6 +32,12 @@ import {
 } from "reactstrap";
 
 const Header = () => {
+    // const match = useMatch();
+    // console.log(match.url);
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const pathnames = pathname.split("/").filter(Boolean);
+  console.log(pathnames)
     const [isOpen, setIsOpen] = useState(false);
     return (
         <>
@@ -44,12 +51,20 @@ const Header = () => {
             </ol>
         </nav> */}
         <Breadcrumb listTag="div">
-  <BreadcrumbItem className="text-decoration-none"
+            {pathnames.map((name, index) => {
+          const routeTo =  `/${pathnames.slice(0, index + 1).join("/")}`;
+          console.log(routeTo)
+          const isLast = index === pathnames.length -1;
+          return isLast? (
+            <BreadcrumbItem className="text-decoration-none"  key={name}>{name}</BreadcrumbItem>
+          ) : (<BreadcrumbItem className="text-decoration-none text-primary" style={{cursor:"pointer"}}  key={name} onClick={() => navigate(routeTo)}>{name}</BreadcrumbItem>)
+        })}
+  {/* <BreadcrumbItem className="text-decoration-none"
   active
     tag="a"
   >
-    Dashboard
-  </BreadcrumbItem>
+    {pathname.substring(1)}
+  </BreadcrumbItem> */}
   {/* <BreadcrumbItem className="text-decoration-none"
     href="#"
     tag="a"

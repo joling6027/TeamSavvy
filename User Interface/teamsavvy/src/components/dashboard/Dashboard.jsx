@@ -5,6 +5,60 @@ import AuthService from '../services/authService';
 import { GetEndPoints } from '../utilities/EndPoints';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import 'https://cdn.jsdelivr.net/npm/chart.js';
+import {
+    Chart,
+    ArcElement,
+    LineElement,
+    BarElement,
+    PointElement,
+    BarController,
+    BubbleController,
+    DoughnutController,
+    LineController,
+    PieController,
+    PolarAreaController,
+    RadarController,
+    ScatterController,
+    CategoryScale,
+    LinearScale,
+    LogarithmicScale,
+    RadialLinearScale,
+    TimeScale,
+    TimeSeriesScale,
+    Decimation,
+    Filler,
+    Legend,
+    Title,
+    Tooltip,
+    SubTitle
+  } from 'chart.js';
+  Chart.register(
+    ArcElement,
+    LineElement,
+    BarElement,
+    PointElement,
+    BarController,
+    BubbleController,
+    DoughnutController,
+    LineController,
+    PieController,
+    PolarAreaController,
+    RadarController,
+    ScatterController,
+    CategoryScale,
+    LinearScale,
+    LogarithmicScale,
+    RadialLinearScale,
+    TimeScale,
+    TimeSeriesScale,
+    Decimation,
+    Filler,
+    Legend,
+    Title,
+    Tooltip,
+    SubTitle
+  );
 const Dashboard = () => {
 
     const {http, user} = AuthService();
@@ -70,30 +124,81 @@ const Dashboard = () => {
            }
         })
     }
-    useEffect(() =>{
-        //for Manager
-        if(user.role && user.role == "Manager")
-        {
-            GetProjects();
-            GetTaskListByManagerId();
-            GetTeamMembersByManagerId();
-        }
 
-        //for HR
-        if(user.role && user.role == "HR")
-        {
-            GetProjectForHR();
-            GetEmployeesForHR();
-            GetJobsForHR();
-        }
+    const labels = [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+      ];
+    
+      const data = {
+        labels: labels,
+        datasets: [{
+          label: 'My First dataset',
+          backgroundColor: 'rgb(255, 99, 132)',
+          borderColor: 'rgb(255, 99, 132)',
+          data: [0, 10, 5, 2, 20, 30, 45],
+        }]
+      };
+    
+      const config = {
+        type: 'bar',
+        data: data,
+        options: {}
+      };
+
+      const myChart = new Chart(
+        document.getElementById('myChart'),
+        config
+      );
+
+    const downloadpdf = () => {
+    
+        fetch('SamplePDF.pdf').then(response => {
+            response.blob().then(blob => {
+                // Creating new object of PDF file
+                const fileURL = window.URL.createObjectURL(blob);
+                // Setting various property values
+                let alink = document.createElement('a');
+                alink.href = fileURL;
+                alink.download = 'SamplePDF.pdf';
+                alink.click();
+            })
+        })
+          
+    }
+
+
+    
+      
+    // useEffect(() =>{
+    //     //for Manager
+    //     if(user.role && user.role == "Manager")
+    //     {
+    //         GetProjects();
+    //         GetTaskListByManagerId();
+    //         GetTeamMembersByManagerId();
+    //     }
+
+    //     //for HR
+    //     if(user.role && user.role == "HR")
+    //     {
+    //         GetProjectForHR();
+    //         GetEmployeesForHR();
+    //         GetJobsForHR();
+    //     }
    
-    },user.employeeId)
+    // },user.employeeId)
 
     return ( 
         <>
          <Container className="px-3">
         {
-            user.role && user.role == "HR" && <div className=" d-flex justify-content-between">
+            // user.role && user.role == "HR" && 
+            <div className=" d-flex justify-content-between">
             <Col className="py-2 px-3 yellow-bg rounded d-flex align-items-center m-2">
                 <h5 className="text-white flex-grow-1">Project in compoany</h5>
                 <h2 className="text-white fw-bold">{totalProjectsForHr}</h2>
@@ -111,7 +216,8 @@ const Dashboard = () => {
         </div>
         }
         {
-            user.role && user.role == "Manager" && <div className=" d-flex justify-content-between">
+            // user.role && user.role == "Manager" && 
+            <div className=" d-flex justify-content-between">
             <Col className="py-2 px-3 yellow-bg rounded d-flex align-items-center m-2">
                 <h5 className="text-white flex-grow-1">Project under manager</h5>
                 <h2 className="text-white fw-bold">{totalProjects}</h2>
@@ -128,6 +234,11 @@ const Dashboard = () => {
             </Col>
         </div>
         }
+        <div>
+             <canvas id="myChart"></canvas>
+        </div>
+        <Link to="#"  onClick={downloadpdf} >Download Report Page as PDF</Link>
+ 
         </Container>
         </>
      );
