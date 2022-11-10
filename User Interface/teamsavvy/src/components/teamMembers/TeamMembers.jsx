@@ -37,7 +37,6 @@ const TeamMembers = ({user, http}) => {
     const [data, setData] = useState([]);
     const toggle = () => setModal(!modal);
     console.log(role)
-    console.log(role === "Manager")
 
     const GetTeamMembers = () =>{
         http.get(GetEndPoints().getTeamMembers+'/'+user.employeeId)
@@ -52,6 +51,30 @@ const TeamMembers = ({user, http}) => {
         
     }
 
+    function findUnique(arr, predicate) {
+        var found = {};
+        arr.forEach(d => {
+          found[predicate(d)] = d;
+        });
+        return Object.keys(found).map(key => found[key]); 
+      }
+      
+    const GetTeamMembersForHr = () =>{
+        http.get(GetEndPoints().getTeamMembers)
+        .then((res) =>{
+            if(res.data.success){
+                console.log(res.data.response)
+                // setTeamMembers(res.data.response);
+                // console.log(res.data.response[0].employeeList)
+                let empList = [];
+                res.data.response.map((emp, index) => empList.push(...emp.employeeList));
+                empList = findUnique(empList, d => d.id);
+                setData(empList)
+            }
+        })
+        
+    }
+
     const handleChange = e =>{
         const {name, value} = e.target;
         let {employeeList} = teamMembers.find((m) => m.projectId === parseInt(value));
@@ -59,7 +82,16 @@ const TeamMembers = ({user, http}) => {
         console.log(value);
     }
     useEffect(()=>{
-        GetTeamMembers();
+        if(role == 'Manager')
+        {
+            GetTeamMembers();
+        }
+
+        if(role == 'HR')
+        {
+            GetTeamMembersForHr();
+        }
+      
     }, user.employeeId)
     const handleDelete = e=>{
         window.alert();
@@ -72,7 +104,7 @@ const TeamMembers = ({user, http}) => {
              editable:true},
         { field: 'department', headerName: 'Department', sortable:true,
         editable:true},
-        { field: 'status', headerName: 'Status', renderCell: (params) => params.row.status ? 'Active' :<Button className="btn bg-primary" onClick={toggle}>Bench</Button>, sortable:true,
+        { field: 'status', headerName: 'Status', sortable:true,
         editable:true },
         { field: 'position', headerName: 'Position', sortable:true,
         editable:true},
@@ -88,13 +120,13 @@ const TeamMembers = ({user, http}) => {
              editable:true},
         { field: 'department', headerName: 'Department', sortable:true,
         editable:true},
-        { field: 'status', headerName: 'Status', renderCell: (params) => params.row.status ? 'Active' :<Button className="btn bg-primary" onClick={toggle}>Bench</Button>, sortable:true,
+        { field: 'status', headerName: 'Status', renderCell: (params) => params.row.status === 'Active' ? 'Active' :<Button className="btn bg-primary" onClick={toggle}>Bench</Button>, sortable:true,
         editable:true },
         { field: 'position', headerName: 'Position', sortable:true,
         editable:true},
         { field: 'salary', headerName: 'Salary'},
         { field: 'progress', headerName:'Progress', renderCell: (params) => <Progress className="w-100" color="success" value={params.row.progress}/> ,width:200},
-        { field: 'details', headerName: 'Details', renderCell: (params) => <Link to={`${params.row.id}`}>View</Link> },
+        { field: 'details', headerName: 'Details', renderCell: (params) => <Link to={`/dashboard/teammembers/employeedetails/${params.row.id}`} >View</Link> },
         { field: 'icon', headerName: 'Delete', renderCell: (params) => <DeleteIcon value={params.row.id} onClick={handleDelete} color="error"/> }
       ];
 
@@ -109,7 +141,7 @@ const TeamMembers = ({user, http}) => {
                
             </CardTitle>
             <CardBody>
-                <Row>
+                {role && role === "Manager" && <Row>
                     <Col md={6}>
                 <Form>
                     <FormGroup>
@@ -130,7 +162,7 @@ const TeamMembers = ({user, http}) => {
                     </FormGroup>
                 </Form>
                 </Col>
-                </Row>
+                </Row>}
             <div style={{ display: 'flex', height: '100%', justifyContent: 'space-between' }}>
                 <div style={{width:'100%'}}>
                     <DataGrid className="table-striped" rows={data} columns={ role === "Manager" ? columns_Manager : columns_HR}  
