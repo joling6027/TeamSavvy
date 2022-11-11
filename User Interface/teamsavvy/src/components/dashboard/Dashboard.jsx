@@ -125,51 +125,51 @@ const Dashboard = () => {
         })
     }
 
-    const labels = [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-      ];
+    // const labels = [
+    //     'January',
+    //     'February',
+    //     'March',
+    //     'April',
+    //     'May',
+    //     'June',
+    //   ];
     
-      const data = {
-        labels: labels,
-        datasets: [{
-          label: 'My First dataset',
-          backgroundColor: 'rgb(255, 99, 132)',
-          borderColor: 'rgb(255, 99, 132)',
-          data: [0, 10, 5, 2, 20, 30, 45],
-        }]
-      };
+    //   const data = {
+    //     labels: labels,
+    //     datasets: [{
+    //       label: 'My First dataset',
+    //       backgroundColor: 'rgb(255, 99, 132)',
+    //       borderColor: 'rgb(255, 99, 132)',
+    //       data: [0, 10, 5, 2, 20, 30, 45],
+    //     }]
+    //   };
     
-      const config = {
-        type: 'bar',
-        data: data,
-        options: {}
-      };
+    //   const config = {
+    //     type: 'bar',
+    //     data: data,
+    //     options: {}
+    //   };
 
-      const myChart = new Chart(
-        document.getElementById('myChart'),
-        config
-      );
+    //   const myChart = new Chart(
+    //     document.getElementById('myChart'),
+    //     config
+    //   );
 
-    const downloadpdf = () => {
+    // const downloadpdf = () => {
     
-        fetch('SamplePDF.pdf').then(response => {
-            response.blob().then(blob => {
-                // Creating new object of PDF file
-                const fileURL = window.URL.createObjectURL(blob);
-                // Setting various property values
-                let alink = document.createElement('a');
-                alink.href = fileURL;
-                alink.download = 'SamplePDF.pdf';
-                alink.click();
-            })
-        })
+    //     fetch('SamplePDF.pdf').then(response => {
+    //         response.blob().then(blob => {
+    //             // Creating new object of PDF file
+    //             const fileURL = window.URL.createObjectURL(blob);
+    //             // Setting various property values
+    //             let alink = document.createElement('a');
+    //             alink.href = fileURL;
+    //             alink.download = 'SamplePDF.pdf';
+    //             alink.click();
+    //         })
+    //     })
           
-    }
+    // }
 
 
     
@@ -219,8 +219,10 @@ const Dashboard = () => {
             user.role && user.role == "Manager" && 
             <div className=" d-flex justify-content-between">
             <Col className="py-2 px-3 yellow-bg rounded d-flex align-items-center m-2">
-                <h5 className="text-white flex-grow-1">Project under manager</h5>
-                <h2 className="text-white fw-bold">{totalProjects}</h2>
+                <Link>
+                    <h5 className="text-white flex-grow-1">Project under manager</h5>
+                    <h2 className="text-white fw-bold">{totalProjects}</h2>
+                </Link>
             </Col>
             <Col className="py-2 px-3 orange-bg rounded d-flex align-items-center m-2">
                 <Link to={'/dashboard/teammembers'} className='text-mute text-decoration-none inline-block'>
@@ -234,10 +236,10 @@ const Dashboard = () => {
             </Col>
         </div>
         }
-        <div>
+        {/* <div>
              <canvas id="myChart"></canvas>
-        </div>
-        <Link to="#"  onClick={downloadpdf} >Download Report Page as PDF</Link>
+        </div> */}
+        {/* <Link to="#"  onClick={downloadpdf} >Download Report Page as PDF</Link> */}
  
         </Container>
         </>

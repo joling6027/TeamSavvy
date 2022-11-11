@@ -8,11 +8,31 @@ import logocl from "../../assets/img/TS.png";
 import logo from "../../assets/img/tsLogo.png";
 import {Link} from 'react-router-dom';
 import AuthService from "../services/authService";
+import { employeeInitialValue } from '../models/employee.model';
+import { useEffect } from "react";
+import { GetEndPoints } from '../utilities/EndPoints';
 
 export default function Sidenav() {
 
     const {token, logout} = AuthService();
     const [open, setopen] = useState(true)
+    const {http, user} = AuthService();
+    const [formValue, setFormValue] = useState(employeeInitialValue);
+
+    const GetEmployee = () => {
+      http.get(GetEndPoints().employee + '/' + user.employeeId)
+      .then((res) =>{
+          if(res.data.success){
+              let response = res.data.response;
+              setFormValue({...formValue, ...response})
+          }
+       })
+  }
+
+  useEffect(()=>{
+    GetEmployee();
+  }, user.employeeId)
+
     const toggleOpen = () => {
         setopen(!open)
     }
@@ -38,7 +58,7 @@ export default function Sidenav() {
         {submenu.map(item =>{
             return `${item.text}` === "Profile" ? 
             <NavLink key={item.id} className={styles.sideitem} to={item.link}>
-            <img className={styles.sidebarprofile} src={item.img}  alt="profile pic"/>
+            <img className={styles.sidebarprofile}  src={`${formValue.employeeImage ? formValue.employeeImage : item.img}`}  alt="profile pic"/>
             <span className={styles.linkText}>{item.text}</span>
         </NavLink>
         :

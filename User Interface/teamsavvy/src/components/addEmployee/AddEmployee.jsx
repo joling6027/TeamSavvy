@@ -13,6 +13,7 @@ import { employeeProject } from '../models/employeeProject.model';
 import ConvertToBase64 from '../utilities/uploadImage';
 import SweetAlert from "react-bootstrap-sweetalert";
 import { formatDate } from '../utilities/convertDate';
+import { RegisterationValidation } from '../utilities/validation';
 
   const AddEmployee = () => {
 
@@ -20,6 +21,7 @@ import { formatDate } from '../utilities/convertDate';
     const dropdownData = getDropdownCont();
     const skillsData = getSkillsLst();
     const [formValue, setFormValue] = useState(employeeInitialValue);
+    const [formErrors, setFormErrors] = useState({});
     const [projectFormValue, setProjectFormValue] = useState(employeeProject);
     const [selectedCountry, setSelectedCountry] = useState();
     const [selectedProvince, setSelectedProvince] = useState();
@@ -378,6 +380,7 @@ import { formatDate } from '../utilities/convertDate';
     const handleSubmit = event =>{
        event.preventDefault();
        console.log("submit")
+       setFormErrors(RegisterationValidation(formValue))
        AddEmployee()
        setFormValue(employeeInitialValue);
     };
