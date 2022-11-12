@@ -6,14 +6,14 @@ import startOfWeek from 'date-fns/startOfWeek';
 import getDay from 'date-fns/getDay';
 import DatePicker from 'react-datepicker';
 import { Card, CardBody, Row, Col, CardTitle ,Button,Modal, ModalBody} from "reactstrap";
-import './timesheet.css';
+import './timesheetView.css';
 import { dateFnsLocalizer } from 'react-big-calendar';
 import SweetAlert from "react-bootstrap-sweetalert";
-import events from './events';
 import AuthService from '../services/authService';
 import { useEffect } from 'react';
 import { GetEndPoints } from '../utilities/EndPoints';
 import moment from "moment";
+import { useParams} from 'react-router-dom';
 
 const locales ={
   "en-US" : require ("date-fns/locale/en-US")
@@ -22,8 +22,9 @@ const locales ={
 const localizer = dateFnsLocalizer({format, parse, startOfWeek, getDay, locales})
 
 
-const Timesheet = () => {
+const TimeSheetView = () => {
 
+  const params = useParams();
   const {http, user} = AuthService();
   const [modal, setModal] = useState(false);
   const [title, setTitle] = useState();
@@ -45,7 +46,7 @@ const Timesheet = () => {
 
   const GetTimeSheet = () =>{
     
-    http.get(GetEndPoints().timeSheet+'/'+user.employeeId)
+    http.get(GetEndPoints().timeSheet+'/'+ params.id)
     .then((res) =>{
        if(res.data.success){
        let timeSheetEvent = res.data.response.map((timeSheet, index) => {
@@ -63,7 +64,6 @@ const Timesheet = () => {
           }
           return tSheet;
        })
-       console.log(timeSheetEvent)
        setEvents([...event, ...timeSheetEvent]);
        setTimeSheet(timeSheetEvent)
        }
@@ -72,7 +72,7 @@ const Timesheet = () => {
   }
   
   const GetLeavesById = () =>{
-     http.get(GetEndPoints().employeeLeave+'/'+user.employeeId)
+     http.get(GetEndPoints().employeeLeave+'/'+params.id)
      .then((res) => {
         if(res.data.success)
         {
@@ -86,12 +86,11 @@ const Timesheet = () => {
                 end: leave.leaveEnds,
                 allDay: true,
                 isApproved:leave.isApproved,
+                leaveStatus:leave.leaveStatus,
                 color: leave.isApproved? "green" : leave.leaveTypeId === 1 ? "orange" : "yellow",
               }
               return leaves;
             })
-            console.log("INN");
-            console.log(event);
             setEvents(customLeaves);
         }
      })
@@ -106,42 +105,81 @@ const Timesheet = () => {
   }, [event.employeeLeaveId])
 
 
-  const successDelete = () => {
-    let obj = JSON.parse(localStorage.getItem('deleteLeave'));
-    DeleteLeave(obj.employeeLeaveId);
+  const approveLeave = () => {
+    let obj = JSON.parse(localStorage.getItem('leaveStatus'));
+    obj.isApproved = true;
+    obj.leaveStatus = "Approved";
+    ApproveLeave(obj);
   };
+
+  const rejectLeave = () => {
+    let obj = JSON.parse(localStorage.getItem('leaveStatus'));
+    obj.isApproved = false;
+    obj.leaveStatus = "Rejected";
+    RejectLeave(obj);
+  }
   
-  const DeleteLeave = (employeeLeaveId) => {
-    http.delete(GetEndPoints().deleteLeave+'/'+ employeeLeaveId )
+  const ApproveLeave = (obj) => {
+    http.put(GetEndPoints().updateLeave, obj )
     .then((res) =>{
        if(res.data.success){
         setAlert(
           <SweetAlert
             success
             style={{ display: "block", marginTop: "-100px" }}
-            title="Deleted!"
+            title="Approved!"
             onConfirm={() => hideAlert()}
             onCancel={() => hideAlert()}
             confirmBtnBsStyle="success"
             btnSize=""
           >
-            Leave has been deleted</SweetAlert>
+            Leave has been approved</SweetAlert>
         );
        }
        setModal(!modal);
-       event.pop()
-       setEvents(event);
+       GetLeavesById();       
     })
     .catch((err) => console.log(err.message))
   }
 
+
+  const RejectLeave = (obj) => {
+    http.put(GetEndPoints().updateLeave, obj )
+    .then((res) =>{
+       if(res.data.success){
+        setAlert(
+          <SweetAlert
+            success
+            style={{ display: "block", marginTop: "-100px" }}
+            title="Reject!"
+            onConfirm={() => hideAlert()}
+            onCancel={() => hideAlert()}
+            confirmBtnBsStyle="success"
+            btnSize=""
+          >
+            Leave has been reject</SweetAlert>
+        );
+       }
+       setModal(!modal);
+       GetLeavesById();
+    })
+    .catch((err) => console.log(err.message))
+  }
   const selectedEvent = (event) => {
-    localStorage.setItem('deleteLeave', JSON.stringify({
-     employeeLeaveId:event.employeeLeaveId
+    
+    localStorage.setItem('leaveStatus', JSON.stringify({
+        employeeLeaveId:event.employeeLeaveId,
+        employeeId: parseInt(params.id),
+        leaveTypeId: event.leaveTypeId,
+        leaveStart: event.start,
+        leaveEnds: event.end,
+        leaveDays: Math.floor((new Date(event.end) - new Date(event.start))/(1000 * 60 * 60 * 24)),
+        isApproved: true,
+        leaveApprovalDate:moment(new Date()).utc().format('YYYY-MM-DD'),
+        leaveApprovalBy: user.role,
+        leaveStatus: ""
     }));
-    const selectedTitle = "Do you want to delete '"+ (event.title) + "' leave"; 
-    //change title on the basis of role
-    // const hrtitle = "Edit event '" +  (event.title) + "'";
+    const selectedTitle = "Do you want to change the status of '"+ (event.title) + "' leave"; 
     setTitle(selectedTitle);
     setModal(!modal);
     
@@ -156,7 +194,7 @@ const Timesheet = () => {
       setEvents([...event, {
           title:leavesArr[0].leaveType, 
           leaveTypeId: leavesArr[0].leaveTypeId,
-          employeeId: user.employeeId,
+          employeeId: parseInt(params.id),
           start: slotInfo.start,
           end: slotInfo.end,
           allDay: true,
@@ -165,7 +203,7 @@ const Timesheet = () => {
       localStorage.setItem('leave', JSON.stringify({
         title:leavesArr[0].leaveType, 
         leaveTypeId: leavesArr[0].leaveTypeId,
-        employeeId: user.employeeId,
+        employeeId: parseInt(params.id),
         start: slotInfo.start,
         end: slotInfo.end,
         allDay: true,
@@ -201,7 +239,7 @@ const Timesheet = () => {
     setEvents([...event, {
             title:newLeave.leaveType, 
             leaveTypeId: newLeave.leaveTypeId,
-            employeeId: user.employeeId,
+            employeeId: parseInt(params.id),
             start: slotInfo.start,
             end: slotInfo.end,
             allDay: true,
@@ -210,7 +248,7 @@ const Timesheet = () => {
       localStorage.setItem('leave', JSON.stringify({
         title:newLeave.leaveType, 
         leaveTypeId: newLeave.leaveTypeId,
-        employeeId: user.employeeId,
+        employeeId: parseInt(params.id),
         start: slotInfo.start,
         end: slotInfo.end,
         allDay: true,
@@ -267,8 +305,6 @@ const Timesheet = () => {
   };
 
   const eventColors = (event, start, end, isSelected) => {
-    console.log(event)
-    
     let style;
     var clockInStyle = {
       backgroundColor: '#fff',
@@ -294,6 +330,15 @@ const Timesheet = () => {
       right:0,
       top:'85px',
       lineHeight:'20px',
+    }
+
+    var vaccationReject = {
+      backgroundColor: 'red',
+      borderRadius: '0px',
+      opacity: 0.8,
+      color: 'black',
+      border: '0px',
+      display: 'block'
     }
 
     var leaveIsApproved = {
@@ -327,7 +372,6 @@ const Timesheet = () => {
      
       if(event.clockType === "Clock-Out")
       {
-        console.log("AAGEYA")
         style = clockOutStyle
       }
       else if(event.clockType === "Clock-In")
@@ -340,13 +384,17 @@ const Timesheet = () => {
      
     }
     else{
-        if( event.leaveTypeId === 1){
+        if( event.leaveTypeId === 1 && event.leaveStatus === ""){
           style = sickLeaveStyle
         }
-        else{
+        else if(event.leaveTypeId === 2 && event.leaveStatus === ""){
           style = vaccationLeaveStyle
         }
+        else{
+            style = vaccationReject
+        }
     }
+    
   
     return {
         style:style
@@ -400,8 +448,11 @@ const Timesheet = () => {
           <ModalBody>
                 <h4>{title}</h4>
                 <div className="d-flex justify-content-center mt-5">
-                <Button className="me-3" color="primary" onClick={successDelete}>
-                    Cancel Leave
+                <Button className="me-3" color="success" onClick={approveLeave}>
+                    Approve Leave
+                </Button>
+                <Button className="me-3" color="danger" onClick={rejectLeave}>
+                    Reject Leave
                 </Button>
                 <Button color="secondary" onClick={() => {
                   setModal(!modal);
@@ -414,4 +465,4 @@ const Timesheet = () => {
     </>
   );
 };
-export default Timesheet;
+export default TimeSheetView;

@@ -7,6 +7,7 @@ import Task from '../task/Task'
 import Profile from '../profile/Profile'
 import ProfileView from './ProfileView';
 import TaskView from './TaskView';
+import TimeSheetView from './TimeSheetView';
 
 const EmployeeDetails = () => {
     return ( 
@@ -16,13 +17,13 @@ const EmployeeDetails = () => {
             
             <Tabs
             defaultActiveKey="home"
-            
             transition={false}
             id="noanim-tab-example"
             className="mb-3"
             >
             <Tab eventKey="home" title="Timesheet">
-                <Timesheet/>
+                {/* <Timesheet/> */}
+                <TimeSheetView/>
             </Tab>
             <Tab eventKey="profile" title="Task">
                 <TaskView/>

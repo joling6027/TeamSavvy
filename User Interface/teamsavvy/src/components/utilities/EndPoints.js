@@ -27,6 +27,12 @@ const enpoints = {
   getTeamMembers:'Dashboard/teammembers',
   projectsForHR:'Dashboard/projects',
   job:'Job',
+  employeeLeave:'Leaves/employeeId',
+  leaveType:'Dropdowns/leavetypes',
+  addLeave:'Leaves/addLeave',
+  deleteLeave:'Leaves/deleteLeave',
+  updateLeave:'Leaves/updateLeave',
+  timeSheet: 'TimeSheet',
 }
 
 export function GetEndPoints(){

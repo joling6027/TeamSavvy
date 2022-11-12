@@ -54,6 +54,7 @@ const ResetPassword = () => {
          >Password is changes successfully.</SweetAlert>)
         }
     })
+    .catch((err) => console.log(err.message));
   }
   const handleSubmit = e =>{
     e.preventDefault();

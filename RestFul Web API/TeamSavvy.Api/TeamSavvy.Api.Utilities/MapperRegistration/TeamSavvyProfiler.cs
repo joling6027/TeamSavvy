@@ -71,6 +71,9 @@ namespace TeamSavvy.Api.Utilities.MapperRegistration
                  .ReverseMap();
             CreateMap<Payroll, PayrollDto>()
                  .ReverseMap();
+
+            CreateMap<Leave, LeaveDto>()
+            .ReverseMap();
         }
     }
 }

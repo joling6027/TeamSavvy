@@ -17,7 +17,6 @@ import SweetAlert from "react-bootstrap-sweetalert";
 const ProfileView = () => {
 
     const params = useParams();
-    console.log(params)
     // const resignationStr = `This will initiate your resignation process from ${new Date().toDateString()} and notify your manager.`+ 
     //                        `(if required) You need to serve 15 days notice period.`
     const {http, user, getDropdownCont, getSkillsLst} = AuthService();
@@ -43,6 +42,7 @@ const ProfileView = () => {
                 setSkills(response.skills)
             }
          })
+         .catch((err) => console.log(err.message));
     }
 
     // const GetTeamMembers = () =>{

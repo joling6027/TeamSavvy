@@ -76,15 +76,20 @@ const Dashboard = () => {
             setTotalProjects(res.data.response.length);
            }
         })
+        .catch((err) => console.log(err.message));
     }
 
     const GetTaskListByManagerId = () => {
-        http.get(GetEndPoints().taskListByManagerId+'/'+user.employeeId)
-        .then((res) =>{
-           if(res.data.success){
-            setTotalTasks(res.data.response.length);
-           }
-        })
+            http.get(GetEndPoints().taskListByManagerId+'/'+user.employeeId)
+            .then((res) =>{
+               if(res.data.success){
+                setTotalTasks(res.data.response.length); 
+               }
+               else{
+                console.log(res);
+               }
+            })
+            .catch((err) => console.log(err.message));
     }
 
     const GetTeamMembersByManagerId = () => {
@@ -94,6 +99,7 @@ const Dashboard = () => {
             setTotalTeamMember(res.data.response);
            }
         })
+        .catch((err) => console.log(err.message));
     }
 
     const GetProjectForHR = () => {
@@ -103,6 +109,7 @@ const Dashboard = () => {
             setTotalProjectsForHr(res.data.response.length);
            }
         })
+        .catch((err) => console.log(err.message));
     }
 
     const GetEmployeesForHR = () => {
@@ -112,6 +119,7 @@ const Dashboard = () => {
             setTotalEmployees(res.data.response.length);
            }
         })
+        .catch((err) => console.log(err.message));
     }
 
     const GetJobsForHR = () => {
@@ -119,10 +127,9 @@ const Dashboard = () => {
         .then((res) =>{
            if(res.data.success){
             setTotalJos(res.data.response.length);
-            console.log(res.data.response.length);
-            console.log(res.data.response);
            }
         })
+        .catch((err) => console.log(err.message));
     }
 
     // const labels = [
@@ -191,7 +198,7 @@ const Dashboard = () => {
             GetJobsForHR();
         }
    
-    },user.employeeId)
+    },[user.role, user.employeeId])
 
     return ( 
         <>

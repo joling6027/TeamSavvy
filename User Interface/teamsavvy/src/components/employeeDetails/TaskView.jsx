@@ -2,9 +2,6 @@ import React, { Component, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import AuthService from '../services/authService';
 import { GetEndPoints } from '../utilities/EndPoints';
-// import TaskModal from './TaskModal'
-// import UpdateStatusModal from './UpdateStatusModal';
-// import { Form, FormGroup, Label, Input, FormFeedback, FormText, Container, Row, Col } from 'reactstrap';
 import QueryBuilderIcon from '@mui/icons-material/QueryBuilder';
 import '../../assets/css/bootstrap.min.css'
 import './taskView.css'
@@ -20,17 +17,18 @@ const TaskView = () => {
     const [taskItem, setTaskItem] = useState();
 
     const GetTasks = () =>{
-        http.get(GetEndPoints().employeeTask + "/" + params.id).then((res) => {
+        http.get(GetEndPoints().employeeTask + "/" + params.id)
+        .then((res) => {
             console.log(res.data.response)
             setTasks(res.data.response);
-
-        }).catch((err) => console.log(err.message));
+        })
+        .catch((err) => console.log(err.message));
     }
     useEffect(() => {
        
         GetTasks();
         // http.put(GetEndPoints().updateTask)
-    }, params.id)
+    }, [params.id])
 
     // const saveTaskDataHandler = (enteredTaskData) => {
     //     const taskData = {

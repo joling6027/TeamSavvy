@@ -13,6 +13,7 @@ namespace TeamSavvy.Api.Services.IServices
         List<RoleDto> GetRoles();
         List<DepartmentDto> GetDepartments();
         List<CompanyLocations> GetCompanyLocations();
+        List<LeaveDto> GetLeavesType();
 
     }
 }

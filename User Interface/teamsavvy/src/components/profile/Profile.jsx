@@ -7,12 +7,13 @@ import {Link} from 'react-router-dom';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import './profile.css';
 import { Button,Card,CardBody, FormGroup,Form,Input,Row, Col, Container, CardTitle, CardSubtitle, ListGroup,
-    ListGroupItem,  Label, Badge, Modal, ModalHeader, ModalBody, } from "reactstrap";
+    ListGroupItem,  Label, Badge, Modal, ModalHeader, ModalBody, FormFeedback} from "reactstrap";
 import AuthService from '../services/authService';
 import { GetEndPoints } from '../utilities/EndPoints';
 import { employeeInitialValue } from '../models/employee.model';
 import ConvertToBase64 from '../utilities/uploadImage';
 import SweetAlert from "react-bootstrap-sweetalert";
+import { ProfileValidation } from '../utilities/validation';
 
 const Profile = () => {
     const resignationStr = `This will initiate your resignation process from ${new Date().toDateString()} and notify your manager.`+ 
@@ -21,6 +22,10 @@ const Profile = () => {
     const dropdownData = getDropdownCont();
     const skillsData = getSkillsLst();
     const [formValue, setFormValue] = useState(employeeInitialValue);
+     //validation
+     const [formErrors, setFormErrors] = useState({});
+     const [isSubmit, setIsSubmit] = useState(false);
+
     const GetEmployee = () => {
         http.get(GetEndPoints().employee + '/' + user.employeeId)
         .then((res) =>{
@@ -40,6 +45,7 @@ const Profile = () => {
                 setSkills(response.skills)
             }
          })
+         .catch((err) => console.log(err.message));
     }
 
     const GetTeamMembers = () =>{
@@ -49,6 +55,7 @@ const Profile = () => {
                setTeamMembers(res.data.response)
             }
          })
+         .catch((err) => console.log(err.message));
     };
 
     useEffect(()=>{
@@ -131,6 +138,7 @@ const Profile = () => {
     const handleChange = event => {
         const {name, value} = event.target;
         setFormValue({...formValue, [name]: value});
+        setFormErrors(ProfileValidation({...formValue, [name]: value}))
         console.log(formValue)
     };
 
@@ -201,6 +209,8 @@ const Profile = () => {
             newValues.address[name] = value
             return newValues
         })
+        setFormErrors(ProfileValidation(formValue))
+        console.log(formErrors)
     };
 
     const UpdateEmployee = () =>{
@@ -221,6 +231,7 @@ const Profile = () => {
                 )
             }
         })
+        .catch((err) => console.log(err.message));
     }
 
     const ResignationInitiation = () =>{
@@ -253,7 +264,8 @@ const Profile = () => {
                     console.log(res);
                 }
             })
-        )
+            .catch((err) => console.log(err.message))
+        ).catch((err) => console.log(err.message));
     }
 
     const hideAlert = () => {
@@ -262,11 +274,21 @@ const Profile = () => {
 
     const handleSubmit = event =>{
        event.preventDefault();
-       //need to do validation
-        // setFormErrors(validate(formValues));
-        // setIsSubmit(true);
-        UpdateEmployee();
+       setFormErrors(ProfileValidation(formValue))
+       setIsSubmit(true);
+       submitForm();
+        // UpdateEmployee();
     };
+
+    //validation
+    const submitForm = () => {
+        if(Object.keys(formErrors).length === 0 && isSubmit) 
+        {
+            console.log(formErrors)
+            console.log(formValue)
+            UpdateEmployee();
+        }
+    }
 
     const handleCancel = event =>{
         event.preventDefault();
@@ -369,7 +391,10 @@ const Profile = () => {
                     type="text"
                     value={formValue.employeeFirstname}
                     onChange={handleChange}
+                    invalid = {formErrors.employeeFirstname? true : false}
+                    valid = {formValue.employeeFirstname? true : false}
                     />
+                    <FormFeedback>{formErrors.employeeFirstname}</FormFeedback>
                 </FormGroup>
                 </Col>
                 <Col md={6}>
@@ -383,7 +408,10 @@ const Profile = () => {
                     type="text"
                     value={formValue.employeeLastname}
                     onChange={handleChange}
+                    invalid = {formErrors.employeeLastname? true : false}
+                    valid = {formValue.employeeLastname? true : false}
                     />
+                    <FormFeedback>{formErrors.employeeLastname}</FormFeedback>
                 </FormGroup>
                 </Col>
             </Row>
@@ -433,7 +461,10 @@ const Profile = () => {
                 type="date"
                 value={formValue.dateofbirth}
                 onChange={handleChange}
+                invalid = {formErrors.dateofbirth? true : false}
+                valid = {formValue.dateofbirth? true : false}
                 />
+                <FormFeedback>{formErrors.dateofbirth}</FormFeedback>
                 </FormGroup>    
                 </Col>
                 <Col md={6}>
@@ -448,7 +479,10 @@ const Profile = () => {
                     type="number"
                     value={formValue.phone}
                     onChange={handleChange}
+                    invalid = {formErrors.phone? true : false}
+                    valid = {formValue.phone? true : false}
                     />
+                    <FormFeedback>{formErrors.phone}</FormFeedback>
                 </FormGroup>
                 </Col>
             </Row>
@@ -464,7 +498,10 @@ const Profile = () => {
                 placeholder="1234 Main St"
                 value={formValue.address.apartment}
                 onChange={handleAddress}
+                invalid = {formErrors.apartment? true : false}
+                valid = {formValue.address.apartment? true : false}
                 />
+                <FormFeedback>{formErrors.apartment}</FormFeedback>
             </FormGroup>
             </Col>
             <Col md={6}>

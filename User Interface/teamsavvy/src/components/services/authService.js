@@ -52,7 +52,8 @@ const AuthService = () => {
 
     const logout = () =>{
         sessionStorage.clear();
-        navigate('/login')
+        window.localStorage.clear();
+        navigate('/login');
     };
 
     const http = axios.create({

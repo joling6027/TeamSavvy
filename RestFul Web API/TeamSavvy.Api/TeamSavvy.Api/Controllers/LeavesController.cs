@@ -157,7 +157,7 @@ namespace TeamSavvy.Api.Entities.Controllers
             return response;
         }
 
-        [Route("deleteLeave")]
+        [Route("deleteLeave/{leaveId:int}")]
         [HttpDelete]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ResponseMessage), 200)]

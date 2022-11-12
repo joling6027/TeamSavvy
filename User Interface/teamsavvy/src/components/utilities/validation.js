@@ -20,58 +20,63 @@ export function LoginValidation(values){
     return errors;
 }
 
-export function RegisterationValidation(values){
+export function RegisterationValidation(values, salary){
 
     const errors = {};
-
-    if(!values.employeeFirstname || values.employeeFirstname == undefined)
+    console.log('inside')
+    if(!values.employeeFirstname || values.employeeFirstname === undefined)
     {
-        errors.name = "Please enter first name.";
+        errors.employeeFirstname = "Please enter first name.";
     }
 
-    if(!values.employeeLastname || values.employeeLastname == undefined)
+    if(!values.employeeLastname || values.employeeLastname === undefined)
     {
-        errors.name = "Please enter last name.";
+        errors.employeeLastname = "Please enter last name.";
     }
 
-    if(!values.phone || values.phone == undefined)
+    if(!values.phone || values.phone === undefined)
     {
-        errors.name = "Please enter phone number.";
+        errors.phone = "Please enter phone number.";
     }
 
-    if(!values.bankaccount || values.bankaccount == undefined)
+    if(!values.bankaccount || values.bankaccount === undefined)
     {
-        errors.name = "Please enter bank account number.";
+        errors.bankaccount = "Please enter bank account number.";
     }
 
-    if(!values.bankname || values.bankname == undefined)
+    if(!values.bankname || values.bankname === undefined)
     {
-        errors.name = "Please enter bank name.";
+        errors.bankname = "Please enter bank name.";
     }
 
-    if(!values.bankcode || values.bankcode == undefined)
+    if(!salary || salary === undefined)
     {
-        errors.name = "Please enter bank code.";
+        errors.salary = "Please enter employee salary.";
     }
 
-    if(!values.address.apartment || values.address.apartment == undefined)
+    if(!values.bankcode || values.bankcode === undefined)
     {
-        errors.name = "Please enter address.";
+        errors.bankcode = "Please enter bank code.";
     }
 
-    if(values.extension < 0 || values.phone == undefined)
+    if(!values.address.apartment || values.address.apartment === undefined)
     {
-        errors.name = "Please enter extension number.";
+        errors.apartment = "Please enter address.";
     }
 
-    if(!values.dateofbirth || values.dateofbirth == undefined)
+    if(values.extension <= 0 || values.phone === undefined)
     {
-        errors.name = "Please enter date of birth.";
+        errors.extension = "Please enter extension number.";
     }
 
-    if(!values.hiredate || values.hiredate == undefined)
+    if(!values.dateofbirth || values.dateofbirth === undefined)
     {
-        errors.name = "Please enter hire date.";
+        errors.dateofbirth = "Please enter date of birth.";
+    }
+
+    if(!values.hiredate || values.hiredate === undefined)
+    {
+        errors.hiredate = "Please enter hire date.";
     }
 
     if(!values.email)
@@ -88,7 +93,7 @@ export function RegisterationValidation(values){
     }
 
     else if(!validatePassword(values.password)){
-        errors.password = "Please enter a valid password";
+        errors.password = "Please enter a valid password with min 8 letter password, with at least a special character, upper and lower case letters and a number";
     }
 
     // if(!values.confirmPassword){
@@ -103,6 +108,41 @@ export function RegisterationValidation(values){
     //     errors.confirmPassword = "Please enter same password and confirm password."
     // }
 
+    return errors;
+}
+
+export function ProfileValidation(values){
+
+    const errors = {};
+    console.log('inside')
+    console.log(values)
+    if(!values.employeeFirstname || values.employeeFirstname === undefined)
+    {
+        errors.employeeFirstname = "Please enter first name.";
+    }
+
+    if(!values.employeeLastname || values.employeeLastname === undefined)
+    {
+        errors.employeeLastname = "Please enter last name.";
+    }
+
+    if(!values.phone || values.phone === undefined)
+    {
+        errors.phone = "Please enter phone number.";
+    }
+
+    if(!values.address.apartment || values.address.apartment === undefined)
+    {
+        errors.apartment = "Please enter address.";
+    }
+
+
+    if(!values.dateofbirth || values.dateofbirth === undefined)
+    {
+        errors.dateofbirth = "Please enter date of birth.";
+    }
+
+   
     return errors;
 }
 

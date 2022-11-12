@@ -161,5 +161,24 @@ namespace TeamSavvy.Api.Services.Services
 
             return skills;
         }
+
+        public List<LeaveDto> GetLeavesType()
+        {
+            List<LeaveDto> leaveDtos = new List<LeaveDto>();
+            try
+            {
+                var leaveType = _unitOfWork.Context.Leave.ToList();
+                if(leaveType.Any())
+                {
+                    leaveDtos = _mapper.Map<List<LeaveDto>>(leaveType);
+                }
+            }
+            catch(Exception ex)
+            {
+                leaveDtos = null;
+            }
+
+            return leaveDtos;
+        }
     }
 }

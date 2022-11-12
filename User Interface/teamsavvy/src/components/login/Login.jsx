@@ -39,6 +39,7 @@ const Login = () => {
               setDropdownCont(res.data.response);
              }
           })
+          .catch((err) => console.log(err.message))
         )
         .then(
           http.get(GetEndPoints().dropdownSkills)
@@ -47,7 +48,10 @@ const Login = () => {
               setSkillLst(res.data.response);
              }
           })
-        );
+          .catch((err) => console.log(err.message))
+        )
+        .catch((err) => console.log(err.message));
+   
   };
 
     return (

@@ -59,7 +59,7 @@ export default function Sidenav() {
             return `${item.text}` === "Profile" ? 
             <NavLink key={item.id} className={styles.sideitem} to={item.link}>
             <img className={styles.sidebarprofile}  src={`${formValue.employeeImage ? formValue.employeeImage : item.img}`}  alt="profile pic"/>
-            <span className={styles.linkText}>{item.text}</span>
+            <span className={styles.linkText}>{user.firstName.trim() + ' ' + user.lastName.trim()}</span>
         </NavLink>
         :
           `${item.text}` === "Logout" ? 

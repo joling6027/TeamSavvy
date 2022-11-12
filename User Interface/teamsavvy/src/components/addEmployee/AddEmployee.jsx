@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import './addEmployee.css';
 import { Button,Card,CardBody, FormGroup,Form,Input,Row, Col, Container, CardTitle, CardSubtitle, ListGroup,
-    ListGroupItem,  Label, Badge, Modal, ModalHeader, ModalBody, } from "reactstrap";
+    ListGroupItem,  Label, Badge, Modal, ModalHeader, ModalBody, FormFeedback} from "reactstrap";
 import AuthService from '../services/authService';
 import { GetEndPoints } from '../utilities/EndPoints';
 import { employeeInitialValue } from '../models/employee.model';
@@ -14,6 +14,7 @@ import ConvertToBase64 from '../utilities/uploadImage';
 import SweetAlert from "react-bootstrap-sweetalert";
 import { formatDate } from '../utilities/convertDate';
 import { RegisterationValidation } from '../utilities/validation';
+import { invalid, valid } from 'moment';
 
   const AddEmployee = () => {
 
@@ -21,7 +22,12 @@ import { RegisterationValidation } from '../utilities/validation';
     const dropdownData = getDropdownCont();
     const skillsData = getSkillsLst();
     const [formValue, setFormValue] = useState(employeeInitialValue);
+
+    //validation
     const [formErrors, setFormErrors] = useState({});
+    const [isSubmit, setIsSubmit] = useState(false);
+
+
     const [projectFormValue, setProjectFormValue] = useState(employeeProject);
     const [selectedCountry, setSelectedCountry] = useState();
     const [selectedProvince, setSelectedProvince] = useState();
@@ -45,7 +51,7 @@ import { RegisterationValidation } from '../utilities/validation';
     const [projectDesc, setProjectDesc] = useState();
     const [projectManager, setProjectManager] = useState();
     const [projectMember, setProjectMember] = useState();
-    const [salary, setSalary] = useState();
+    const [salary, setSalary] = useState("");
     const protoggle = () => setproModal(!profileModal);
     const toggle = () => setModal(!modal);
     const assigntoggle = () => setassignModal(!assignProject);
@@ -65,6 +71,7 @@ import { RegisterationValidation } from '../utilities/validation';
             setSelectDeparment(comp.jobLocationId)
            }
         })
+        .catch((err) => console.log(err.message));
     }
 
     const GetRoles = () => {
@@ -81,6 +88,7 @@ import { RegisterationValidation } from '../utilities/validation';
             setSelectDeparment(role.roleId)
            }
         })
+        .catch((err) => console.log(err.message));
     }
 
     const GetDepartments = () => {
@@ -97,6 +105,7 @@ import { RegisterationValidation } from '../utilities/validation';
             setSelectDeparment(dept.departmentId)
            }
         })
+        .catch((err) => console.log(err.message));
     }
 
     const GetProjects = () => {
@@ -113,6 +122,7 @@ import { RegisterationValidation } from '../utilities/validation';
             setProjectFormValue(projectFormValue)
            }
         })
+        .catch((err) => console.log(err.message));
     }
 
 
@@ -250,12 +260,13 @@ import { RegisterationValidation } from '../utilities/validation';
         if(name === "extension")
         {
             setFormValue({...formValue, [name]: parseInt(value)});
+            // setFormErrors(RegisterationValidation({...formValue, [name]: parseInt(value)}))
         }
         else
         {
             setFormValue({...formValue, [name]: value});
+            // setFormErrors(RegisterationValidation({...formValue, [name]: parseInt(value)}))
         }
-
         console.log(formValue)
     };
 
@@ -350,6 +361,7 @@ import { RegisterationValidation } from '../utilities/validation';
                 return true;
             }
         })
+        .catch((err) => console.log(err.message));
     }
 
     const AddProject = (employeeId) =>{
@@ -360,6 +372,7 @@ import { RegisterationValidation } from '../utilities/validation';
                 console.log('Project Added')
             }
         })
+        .catch((err) => console.log(err.message));
     }
 
     const AddSalary = (employeeId) =>{
@@ -375,15 +388,30 @@ import { RegisterationValidation } from '../utilities/validation';
                 console.log('Salary Added')
             }
         })
+        .catch((err) => console.log(err.message));
     }
 
     const handleSubmit = event =>{
        event.preventDefault();
        console.log("submit")
-       setFormErrors(RegisterationValidation(formValue))
-       AddEmployee()
-       setFormValue(employeeInitialValue);
+       
+       //validation
+       setFormErrors(RegisterationValidation(formValue, salary))
+       setIsSubmit(true);
+       submitForm();
     };
+
+    //validation
+    const submitForm = () => {
+        if(Object.keys(formErrors).length === 0 && isSubmit) 
+        {
+            console.log("validated")
+            console.log(formErrors)
+                AddEmployee();
+            setFormValue(employeeInitialValue);
+        }
+    }
+   
 
     const handleCancel = event =>{
         event.preventDefault();
@@ -478,7 +506,6 @@ import { RegisterationValidation } from '../utilities/validation';
                                     type="text"
                                     disabled
                                     value={formValue.employeeFirstname + " " + formValue.employeeLastname}
-                                    valid
                                     />
                                 </FormGroup>
                                 </Col>
@@ -540,8 +567,10 @@ import { RegisterationValidation } from '../utilities/validation';
                     type="text"
                     value={formValue.employeeFirstname}
                     onChange={handleChange}
-                    valid
+                    invalid = {formErrors.employeeFirstname? true : false}
+                    valid = {formValue.employeeFirstname? true : false}
                     />
+                    <FormFeedback>{formErrors.employeeFirstname}</FormFeedback>
                 </FormGroup>
                 </Col>
                 <Col md={6}>
@@ -552,11 +581,13 @@ import { RegisterationValidation } from '../utilities/validation';
                     <Input
                     id="lastname"
                     name="employeeLastname"
-                    type="text"
+                    // type="text"
                     value={formValue.employeeLastname}
                     onChange={handleChange}
-                    invalid
+                    invalid = {formErrors.employeeLastname? true : false}
+                    valid = {formValue.employeeLastname? true : false}
                     />
+                    <FormFeedback>{formErrors.employeeLastname}</FormFeedback>
                 </FormGroup>
                 </Col>
             </Row>
@@ -572,7 +603,10 @@ import { RegisterationValidation } from '../utilities/validation';
                 placeholder="jake@teamsavvy.com"
                 value={formValue.email}
                 onChange={handleChange}
+                invalid = {formErrors.email? true : false}
+                valid = {formValue.email? true : false}
                 />
+                <FormFeedback>{formErrors.email}</FormFeedback>
             </FormGroup>
             </Col>
             <Col md={6}>
@@ -587,7 +621,10 @@ import { RegisterationValidation } from '../utilities/validation';
                 type="date"
                 value={formValue.hiredate}
                 onChange={handleChange}
+                invalid = {formErrors.hiredate? true : false}
+                valid = {formValue.hiredate? true : false}
                 />
+                <FormFeedback>{formErrors.hiredate}</FormFeedback>
             </FormGroup>       
             </Col>
             </Row>
@@ -604,7 +641,10 @@ import { RegisterationValidation } from '../utilities/validation';
                 type="date"
                 value={formValue.dateofbirth}
                 onChange={handleChange}
+                invalid = {formErrors.dateofbirth? true : false}
+                valid = {formValue.dateofbirth? true : false}
                 />
+                <FormFeedback>{formErrors.dateofbirth}</FormFeedback>
                 </FormGroup>    
                 </Col>
                 <Col md={6}>
@@ -619,7 +659,10 @@ import { RegisterationValidation } from '../utilities/validation';
                     type="number"
                     value={formValue.phone}
                     onChange={handleChange}
+                    invalid = {formErrors.phone? true : false}
+                    valid = {formValue.phone? true : false}
                     />
+                    <FormFeedback>{formErrors.phone}</FormFeedback>
                 </FormGroup>
                 </Col>
             </Row>
@@ -635,7 +678,10 @@ import { RegisterationValidation } from '../utilities/validation';
                 placeholder="1234 Main St"
                 value={formValue.address.apartment}
                 onChange={handleAddress}
+                invalid = {formErrors.apartment? true : false}
+                valid = {formValue.address.apartment? true : false}
                 />
+                <FormFeedback>{formErrors.apartment}</FormFeedback>
             </FormGroup>
             </Col>
             <Col md={6}>
@@ -719,7 +765,10 @@ import { RegisterationValidation } from '../utilities/validation';
                     name="password"
                     value={formValue.password}
                     onChange={handleChange}
+                    invalid = {formErrors.password? true : false}
+                    valid = {formValue.password? true : false}
                     />
+                    <FormFeedback>{formErrors.password}</FormFeedback>
                 </FormGroup>
                 </Col>
             </Row>
@@ -780,10 +829,14 @@ import { RegisterationValidation } from '../utilities/validation';
                 <Input
                 id="extension"
                 name="extension"
+                type='number'
                 placeholder="office contact"
                 value={formValue.extension}
                 onChange={handleChange}
+                invalid = {formErrors.extension? true : false}
+                valid = {formValue.extension? true : false}
                 />
+                <FormFeedback>{formErrors.extension}</FormFeedback>
             </FormGroup>
             </Col>
             <Col md={6}>
@@ -878,7 +931,10 @@ import { RegisterationValidation } from '../utilities/validation';
                     type="text"
                     value={formValue.bankname}
                     onChange={handleChange}
+                    invalid = {formErrors.bankname? true : false}
+                    valid = {formValue.bankname? true : false}
                     />
+                    <FormFeedback>{formErrors.bankname}</FormFeedback>
                 </FormGroup>
                 </Col>
                 <Col md={6}>
@@ -892,7 +948,10 @@ import { RegisterationValidation } from '../utilities/validation';
                     type="text"
                     value={formValue.bankaccount}
                     onChange={handleChange}
+                    invalid = {formErrors.bankaccount? true : false}
+                    valid = {formValue.bankaccount? true : false}
                     />
+                    <FormFeedback>{formErrors.bankaccount}</FormFeedback>
                 </FormGroup>
                 </Col>
             </Row>
@@ -908,7 +967,10 @@ import { RegisterationValidation } from '../utilities/validation';
                 type="text"
                 value={formValue.bankcode}
                 onChange={handleChange}
+                invalid = {formErrors.bankcode? true : false}
+                valid = {formValue.bankcode? true : false}
                 />
+                <FormFeedback>{formErrors.bankcode}</FormFeedback>
             </FormGroup>
             </Col>
             </Row>
@@ -933,7 +995,10 @@ import { RegisterationValidation } from '../utilities/validation';
                             type="text"
                             value={salary}
                             onChange={handleSalary}
+                            invalid = {formErrors.salary? true : false}
+                            valid = {!formErrors.salary && salary ? true : false}
                             />
+                            <FormFeedback>{formErrors.salary}</FormFeedback>
                         </FormGroup>
                         </Col>
                   
