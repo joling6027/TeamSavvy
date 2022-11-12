@@ -1,4 +1,5 @@
 import React, { Component, useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { DataGrid } from '@mui/x-data-grid';
 import {Card, 
     CardTitle, 
@@ -23,13 +24,44 @@ import { tableItems } from "./EmployeeItemsteam";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import LinearProgress from '@mui/material/LinearProgress';
 import DeleteIcon from '@mui/icons-material/Delete';
+import AuthService from '../services/authService';
+import { GetEndPoints } from '../utilities/EndPoints';
 
 
 import './jobAppliedEmployee.css';
 
 const ProjectList = () => {
-    const [modal, setModal] = useState(false);
-    const toggle = () => setModal(!modal);
+    const data = useLocation();
+    const jobId = data.state.jobId;
+    console.log(data.state.jobId)
+    const { http, user } = AuthService();
+    // const [modal, setModal] = useState(false);
+    const [applicants, setApplicants] = useState([]);
+    // const toggle = () => setModal(!modal);
+
+    useEffect(() => {
+        http.get(GetEndPoints().internalJob + "/jobApplied/" + jobId)
+        .then((res) => {
+            if(res.data.success){
+                console.log(res.data.response)
+                // setApplicants(res.data.response)
+                let objs = [];
+                objs = [...res.data.response].map((applicant) => {
+                    return{
+                        id: applicant.employeeId,
+                        empname: applicant.employeeFirstname + " " + applicant.employeeLastname,
+                        dept: applicant.department.departmentName,
+                        position: applicant.role.roleType,
+                        details: "<button>View</button>"
+                    }
+                })
+                setApplicants(objs);
+                console.log(applicants)
+            }
+        })
+        .catch((err) => console.log(err))
+        
+    },[])
 
     const columns = [
         { field: 'id', headerName: 'Employee Id',width:200 },
@@ -37,10 +69,33 @@ const ProjectList = () => {
         width:200,
              sortable:true,
              editable:true},
-        { field: 'dept', headerName: 'Dept',width:200},
+        { field: 'dept', headerName: 'Department',width:200},
         { field: 'position', headerName: 'Position', width:200},
-        { field: 'details', headerName: 'Details', width:200, renderCell: (params) => <Link to="${params.row.id}">View</Link> },
+        { field: 'details', headerName: 'Details', width:200, renderCell: (params) => <Link to={params.row.id}>View</Link> }
       ];
+
+    // const populateApplicants = (...applicants) => {
+    //     console.log(...applicants)
+
+    //     let applicantsObj = [];
+    //       applicantsObj = [...applicants].map((applicant) => {
+    //         return{
+    //             id: applicant.employeeId,
+    //             empname: applicant.employeeFirstname + " " + applicant.employeeLastname,
+    //             dept: applicant.department.departmentName,
+    //             position: applicant.role.roleType,
+    //             details: <button>View</button>
+    //         }
+    //       })
+    //       console.log(applicantsObj)
+    //       return setApplicantRows(...applicantsObj);
+    // }
+
+    if (applicants === undefined) {
+        return (
+            <>No Applicant applied for this position yet.</>
+        )
+    } else {
     
     return ( 
         <Container>
@@ -50,7 +105,7 @@ const ProjectList = () => {
             <CardBody>
             <div style={{ display: 'flex', height: '100%', justifyContent: 'space-between' }}>
                 <div style={{width:'100%'}}>
-                    <DataGrid className="table-striped" rows={tableItems} columns={columns}  
+                        <DataGrid className="table-striped" rows={applicants} columns={columns}  
                         pageSize={8} 
                         rowsPerPageOptions={[8]}
                         SelectionOnClick
@@ -62,7 +117,7 @@ const ProjectList = () => {
            
             </CardBody>
        </Card>
-       <Modal isOpen={modal} toggle={toggle} backdrop="static" centered>
+       {/* <Modal isOpen={modal} toggle={toggle} backdrop="static" centered>
                     <ModalHeader>  <h4>Assign Project</h4> </ModalHeader>
                     <ModalBody>
                         <Form>
@@ -127,10 +182,11 @@ const ProjectList = () => {
                     </div>
                     </ModalBody>
                     
-                </Modal>
+                </Modal> */}
 
         </Container>    
     );
+}
 }
  
 export default ProjectList;

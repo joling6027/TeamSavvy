@@ -47,12 +47,60 @@ const InternalJobs = () => {
     const [jobPay, setJobPay] = useState();
     const [jobDeadline, setJobDeadline] = useState();
     const [selectOptions, setSelectOptions] = useState([]);
+    // const [selectOptions, setSelectOptions] = useState(new Set());
     const [skills, setSkills] = useState([]);
+    // const [skills, setSkills] = useState(new Set());
     const skillsData = getSkillsLst();
 
     //modal for skills
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
+
+    //modal for apply
+    const [show, setShow] = useState(false);
+    const toggleApplyJob = () => {
+        setShow(!show)
+    }
+
+    //submit job apply
+    const submitJobApply = (e) => {
+        e.preventDefault();
+        console.log(jobItem.jobId);
+
+        const jobSubmitData = {
+            employeeId: user.employeeId,
+            jobId: jobItem.jobId,
+            appliedOn: today
+        }
+
+        console.log(jobSubmitData)
+
+        http.post(GetEndPoints().internalJob + "/applyjob", { ...jobSubmitData })
+        .then((res) => {
+            if(res.data.success){
+                console.log("Job apply successed!");
+                setAlert(
+                    <SweetAlert
+                        success
+                        style={{ display: "block", marginTop: "-100px" }}
+                        title="Submitted!"
+                        onConfirm={() => hideAlert()}
+                        onCancel={() => hideAlert()}
+                        confirmBtnBsStyle="success"
+                        btnSize=""
+                    >
+                        Your application has been submitted!!</SweetAlert>
+                )
+            }
+        }).catch((err) => console.log(err.message))
+
+        setShow(!show)
+    }
+
+    const hideAlert = () => {
+        setAlert(null);
+    };
+
 
     //validation
     const [jobNameValidate, setJobNameValidate] = useState(false);
@@ -82,7 +130,7 @@ const InternalJobs = () => {
                 }
             })
             .catch((err) => console.log(err.message))
-    }, [user.employeeId])
+    }, [])
 
     // handle skills
     const handleSkillChange = event => {
@@ -109,6 +157,7 @@ const InternalJobs = () => {
         toggle();
         console.log(selectOptions)
         let skObjs = [];
+        // let skObjs = new Set();
         skObjs = selectOptions.map((id, index) => {
             
             let skRes = skillsData.find((s) => s.skillId === parseInt(id));
@@ -196,52 +245,76 @@ const InternalJobs = () => {
     const submitHandler = (e) => {
         e.preventDefault()
         
+        // if (jobName === undefined || jobDetail === undefined || jobResponsibility === undefined || jobPay === undefined || jobDeadline === undefined) {
+        //     setJobNameValidate(true);
+        //     setJobDetailValidate(true);
+        //     setJobResponsibilityValidate(true);
+        //     setJobDeadlineValidate(true);
+        //     setJobPayValidate(true);
+        //     return;
+        // }
+        // console.log(jobDetailValidate);
+        // console.log(jobResponsibilityValidate);
+        // console.log(jobPayValidate);
+        // console.log(jobDeadlineValidate);
 
-        if (jobName === undefined || jobDetail === undefined || jobResponsibility === undefined || jobPay === undefined || jobDeadline === undefined) {
+        if (jobName === undefined || jobName === null){
             setJobNameValidate(true);
+            return;
+        }
+        console.log(jobDetail)
+        if (jobDetail === undefined || jobDetail === null){
             setJobDetailValidate(true);
+            return;
+        }
+        if (jobResponsibility === undefined){
             setJobResponsibilityValidate(true);
-            setJobDeadlineValidate(true);
+            return;
+        }
+        if (jobPay === undefined){
             setJobPayValidate(true);
+            return;
+        }
+        if (jobDeadline === undefined){
+            setJobDeadlineValidate(true);
             return;
         }
 
         if (jobNameValidate || jobDetailValidate || jobResponsibilityValidate || jobDeadlineValidate || jobPayValidate) {
             return;
+        }else{
+            const newJob = {
+                jobPosition: jobName,
+                salary: jobPay,
+                details: jobDetail,
+                responsibilities: jobResponsibility,
+                createdOn: today,
+                deadline: jobDeadline,
+                isdelete: false,
+                jobSkills: skills
+            }
+
+            console.log("new job -");
+            console.log(newJob);
+
+            http.post(GetEndPoints().internalJob + "/addJob", { ...newJob })
+                .then((res) => {
+                    if (res.data.success) {
+                        console.log("ok");
+                        // setIsCreateJob(false);
+                    }
+                }).catch((err) => console.log(err.message));
+
+            // clearCreateJobInput();
+            e.target.reset();
+
+
         }
-
-        // console.log(today);
-
-        const newJob = {
-            jobPosition: jobName,
-            salary: jobPay,
-            details: jobDetail,
-            responsibilities: jobResponsibility,
-            createdOn: today,
-            deadline: jobDeadline,
-            isdelete: false,
-            jobSkills: skills
-        }
-
-        console.log("new job -");
-        console.log(newJob);
-
-        http.post(GetEndPoints().internalJob + "/addJob", { ...newJob })
-            .then((res) => {
-                if (res.data.success) {
-                    console.log("ok");
-                }
-            }).catch((err) => console.log(err.message));
-
-        // clearCreateJobInput();
-        e.target.reset();
        
 
     }
 
-    const hideAlert = () => {
-        setAlert(null);
-    };
+
 
     if (jobItem === undefined) {
         return (
@@ -251,7 +324,7 @@ const InternalJobs = () => {
 
         return (
             <>
-
+                {alert}
                 <div className="content">
                     <Container>
                         <Row>
@@ -259,7 +332,7 @@ const InternalJobs = () => {
                                 <Col sm="4">
                                     <Card className='jobs-card' body>
                                         <CardTitle className='job-card-title'>Jobs
-                                            {(user.role === 'HR' || user.role === 'Admin' ? (<Button className='createAndApply-btn' color="link" onClick={() => { setIsCreateJob(true); setValidate() }}>
+                                            {(user.role === 'HR' || user.role === 'Admin' ? (<Button className='createAndApply-btn' color="link" onClick={() => { setIsCreateJob(true); setValidate(); setJobName(); setJobDetail(); setJobResponsibility(); setJobPay(); setJobDeadline(); setSelectOptions([])}}>
                                                 <AddOutlinedIcon /> Create Job
                                             </Button>) : "")}
                                         </CardTitle>
@@ -294,18 +367,24 @@ const InternalJobs = () => {
                                                     <FormGroup>
                                                         <Container>
                                                             <CardTitle className='job-card-title'>Job Details</CardTitle>
+                                                            <div>
                                                             <Label for='newJob_name'>Position Name</Label>
                                                             <Input type='text' name='newJob_name' id='newJob_name' onChange={nameChangeHandler} invalid={jobNameValidate} />
-                                                            <FormFeedback>Position name cannot be blank</FormFeedback>
+                                                            <FormFeedback invalid>Position name cannot be blank</FormFeedback>
+                                                            </div>
                                                             
+                                                            <div>
                                                             <Label for='newJob_detail'>Details</Label>
                                                             <Input type='text' name='newJob_detail' id='newJob_detail' onChange={detailChangeHandler} invalid={jobDetailValidate} />
-                                                            <FormFeedback>Detail cannot be blank</FormFeedback>
+                                                            <FormFeedback invalid>Detail cannot be blank</FormFeedback>
+                                                            </div>
 
+                                                            <div>
                                                             <Label for='newJob_responsibility'>Responsibilities</Label>
                                                             <Input type='text' name='newJob_responsibility' id='newJob_responsibility' onChange={responsibilityChangeHandler} invalid={jobResponsibilityValidate} />
                                                             <FormFeedback>Responsibilities cannot be blank</FormFeedback>
                                                             <CardSubtitle className='job-subtitle'>Skill Required</CardSubtitle>
+                                                            </div>
                                                             <br />
                                                             {skills && skills.map((skill, index) => skill.isactive && <div class="skill position-relative" key={index}>
                                                                 <Badge className="skillPill rounded-pill me-3 mb-3 " pill > {skill.skills.skillName} </Badge>
@@ -370,7 +449,7 @@ const InternalJobs = () => {
                                                             </Row>
                                                             <Col>
                                                                 <Button type='submit' style={{ color: '#367FFF', backgroundColor: 'white', border: 'none', textTransform: 'uppercase', float: 'right' }}>Create Job</Button>{''}
-                                                                <Button type='reset' style={{ color: '#FD8787', backgroundColor: 'white', border: 'none', textTransform: 'uppercase', float: 'right' }}>Cancel</Button>
+                                                                <Button type='reset' style={{ color: '#FD8787', backgroundColor: 'white', border: 'none', textTransform: 'uppercase', float: 'right' }} onClick={() => setIsCreateJob(false)}>Cancel</Button>
                                                             </Col>
                                                         </Container>
                                                     </FormGroup>
@@ -380,9 +459,24 @@ const InternalJobs = () => {
                                             (<>
                                                 <CardTitle className='job-card-title'>
                                                     {(user.role === 'HR' || user.role === 'Admin' ? 
-                                                        (<Link className='createAndApply-btn' color="link" to={"/JobAppliedEmployees"} state={{ jobId:jobItem.jobId }}>Applied</Link>) : (<Button className='createAndApply-btn' color="link">Apply Now</Button>))}
+                                                        (<><Link className='createAndApply-btn' color="link" to={"/jobs/jobApplied"} state={{ jobId:jobItem.jobId }}>Applied</Link>
+                                                            <Button type='button' className='createAndApply-btn' color="link" onClick={toggleApplyJob}>Apply Now</Button></>) : (<Button type='button' className='createAndApply-btn' color="link" onClick={toggleApplyJob}>Apply Now</Button>))}
                                                     {jobItem.jobPosition}
+                                                    <Modal isOpen={show} toggle={toggleApplyJob} backdrop="static" centered>
+                                                        <ModalBody>
+                                                            <h4>Are you sure you want to apply for this position?</h4>
+                                                            <div className="d-flex justify-content-center mt-5">
+                                                                <Button className="me-3" color="primary" onClick={submitJobApply}>
+                                                                    Confirm
+                                                                </Button>
+                                                                <Button color="secondary" onClick={() => setShow(false)} >
+                                                                    Cancel
+                                                                </Button>
+                                                            </div>
+                                                        </ModalBody>
+                                                    </Modal>
                                                 </CardTitle>
+                                                
                                                 <CardText>{(jobItem.details).charAt(0).toUpperCase() + (jobItem.details).slice(1)}</CardText>
                                                 <CardSubtitle className='job-subtitle'>Responsibility</CardSubtitle>
                                                 <br />

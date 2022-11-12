@@ -59,7 +59,8 @@ function App() {
             <Route path="/payroll" exact element={<Payroll data={data} columns={COLUMNS} />} />
             <Route path="/jobs" element={<InternalJobs />} />
             <Route path='/payroll/:payrollid' element={<Paystub />} />
-            <Route path="/JobAppliedEmployees" element={<JobAppliedEmployees/>} />
+            {/* <Route path="/JobAppliedEmployees" element={<JobAppliedEmployees/>} /> */}
+            <Route path="/jobs/jobApplied" element={<JobAppliedEmployees/>} />
           </Routes>
         </main>
       </div>
