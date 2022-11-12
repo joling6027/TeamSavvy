@@ -20,6 +20,8 @@ import AuthService from './components/services/authService';
 import AddEmployee from './components/addEmployee/AddEmployee';
 import TeamMembers from './components/teamMembers/TeamMembers';
 import EmployeeDetails from './components/employeeDetails/EmployeeDetails';
+import ProjectDetails from './components/projectDetails/ProjectDetails'
+import ProjectList from './components/projectList/ProjectList'
 
 function App() {
   const { http, user, getToken } = AuthService();
@@ -60,8 +62,9 @@ function App() {
             <Route path="/payroll" exact element={<Payroll data={data} columns={COLUMNS} />} />
             <Route path="/jobs" element={<InternalJobs />} />
             <Route path='/payroll/:payrollid' element={<Paystub />} />
-            {/* <Route path="/JobAppliedEmployees" element={<JobAppliedEmployees/>} /> */}
             <Route path="/jobs/jobApplied" element={<JobAppliedEmployees/>} />
+            <Route path="/projectList" element={<ProjectList/>} />
+            <Route path="/projects" element={<ProjectDetails />} />
           </Routes>
         </main>
       </div>

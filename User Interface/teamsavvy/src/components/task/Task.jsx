@@ -155,7 +155,6 @@ const Task = () => {
                                                 </button>
                                                 <UpdateStatusModal 
                                                 onSaveTaskData={saveUpdateDataHandler} 
-                                                
                                                 show={showUpdate} 
                                                 close={() => setShowUpdate(false)}
                                                  

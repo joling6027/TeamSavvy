@@ -204,11 +204,13 @@ const Dashboard = () => {
         <>
          <Container className="px-3">
         {
-            user.role && user.role == "HR" && 
+            user.role && user.role === "HR" && 
             <div className=" d-flex justify-content-between">
             <Col className="py-2 px-3 yellow-bg rounded d-flex align-items-center m-2">
-                <h5 className="text-white flex-grow-1">Project in compoany</h5>
-                <h2 className="text-white fw-bold">{totalProjectsForHr}</h2>
+                <Link to={"/projects"} className='text-mute text-decoration-none inline-block'>
+                    <h5 className="text-white flex-grow-1">Project in compoany</h5>
+                    <h2 className="text-white fw-bold">{totalProjectsForHr}</h2>
+                </Link>
             </Col>
             <Col className="py-2 px-3 orange-bg rounded d-flex align-items-center m-2">
                 <Link to={'/dashboard/teammembers'} className='text-mute text-decoration-none inline-block'>
@@ -223,10 +225,10 @@ const Dashboard = () => {
         </div>
         }
         {
-            user.role && user.role == "Manager" && 
+            user.role && user.role === "Manager" && 
             <div className=" d-flex justify-content-between">
             <Col className="py-2 px-3 yellow-bg rounded d-flex align-items-center m-2">
-                <Link>
+                <Link to={"/projects"} className='text-mute text-decoration-none inline-block'>
                     <h5 className="text-white flex-grow-1">Project under manager</h5>
                     <h2 className="text-white fw-bold">{totalProjects}</h2>
                 </Link>

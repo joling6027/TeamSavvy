@@ -30,7 +30,7 @@ import { GetEndPoints } from '../utilities/EndPoints';
 
 import './jobAppliedEmployee.css';
 
-const ProjectList = () => {
+const JobAppliedEmployees = () => {
     const data = useLocation();
     const jobId = data.state.jobId;
     console.log(data.state.jobId)
@@ -189,4 +189,4 @@ const ProjectList = () => {
 }
 }
  
-export default ProjectList;
+export default JobAppliedEmployees;
