@@ -101,6 +101,16 @@ const InternalJobs = () => {
         setAlert(null);
     };
 
+    // disable apply button
+    const fetchAppliedData = (jobId) => {
+        http.get(GetEndPoints.internalJob+ "/jobApplied/" + jobId)
+        .then((res) => {
+            console.log(res.data)
+
+        })
+        .catch((err) => console.log(err.message))
+    }
+
 
     //validation
     const [jobNameValidate, setJobNameValidate] = useState(false);
@@ -332,7 +342,8 @@ const InternalJobs = () => {
                                 <Col sm="4">
                                     <Card className='jobs-card' body>
                                         <CardTitle className='job-card-title'>Jobs
-                                            {(user.role === 'HR' || user.role === 'Admin' ? (<Button className='createAndApply-btn' color="link" onClick={() => { setIsCreateJob(true); setValidate(); setJobName(); setJobDetail(); setJobResponsibility(); setJobPay(); setJobDeadline(); setSelectOptions([])}}>
+                                            {(user.role === 'HR' || user.role === 'Admin' ? 
+                                            (<Button className='createAndApply-btn' color="link" onClick={() => { setIsCreateJob(true); setValidate(); setJobName(); setJobDetail(); setJobResponsibility(); setJobPay(); setJobDeadline(); setSelectOptions([])}}>
                                                 <AddOutlinedIcon /> Create Job
                                             </Button>) : "")}
                                         </CardTitle>

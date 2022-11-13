@@ -16,10 +16,11 @@ import {Card,
     Button,
 FormFeedback} from 'reactstrap';
 import {Link} from 'react-router-dom';
-// import {Link} from '@material-ui/core';
 import { tableItems } from "./TableItems";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import './projectList.css';
+import AuthService from '../services/authService';
+import { GetEndPoints } from '../utilities/EndPoints';
 
 const ProjectList = () => {
     
@@ -35,11 +36,62 @@ const ProjectList = () => {
         { field: 'details', headerName: 'Details',  renderCell: (params) => 
         <Link to="${params.row.id}">View</Link> },
       ];
+
+      //create project modal
       const [modal, setModal] = useState(false);
       const toggle = () => setModal(!modal);
+
+      //vars
+      const [projects, setProjects] = useState();
+
+    const { http, user } = AuthService();
+    const userID = user.employeeId;
+    const userName = user.firstName;
+    console.log(userName)
+
+    const getProject = () => {
+        http.get(GetEndPoints().projects)
+        .then((res) =>{
+
+            console.log(res.data.response);
+            let objs = [];
+            objs = [...res.data.response].map((project) => {
+                console.log(project.projectManagerName.toLowerCase())
+                console.log(userName)
+                if (project.projectManagerName === userName){
+                    console.log("I'm in")
+                    // return {
+                    //     id: project.projectId,
+                    //     projectname: project.projectName,
+                    //     team: project.projectTotalEmployees,
+                    //     budget: project.projectBudget,
+                    //     description: project.projectDesc,
+                    //     details: "<button>View</button>"
+                    // }
+                }else{
+                    return "";
+                }
+            })
+            setProjects(objs);
+            console.log(objs)
+
+        }).catch((err) => console.log(err.message))
+    }
+
+    useEffect(() => {
+        getProject();
+
+    }, [])
+
+    if(projects === undefined){
+        return(
+            <div>No projects under your name</div>
+        )
+    }else{
       
     return ( 
         <Container>
+        {projects}
             <Card className="prCard" > 
                 <CardTitle tag="h5" className="px-3 pt-3" > Projects 
             <Link to="" onClick={toggle} className="alert-link text-decoration-none float-end linkStyle">
@@ -177,6 +229,7 @@ const ProjectList = () => {
 
         </Container>    
     );
+}
 }
  
 export default ProjectList;
