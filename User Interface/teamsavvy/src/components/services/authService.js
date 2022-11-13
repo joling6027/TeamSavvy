@@ -27,7 +27,7 @@ const AuthService = () => {
 
         setToken(token);
         setUser(user);
-        navigate('/dashboard');
+        user.role === "Employee" ? navigate('/profile') : navigate('/dashboard');
     };
 
     const setDropdownCont = (data) =>{

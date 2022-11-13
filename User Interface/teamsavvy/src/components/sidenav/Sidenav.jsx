@@ -68,7 +68,7 @@ export default function Sidenav() {
           <span className={styles.linkText}>{item.text}</span>
           </span>
           :
-          <NavLink key={item.id} className={styles.sideitem} to={item.link}>
+          <NavLink key={item.id} className={user.role === "Employee" && item.text === "Dashboard" ? "d-none" :styles.sideitem} to={item.link}>
               {item.icon}
               <span className={styles.linkText}>{item.text}</span>
           </NavLink>

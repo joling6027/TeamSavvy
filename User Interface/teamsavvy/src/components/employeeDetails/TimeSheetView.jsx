@@ -458,6 +458,7 @@ const GetTotalHours = (timeSheetEvent) => {
 
   };
 
+  
    return (
      <>
         <div className="container">
@@ -482,7 +483,7 @@ const GetTotalHours = (timeSheetEvent) => {
               </CardBody>
             </Card>
             </Col>
-            <Col className="d-inline-block" md={2}>
+            {/* <Col className="d-inline-block" md={2}>
             <Card className="prCard p-2 text-center">
                 <h3 className="pt-1">Hours</h3>
                 <CardBody className="p-2">
@@ -516,7 +517,7 @@ const GetTotalHours = (timeSheetEvent) => {
                     </div>
                 </CardBody>
             </Card>
-            </Col>
+            </Col> */}
         </Row>
         </div>
         <Modal isOpen={modal} backdrop="static" centered>

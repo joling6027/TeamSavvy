@@ -404,10 +404,10 @@ const Timesheet = () => {
      
     }
     else{
-        if( event.leaveTypeId === 1 && event.leaveStatus === ""){
+        if( event.leaveTypeId === 1){
           style = sickLeaveStyle
         }
-        else if(event.leaveTypeId === 2 && event.leaveStatus === ""){
+        else if(event.leaveTypeId === 2 ){
           style = vaccationLeaveStyle
         }
         else{
@@ -447,7 +447,7 @@ const Timesheet = () => {
               </CardBody>
             </Card>
             </Col>
-            <Col className="d-inline-block" md={2}>
+            {/* <Col className="d-inline-block" md={2}>
             <Card className="prCard p-2 text-center">
                 <h3 className="pt-1">Hours</h3>
                 <CardBody className="p-2">
@@ -484,10 +484,10 @@ const Timesheet = () => {
                       <span></span>
                       <span></span> */}
                       {/* <span></span> */}
-                    </div>
+                    {/* </div>
                 </CardBody>
             </Card>
-            </Col>
+            </Col> */} 
         </Row>
         </div>
         <Modal isOpen={modal} backdrop="static" centered>

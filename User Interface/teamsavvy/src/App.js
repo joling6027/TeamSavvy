@@ -51,7 +51,7 @@ function App() {
           <Routes>
             <Route path="/resetpassword" element={<ResetPassword />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/" element={<Profile />} />
             <Route path="/dashboard" element={<Dashboard />}/>
             <Route path='/dashboard/teammembers/addemployee' element={<AddEmployee/>}/>
             <Route path='/dashboard/teammembers' element={<TeamMembers />}/>
