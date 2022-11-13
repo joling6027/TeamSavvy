@@ -33,6 +33,8 @@ const TimeSheetView = () => {
   const [alert, setAlert] = useState(null);
   const [leavesArr, setLeaveArr] = useState([]);
   const [selectedLeaveType, setSelectedLeaveType] = useState();
+  const [totalWorkHours, setTotalWorkHours] = useState([]);
+  const [arr, setArr] = useState([1]);
 
   const GetLeaveType = () =>{
     http.get(GetEndPoints().leaveType)
@@ -50,26 +52,75 @@ const TimeSheetView = () => {
     .then((res) =>{
        if(res.data.success){
        let timeSheetEvent = res.data.response.map((timeSheet, index) => {
-          let tSheet = {
-            title: timeSheet.clockType === "Clock-In"? "In  " + timeSheet.clockTime : "Out  "+ timeSheet.clockTime,
-            start: timeSheet.clockDate,
-            end: timeSheet.clockDate,
-            employeeId:timeSheet.employeeId,
-            allDay: true,
-            clockType:timeSheet.clockType,
-            leaveTypeId: 0,
-            employeeLeaveId: 0,
-            isApproved:true,
-            color: "gray",
-          }
+        let actualDate = new Date(timeSheet.clockDate);
+        actualDate.setDate(actualDate.getDate() + 1);
+        let tSheet = {
+          title: timeSheet.clockType === "Clock-In"? "In  " + timeSheet.clockTime : "Out  "+ timeSheet.clockTime,
+          start: moment(actualDate).utc().format('YYYY-MM-DD'),
+          end: moment(actualDate).utc().format('YYYY-MM-DD'),
+          employeeId:timeSheet.employeeId,
+          allDay: true,
+          clockType:timeSheet.clockType,
+          leaveTypeId: 0,
+          employeeLeaveId: 0,
+          isApproved:true,
+          color: "gray",
+        }
           return tSheet;
        })
        setEvents([...event, ...timeSheetEvent]);
-       setTimeSheet(timeSheetEvent)
+       setTimeSheet(timeSheetEvent);
+       GetTotalHours(res.data.response);
        }
     })
     .catch((err) => console.log(err.message))
   }
+
+  function parseTime(s) {
+    var part = s.match(/(\d+):(\d+)(?: )?(am|pm)?/i);
+    var hh = parseInt(part[1], 10);
+    var mm = parseInt(part[2], 10);
+    var ap = part[3] ? part[3].toUpperCase() : null;
+    if (ap === "AM") {
+        if (hh == 12) {
+            hh = 0;
+        }
+    }
+    if (ap === "PM") {
+        if (hh != 12) {
+            hh += 12;
+        }
+    }
+    return { hh: hh + (mm/60) };
+}
+
+const GetTotalHours = (timeSheetEvent) => {
+  let collectDateTime = [];
+  // timeSheetEvent.map((ts, index) => {
+  //   // let hours = Math.floor(parseInt(ts.clockTime.split(':')[0]));
+  //   // let minute =parseInt((ts.clockTime.split(':')[1]).split(' ')[0])/60; 
+  //   // return collectDateTime.push({
+  //   //   date:ts.clockDate,
+  //   //   time: hours + minute
+  //   // })
+
+  //   console.log(parseTime(ts.clockTime))
+
+  // })
+ 
+  for (let index = 0; index < timeSheetEvent.length; index += 2) {
+    let first = parseTime(timeSheetEvent[index].clockTime);
+    let second = parseTime(timeSheetEvent[index + 1].clockTime);
+    collectDateTime.push({
+          date:timeSheetEvent[index].clockDate,
+          time: second.hh - first.hh
+    })
+    // console.log(second,  first)
+    // console.log(second.hh - first.hh)
+  }
+
+  setTotalWorkHours(collectDateTime);
+}
   
   const GetLeavesById = () =>{
      http.get(GetEndPoints().employeeLeave+'/'+params.id)
@@ -166,23 +217,28 @@ const TimeSheetView = () => {
     .catch((err) => console.log(err.message))
   }
   const selectedEvent = (event) => {
-    
-    localStorage.setItem('leaveStatus', JSON.stringify({
-        employeeLeaveId:event.employeeLeaveId,
-        employeeId: parseInt(params.id),
-        leaveTypeId: event.leaveTypeId,
-        leaveStart: event.start,
-        leaveEnds: event.end,
-        leaveDays: Math.floor((new Date(event.end) - new Date(event.start))/(1000 * 60 * 60 * 24)),
-        isApproved: true,
-        leaveApprovalDate:moment(new Date()).utc().format('YYYY-MM-DD'),
-        leaveApprovalBy: user.role,
-        leaveStatus: ""
-    }));
-    const selectedTitle = "Do you want to change the status of '"+ (event.title) + "' leave"; 
-    setTitle(selectedTitle);
-    setModal(!modal);
-    
+    if(event.clockType === "Clock-Out" || event.clockType === "Clock-In")
+    {
+     
+    }
+    else
+    {
+      localStorage.setItem('leaveStatus', JSON.stringify({
+          employeeLeaveId:event.employeeLeaveId,
+          employeeId: parseInt(params.id),
+          leaveTypeId: event.leaveTypeId,
+          leaveStart: event.start,
+          leaveEnds: event.end,
+          leaveDays: Math.floor((new Date(event.end) - new Date(event.start))/(1000 * 60 * 60 * 24)),
+          isApproved: true,
+          leaveApprovalDate:moment(new Date()).utc().format('YYYY-MM-DD'),
+          leaveApprovalBy: user.role,
+          leaveStatus: ""
+      }));
+      const selectedTitle = "Do you want to change the status of '"+ (event.title) + "' leave"; 
+      setTitle(selectedTitle);
+      setModal(!modal);
+    }
   };
   
  
@@ -432,12 +488,31 @@ const TimeSheetView = () => {
                 <CardBody className="p-2">
                     <p className="mt-2 mb-2">Worked</p>
                     <div className="totalhr flex-column d-flex">
-                      <span>40</span>
-                      <span>40</span>
-                      <span>40</span>
-                      <span></span>
-                      <span></span>
-                      {/* <span></span> */}
+                    { 
+                        arr.map(()=>{
+                            let total = 0
+                            totalWorkHours.map((workHour, index) =>{
+                              let dayOfweek = new Date(workHour.date).getDay();
+                              let dateOfWeek = new Date(workHour.date).getUTCDate();
+                              if(dayOfweek === 6)
+                              {
+                              let maxDateOfWeek = dateOfWeek + 6;
+                              let minDateOfWeek = dateOfWeek - 1 ;
+                              localStorage.setItem('maxDateOfWeek', maxDateOfWeek);
+                              localStorage.setItem('minDateOfWeek', minDateOfWeek);
+                              }
+                              if(dateOfWeek >  localStorage.getItem('minDateOfWeek') && dateOfWeek <=  localStorage.getItem('maxDateOfWeek'))
+                              {
+                                  console.log(workHour)
+                                  total += workHour.time;
+                              }
+                                return total;
+                            })
+
+                            return <span>{total}</span>}
+                        )
+                       
+                      }
                     </div>
                 </CardBody>
             </Card>

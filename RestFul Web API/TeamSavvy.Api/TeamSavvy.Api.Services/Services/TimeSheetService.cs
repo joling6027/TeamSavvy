@@ -57,7 +57,9 @@ namespace TeamSavvy.Api.Services.Services
 
         public List<TimeSheetDto> GetTimeSheet(int employeeId)
         {
-            List<TimeSheetDto> empTimeSheet = null;
+            List<TimeSheetDto> empTimeSheet = new List<TimeSheetDto>();
+            int reducedTime = 0;
+            int totalWork = 0;
             try
             {
                 if (employeeId > 0)
@@ -65,7 +67,24 @@ namespace TeamSavvy.Api.Services.Services
                     var timeSheet = _unitOfWork.Context.TimeSheet
                                     .Where(x => x.EmployeeId == employeeId)
                                     .ToList();
-                    empTimeSheet = _mapper.Map<List<TimeSheet>, List<TimeSheetDto>>(timeSheet);
+                    var date = string.Empty;
+                    foreach (var ts in timeSheet)
+                    {
+                       
+                        if(date != ts.ClockDate)
+                        {
+                            date = ts.ClockDate;
+                            var firstClockIn = _mapper.Map<TimeSheet, TimeSheetDto>(ts);
+                            var lco = timeSheet
+                                           .Where(x => x.EmployeeId == employeeId && x.ClockDate == ts.ClockDate && x.ClockType == "Clock-Out").OrderByDescending(x => x.TimesheetId)
+                                           .FirstOrDefault();
+                            var lastCLockOut = _mapper.Map<TimeSheet, TimeSheetDto>(lco);
+                            empTimeSheet.Add(firstClockIn);
+                            empTimeSheet.Add(lastCLockOut);
+                        }
+                       
+                    }
+                    //empTimeSheet = _mapper.Map<List<TimeSheet>, List<TimeSheetDto>>(timeSheet);
                 }
             }
             catch (Exception e)
