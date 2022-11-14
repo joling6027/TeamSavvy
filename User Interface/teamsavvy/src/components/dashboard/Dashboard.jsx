@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Container, Row, Col, Card,CardTitle, Form, FormGroup,Label, Input, Accordion,
     AccordionBody,
     AccordionHeader,
-    AccordionItem, Collapse, Button, CardBody} from 'reactstrap';
+    AccordionItem, Collapse, Button, CardBody,Modal,ModalHeader, ModalBody} from 'reactstrap';
 import { Link, Outlet } from 'react-router-dom';
 import AuthService from '../services/authService';
 import { GetEndPoints } from '../utilities/EndPoints';
@@ -212,7 +212,11 @@ const data = {
     },
   ],
 };
-
+    
+const [approveModal, setapproveModal] = useState(false);
+const approvetoggle = () => setapproveModal(!approveModal);
+    
+    
     return ( 
         <>
          <Container className="px-3">
@@ -309,9 +313,37 @@ const data = {
                         pageSize={8} 
                         rowsPerPageOptions={[8]}
                         SelectionOnClick
-                        onRowClick={e => console.log(e)}
+                        onRowClick={approvetoggle}
                     />
                 </div>
+                <Modal isOpen={approveModal} toggle={approvetoggle} backdrop="static" centered>
+                          <ModalHeader>  <h4>Update Leave Status</h4> </ModalHeader>
+                          <ModalBody>
+                          <Card style={{}} className="text-center prCard">
+                            <CardBody className="profile-card" >
+                                <img alt="..."className="avatar mt-5 rounded-circle" style={{width:100}} src={`${formValue.employeeImage ? formValue.employeeImage : pic}`} />
+                                <CardTitle tag="h5"> {formValue.employeeFirstname + " " + formValue.employeeLastname} </CardTitle>
+                            <CardSubtitle className="mb-2 text-muted" tag="h6"><small> <strong>ID: </strong>  E-{formValue.employeeId}</small>
+                            {/* <p>Position, dept, location</p> */}
+                            <p className="mb-0"><small>{formValue.role?.roleType}, {formValue.department?.departmentName}, {formValue.jobLocation?.location}</small></p>
+                            <small className="lh-1 me-2"><strong>Ext: </strong> {formValue.extension}</small>
+                            </CardSubtitle>
+                            </CardBody>
+                        </Card>
+                          <div className="d-flex justify-content-center mt-5">
+                          <Button className="me-3" color="primary" onClick={handleImage}>
+                              Approve
+                          </Button>{' '}
+                          <Button className="me-3" color="primary" onClick={handleImage}>
+                              Reject
+                          </Button>{' '}
+                          <Button color="secondary" onClick={approvetoggle}>
+                              Cancel
+                          </Button>
+                          </div>
+                          </ModalBody>
+                          
+                      </Modal>
             </div>
                 </Card>
             </Col>
