@@ -296,9 +296,13 @@ const Profile = () => {
         GetEmployee();
     };
 
-    if(dropdownData == null || dropdownData === undefined || skillsData == null || skillsData === undefined )
+    if(formValue.employeeId <=0)
     {
-        <div className='spinner-border'></div>
+        return (<div class="d-flex justify-content-center">
+            <div class="spinner-grow text-success" style={{width: "3rem", height: "3rem"}} role="status">
+            <span class="sr-only">Loading.....</span>
+            </div>
+        </div>);
     }
     else{
         return (
@@ -721,7 +725,7 @@ const Profile = () => {
                  
                   <span className="ms-2 mt-3 d-inline-block text-center p-3">
                       <Button className="d-inline-block bg-primary btn-primary" onClick={handleSubmit}> Submit Changes</Button>
-                      <Button className="d-inline-block bg-danger btn-primary ms-2" onClick={handleCancel}> Cancel</Button>
+                      <Button className="d-inline-block bg-danger btn-primary ms-2" onClick={handleCancel}> Reset</Button>
                   
                   </span>
               </div>

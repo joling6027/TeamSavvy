@@ -28,7 +28,7 @@ const Timesheet = () => {
   const [modal, setModal] = useState(false);
   const [title, setTitle] = useState();
   const [event, setEvents] = useState([]);
-  const [timeSheet, setTimeSheet] = useState([]);
+  const [timeSheet, setTimeSheet] = useState();
   const [alert, setAlert] = useState(null);
   const [leavesArr, setLeaveArr] = useState([]);
   const [selectedLeaveType, setSelectedLeaveType] = useState();
@@ -422,90 +422,100 @@ const Timesheet = () => {
 
   };
 
-
-   return (
-     <>
-        <div className="container">
-        {alert}
-        <Row class="justify-content-center">
-          <Col className="ml-auto mr-auto mb-5 pe-0" md={10}>
-            <Card className="card-calendar prCard">
-              <CardBody>
-              <BigCalendar
-                  selectable
-                  localizer={localizer}
-                  events={[...event, ...timeSheet]}
-                  views={{month: true}}                 
-                  defaultView="month"
-                  scrollToTime={new Date(1970, 1, 1, 6)}
-                  defaultDate={new Date()}
-                  onSelectEvent={(event) => selectedEvent(event)}
-                  onSelectSlot={(slotInfo) => addNewEventAlert(slotInfo)}
-                  eventPropGetter={eventColors}
-                  
-                />
-              </CardBody>
-            </Card>
-            </Col>
-            {/* <Col className="d-inline-block" md={2}>
-            <Card className="prCard p-2 text-center">
-                <h3 className="pt-1">Hours</h3>
-                <CardBody className="p-2">
-                    <p className="mt-2 mb-2">Worked</p>
-                    <div className="totalhr flex-column d-flex">
-                      { 
-                        arr.map(()=>{
-                            let total = 0
-                            totalWorkHours.map((workHour, index) =>{
-                              let dayOfweek = new Date(workHour.date).getDay();
-                              let dateOfWeek = new Date(workHour.date).getUTCDate();
-                              if(dayOfweek === 6)
-                              {
-                              let maxDateOfWeek = dateOfWeek + 6;
-                              let minDateOfWeek = dateOfWeek - 1 ;
-                              localStorage.setItem('maxDateOfWeek', maxDateOfWeek);
-                              localStorage.setItem('minDateOfWeek', minDateOfWeek);
-                              }
-                              if(dateOfWeek >  localStorage.getItem('minDateOfWeek') && dateOfWeek <=  localStorage.getItem('maxDateOfWeek'))
-                              {
-                                  console.log(workHour)
-                                  total += workHour.time;
-                              }
-                                return total;
-                            })
-
-                            return <span>{total}</span>}
-                        )
-                       
-                      }
-                      {/* <span>40</span>
-                      <span>40</span>
-                      <span>40</span>
-                      <span></span>
-                      <span></span> */}
-                      {/* <span></span> */}
-                    {/* </div>
-                </CardBody>
-            </Card>
-            </Col> */} 
-        </Row>
-        </div>
-        <Modal isOpen={modal} backdrop="static" centered>
-          <ModalBody>
-                <h4>{title}</h4>
-                <div className="d-flex justify-content-center mt-5">
-                <Button className="me-3" color="primary" onClick={successDelete}>
-                    Cancel Leave
-                </Button>
-                <Button color="secondary" onClick={() => {
-                  setModal(!modal);
-                  }} >
-                    Cancel
-                </Button>
-                </div>
-          </ModalBody>
-        </Modal>
-    </>
-  );
+   if(timeSheet === undefined)
+   {
+    return (<div class="d-flex justify-content-center">
+            <div class="spinner-grow text-success" style={{width: "3rem", height: "3rem"}} role="status">
+            <span class="sr-only">Loading.....</span>
+            </div>
+        </div>);
+   }
+   else{
+    return (
+      <>
+         <div className="container">
+         {alert}
+         <Row class="justify-content-center">
+           <Col className="ml-auto mr-auto mb-5 pe-0" md={10}>
+             <Card className="card-calendar prCard">
+               <CardBody>
+               <BigCalendar
+                   selectable
+                   localizer={localizer}
+                   events={[...event, ...timeSheet]}
+                   views={{month: true}}                 
+                   defaultView="month"
+                   scrollToTime={new Date(1970, 1, 1, 6)}
+                   defaultDate={new Date()}
+                   onSelectEvent={(event) => selectedEvent(event)}
+                   onSelectSlot={(slotInfo) => addNewEventAlert(slotInfo)}
+                   eventPropGetter={eventColors}
+                   
+                 />
+               </CardBody>
+             </Card>
+             </Col>
+             {/* <Col className="d-inline-block" md={2}>
+             <Card className="prCard p-2 text-center">
+                 <h3 className="pt-1">Hours</h3>
+                 <CardBody className="p-2">
+                     <p className="mt-2 mb-2">Worked</p>
+                     <div className="totalhr flex-column d-flex">
+                       { 
+                         arr.map(()=>{
+                             let total = 0
+                             totalWorkHours.map((workHour, index) =>{
+                               let dayOfweek = new Date(workHour.date).getDay();
+                               let dateOfWeek = new Date(workHour.date).getUTCDate();
+                               if(dayOfweek === 6)
+                               {
+                               let maxDateOfWeek = dateOfWeek + 6;
+                               let minDateOfWeek = dateOfWeek - 1 ;
+                               localStorage.setItem('maxDateOfWeek', maxDateOfWeek);
+                               localStorage.setItem('minDateOfWeek', minDateOfWeek);
+                               }
+                               if(dateOfWeek >  localStorage.getItem('minDateOfWeek') && dateOfWeek <=  localStorage.getItem('maxDateOfWeek'))
+                               {
+                                   console.log(workHour)
+                                   total += workHour.time;
+                               }
+                                 return total;
+                             })
+ 
+                             return <span>{total}</span>}
+                         )
+                        
+                       }
+                       {/* <span>40</span>
+                       <span>40</span>
+                       <span>40</span>
+                       <span></span>
+                       <span></span> */}
+                       {/* <span></span> */}
+                     {/* </div>
+                 </CardBody>
+             </Card>
+             </Col> */} 
+         </Row>
+         </div>
+         <Modal isOpen={modal} backdrop="static" centered>
+           <ModalBody>
+                 <h4>{title}</h4>
+                 <div className="d-flex justify-content-center mt-5">
+                 <Button className="me-3" color="primary" onClick={successDelete}>
+                     Cancel Leave
+                 </Button>
+                 <Button color="secondary" onClick={() => {
+                   setModal(!modal);
+                   }} >
+                     Cancel
+                 </Button>
+                 </div>
+           </ModalBody>
+         </Modal>
+     </>
+   );
+   }
+  
 };
 export default Timesheet;

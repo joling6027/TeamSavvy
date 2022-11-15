@@ -117,7 +117,7 @@ const Payroll = () => {
                                     </tr>
                                 ))}
 
-                                <tr>
+                                {/* <tr>
                                     <td className="text-center">
                                         28-FEB-2022
                                     </td>
@@ -128,8 +128,8 @@ const Payroll = () => {
                                     <td className="text-center view-file">
                                         <Link to={"/paystub"}>VIEW FILE</Link>
                                     </td>
-                                </tr>
-                                <tr>
+                                </tr> */}
+                                {/* <tr>
                                     <td className="text-center">
                                         31-JAN-2022
                                     </td>
@@ -140,7 +140,7 @@ const Payroll = () => {
                                     <td className="text-center view-file">
                                         <Link to={"/paystub"}>VIEW FILE</Link>
                                     </td>
-                                </tr>
+                                 </tr> */}
                                 {/* <tr>
                                     <td className="text-center">
                                         31-JAN-2022

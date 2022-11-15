@@ -33,11 +33,10 @@ import AuthService from '../services/authService';
 const TeamMembers = () => {
 
     const { user, http } = AuthService();
-    // const [role, setRole] = useState(user.role);
     const [modal, setModal] = useState(false);
     const [teamMembers, setTeamMembers] = useState([]);
     const [selectTeamMembers, setSelectTeamMembers] = useState();
-    const [data, setData] = useState([]);
+    const [data, setData] = useState();
     const [alert, setAlert] = useState(null);
     const [projects, setProjects] = useState([]);
     const [selectProject, setSelectProject] = useState();
@@ -241,117 +240,128 @@ const TeamMembers = () => {
         { field: 'icon', headerName: 'Delete', renderCell: (params) => <DeleteIcon value={params.row.id} onClick={() => handleDelete(params.row.id)} color="error"/> }
       ];
 
-    return ( 
-        <Container>
-            {alert}
-            <Card className="prCard" > 
-                <CardTitle tag="h5" className="px-3 pt-3" >{  user.role && user.role === "HR" ? 'Employee List' : 'Team Members' }
-                { 
-                    user.role && user.role === "HR" && <Link to="/dashboard/teammembers/addemployee"  className="alert-link text-decoration-none float-end linkStyle">
-                    <AddCircleIcon/> ADD NEW EMPLOYEE</Link>
-                }
-               
-            </CardTitle>
-            <CardBody>
-                {user.role && user.role === "Manager" && <Row>
-                    <Col md={6}>
-                <Form>
-                    <FormGroup>
-                <Label className="mt-3 mb-2 "  for="projects">
-                           Select Project
-                            </Label>
-                            <Input
-                            id="projects"
-                            name="projects"
-                            type="select"
-                            value={selectTeamMembers}
-                            onChange={handleChange}
-                            >
-                            {
-                                teamMembers && teamMembers.map((member, index) => <option key={index} value={member.projectId}>{member.projectName}</option>)
-                            }
-                            </Input>
-                    </FormGroup>
-                </Form>
-                </Col>
-                </Row>}
-            <div style={{ display: 'flex', height: '100%', justifyContent: 'space-between' }}>
-                <div style={{width:'100%'}}>
-                    <DataGrid className="table-striped"
-                        rows={data} 
-                        columns={ user.role === "Manager" ? columns_Manager : columns_HR}  
-                        pageSize={8} 
-                        rowsPerPageOptions={[8]}
-                        SelectionOnClick
-                        onRowClick={e => console.log(e)}
-                    />
+    if(data === undefined)
+    {
+        return (<div class="d-flex justify-content-center">
+        <div class="spinner-grow text-success" style={{width: "3rem", height: "3rem"}} role="status">
+        <span class="sr-only">Loading.....</span>
+        </div>
+    </div>);
+    }
+    else{
+        return ( 
+            <Container>
+                {alert}
+                <Card className="prCard" > 
+                    <CardTitle tag="h5" className="px-3 pt-3" >{  user.role && user.role === "HR" ? 'Employee List' : 'Team Members' }
+                    { 
+                        user.role && user.role === "HR" && <Link to="/dashboard/teammembers/addemployee"  className="alert-link text-decoration-none float-end linkStyle">
+                        <AddCircleIcon/> ADD NEW EMPLOYEE</Link>
+                    }
+                   
+                </CardTitle>
+                <CardBody>
+                    {user.role && user.role === "Manager" && <Row>
+                        <Col md={6}>
+                    <Form>
+                        <FormGroup>
+                    <Label className="mt-3 mb-2 "  for="projects">
+                               Select Project
+                                </Label>
+                                <Input
+                                id="projects"
+                                name="projects"
+                                type="select"
+                                value={selectTeamMembers}
+                                onChange={handleChange}
+                                >
+                                {
+                                    teamMembers && teamMembers.map((member, index) => <option key={index} value={member.projectId}>{member.projectName}</option>)
+                                }
+                                </Input>
+                        </FormGroup>
+                    </Form>
+                    </Col>
+                    </Row>}
+                <div style={{ display: 'flex', height: '100%', justifyContent: 'space-between' }}>
+                    <div style={{width:'100%'}}>
+                        <DataGrid className="table-striped"
+                            rows={data} 
+                            columns={ user.role === "Manager" ? columns_Manager : columns_HR}  
+                            pageSize={8} 
+                            rowsPerPageOptions={[8]}
+                            SelectionOnClick
+                            onRowClick={e => console.log(e)}
+                        />
+                    </div>
                 </div>
-            </div>
-            
-           
-            </CardBody>
-       </Card>
-       <Modal isOpen={modal} toggle={toggle} backdrop="static" centered>
-                    <ModalHeader>  <h4>Assign Project</h4> </ModalHeader>
-                    <ModalBody>
-                        <Form>
-                            <Row>
-                                <Col>
-                                 <FormGroup>
-                                    <Label className="mt-2 mb-1" for="employee">
-                                    Employee name
-                                    </Label>
-                                    <Input
-                                    id="empname"
-                                    name="empname"
-                                    type="text"
-                                    valid
-                                    disabled
-                                    value={employeeName}
-                                    />
-                                </FormGroup>
-                                </Col>
+                
+               
+                </CardBody>
+           </Card>
+           <Modal isOpen={modal} toggle={toggle} backdrop="static" centered>
+                        <ModalHeader>  <h4>Assign Project</h4> </ModalHeader>
+                        <ModalBody>
+                            <Form>
+                                <Row>
+                                    <Col>
+                                     <FormGroup>
+                                        <Label className="mt-2 mb-1" for="employee">
+                                        Employee name
+                                        </Label>
+                                        <Input
+                                        id="empname"
+                                        name="empname"
+                                        type="text"
+                                        valid
+                                        disabled
+                                        value={employeeName}
+                                        />
+                                    </FormGroup>
+                                    </Col>
+                                </Row>
+                                <Row>
+                            <Col>
+                            <FormGroup>
+                            <Label className=""  for="projectname">
+                                    Project
+                                        </Label>
+                                        <Input
+                                        id="projectname"
+                                        name="projectname"
+                                        type="select"
+                                        value={selectProject}
+                                        onChange={handleProject}
+                                        >
+                                        {
+                                           projects && projects.map((project, index) => <option key={index} value={project.projectId}>{project.projectName}</option>)
+                                        }
+                                        </Input>
+                            </FormGroup>
+                            </Col>
                             </Row>
                             <Row>
-                        <Col>
-                        <FormGroup>
-                        <Label className=""  for="projectname">
-                                Project
-                                    </Label>
-                                    <Input
-                                    id="projectname"
-                                    name="projectname"
-                                    type="select"
-                                    value={selectProject}
-                                    onChange={handleProject}
-                                    >
-                                    {
-                                       projects && projects.map((project, index) => <option key={index} value={project.projectId}>{project.projectName}</option>)
-                                    }
-                                    </Input>
-                        </FormGroup>
-                        </Col>
-                        </Row>
-                        <Row>
-                        <h6 className="text-muted">Project Description</h6>
-                        <p className="text-muted">{projectDesc}</p>
-                        <p className="text-muted">Project Manager <strong>{projectManager}</strong> <span className="ms-2">Team Member <strong> {projectMember}</strong></span></p>
-                        </Row>
-                    </Form>
-                    <div className="d-flex justify-content-center mt-5">
-                    <Button className="me-3" color="primary" onClick={assignProj}>
-                        Assign 
-                    </Button>{' '}
-                    <Button color="secondary" onClick={cancelProj}>
-                        Cancel
-                    </Button>
-                    </div>
-                    </ModalBody>
-                    
-                </Modal>
-
-        </Container>    
-    );
+                            <h6 className="text-muted">Project Description</h6>
+                            <p className="text-muted">{projectDesc}</p>
+                            <p className="text-muted">Project Manager <strong>{projectManager}</strong> <span className="ms-2">Team Member <strong> {projectMember}</strong></span></p>
+                            </Row>
+                        </Form>
+                        <div className="d-flex justify-content-center mt-5">
+                        <Button className="me-3" color="primary" onClick={assignProj}>
+                            Assign 
+                        </Button>{' '}
+                        <Button color="secondary" onClick={cancelProj}>
+                            Cancel
+                        </Button>
+                        </div>
+                        </ModalBody>
+                        
+                    </Modal>
+    
+            </Container>    
+        );
+    }
+   
 }
  
 export default TeamMembers;

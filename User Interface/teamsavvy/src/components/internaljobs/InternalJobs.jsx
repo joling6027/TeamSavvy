@@ -327,9 +327,11 @@ const InternalJobs = () => {
 
 
     if (jobItem === undefined) {
-        return (
-            <>Loading...</>
-        )
+        return (<div class="d-flex justify-content-center">
+            <div class="spinner-grow text-success" style={{width: "3rem", height: "3rem"}} role="status">
+            <span class="sr-only">No Applicant applied for this position yet.</span>
+            </div>
+        </div>);
     } else {
 
         return (
