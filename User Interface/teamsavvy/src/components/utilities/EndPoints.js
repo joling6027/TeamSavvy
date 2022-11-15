@@ -33,6 +33,7 @@ const enpoints = {
   deleteLeave:'Leaves/deleteLeave',
   updateLeave:'Leaves/updateLeave',
   timeSheet: 'TimeSheet',
+  employeeLeaves:'Dashboard/employeeLeaves',
 }
 
 export function GetEndPoints(){

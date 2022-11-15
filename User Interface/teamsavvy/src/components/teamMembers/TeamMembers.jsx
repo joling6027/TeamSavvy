@@ -277,7 +277,9 @@ const TeamMembers = () => {
                 </Row>}
             <div style={{ display: 'flex', height: '100%', justifyContent: 'space-between' }}>
                 <div style={{width:'100%'}}>
-                    <DataGrid className="table-striped" rows={data} columns={ user.role === "Manager" ? columns_Manager : columns_HR}  
+                    <DataGrid className="table-striped"
+                        rows={data} 
+                        columns={ user.role === "Manager" ? columns_Manager : columns_HR}  
                         pageSize={8} 
                         rowsPerPageOptions={[8]}
                         SelectionOnClick

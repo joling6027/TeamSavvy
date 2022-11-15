@@ -5,9 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using TeamSavvy.Api.BusinessModel.DashboardModels;
+using TeamSavvy.Api.BusinessModel.DataTransferModel;
 using TeamSavvy.Api.BusinessModel.DataTransferModel.Charts;
 using TeamSavvy.Api.Entities.Context;
 using TeamSavvy.Api.Entities.GenericRepo;
+using TeamSavvy.Api.Entities.Models;
 using TeamSavvy.Api.Services.IServices;
 using Project = TeamSavvy.Api.BusinessModel.DashboardModels.Project;
 
@@ -54,19 +56,32 @@ namespace TeamSavvy.Api.Services.Services
                         {
                             foreach (var empId in empIds)
                             {
-                                var leave = _unitOfWork.Context.EmployeeLeave.Where(e => e.EmployeeId == empId.EmployeeId && String.IsNullOrEmpty(e.LeaveStatus)).FirstOrDefault();
+                                var leave = _unitOfWork.Context.Employee
+                                  .Join(_unitOfWork.Context.EmployeeLeave,
+                                   emp => emp.EmployeeId,
+                                   lev => lev.EmployeeId,
+                                   (emp, lev) => new { Emp = emp, Leave = lev })
+                                  .Where(x => x.Emp.EmployeeId == empId.EmployeeId && String.IsNullOrEmpty(x.Leave.LeaveStatus))
+                                  .Select(x => new LeaveApproval
+                                  {
+                                      EmployeeId = x.Emp.EmployeeId,
+                                      EmployeeName = x.Emp.EmployeeFirstname.Trim() + " " + x.Emp.EmployeeLastname.Trim(),
+                                      Email = x.Emp.Email.Trim(),
+                                      Department = _unitOfWork.Context.Department.Where(y => y.DepartmentId == x.Emp.DepartmentId).Select(x => x.DepartmentName).FirstOrDefault(),
+                                      Extension = x.Emp.Extension,
+                                      Role = _unitOfWork.Context.Role.Where(y => y.RoleId == x.Emp.RoleId).Select(x => x.RoleType).FirstOrDefault(),
+                                      EmployeeImage = x.Emp.EmployeeImage,
+                                      ProjectName = item.ProjectName,
+                                      Id = x.Leave.EmployeeLeaveId,
+                                      LeaveType = _unitOfWork.Context.Leave.Where(j => j.LeaveTypeId == x.Leave.LeaveTypeId).FirstOrDefault().LeaveType,
+                                      TotalLeaveDays = x.Leave.LeaveDays,
+                                      LeaveStartDate = x.Leave.LeaveStart,
+                                      LeaveEndDate = x.Leave.LeaveEnds,
+                                  }).FirstOrDefault();
+                               //= _unitOfWork.Context.EmployeeLeave.Where(e => e.EmployeeId == empId.EmployeeId && String.IsNullOrEmpty(e.LeaveStatus)).FirstOrDefault();
                                 if (leave != null)
                                 {
-                                    LeaveApproval leaveApproval = new LeaveApproval
-                                    {
-                                        ProjectName = item.ProjectName,
-                                        TotalLeaveDays = leave.LeaveDays,
-                                        LeaveStartDate = leave.LeaveStart,
-                                        LeaveEndDate = leave.LeaveEnds,
-                                        Id = empId.EmployeeId
-                                    };
-
-                                    leaveApprovals.Add(leaveApproval);
+                                    leaveApprovals.Add(leave);
                                 }
 
                             }
@@ -92,28 +107,39 @@ namespace TeamSavvy.Api.Services.Services
                 {
                     foreach (var item in projs)
                     {
-                       
                         var empIds = _unitOfWork.Context.EmployeeProject.Where(p => p.ProjectId == item.ProjectId).ToList();
 
                         if (empIds != null)
                         {
                             foreach (var empId in empIds)
                             {
-                                var leave = _unitOfWork.Context.EmployeeLeave.Where(e => e.EmployeeId == empId.EmployeeId && String.IsNullOrEmpty(e.LeaveStatus)).FirstOrDefault();
-                                if(leave != null)
+                                var leave = _unitOfWork.Context.Employee
+                                  .Join(_unitOfWork.Context.EmployeeLeave,
+                                   emp => emp.EmployeeId,
+                                   lev => lev.EmployeeId,
+                                   (emp, lev) => new { Emp = emp, Leave = lev })
+                                  .Where(x => x.Emp.EmployeeId == empId.EmployeeId && String.IsNullOrEmpty(x.Leave.LeaveStatus))
+                                  .Select(x => new LeaveApproval
+                                  {
+                                      EmployeeId = x.Emp.EmployeeId,
+                                      EmployeeName = x.Emp.EmployeeFirstname.Trim() + " " + x.Emp.EmployeeLastname.Trim(),
+                                      Email = x.Emp.Email.Trim(),
+                                      Department = _unitOfWork.Context.Department.Where(y => y.DepartmentId == x.Emp.DepartmentId).Select(x => x.DepartmentName).FirstOrDefault(),
+                                      Extension = x.Emp.Extension,
+                                      Role = _unitOfWork.Context.Role.Where(y => y.RoleId == x.Emp.RoleId).Select(x => x.RoleType).FirstOrDefault(),
+                                      EmployeeImage = x.Emp.EmployeeImage,
+                                      ProjectName = item.ProjectName,
+                                      Id = x.Leave.EmployeeLeaveId,
+                                      LeaveType = _unitOfWork.Context.Leave.Where(j => j.LeaveTypeId == x.Leave.LeaveTypeId).FirstOrDefault().LeaveType,
+                                      TotalLeaveDays = x.Leave.LeaveDays,
+                                      LeaveStartDate = x.Leave.LeaveStart,
+                                      LeaveEndDate = x.Leave.LeaveEnds,
+                                  }).FirstOrDefault();
+                                //= _unitOfWork.Context.EmployeeLeave.Where(e => e.EmployeeId == empId.EmployeeId && String.IsNullOrEmpty(e.LeaveStatus)).FirstOrDefault();
+                                if (leave != null)
                                 {
-                                    LeaveApproval leaveApproval = new LeaveApproval
-                                    {
-                                        ProjectName = item.ProjectName,
-                                        TotalLeaveDays = leave.LeaveDays,
-                                        LeaveStartDate = leave.LeaveStart,
-                                        LeaveEndDate = leave.LeaveEnds,
-                                        Id = empId.EmployeeId
-                                    };
-
-                                    leaveApprovals.Add(leaveApproval);
+                                    leaveApprovals.Add(leave);
                                 }
-                                
 
                             }
                         }
