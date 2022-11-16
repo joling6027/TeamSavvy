@@ -63,7 +63,7 @@ function App() {
             <Route path='/payroll/:payrollid' element={<Paystub />} />
             <Route path="/jobs/jobApplied" element={<JobAppliedEmployees/>} />
             <Route path="/dashboard/projects" element={<ProjectList/>} />
-            <Route path="/dashboard/projects/projectdetails" element={<ProjectDetails />} />
+            <Route path="/dashboard/projects/projectdetails/:id" element={<ProjectDetails />} />
           </Routes>
         </main>
       </div>
