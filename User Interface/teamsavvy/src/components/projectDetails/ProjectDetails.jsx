@@ -1,14 +1,29 @@
 import React, { Component, useState } from 'react';
-import {Link} from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import {Container, Form, FormGroup, Label, Input, FormFeedback, FormText, Row, Col, Modal,  ModalHeader, Button, ModalBody } from 'reactstrap';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import './projectDetails.css';
 import UpdateOutlinedIcon from '@mui/icons-material/UpdateOutlined';
+import { Http } from '@mui/icons-material';
 
 
 const ProjectDetails = () => {
+    const params = useParams();
+    console.log(params)
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
+
+    const getProject = () => {
+        
+    }
+
+
+
+
+
+
+
+
     return ( 
         <>
         <Container className="px-3">
