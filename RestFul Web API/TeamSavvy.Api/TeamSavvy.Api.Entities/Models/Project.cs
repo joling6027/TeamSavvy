@@ -17,8 +17,8 @@ namespace TeamSavvy.Api.Entities.Models
 
         public int ProjectId { get; set; }
         public string ProjectName { get; set; }
-        public DateTime ProjectStartDate { get; set; }
-        public DateTime? ProjectEndDate { get; set; }
+        public string ProjectStartDate { get; set; }
+        public string ProjectEndDate { get; set; }
         public string ProjectBudget { get; set; }
         public string ProjectDesc { get; set; }
         public int? TotalTaskCount { get; set; }

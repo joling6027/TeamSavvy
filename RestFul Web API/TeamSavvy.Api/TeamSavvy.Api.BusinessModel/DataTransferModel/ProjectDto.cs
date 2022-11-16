@@ -6,12 +6,11 @@ namespace TeamSavvy.Api.BusinessModel.DataTransferModel
 {
     public class ProjectDto
     {
+
         public int ProjectId { get; set; }
-        public int EmployeeId { get; set; }
-        public int EmployeeProjectId { get; set; }
         public string ProjectName { get; set; }
-        public DateTime ProjectStartDate { get; set; }
-        public DateTime? ProjectEndDate { get; set; }
+        public string ProjectStartDate { get; set; }
+        public string ProjectEndDate { get; set; }
         public string ProjectBudget { get; set; }
         public string ProjectDesc { get; set; }
         public int? TotalTaskCount { get; set; }
@@ -21,7 +20,6 @@ namespace TeamSavvy.Api.BusinessModel.DataTransferModel
         public string ProjectClient { get; set; }
         public string ProjectLead { get; set; }
         public int? ProjectTotalEmployees { get; set; }
-        public bool EmployeeProjectStatus { get; set; }
 
     }
 }

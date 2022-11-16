@@ -553,7 +553,8 @@ namespace TeamSavvy.Api.Entities.Context
 
                 entity.Property(e => e.ProjectEndDate)
                     .HasColumnName("PROJECT_END_DATE")
-                    .HasColumnType("date");
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.ProjectLead)
                     .HasColumnName("PROJECT_LEAD")
@@ -572,8 +573,10 @@ namespace TeamSavvy.Api.Entities.Context
                     .IsUnicode(false);
 
                 entity.Property(e => e.ProjectStartDate)
+                    .IsRequired()
                     .HasColumnName("PROJECT_START_DATE")
-                    .HasColumnType("date");
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.ProjectTotalEmployees).HasColumnName("PROJECT_TOTAL_EMPLOYEES");
 

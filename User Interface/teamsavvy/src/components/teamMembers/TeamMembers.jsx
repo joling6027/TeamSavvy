@@ -290,7 +290,7 @@ const TeamMembers = () => {
                             columns={ user.role === "Manager" ? columns_Manager : columns_HR}  
                             pageSize={8} 
                             rowsPerPageOptions={[8]}
-                            SelectionOnClick
+                            // SelectionOnClick
                             onRowClick={e => console.log(e)}
                         />
                     </div>
