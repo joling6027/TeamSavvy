@@ -74,9 +74,9 @@ namespace TeamSavvy.Api.Services.Services
                      .Where(x => x.Employee.EmployeeId == employeeId && x.Employee.Password == password)
                      .Select(x => new LoginDto
                      {
-                         Role = x.Roles.RoleType,
-                         FirstName = x.Employee.EmployeeFirstname,
-                         LastName = x.Employee.EmployeeLastname,
+                         Role = x.Roles.RoleType.Trim(),
+                         FirstName = x.Employee.EmployeeFirstname.Trim(),
+                         LastName = x.Employee.EmployeeLastname.Trim(),
                          EmployeeId = x.Employee.EmployeeId,
                      }).FirstOrDefault();
 
