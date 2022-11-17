@@ -5,7 +5,7 @@ const enpoints = {
   dropdownSkills:'Dropdowns/skills',
   payrollList: 'Payroll/list/employeeId',
   paystub: 'Payroll/payrollId',
-  employeeTask: 'EmployeeTask/employeeId',
+  employeeTask: 'EmployeeTask',
   updateTask: 'EmployeeTask/updateTask',
   internalJob: 'Job',
   teams:'Teams',

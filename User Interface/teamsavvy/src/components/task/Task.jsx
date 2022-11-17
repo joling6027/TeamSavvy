@@ -18,7 +18,7 @@ const Task = () => {
     const [taskItem, setTaskItem] = useState();
 
     useEffect(() => {
-        http.get(GetEndPoints().employeeTask + "/" + user.employeeId).then((res) => {
+        http.get(GetEndPoints().employeeTask + "/employeeId/" + user.employeeId).then((res) => {
             console.log(res.data.response)
             setTasks(res.data.response);
 

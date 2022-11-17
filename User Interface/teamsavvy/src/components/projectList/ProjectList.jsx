@@ -38,7 +38,7 @@ const ProjectList = () => {
         {
             field: "details",
             headerName: "Details",
-            renderCell: (params) => <Link to={`/dashboard/projects/projectdetails/${params.row.id}`}>View</Link>,
+            renderCell: (params) => <Link to={`/dashboard/projects/${params.row.id}`}>View</Link>,
         },
     ];
 
@@ -90,6 +90,8 @@ const ProjectList = () => {
                     objs = [...res.data.response];
                 }else{
                     objs = [...res.data.response].filter((project) => project.projectManagerName.trim().toLowerCase() === userName.trim().toLowerCase());
+                    console.log(res.data.response[0].projectManagerName);
+                    console.log(userName)
                 }
 
                 let structuredProjects = [];
