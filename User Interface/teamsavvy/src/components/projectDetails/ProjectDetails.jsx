@@ -221,6 +221,8 @@ const ProjectDetails = () => {
         e.preventDefault();
         // console.log(startDate)
 
+        const dateStartDate = Date.parse(startDate);
+        const dateEndDate = Date.parse(endDate);
 
         if (title === undefined || title.trim() === ""){
             setTitleValidate(true)
@@ -235,6 +237,10 @@ const ProjectDetails = () => {
             setStartDateValidate(true)
             return;
         } else if (endDate === undefined || endDate === ""){
+            setEndDateValidate(true)
+            return;
+        } else if (dateStartDate > dateEndDate){
+            setStartDateValidate(true)
             setEndDateValidate(true)
             return;
         }
@@ -300,21 +306,25 @@ const ProjectDetails = () => {
      }
     const mStartDateChangeHandler = (e) => { 
         const dateStartDate = Date.parse(e.target.value);
-        if (dateStartDate > Date.parse(today)) {
-            setModifiedStartDateValidate(false);
-            setMStartDate(e.target.value)
-        } else {
-            setModifiedStartDateValidate(true);
-        } 
+        setMStartDate(e.target.value)
+        setModifiedStartDateValidate(false)
+        // if (dateStartDate > Date.parse(today)) {
+        //     setModifiedStartDateValidate(false);
+        //     setMStartDate(e.target.value)
+        // } else {
+        //     setModifiedStartDateValidate(true);
+        // } 
     }
     const mEndDateChangeHandler = (e) => {
         const dateStartDate = Date.parse(e.target.value);
-        if (dateStartDate > Date.parse(today)) {
-            sestModifiedEndDateValidate(false);
-            setMEndDate(e.target.value)
-        } else {
-            sestModifiedEndDateValidate(true);
-        }   
+        setMEndDate(e.target.value)
+        sestModifiedEndDateValidate(false)
+        // if (dateStartDate > Date.parse(today)) {
+        //     sestModifiedEndDateValidate(false);
+        //     setMEndDate(e.target.value)
+        // } else {
+        //     sestModifiedEndDateValidate(true);
+        // }   
     }
 
     // post modified task
@@ -329,27 +339,53 @@ const ProjectDetails = () => {
         e.preventDefault();
 
         // console.log(mAssignedBy)
-        const modifyTaskData = {
-            taskId: +mTaskId,
-            employeeId: +mAssignedEmpId,
-            projectId: +params.id,
-            taskName: mTitle,
-            taskDesc: mDesc,
-            taskStartDate: mStartDate,
-            taskEndDate: mEndDate,
-            taskTotalHours: mHours,
-            assignedBy: user.firstName,
-            assignedTo: mAssignedEmp,
-            assignedDate: mAssignedDate,
-            taskStatus: mStatus,
+        const dateStartDate = Date.parse(mStartDate);
+        const dateEndDate = Date.parse(mEndDate);
+
+        if (mTitle === undefined || mTitle.trim() === "") {
+            setTitleValidate(true)
+            return;
+        } else if (mDesc === undefined || mDesc.trim() === "") {
+            setDescValidate(true)
+            return;
+        } else if (mHours === undefined || mHours === "") {
+            setHoursValidate(true)
+            return;
+        } else if (mStartDate === undefined || mStartDate === "") {
+            setStartDateValidate(true)
+            return;
+        } else if (mEndDate === undefined || mEndDate === "") {
+            setEndDateValidate(true)
+            return;
+        } else if (dateStartDate > dateEndDate) {
+            setModifiedStartDateValidate(true)
+            sestModifiedEndDateValidate(true)
+            return;
         }
-        console.log(modifyTaskData)
-        postModifiedTask(modifyTaskData)
-        setTasks([
-            ...tasks,
-            modifyTaskData
-        ]);
-        setModifyModal(!modifyModal);
+        else {
+
+            const modifyTaskData = {
+                taskId: +mTaskId,
+                employeeId: +mAssignedEmpId,
+                projectId: +params.id,
+                taskName: mTitle,
+                taskDesc: mDesc,
+                taskStartDate: mStartDate,
+                taskEndDate: mEndDate,
+                taskTotalHours: mHours,
+                assignedBy: user.firstName,
+                assignedTo: mAssignedEmp,
+                assignedDate: mAssignedDate,
+                taskStatus: mStatus,
+            }
+            console.log(modifyTaskData)
+            postModifiedTask(modifyTaskData)
+            setTasks([
+                ...tasks,
+                modifyTaskData
+            ]);
+            setModifyModal(!modifyModal);
+        }
 
     }
 
@@ -412,6 +448,8 @@ const ProjectDetails = () => {
                                     <li class="list-group-item border-end-0 border-bottom-0 border-start-0 rounded-0 px-0 py-3 border-top" key={Math.random()}>
                                         <h6>{task.taskName}</h6>
                                         <p className="text-muted">{task.taskDesc}</p>
+                                        <p className="text-muted">Start Date: {task.taskStartDate}</p>
+                                        <p className="text-muted">End Date: {task.taskEndDate}</p>
                                         <p className="text-muted">Assigned to <strong>{task.assignedTo}</strong></p>
                                         <Link to="" onClick={() => mtoggle(task)} className="alert-link text-uppercase text-decoration-none linkStyle">Modify Task</Link>
                                     </li>
@@ -441,7 +479,10 @@ const ProjectDetails = () => {
                             <ul class="list-group p-3">
                                 {tasks && tasks.filter((task => task.taskStatus === "In Progress")).map((task) => (<li class="list-group-item border-end-0 border-bottom-0 border-start-0 rounded-0 px-0 py-3 border-top">
                                     <h6>{task.taskName}</h6>
+                                    {/* <p><strong>Task Description</strong></p> */}
                                     <p className="text-muted">{task.taskDesc}</p>
+                                    <p className="text-muted">Start Date: {task.taskStartDate}</p>
+                                    <p className="text-muted">End Date: {task.taskEndDate}</p>
                                     <p className="text-muted">Assigned to <strong>{task.assignedTo}</strong></p>
                                     <p className="text-muted"><UpdateOutlinedIcon /> Hours <strong>{task.taskTotalHours}</strong></p>
                                 </li>))}
@@ -501,6 +542,7 @@ const ProjectDetails = () => {
                                         
 
                                     />
+                                    <FormFeedback invalid>Title cannot be blank</FormFeedback>
                                 </FormGroup>
                                 <FormGroup>
                                     <Label className="mt-2 mb-1" for="description">
@@ -515,6 +557,7 @@ const ProjectDetails = () => {
                                         invalid={descValidate}
 
                                     />
+                                    <FormFeedback invalid>Description cannot be blank</FormFeedback>
                                 </FormGroup>
                                 <Row>
                                     <Col md={6}>
@@ -531,6 +574,7 @@ const ProjectDetails = () => {
                                                 valid={hours? true: false}
                                                 invalid={hoursValidate}
                                             />
+                                            <FormFeedback invalid>Estimated hours cannot be blank</FormFeedback>
                                         </FormGroup>
                                     </Col>
                                     <Col md={6}>
@@ -568,6 +612,7 @@ const ProjectDetails = () => {
                                                 valid={startDate? true: false}
                                                 invalid={startDateValidate}
                                             />
+                                            <FormFeedback invalid>Start date cannot be blank or before today</FormFeedback>
                                         </FormGroup>
                                     </Col>
                                     <Col md={6}>
@@ -583,6 +628,7 @@ const ProjectDetails = () => {
                                                 valid={endDate? true: false}
                                                 invalid={endDateValidate}
                                             />
+                                            <FormFeedback invalid>End date cannot be blank, before today or before start date</FormFeedback>
                                         </FormGroup>
                                     </Col>
                                 </Row>
@@ -641,13 +687,13 @@ const ProjectDetails = () => {
                                                 <Label for="task-start-date">Start Date</Label>
                                                 <Input type='date' name='task-start-date' id='task-start-date'
                                                     onChange={mStartDateChangeHandler} valid={mStartDate ? true : false} invalid={modifiedStartDateValidate} defaultValue={mStartDate}/>
-                                                <FormFeedback invalid>The start date cannnot be blank</FormFeedback>
+                                                <FormFeedback invalid>Start date cannot later than end date</FormFeedback>
                                             </Col>
                                             <Col>
                                                 <Label for="task-end-date">End Date</Label>
                                                 <Input type='date' name='task-end-date' id='task-end-date'
                                                     onChange={mEndDateChangeHandler} valid={mEndDate ? true : false} invalid={modifiedEndDateValidate} defaultValue={mEndDate}/>
-                                                <FormFeedback invalid>The start date cannnot be blank</FormFeedback>
+                                                <FormFeedback invalid>End date cannot before start date</FormFeedback>
                                             </Col>
                                         </Row>
                                     </Container>
