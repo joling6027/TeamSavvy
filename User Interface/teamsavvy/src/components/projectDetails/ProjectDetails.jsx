@@ -451,7 +451,7 @@ const ProjectDetails = () => {
                                         <p className="text-muted">Start Date: {task.taskStartDate}</p>
                                         <p className="text-muted">End Date: {task.taskEndDate}</p>
                                         <p className="text-muted">Assigned to <strong>{task.assignedTo}</strong></p>
-                                        <Link to="" onClick={() => mtoggle(task)} className="alert-link text-uppercase text-decoration-none linkStyle">Modify Task</Link>
+                                        {(user.firstName === project.projectManagerName) ? (<Link to="" onClick={() => mtoggle(task)} className="alert-link text-uppercase text-decoration-none linkStyle">Modify Task</Link>): ""}
                                     </li>
                                 ))}
                                 {/* <li class="list-group-item border-end-0 border-bottom-0 border-start-0 rounded-0 px-0 py-3 border-top">
