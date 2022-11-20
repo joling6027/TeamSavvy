@@ -304,8 +304,8 @@ const InternalJobs = () => {
                 jobSkills: skills
             }
 
-            console.log("new job -");
-            console.log(newJob);
+            // console.log("new job -");
+            // console.log(newJob);
 
             http.post(GetEndPoints().internalJob + "/addJob", { ...newJob })
                 .then((res) => {
@@ -472,7 +472,7 @@ const InternalJobs = () => {
                                             (<>
                                                 <CardTitle className='job-card-title'>
                                                     {(user.role === 'HR' || user.role === 'Admin' ? 
-                                                        (<><Link className='createAndApply-btn' color="link" to={"/jobs/jobApplied"} state={{ jobId:jobItem.jobId }}>Applied</Link>
+                                                        (<><Link className='createAndApply-btn' color="link" to={`/jobs/jobApplied/${jobItem.jobId}`} state={{ jobId:jobItem.jobId }}>Applied</Link>
                                                             <Button type='button' className='createAndApply-btn' color="link" onClick={toggleApplyJob}>Apply Now</Button></>) : (<Button type='button' className='createAndApply-btn' color="link" onClick={toggleApplyJob}>Apply Now</Button>))}
                                                     {jobItem.jobPosition}
                                                     <Modal isOpen={show} toggle={toggleApplyJob} backdrop="static" centered>

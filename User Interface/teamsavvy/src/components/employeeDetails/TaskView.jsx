@@ -17,7 +17,7 @@ const TaskView = () => {
     const [taskItem, setTaskItem] = useState();
 
     const GetTasks = () =>{
-        http.get(GetEndPoints().employeeTask + "/" + params.id)
+        http.get(GetEndPoints().employeeTask + "/employeeId/" + params.id)
         .then((res) => {
             console.log(res.data.response)
             setTasks(res.data.response);

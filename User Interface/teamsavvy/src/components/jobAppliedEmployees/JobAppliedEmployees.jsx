@@ -71,7 +71,8 @@ const JobAppliedEmployees = () => {
              editable:true},
         { field: 'dept', headerName: 'Department',width:200},
         { field: 'position', headerName: 'Position', width:200},
-        { field: 'details', headerName: 'Details', width:200, renderCell: (params) => <Link to={params.row.id}>View</Link> }
+        {
+            field: 'details', headerName: 'Details', width: 200, renderCell: (params) => <Link to={`/dashboard/teammembers/employeedetails/${params.row.id}`}>View</Link> }
       ];
 
     // const populateApplicants = (...applicants) => {
