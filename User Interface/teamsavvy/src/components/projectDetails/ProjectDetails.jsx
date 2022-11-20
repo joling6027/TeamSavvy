@@ -14,7 +14,8 @@ const ProjectDetails = () => {
 
     const [project, setProject] = useState();
     const [tasks, setTasks] = useState();
-    const [teamMembers, setTeamMembers] = useState([]);
+    const [completedTasks, setCompletedTasks] = useState();
+    const [teamMembers, setTeamMembers] = useState();
 
     const { user, http } = AuthService();
     //create modal
@@ -126,11 +127,12 @@ const ProjectDetails = () => {
 
     //get emp
     const getProjectEmp = () => {
-        http.get(GetEndPoints().getTeamMembers + "/" + params.id)
+        http.get(GetEndPoints().getTeamMembers + "/" + user.employeeId)
             .then((res) => {
                 if (res.data.success) {
                     console.log(res.data.response);
-                    let obj = [...res.data.response].filter((proj) => proj.projectId == params.id)
+                    let obj = [...res.data.response].filter((proj) => proj.projectId == user.employeeId)
+                    console.log(obj)
                     console.log(obj[0].employeeList)
                     setTeamMembers(obj[0].employeeList)
                 }
@@ -140,12 +142,14 @@ const ProjectDetails = () => {
     //get tasks
     const getTasks = () => {
         // console.log(params.id)
-        http.get(GetEndPoints().employeeTask)
+        http.get(GetEndPoints().employeeTask + "/tasklist/" + user.employeeId)
             .then((res) => {
                 console.log(res.data.response)
                 let tasksById = [...res.data.response].filter((task) => task.projectId == params.id);
 
                 setTasks(tasksById)
+                let completedTasks = [...tasksById].filter((task) => task.taskStatus === "Completed");
+                setCompletedTasks(completedTasks)
             }).catch((err) => {
                 console.log(err.message);
             })
@@ -217,6 +221,16 @@ const ProjectDetails = () => {
         }).catch((err) => console.log(err.message))
     }
 
+    const updateProject = (updatedProject) => {
+        http.put(GetEndPoints().projects + "/updateProject", { ...updatedProject })
+        .then((res) => {
+            if(res.data.success){
+                console.log("Project update successfully.");
+            }
+
+        }).catch((err) => console.log(err.message))
+    }
+
     const createTaskSubmitHandler = (e) => {
         e.preventDefault();
         // console.log(startDate)
@@ -265,8 +279,17 @@ const ProjectDetails = () => {
                 taskData
             ]);
 
-            console.log(taskData);
+            //count total tasks
+            console.log(tasks.length);
+            const completedTask = [...tasks].filter((task) => task.taskStatus === 'Completed');
+
+
+            console.log(completedTask);
             postCreatedTask(taskData);
+
+            //update project
+            // updateProject(project);
+
             toggle();
 
         }
@@ -379,11 +402,12 @@ const ProjectDetails = () => {
                 taskStatus: mStatus,
             }
             console.log(modifyTaskData)
-            postModifiedTask(modifyTaskData)
             setTasks([
-                ...tasks,
+                ...tasks.filter((givenTask) => givenTask.taskId !== modifyTaskData.taskId),
                 modifyTaskData
-            ]);
+            ].sort((a, b) => (a.taskId > b.taskId) ? 1 : -1));
+            postModifiedTask(modifyTaskData)
+            
             setModifyModal(!modifyModal);
         }
 
@@ -411,7 +435,7 @@ const ProjectDetails = () => {
     }, [])
 
 
-    if (project === undefined || tasks === undefined) {
+    if (project === undefined || tasks === undefined || teamMembers === undefined) {
         return (<div class="d-flex justify-content-center">
             <div class="spinner-grow text-success" style={{ width: "3rem", height: "3rem" }} role="status">
                 <span class="sr-only">No project detail</span>
@@ -426,15 +450,15 @@ const ProjectDetails = () => {
                     <div className=" d-flex justify-content-between">
                         <Col className="py-2 px-3 yellow-bg rounded d-flex align-items-center m-2">
                             <h5 className="text-white flex-grow-1">Tasks</h5>
-                            <h2 className="text-white fw-bold">{project.totalTaskCount}</h2>
+                            <h2 className="text-white fw-bold">{tasks.length}</h2>
                         </Col>
                         <Col className="py-2 px-3 orange-bg rounded d-flex align-items-center m-2">
                             <h5 className="text-white flex-grow-1">In-Progress</h5>
-                            <h2 className="text-white fw-bold">{(project.totalTaskCount) - (project.totalCompletedCount)}</h2>
+                            <h2 className="text-white fw-bold">{(tasks.length) - (completedTasks.length)}</h2>
                         </Col>
                         <Col className="py-2 px-3 green-bg rounded d-flex align-items-center m-2">
                             <h5 className="text-white flex-grow-1">Completed</h5>
-                            <h2 className="text-white fw-bold">{project.totalCompletedCount}</h2>
+                            <h2 className="text-white fw-bold">{completedTasks.length}</h2>
                         </Col>
                     </div>
                     <div className="d-flex mt-1">
@@ -477,7 +501,7 @@ const ProjectDetails = () => {
                         <Col className="rounded m-2 prCard">
                             <h5 className="d-inline-block p-3">In-Progress</h5>
                             <ul class="list-group p-3">
-                                {tasks && tasks.filter((task => task.taskStatus === "In Progress")).map((task) => (<li class="list-group-item border-end-0 border-bottom-0 border-start-0 rounded-0 px-0 py-3 border-top">
+                                {tasks && tasks.filter((task => task.taskStatus === "In-Progress")).map((task) => (<li class="list-group-item border-end-0 border-bottom-0 border-start-0 rounded-0 px-0 py-3 border-top">
                                     <h6>{task.taskName}</h6>
                                     {/* <p><strong>Task Description</strong></p> */}
                                     <p className="text-muted">{task.taskDesc}</p>
