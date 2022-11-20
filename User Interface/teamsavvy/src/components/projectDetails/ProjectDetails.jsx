@@ -135,7 +135,7 @@ const ProjectDetails = () => {
             .then((res) => {
                 if (res.data.success) {
                     console.log(res.data.response);
-                    let obj = [...res.data.response].filter((proj) => proj.projectId == user.employeeId)
+                    let obj = [...res.data.response].filter((proj) => proj.projectId == params.id)
                     console.log(obj)
                     console.log(obj[0].employeeList)
                     setTeamMembers(obj[0].employeeList)
