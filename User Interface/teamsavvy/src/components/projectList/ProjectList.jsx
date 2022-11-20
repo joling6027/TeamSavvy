@@ -44,16 +44,24 @@ const ProjectList = () => {
         },
         { field: "tasks", headerName: "Tasks" },
         { field: "team", headerName: "Team members" },
+        { field: "projectManagerName", headerName: "Manager Name" },
+        { field: "projectManagerId", headerName: "Manager ID"},
         { field: "budget", headerName: "Budget" },
         { field: "description", headerName: "Descritpion", width: 300 },
         {
             field: "details",
             headerName: "Details",
             renderCell: (params) => (
-                <Link to={`/dashboard/projects/${params.row.id}`}>View</Link>
+                <Link to={`/dashboard/projects/${params.row.id}`} state={params.row.projectManagerId }>View</Link>
             ),
         },
     ];
+
+    //currency formatter
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+    })
 
     //create project modal
     const [modal, setModal] = useState(false);
@@ -82,6 +90,7 @@ const ProjectList = () => {
     const userID = user.employeeId;
     const userName = user.firstName;
     const [projects, setProjects] = useState();
+    const [ projectManagerIdList, setProjectManagerIdList] = useState();
 
     //create project vars
     const [projectTitle, setProjectTitle] = useState();
@@ -105,7 +114,7 @@ const ProjectList = () => {
     const [projectClientNameValidate, setProjectClientNameValidate] =
         useState(false);
 
-    const getProject = () => {
+    const getProjects = () => {
         http
             .get(GetEndPoints().projects)
             .then((res) => {
@@ -147,9 +156,11 @@ const ProjectList = () => {
                     structuredProjects.push({
                         id: objs[i].projectId,
                         projectname: objs[i].projectName,
+                        projectManagerName: objs[i].projectManagerName,
+                        projectManagerId: objs[i].projectManagerId,
                         tasks: objs[i].totalTaskCount,
                         team: objs[i].projectTotalEmployees,
-                        budget: objs[i].projectBudget,
+                        budget: formatter.format(objs[i].projectBudget),
                         description: objs[i].projectDesc,
                         details: `<a href="javaScript.void(0);"> View</a>`,
                     });
@@ -158,12 +169,18 @@ const ProjectList = () => {
                 setProjects(structuredProjects);
                 console.log(structuredProjects);
                 console.log(objs);
+                let managerIdList = [];
+                for(let i = 0; i < objs.length; i++){
+                    managerIdList.push(objs[i].projectManagerId);
+                }
+                console.log(managerIdList);
+                setProjectManagerIdList(managerIdList);
             })
             .catch((err) => console.log(err.message));
     };
 
     useEffect(() => {
-        getProject();
+        getProjects();
     }, []);
 
     // modal data handling
@@ -306,7 +323,7 @@ const ProjectList = () => {
         }
     };
 
-    if (projects === undefined) {
+    if (projects === undefined || projectManagerIdList === undefined) {
         return (
             <div class="d-flex justify-content-center">
                 <div
@@ -341,6 +358,14 @@ const ProjectList = () => {
                     <CardBody style={{ display: "flex", height: "100%" }}>
                         <div style={{ flexGrow: 1 }}>
                             <DataGrid
+                                // initialState={{
+                                //     columns:{
+                                //         columnVisibilityModel: {
+                                //             projectManagerId: false,
+                                //         }
+                                //     }
+                                // }}
+                                columnVisibilityModel={{projectManagerId: false}}
                                 rows={projects}
                                 columns={columns}
                                 pageSize={8}
@@ -491,7 +516,7 @@ const ProjectList = () => {
                                     </Button>
                                     <Button color="primary" onClick={(e) => {
                                         createProjectsubmitHandler(e);
-                                        getProject();
+                                        getProjects();
                                     }}>
                                         Create Project
                                     </Button>{" "}

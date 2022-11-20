@@ -22,17 +22,17 @@ const Payroll = () => {
     // const [employeeId, setEmployeeId] = useState();
     const { http, user } = AuthService();
 
-    const columns = [
-        { field: 'id', headerName: 'Pay Date', width: 200 },
-        {
-            field: 'empname', headerName: 'Pay Type',
-            width: 200,
-        },
-        { field: 'email', headerName: 'Total Hours', width: 200 },
-        { field: 'dept', headerName: 'Earnings', width: 200 },
-        { field: 'position', headerName: 'Net Pay', width: 200 },
-        { field: 'details', headerName: 'File', width: 200, renderCell: (params) => <Link to="${params.row.id}">View</Link> },
-    ];
+    // const columns = [
+    //     { field: 'id', headerName: 'Pay Date', width: 200 },
+    //     {
+    //         field: 'empname', headerName: 'Pay Type',
+    //         width: 200,
+    //     },
+    //     { field: 'email', headerName: 'Total Hours', width: 200 },
+    //     { field: 'dept', headerName: 'Earnings', width: 200 },
+    //     { field: 'position', headerName: 'Net Pay', width: 200 },
+    //     { field: 'details', headerName: 'File', width: 200, renderCell: (params) => <Link to="${params.row.id}">View</Link> },
+    // ];
 
 
     useEffect(() => {

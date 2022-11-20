@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useLocation } from 'react-router-dom';
 import { Container, Form, FormGroup, Label, Input, FormFeedback, FormText, Row, Col, Modal, ModalHeader, Button, ModalBody } from 'reactstrap';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import './projectDetails.css';
@@ -10,7 +10,10 @@ import { GetEndPoints } from '../utilities/EndPoints';
 
 const ProjectDetails = () => {
     const params = useParams();
+    const data = useLocation();
     // console.log(params.id)
+    // console.log(data.state);
+    const managerId = data.state;
 
     const [project, setProject] = useState();
     const [tasks, setTasks] = useState();
@@ -121,11 +124,12 @@ const ProjectDetails = () => {
             if(res.data.success){
                 console.log(res.data.response);
                 setProject(res.data.response)
+                // console.log(project)
             }
         }).catch((err) => console.log(err.message))
     }
 
-    //get emp
+    //get emp (only for project manager)
     const getProjectEmp = () => {
         http.get(GetEndPoints().getTeamMembers + "/" + user.employeeId)
             .then((res) => {
@@ -140,16 +144,17 @@ const ProjectDetails = () => {
     }
 
     //get tasks
-    const getTasks = () => {
-        // console.log(params.id)
-        http.get(GetEndPoints().employeeTask + "/tasklist/" + user.employeeId)
+    const getTasks = (project) => {
+        console.log(project)
+        http.get(GetEndPoints().employeeTask + "/tasklist/" + managerId)
             .then((res) => {
                 console.log(res.data.response)
                 let tasksById = [...res.data.response].filter((task) => task.projectId == params.id);
-
+                // console.log(tasksById)
                 setTasks(tasksById)
                 let completedTasks = [...tasksById].filter((task) => task.taskStatus === "Completed");
                 setCompletedTasks(completedTasks)
+                // console.log(completedTasks)
             }).catch((err) => {
                 console.log(err.message);
             })
@@ -429,19 +434,31 @@ const ProjectDetails = () => {
 
     useEffect(() => {
         getProject();
-        getProjectEmp();
+        if(user.role === 'Manager'){
+            getProjectEmp();
+        }
         getTasks();
 
     }, [])
 
 
-    if (project === undefined || tasks === undefined || teamMembers === undefined) {
+    if (project === undefined || tasks === undefined) {
         return (<div class="d-flex justify-content-center">
             <div class="spinner-grow text-success" style={{ width: "3rem", height: "3rem" }} role="status">
                 <span class="sr-only">No project detail</span>
             </div>
         </div>);
-    } else {
+    }
+    else if(user.role === "Manager" && project.projectManagerId === user.employeeId && teamMembers === undefined){
+        console.log(user.role);
+        console.log(project.projectManagerId)
+        return (<div class="d-flex justify-content-center">
+            <div class="spinner-grow text-success" style={{ width: "3rem", height: "3rem" }} role="status">
+                <span class="sr-only">No project detail</span>
+            </div>
+        </div>);
+    }
+     else {
 
         return (
             <>
