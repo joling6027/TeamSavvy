@@ -149,26 +149,28 @@ const ProjectList = () => {
                     console.log(res.data.response[0].projectManagerName);
                     console.log(userName);
                 }
+                // objs = [...res.data.response].filter((project) => project.projectManagerName.trim().toLowerCase() === userName.trim().toLowerCase());
+
+                console.log(objs);
 
                 let structuredProjects = [];
                 // these are structured projects
                 for (let i = 0; i < objs.length; i++) {
                     structuredProjects.push({
-                        id: objs[i].projectId,
-                        projectname: objs[i].projectName,
-                        projectManagerName: objs[i].projectManagerName,
-                        projectManagerId: objs[i].projectManagerId,
-                        tasks: objs[i].totalTaskCount,
-                        team: objs[i].projectTotalEmployees,
-                        budget: formatter.format(objs[i].projectBudget),
-                        description: objs[i].projectDesc,
-                        details: `<a href="javaScript.void(0);"> View</a>`,
+                        "id": objs[i].projectId,
+                        "projectname": objs[i].projectName,
+                        "projectManagerName": objs[i].projectManagerName,
+                        "projectManagerId": objs[i].projectManagerId,
+                        "tasks": objs[i].totalTaskCount,
+                        "team": objs[i].projectTotalEmployees,
+                        "budget": formatter.format(objs[i].projectBudget),
+                        "description": objs[i].projectDesc,
+                        "details": `<a href="javaScript.void(0);"> View</a>`,
                     });
                 }
 
                 setProjects(structuredProjects);
                 console.log(structuredProjects);
-                console.log(objs);
                 let managerIdList = [];
                 for(let i = 0; i < objs.length; i++){
                     managerIdList.push(objs[i].projectManagerId);
@@ -181,6 +183,9 @@ const ProjectList = () => {
 
     useEffect(() => {
         getProjects();
+        if (projects){
+            console.log(projects)
+        }
     }, []);
 
     // modal data handling
@@ -253,9 +258,11 @@ const ProjectList = () => {
                 if (res.data.success) {
                     console.log(res.data.response);
                     console.log("post succeed");
+                    getProjects();
                 }
             })
             .catch((err) => console.log(err.message));
+            
     };
 
     const createProjectsubmitHandler = (e) => {
@@ -315,10 +322,8 @@ const ProjectList = () => {
             console.log(projectData);
 
             postCreateProject(projectData);
-            // setProjects([
-            //     ...projects,
-            //     projectData
-            // ]);
+            
+            
             toggle();
         }
     };
@@ -371,6 +376,7 @@ const ProjectList = () => {
                                 pageSize={8}
                                 rowsPerPageOptions={[8]}
                                 SelectionOnClick
+                                getRowId={(project) => project.id}
                                 onRowClick={(e) => console.log(e)}
                             />
                         </div>

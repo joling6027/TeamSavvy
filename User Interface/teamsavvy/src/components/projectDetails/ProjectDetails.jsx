@@ -199,7 +199,7 @@ const ProjectDetails = () => {
     const newStartDateChangeHandler = (e) => {
 
         const dateStartDate = Date.parse(e.target.value);
-        if (dateStartDate > Date.parse(today)){
+        if (dateStartDate >= Date.parse(today)){
             setStartDateValidate(false);
             setStartDate(e.target.value)
         }else{
@@ -209,7 +209,7 @@ const ProjectDetails = () => {
     const newEndDateChangeHandler = (e) => { 
 
         const dateEndDate = Date.parse(e.target.value);
-        if (dateEndDate > Date.parse(today)) {
+        if (dateEndDate >= Date.parse(today)) {
             setEndDateValidate(false);
             setEndDate(e.target.value)
         } else {
@@ -442,7 +442,7 @@ const ProjectDetails = () => {
     }, [])
 
 
-    if (project === undefined || tasks === undefined) {
+    if (!(project && tasks)) {
         return (<div class="d-flex justify-content-center">
             <div class="spinner-grow text-success" style={{ width: "3rem", height: "3rem" }} role="status">
                 <span class="sr-only">No project detail</span>
