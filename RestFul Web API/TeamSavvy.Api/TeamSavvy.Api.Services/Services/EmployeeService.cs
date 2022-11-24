@@ -90,6 +90,17 @@ namespace TeamSavvy.Api.Services.Services
                     if (emp.EmployeeId > 0 && skills.Any() && addr.AddressId > 0)
                     {
                         empId = emp.EmployeeId;
+                        if (employee.Role.RoleType == Access.Manager || employee.Role.RoleType == Access.HR || employee.Role.RoleType == Access.Admin)
+                        {
+                            _unitOfWork.Repository<Dashboard>().Insert(new Dashboard
+                            {
+                                EmployeeId = emp.EmployeeId,
+                                CreatedBy = emp.EmployeeFirstname.Trim() + " " + emp.EmployeeLastname.Trim(),
+                                IsDeleted = 0,
+                                CreatedOn = DateTime.Now.ToString("yyyy-MM-dd")
+                            });
+                            _unitOfWork.SaveChanges();
+                        }
                     }
                 }
             }

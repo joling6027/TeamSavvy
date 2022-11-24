@@ -9,8 +9,6 @@ import taskpic from '../../assets/img/tasks.png';
 import Chart from "chart.js/auto";
 import { Line , Bar, Pie} from "react-chartjs-2";
 import { DataGrid } from '@mui/x-data-grid';
-// import 'https://cdn.jsdelivr.net/npm/chart.js';
-import { tableItemsdashboard } from "./TableItemsteamDashboard";
 import AddIcon from '@mui/icons-material/Add';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import TimelineIcon from '@mui/icons-material/Timeline';
@@ -18,6 +16,11 @@ import PieChartIcon from '@mui/icons-material/PieChart';
 import './dashboard.css';
 import pic from "../../assets/img/Profilepic.png";
 import moment from "moment";
+import { ProjectQueries } from './projectDropdow';
+import { EmployeeQueries } from './employeeDropdown';
+import SweetAlert from "react-bootstrap-sweetalert";
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
 import {
     ArcElement,
     LineElement,
@@ -45,7 +48,8 @@ import {
     SubTitle
   
   } from 'chart.js';
-// import { createFalse } from 'typescript';
+
+
   Chart.register(
     ArcElement,
     LineElement,
@@ -74,6 +78,42 @@ import {
   );
 const Dashboard = () => {
 
+    const initialWidget = {
+        selection:"",
+        queries:""
+    }
+
+    const options = {
+        responsive: true,
+          plugins: {
+          legend: {
+            position: 'top',// lable position left/right/top/bottom
+            labels: {
+              boxWidth: 30, // lable box size
+            }
+          },
+        },
+        elements: {
+          point: {
+            radius: 1
+          }
+        },
+        scales: {
+          x: {
+            display: true,  // show/ hide x-axis
+            grid: {
+              display: false  // show/hide grid line in x-axis
+            },
+          },
+          y: {
+            display: true, // same as x-axis
+            grid: {
+              display: true
+            }
+          }
+        }
+    };
+
     const {http, user} = AuthService();
     const [totalProjects, setTotalProjects] = useState();
     const [totalProjectsForHr, setTotalProjectsForHr] = useState();
@@ -84,17 +124,60 @@ const Dashboard = () => {
     const [empLeaves, setEmpLeaves] = useState([]);
     const [rowData, setRowData] = useState({});
     const [approveModal, setapproveModal] = useState(false);
-    const [dropdownOpen, setDropdownOpen] = useState(false);
+    // const [dropdownOpen, setDropdownOpen] = useState(false);
     const [data, setTopProj] = useState()
-    const show = () => setDropdownOpen((prevState) => !prevState);
     const [isOpen, setIsOpen] = useState(false);
-    const toggle = () => {setIsOpen(!isOpen); setVisible(false)};
     const[visible, setVisible ]=useState(false);
-    const selectiontoggle = () => setVisible(true);
     const [selected, setSelected] = useState(false);
-    const handleChange = event => {
-        setSelected(event.target.value);
+    const [dd_data, setDdData] = useState(ProjectQueries);
+    const [selected_dd_data, setSelectedDdData] = useState();
+    const [widgetValue, setWidgetValue] = useState(initialWidget);
+    const [dashboardId, setDashboardId] = useState();
+    const [alert, setAlert] = useState(null);
+    const [widgetsData, setWidgetsData] =useState([]);
+    const [rd_value, setRdValue] = React.useState('');
+
+    const toggle = () => {
+        setIsOpen(!isOpen); 
+        setVisible(false);
+        setSelected(false);
+        setRdValue('');
+        setSelectedDdData('');
     };
+
+    const selectiontoggle = e => {
+        const {name, value} = e.target;
+        if(value === "0")
+        {
+            setDdData(ProjectQueries)
+        }
+        if(value === "1")
+        {
+            setDdData(EmployeeQueries)
+        }
+        setSelectedDdData('');
+        setWidgetValue({...widgetValue, [name]: value});
+        setRdValue(value);
+        setVisible(true);
+      
+    };
+
+    const handleChange = event => {
+        setSelected(true)
+        const {name, value} = event.target;
+        setSelectedDdData(value);
+        setWidgetValue({...widgetValue, [name]: value});
+    };
+
+    const GetDashboardId = () =>{
+        http.get(GetEndPoints().dashboardId+'/'+user.employeeId)
+        .then((res) =>{
+           if(res.data.success){
+            setDashboardId(res.data.response);
+           }
+        })
+        .catch((err) => console.log(err.message));
+    }
 
     const GetProjects = () => {
         http.get(GetEndPoints().projectsByEmployeeId+'/'+user.employeeId)
@@ -111,9 +194,6 @@ const Dashboard = () => {
             .then((res) =>{
                if(res.data.success){
                 setTotalTasks(res.data.response.length); 
-               }
-               else{
-                console.log(res);
                }
             })
             .catch((err) => console.log(err.message));
@@ -163,7 +243,6 @@ const Dashboard = () => {
         http.get(GetEndPoints().employeeLeaves)
         .then((res) =>{
            if(res.data.success){
-            console.log(res.data.response)
             setEmpLeaves(res.data.response)
            }
         })
@@ -174,7 +253,6 @@ const Dashboard = () => {
         http.get(GetEndPoints().employeeLeaves+'/'+user.employeeId)
         .then((res) =>{
            if(res.data.success){
-            console.log(res.data.response)
             setEmpLeaves(res.data.response)
            }
         })
@@ -185,14 +263,11 @@ const Dashboard = () => {
         http.get(GetEndPoints().topProjects)
         .then((res) =>{
            if(res.data.success){
-            console.log(res.data.response.labels)
-            console.log(res.data.response.data)
-           
             var data = {
                 labels: res.data.response.labels,
                 datasets: [
                   {
-                    label: "Top 5 progress projects",
+                    label: "Top 5 budget projects",
                     backgroundColor: ["rgb(255, 99, 132)",
                     'rgb(196, 200, 102)',
                     'rgb(255, 159, 64)',
@@ -204,17 +279,25 @@ const Dashboard = () => {
                 ],
               };
            }
-
-        //    if(data.lebels && data.datasets.data)
-        //    {
             setTopProj(data)
-        //    }
+        })
+        .catch((err) => console.log(err.message));
+    }
+
+    const GetWidgets = () =>{
+        http.get(GetEndPoints().widgets+'/'+ user.employeeId)
+        .then((res) =>{
+           if(res.data.success){
+            setWidgetsData(res.data.response.reverse());
+           }
         })
         .catch((err) => console.log(err.message));
     }
 
     useEffect(() =>{
         GetTopProjects();
+        GetDashboardId();
+        GetWidgets();
         //for Manager
         if(user.role && user.role == "Manager")
         {
@@ -236,37 +319,13 @@ const Dashboard = () => {
     },[user.role, user.employeeId, rowData])
 
     const columns = [
-        
         { field: 'id', headerName: 'Id', width:20},
-        { field: 'employeeId', headerName: 'Employee Id',
-             sortable:true,
-             editable:true,},
+        { field: 'employeeId', headerName: 'Employee Id', sortable:true, editable:true},
         { field: 'projectName', headerName: 'Project'},
         { field: 'leaveType', headerName: 'Leave Type'},
         { field: 'leaveStartDate', headerName: 'Start Date'},
         { field: 'leaveEndDate', headerName: 'End Date'},
-        // { field: '', headerName: '',  renderCell: (params) => 
-        // <Link to="${params.row.id}">Update</Link> },
       ];
-
-const labels = ["Project 1","Project 2","Project 3","Project 4","Project 5"];
-
-const data1 = {
-  labels: labels,
-  datasets: [
-    {
-      label: "Top 5 progress projects",
-      backgroundColor: ["rgb(255, 99, 132)",
-      'rgb(196, 200, 102)',
-      'rgb(255, 159, 64)',
-      'rgb(255, 205, 86)',
-      'rgb(75, 192, 192)'],
-      borderColor: "rgb(255, 99, 132)",
-      data: [35, 10, 25, 40, 20, 30, 45],
-    },
-  ],
-};
-  
 
 const approvetoggle = (event) => {
     setRowData(event.row)
@@ -339,6 +398,84 @@ const rejectLeave = (data) => {
     .catch((err) => console.log(err.message))
 }
 
+const handleWidget = e =>{
+    e.preventDefault();
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; 
+    var yyyy = today.getFullYear();
+    today = yyyy +'-'+mm+'-'+dd;
+    http.post(GetEndPoints().addWidget, {
+        dashboardId: dashboardId,
+        createdBy: user.firstName + " " + user.lastName,
+        createdOn: today,
+        selection: widgetValue.selection,
+        queries: widgetValue.queries
+    })
+    .then((res) =>{
+        if(res.data.success)
+        {
+            setAlert(
+                <SweetAlert
+                  success
+                  style={{ display: "block", marginTop: "-100px" }}
+                  title="Widget Added!"
+                  onConfirm={() => { hideAlert();}}
+                  onCancel={() => hideAlert()}
+                  confirmBtnBsStyle="success"
+                  btnSize=""
+                >
+                  New Widget Added</SweetAlert>
+              );
+
+              GetWidgets();
+        }
+    })
+    .catch((err) => console.log(err))
+}
+
+const hideAlert = () => {
+    setAlert(null);
+  };
+
+const deleteWidget = (widget) =>{
+    setAlert(
+        <SweetAlert
+          danger
+          style={{ display: "block", marginTop: "-100px" }}
+          title="Are you sure!"
+          onConfirm={() => { deleteWid(widget); hideAlert();}}
+          onCancel={() => hideAlert()}
+          confirmBtnBsStyle="danger"
+          cancelBtnBsStyle='primary'
+          showCancel
+          btnSize=""
+        >
+          You want to deleted widget!!</SweetAlert>
+      );
+   
+}
+const deleteWid = (widget) =>{
+    http.delete(GetEndPoints().deleteWidget + '/'+ widget.widgetId)
+    .then((res) => {
+        setAlert(
+            <SweetAlert
+              danger
+              style={{ display: "block", marginTop: "-100px" }}
+              title="Widget Deleted!"
+              onConfirm={() => { hideAlert()}}
+              onCancel={() => hideAlert()}
+              confirmBtnBsStyle="danger"
+              btnSize=""
+            >
+              You have deleted One widget!!</SweetAlert>
+          );
+       
+          GetWidgets();
+    })
+    .catch(err => console.log(err))
+}
+
 if(data === undefined)
 {
     return (<div class="d-flex justify-content-center">
@@ -351,6 +488,7 @@ else{
     return ( 
         <>
          <Container className="px-3">
+            {alert}
         {
             user.role && user.role === "HR" && 
             <div className=" d-flex justify-content-between">
@@ -432,7 +570,7 @@ else{
         <Row className="px-2 py-3">
             <Col md={6} className="">
                 <Card className="prCard py-5 px-3 border-0">
-                    {data && <Bar data={data} />}
+                    {data && <Bar data={data} options={options}/>}
                 </Card>
             </Col>
             <Col md={6} className="">
@@ -488,21 +626,25 @@ else{
                 <Card className="rounded-0 border-0">
                 <CardBody>
                 <Form>
-                         <FormGroup className="d-flex text-muted align-items-center">
+                    <FormGroup className="d-flex text-muted align-items-center">
                              <h6 className="me-3">Choose for</h6>
                         <FormGroup check >
                             <Label check>
-                            <Input type="radio" name="selection"
-                            value="1"
-                         onClick={selectiontoggle} 
+                            <Input type="radio"
+                            name="selection"
+                            value="0"
+                            checked={rd_value === '0'}
+                            onClick={selectiontoggle} 
                                 />
                             <span className="me-3">Projects </span>
                             </Label> 
                         </FormGroup>
                         <FormGroup check>
                             <Label check>
-                            <Input type="radio" name="selection" value="0"
-
+                            <Input type="radio" 
+                            name="selection" 
+                            value="1"
+                            checked={rd_value === '1'}
                             onClick={selectiontoggle}/>
                             <span className="me-3">Employees </span>
                             </Label>
@@ -511,58 +653,26 @@ else{
                         <div className="d-flex align-items-center justify-content-between">
                         { visible &&
                         <div className="p-0 col-md-4 col-sm-12">
-                            
                                 <FormGroup>
                                     <Input
-                                    id="project"
-                                    name="project"
+                                    id="queries"
+                                    name="queries"
                                     type="select"
+                                    value={selected_dd_data}
                                     onChange={handleChange}
                                     >
-                                   
-                                    <option>
-                                        Select project
-                                    </option>
-                                    <option>
-                                        All projects
-                                    </option>
-                                    <option>
-                                        Project 1
-                                    </option>
-                                    <option>
-                                        Project 2
-                                    </option>
+                                   {
+                                        dd_data && dd_data.map((obj, index) => <option key={index} value={obj.key}>{obj.value}</option>)
+                                   }
                                     </Input>
                                 </FormGroup>
                           
                         </div>
                             }
-                        {selected &&
+                        {selected && selected_dd_data !== '' && 
                         <div className="p-0 ms-1 d-flex col">
-                            
-                                <FormGroup className="ms-3 col-md-8 col-sm-12">
-                                    <Input
-                                    id="project"
-                                    name="project"
-                                    type="select"
-                                    >
-                                   
-                                    <option>
-                                        Select query
-                                    </option>
-                                    <option>
-                                        Query 1
-                                    </option>
-                                    <option>
-                                        Query 2
-                                    </option>
-                                    <option>
-                                        Query 3
-                                    </option>
-                                    </Input>
-                                </FormGroup>
-                                <Button className="bg-primary ms-3 mb-3 col-md-3 col-sm-12 buttonPro" type="submit">Create Widget</Button>
-                        
+                                <Button className="bg-primary ms-3 mb-3 col-md-3 col-sm-12 buttonPro" type="submit" 
+                                onClick={handleWidget}>Create Widget</Button>
                         </div>
                         }
                         </div>     
@@ -572,32 +682,109 @@ else{
             </Collapse>
         </Col>    
         </Row>
-        {/* <Row className="px-2 py-2">
-            <div className="d-flex align-items-center justify-content-start chartIcons ">
-                <span className="prCard p-2 me-3 rounded"> <BarChartIcon color="primary"/></span>
-                <span className="prCard p-2 me-3 rounded"> <TimelineIcon color="primary"/></span>
-                <span className="prCard p-2 rounded"> <PieChartIcon color="primary"/></span>
-            </div>
-            <Card className="prCard py-5 px-3 border-0 m-3 w-100">
-                    <Bar data={data} />
-                </Card>
-                <Card className="prCard py-5 px-3 border-0 m-3 w-100">
-                    <Line data={data} />
-                </Card>
-                <Card className="prCard py-5 px-3 border-0 m-3 w-100">
-                    <Pie data={data} />
-                </Card>
-                <Card className="prCard py-5 px-3 border-0 m-3 w-100">
-                    <Bar data={data} />
-                </Card>
-                <Card className="prCard py-5 px-3 border-0 m-3 w-100">
-                    <Line data={data} />
-                </Card>
-                <Card className="prCard py-5 px-3 border-0 m-3 w-100">
-                    <Pie data={data} />
-                </Card>
-               
-        </Row> */}
+       {widgetsData &&
+          widgetsData.map((widget, index) => {
+            let lbl = "";
+           
+            if(widget.selection === '0')
+            {
+                lbl = ProjectQueries.find(x => x.key === widget.queries);
+            }
+            if(widget.selection === '1')
+            {
+                lbl = EmployeeQueries.find(x => x.key === widget.queries);
+            }
+            if(widget.queries === 'p-7')
+            {
+                var data = {
+                    labels: widget.chart.labels,
+                    datasets: [
+                      {
+                        label: lbl.value,
+                        backgroundColor: ["rgb(255, 99, 132)",
+                        'rgb(196, 200, 102)',
+                        'rgb(255, 159, 64)',
+                        'rgb(255, 205, 86)',
+                        'rgb(75, 192, 192)'],
+                        borderColor: "rgb(255, 99, 132)",
+                        barThickness: 50,
+                        barPercentage: 0.5,
+                        maxBarThickness: 100,
+                        data: widget.chart.data.map((date, i) => moment(date).utc().format('MM')),
+                      },
+                    ],
+                   
+                  };
+            }
+            else{
+                var data = {
+                    labels: widget.chart.labels,
+                    datasets: [
+                      {
+                        label: lbl.value,
+                        backgroundColor: ["rgb(255, 99, 132)",
+                        'rgb(196, 200, 102)',
+                        'rgb(255, 159, 64)',
+                        'rgb(255, 205, 86)',
+                        'rgb(75, 192, 192)'],
+                        borderColor: "rgb(255, 99, 132)",
+                        barThickness: 50,
+                        barPercentage: 0.5,
+                        maxBarThickness: 100,
+                        data: widget.chart.data,
+                      },
+                    ]
+                  };
+            }
+           
+            return ( 
+                <>
+                
+                    <Row key={index} className="px-2 py-2">
+                    <button onClick={() => deleteWidget(widget)}> Delete</button>
+                        <Tabs key={index}
+                            defaultActiveKey="bar"
+                            transition={true}
+                            id="noanim-tab-example"
+                            className="mb-3 flex-row"
+                            variant="pills"
+                            >
+                            <Tab eventKey="bar" title={<BarChartIcon color="primary" />}>
+                                <Card className="py-5 px-3 border-0 mt-4">
+                                    <Bar data={data}  options={options}/>
+                                </Card>
+                            </Tab>
+                            <Tab eventKey="line" title={<TimelineIcon color="primary"/>}>
+                                <Card className=" py-5 px-3 border-0 mt-4">
+                                    <Line data={data} />
+                                </Card>
+                            </Tab>
+                            <Tab eventKey="pie" title={<PieChartIcon color="primary"/>} >
+                                <Card className="py-5 px-3 border-0 mt-4">
+                                    <Pie data={data} />
+                                </Card>
+                            </Tab>
+                        </Tabs>
+                                
+                              {/* <div className="d-flex align-items-center justify-content-start chartIcons ">
+                                    <span className="prCard p-2 me-3 rounded"> <BarChartIcon color="primary"/></span>
+                                    <span className="prCard p-2 me-3 rounded"> <TimelineIcon color="primary"/></span>
+                                    <span className="prCard p-2 rounded"> <PieChartIcon color="primary"/></span>
+                                </div>  */}
+                                 {/* <Card className="py-5 px-3 border-0 mt-4">
+                                    <Bar data={data}  options={options}/>
+                                </Card> */}
+                                {/* <Card className=" py-5 px-3 border-0 mt-4">
+                                    <Line data={data} />
+                                </Card>
+                                <Card className="py-5 px-3 border-0 mt-4">
+                                    <Pie data={data} />
+                                </Card> */}
+                    </Row>
+                    </>
+                )
+         })
+         }
         </Container>
         </>
     );

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import loginbg from '../../assets/img/card-bg.png'
 import {
     Card,
@@ -58,7 +57,6 @@ const ResetPassword = () => {
   }
   const handleSubmit = e =>{
     e.preventDefault();
-    console.log(formValue)
     ChangePassword();
   }
   return (  <>

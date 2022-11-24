@@ -74,6 +74,9 @@ namespace TeamSavvy.Api.Utilities.MapperRegistration
 
             CreateMap<Leave, LeaveDto>()
             .ReverseMap();
+
+            CreateMap<Widget, WidgetDto>()
+          .ReverseMap();
         }
     }
 }

@@ -35,6 +35,10 @@ const enpoints = {
   timeSheet: 'TimeSheet',
   employeeLeaves:'Dashboard/employeeLeaves',
   topProjects:'Dashboard/topprojects',
+  widgets:'Dashboard/charts',
+  deleteWidget:'Dashboard/deleteWidget',
+  addWidget:'Dashboard/addWidget',
+  dashboardId:'Dashboard/dashbordId'
 }
 
 export function GetEndPoints(){

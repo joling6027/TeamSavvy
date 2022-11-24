@@ -98,18 +98,6 @@ const Timesheet = () => {
 
   const GetTotalHours = (timeSheetEvent) => {
     let collectDateTime = [];
-    // timeSheetEvent.map((ts, index) => {
-    //   // let hours = Math.floor(parseInt(ts.clockTime.split(':')[0]));
-    //   // let minute =parseInt((ts.clockTime.split(':')[1]).split(' ')[0])/60; 
-    //   // return collectDateTime.push({
-    //   //   date:ts.clockDate,
-    //   //   time: hours + minute
-    //   // })
-
-    //   console.log(parseTime(ts.clockTime))
-
-    // })
-   
     for (let index = 0; index < timeSheetEvent.length; index += 2) {
       let first = parseTime(timeSheetEvent[index].clockTime);
       let second = parseTime(timeSheetEvent[index + 1].clockTime);
@@ -117,8 +105,6 @@ const Timesheet = () => {
             date:timeSheetEvent[index].clockDate,
             time: second.hh - first.hh
       })
-      // console.log(second,  first)
-      // console.log(second.hh - first.hh)
     }
 
     setTotalWorkHours(collectDateTime);
@@ -455,47 +441,6 @@ const Timesheet = () => {
                </CardBody>
              </Card>
              </Col>
-             {/* <Col className="d-inline-block" md={2}>
-             <Card className="prCard p-2 text-center">
-                 <h3 className="pt-1">Hours</h3>
-                 <CardBody className="p-2">
-                     <p className="mt-2 mb-2">Worked</p>
-                     <div className="totalhr flex-column d-flex">
-                       { 
-                         arr.map(()=>{
-                             let total = 0
-                             totalWorkHours.map((workHour, index) =>{
-                               let dayOfweek = new Date(workHour.date).getDay();
-                               let dateOfWeek = new Date(workHour.date).getUTCDate();
-                               if(dayOfweek === 6)
-                               {
-                               let maxDateOfWeek = dateOfWeek + 6;
-                               let minDateOfWeek = dateOfWeek - 1 ;
-                               localStorage.setItem('maxDateOfWeek', maxDateOfWeek);
-                               localStorage.setItem('minDateOfWeek', minDateOfWeek);
-                               }
-                               if(dateOfWeek >  localStorage.getItem('minDateOfWeek') && dateOfWeek <=  localStorage.getItem('maxDateOfWeek'))
-                               {
-                                   console.log(workHour)
-                                   total += workHour.time;
-                               }
-                                 return total;
-                             })
- 
-                             return <span>{total}</span>}
-                         )
-                        
-                       }
-                       {/* <span>40</span>
-                       <span>40</span>
-                       <span>40</span>
-                       <span></span>
-                       <span></span> */}
-                       {/* <span></span> */}
-                     {/* </div>
-                 </CardBody>
-             </Card>
-             </Col> */} 
          </Row>
          </div>
          <Modal isOpen={modal} backdrop="static" centered>

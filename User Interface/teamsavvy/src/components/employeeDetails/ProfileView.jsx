@@ -1,18 +1,11 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import pic from "../../assets/img/Profilepic.png";
-import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
-import MailOutlineOutlinedIcon from '@mui/icons-material/MailOutlineOutlined';
-import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
-import {Link, useParams} from 'react-router-dom';
-import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+import {useParams} from 'react-router-dom';
 import './profileView.css';
-import { Button,Card,CardBody, FormGroup,Form,Input,Row, Col, Container, CardTitle, CardSubtitle, ListGroup,
-    ListGroupItem,  Label, Badge, Modal, ModalHeader, ModalBody, } from "reactstrap";
+import { Card,CardBody, FormGroup,Form,Input,Row, Col, Container, CardTitle, CardSubtitle, Label, Badge, Modal, ModalHeader, ModalBody, } from "reactstrap";
 import AuthService from '../services/authService';
 import { GetEndPoints } from '../utilities/EndPoints';
 import { employeeInitialValue } from '../models/employee.model';
-import ConvertToBase64 from '../utilities/uploadImage';
-import SweetAlert from "react-bootstrap-sweetalert";
 
 const ProfileView = () => {
 
@@ -58,7 +51,6 @@ const ProfileView = () => {
     const handleChange = event => {
         const {name, value} = event.target;
         setFormValue({...formValue, [name]: value});
-        console.log(formValue)
     };
 
     if(formValue.employeeId === 0)
@@ -291,12 +283,10 @@ const ProfileView = () => {
                               skills.map((skill, index) => 
                                  skill.isactive && <div class="skill position-relative" key={index}>
                                   <Badge className="skillPill rounded-pill me-3 mb-3 " pill > {skill.skills.skillName} </Badge> 
-                                  {/* <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge" onClick={()=>handleDelete(skill.skills.skillId)}> <CloseOutlinedIcon sx={{fontSize: 13 }} /> </Badge> */}
                                   </div>
                               )
                           }
                       </div>
-                     
                       </CardBody>
                   </Card>
               </div>

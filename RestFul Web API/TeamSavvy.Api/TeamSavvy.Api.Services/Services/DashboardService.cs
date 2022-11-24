@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using TeamSavvy.Api.BusinessModel.DashboardModels;
@@ -11,6 +12,7 @@ using TeamSavvy.Api.Entities.Context;
 using TeamSavvy.Api.Entities.GenericRepo;
 using TeamSavvy.Api.Entities.Models;
 using TeamSavvy.Api.Services.IServices;
+using TeamSavvy.Api.Utilities.Helper;
 using Project = TeamSavvy.Api.BusinessModel.DashboardModels.Project;
 
 namespace TeamSavvy.Api.Services.Services
@@ -277,7 +279,7 @@ namespace TeamSavvy.Api.Services.Services
                                 int progress = 0;
                                 if(totalTask > 0)
                                 {
-                                    progress = (completed / totalTask)*100;
+                                    progress = ((int)((completed / (float)totalTask)*100));
                                 }
 
                                 teamMember.EmployeeList.Add(new ProjectEmployee
@@ -343,7 +345,7 @@ namespace TeamSavvy.Api.Services.Services
                                 int progress = 0;
                                 if (totalTask > 0)
                                 {
-                                    progress = (completed / totalTask) * 100;
+                                    progress = ((int)((completed / (float)totalTask) * 100));
                                 }
 
                                 teamMember.EmployeeList.Add(new ProjectEmployee
@@ -406,7 +408,7 @@ namespace TeamSavvy.Api.Services.Services
             try
             {
                 chart.Labels = new List<string>();
-                chart.Data = new List<int>();
+                chart.Data = new List<object>();
                 var res = _unitOfWork.Context.Project.OrderByDescending(p => p.ProjectBudget).ToList().Take(5);
 
                 foreach (var item in res)
@@ -422,5 +424,524 @@ namespace TeamSavvy.Api.Services.Services
 
             return chart;
         }
+
+        public int GetDashBoardId(int employeeId)
+        {
+           return _unitOfWork.Context.Dashboard.Where(x => x.EmployeeId == employeeId).FirstOrDefault().DashboardId;
+        }
+
+        public List<DashboardWidget> GetWidegts(int employeeId)
+        {
+            List<DashboardWidget> widgt = new List<DashboardWidget>();
+            var dashboardId = _unitOfWork.Context.Dashboard.Where(d => d.EmployeeId == employeeId).FirstOrDefault().DashboardId;
+            if (dashboardId > 0)
+            {
+                var widgets = _unitOfWork.Context.Widget.Where(w => w.DashboardId == dashboardId).ToList();
+                if (widgets.Count > 0)
+                {
+                    foreach (var widget in widgets)
+                    {
+                        DashboardWidget dashboardWidget = new DashboardWidget
+                        {
+                            DashboardId = widget.DashboardId,
+                            Queries = widget.Queries,
+                            Selection = widget.Selection,
+                            CreatedOn = widget.CreatedOn,
+                            CreatedBy = widget.CreatedBy,
+                            WidgetId = widget.WidgetId
+                        };
+                        
+                        switch (widget.Selection)
+                        {
+                            case "0":
+                                dashboardWidget.Chart = GetProjectsRelatedCharts(widget.Queries);
+                                break;
+                            case "1":
+                                dashboardWidget.Chart = GetEmployeesRelatedCharts(widget.Queries);
+                                break;
+                            default:
+                                widgt.Add(new DashboardWidget());
+                                break;
+                        }
+                        widgt.Add(dashboardWidget);
+                    }
+                }
+            }
+
+            return widgt;
+        }
+
+        public bool AddWidget(WidgetDto widget)
+        {
+            bool isSuccess = false;
+            try
+            {
+                if (widget != null)
+                {
+                    var widgt = _mapper.Map<Widget>(widget);
+                    if (widgt != null)
+                    {
+                        _unitOfWork.Repository<Widget>().Insert(widgt);
+                        _unitOfWork.SaveChanges();
+                        isSuccess = true;
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                isSuccess = false;
+            }
+
+            return isSuccess;
+        }
+        public bool DeleteWidget(int widgetId)
+        {
+            bool isSuccess = false;
+            try
+            {
+                if (widgetId > 0)
+                {
+                    var widget = _unitOfWork.Context.Widget.Where(x => x.WidgetId == widgetId).FirstOrDefault();
+                    if (widget != null)
+                    {
+                        _unitOfWork.Repository<Widget>().Delete(widget);
+                        _unitOfWork.SaveChanges();
+                        isSuccess = true;
+                    }
+                  
+                }
+            }
+            catch (Exception e)
+            {
+                isSuccess = false;
+            }
+            return isSuccess;
+        }
+        private Chart GetProjectsRelatedCharts(string queries)
+        {
+            Chart chart = new Chart();
+            switch(queries)
+            {
+                case "p-1":
+                    chart = GetTopFiveProjectsLowestBudget();
+                    break;
+                case "p-2":
+                    chart = GetTopFiveProjectsHighestProformance();
+                    break;
+                case "p-3":
+                    chart = GetTopFiveProjectsLowestProformance();
+                    break;
+                case "p-4":
+                    chart = GetNumberOfProjectsRelatedToClient();
+                    break;
+                case "p-5":
+                    chart = GetTopFiveProjectsWithHigestTeam();
+                    break;
+                case "p-6":
+                    chart = GetTopFiveProjectsWithLowestTeam();
+                    break;
+                //case "p-7":
+                //    chart = GetProjectsWithResToNumSickLeave();
+                //    break;
+                case "p-7":
+                    chart = GetProjectsWithNearestDeadline();
+                    break;
+            }
+            return chart;
+        }
+        private Chart GetEmployeesRelatedCharts(string queries)
+        {
+            Chart chart = new Chart();
+            switch (queries)
+            {
+                //case "e-1":
+                //    chart = TopFiveEmpWithMinLeaveWithRespToProj();
+                //    break;
+                //case "e-2":
+                //    chart = TopFiveEmpWithMaxLeaveWithRespToProj();
+                //    break;
+                case "e-1":
+                    chart = TopFiveEmpWithMaxSkills();
+                    break;
+                case "e-2":
+                    chart = TopFiveEmpWithMinSkills();
+                    break;
+                case "e-3":
+                    chart = NumOfEmpWorkingInEachJobLoc();
+                    break;
+                case "e-4":
+                    chart = NumOfEmpWorkingInEachDept();
+                    break;
+            }
+            return chart;
+        }
+        private Chart GetTopFiveProjectsLowestBudget()
+        {
+            Chart chart = new Chart();
+
+            try
+            {
+                chart.Labels = new List<string>();
+                chart.Data = new List<object>();
+                var res = _unitOfWork.Context.Project.OrderBy(p => p.ProjectBudget).ToList().Take(5);
+
+                foreach (var item in res)
+                {
+                    chart.Labels.Add(item.ProjectName);
+                    chart.Data.Add(Int32.Parse(item.ProjectBudget));
+                }
+            }
+            catch (Exception ex)
+            {
+                chart = new Chart();
+            }
+
+            return chart;
+        }
+        private Chart GetTopFiveProjectsHighestProformance()
+        {
+            Chart chart = new Chart();
+
+            try
+            {
+                chart.Labels = new List<string>();
+                chart.Data = new List<object>();
+                List<ProjectPerformace> performaces = new List<ProjectPerformace>();
+                var projs = (from task in _unitOfWork.Context.Task
+                               group task by task.ProjectId into tsk
+                               select new { tsk.Key, count = tsk.Count() }).ToList();
+                foreach (var proj in projs)
+                {
+                    var name = _unitOfWork.Context.Project.Where(p => p.ProjectId == proj.Key).FirstOrDefault().ProjectName;
+                    var completedCount = _unitOfWork.Context.Task.Where(t => t.ProjectId == proj.Key && t.TaskStatus == "Completed").Count();
+                    var progress = ((completedCount / (float)proj.count) * 100);
+                    performaces.Add(new ProjectPerformace
+                    {
+                        ProjectName = name,
+                        Progress = progress
+                    });
+                }
+
+                var projectHighestProf = performaces.OrderByDescending( p=>p.Progress).Take(5).ToList();
+                foreach(var project in projectHighestProf)
+                {
+                    chart.Labels.Add(project.ProjectName);
+                    chart.Data.Add((int)project.Progress);
+                }
+            }
+            catch (Exception ex)
+            {
+                chart = new Chart();
+            }
+
+            return chart;
+        }
+        private Chart GetTopFiveProjectsLowestProformance()
+        {
+            Chart chart = new Chart();
+
+            try
+            {
+                chart.Labels = new List<string>();
+                chart.Data = new List<object>();
+                List<ProjectPerformace> performaces = new List<ProjectPerformace>();
+                var projs = (from task in _unitOfWork.Context.Task
+                             group task by task.ProjectId into tsk
+                             select new { tsk.Key, count = tsk.Count() }).ToList();
+                foreach (var proj in projs)
+                {
+                    var name = _unitOfWork.Context.Project.Where(p => p.ProjectId == proj.Key).FirstOrDefault().ProjectName;
+                    var completedCount = _unitOfWork.Context.Task.Where(t => t.ProjectId == proj.Key && t.TaskStatus == "Completed").Count();
+                    var progress = ((completedCount / (float)proj.count) * 100);
+                    performaces.Add(new ProjectPerformace
+                    {
+                        ProjectName = name,
+                        Progress = progress
+                    });
+                }
+
+                var projectHighestProf = performaces.OrderBy(p => p.Progress).Take(5).ToList();
+                foreach (var project in projectHighestProf)
+                {
+                    chart.Labels.Add(project.ProjectName);
+                    chart.Data.Add((int)project.Progress);
+                }
+            }
+            catch (Exception ex)
+            {
+                chart = new Chart();
+            }
+
+            return chart;
+        }
+        private Chart GetNumberOfProjectsRelatedToClient()
+        {
+            Chart chart = new Chart();
+
+            try
+            {
+                chart.Labels = new List<string>();
+                chart.Data = new List<object>();
+                var clients = (from proj in _unitOfWork.Context.Project
+                            group proj by proj.ProjectClient into client
+                            select new { client.Key, count = client.Count() }).ToList();
+                foreach (var client in clients)
+                {
+
+                    chart.Labels.Add(client.Key);
+                    chart.Data.Add(client.count);
+                }
+            }
+            catch (Exception ex)
+            {
+                chart = new Chart();
+            }
+
+            return chart;
+        }
+        private Chart GetTopFiveProjectsWithHigestTeam()
+        {
+            Chart chart = new Chart();
+
+            try
+            {
+                chart.Labels = new List<string>();
+                chart.Data = new List<object>();
+                var projs = (from proj in _unitOfWork.Context.EmployeeProject
+                            group proj by proj.ProjectId into projId
+                            select new { projId.Key, count = projId.Count() }).OrderByDescending(x => x.count).Take(5).ToList();
+                foreach (var proj in projs)
+                {
+                    var name = _unitOfWork.Context.Project.Where(p => p.ProjectId == proj.Key).FirstOrDefault().ProjectName;
+                    chart.Labels.Add(name);
+                    chart.Data.Add(proj.count);
+                }
+            }
+            catch (Exception ex)
+            {
+                chart = new Chart();
+            }
+
+            return chart;
+        }
+        private Chart GetTopFiveProjectsWithLowestTeam()
+        {
+            Chart chart = new Chart();
+
+            try
+            {
+                chart.Labels = new List<string>();
+                chart.Data = new List<object>();
+                var projs = (from proj in _unitOfWork.Context.EmployeeProject
+                             group proj by proj.ProjectId into projId
+                             select new { projId.Key, count = projId.Count() }).OrderBy(x => x.count).Take(5).ToList();
+                foreach (var proj in projs)
+                {
+                    var name = _unitOfWork.Context.Project.Where(p => p.ProjectId == proj.Key).FirstOrDefault().ProjectName;
+                    chart.Labels.Add(name);
+                    chart.Data.Add(proj.count);
+                }
+            }
+            catch (Exception ex)
+            {
+                chart = new Chart();
+            }
+
+            return chart;
+        }
+        private Chart GetProjectsWithResToNumSickLeave()
+        {
+            Chart chart = new Chart();
+
+            try
+            {
+               
+            }
+            catch (Exception ex)
+            {
+                chart = new Chart();
+            }
+
+            return chart;
+        }
+        private Chart GetProjectsWithNearestDeadline()
+        {
+            Chart chart = new Chart();
+
+            try
+            {
+                chart.Labels = new List<string>();
+                chart.Data = new List<object>();
+                var currDate = DateTime.Today;
+                DateTime thisDateNextYear, thisDateLastYear;
+                thisDateNextYear = currDate.AddYears(1);
+                thisDateLastYear = currDate.AddYears(-1);
+                var projs = _unitOfWork.Context.Project.ToList();
+                foreach(var proj in projs)
+                {
+                    if (DateTime.Parse(proj.ProjectEndDate, CultureInfo.InvariantCulture).Year > thisDateLastYear.Year && DateTime.Parse(proj.ProjectEndDate, CultureInfo.InvariantCulture).Year< thisDateNextYear.Year)
+                    {
+                        if (DateTime.Parse(proj.ProjectEndDate, CultureInfo.InvariantCulture).Month >= thisDateLastYear.Month)
+                        {
+                            if (DateTime.Parse(proj.ProjectEndDate, CultureInfo.InvariantCulture).Day >= thisDateLastYear.Day)
+                            {
+                                chart.Labels.Add(proj.ProjectName);
+                                chart.Data.Add(DateTime.Parse(proj.ProjectEndDate, CultureInfo.InvariantCulture));
+                            }
+                        }
+                        
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                chart = new Chart();
+            }
+
+            return chart;
+        }
+        //private Chart TopFiveEmpWithMinLeaveWithRespToProj()
+        //{
+        //    Chart chart = new Chart();
+
+        //    try
+        //    {
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        chart = new Chart();
+        //    }
+
+        //    return chart;
+
+        //}
+        //private Chart TopFiveEmpWithMaxLeaveWithRespToProj()
+        //{
+        //    Chart chart = new Chart();
+
+        //    try
+        //    {
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        chart = new Chart();
+        //    }
+
+        //    return chart;
+
+        //}
+        private Chart TopFiveEmpWithMaxSkills()
+        {
+            Chart chart = new Chart();
+
+            try
+            {
+                chart.Labels = new List<string>();
+                chart.Data = new List<object>();
+                var empSkils = (from empSk in _unitOfWork.Context.EmployeeSkill
+                               group empSk by empSk.EmployeeId into id
+                               select new {id.Key, count = id.Count() }).OrderByDescending(x =>x.count).Take(5).ToList();
+                foreach(var emp in empSkils)
+                {
+                    var em = _unitOfWork.Context.Employee.Where(e => e.EmployeeId == emp.Key).FirstOrDefault();
+                    var name = em.EmployeeFirstname.Trim() + " " + em.EmployeeLastname.Trim();
+                    chart.Labels.Add(name + "( " + emp.Key + " )");
+                    chart.Data.Add(emp.count);
+                }
+            }
+            catch (Exception ex)
+            {
+                chart = new Chart();
+            }
+
+            return chart;
+
+        }
+        private Chart TopFiveEmpWithMinSkills()
+        {
+            Chart chart = new Chart();
+
+            try
+            {
+                chart.Labels = new List<string>();
+                chart.Data = new List<object>();
+                var empSkils = (from empSk in _unitOfWork.Context.EmployeeSkill
+                                group empSk by empSk.EmployeeId into id
+                                select new { id.Key, count = id.Count() }).OrderBy(x => x.count).Take(5).ToList();
+                foreach (var emp in empSkils)
+                {
+                    var em = _unitOfWork.Context.Employee.Where(e => e.EmployeeId == emp.Key).FirstOrDefault();
+                    var name = em.EmployeeFirstname.Trim() + " " + em.EmployeeLastname.Trim();
+                    chart.Labels.Add(name + "( " + emp.Key + " )");
+                    chart.Data.Add(emp.count);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                chart = new Chart();
+            }
+
+            return chart;
+
+        }
+        private Chart NumOfEmpWorkingInEachJobLoc()
+        {
+            Chart chart = new Chart();
+
+            try
+            {
+                chart.Labels = new List<string>();
+                chart.Data = new List<object>();
+                var emps = (from emp in _unitOfWork.Context.Employee
+                                group emp by emp.JobLocationId into id
+                                select new { id.Key, count = id.Count()}).ToList();
+                foreach(var emp in emps)
+                {
+                    var cityId = _unitOfWork.Context.JobLocation.Where(l => l.JobLocationId == emp.Key).FirstOrDefault().CityId;
+                    var cityName = _unitOfWork.Context.City.Where(c => c.CityId == cityId).FirstOrDefault().CityName;
+                    chart.Labels.Add(cityName);
+                    chart.Data.Add(emp.count);
+                }
+            }
+            catch (Exception ex)
+            {
+                chart = new Chart();
+            }
+
+            return chart;
+
+        }
+        private Chart NumOfEmpWorkingInEachDept()
+        {
+            Chart chart = new Chart();
+
+            try
+            {
+                chart.Labels = new List<string>();
+                chart.Data = new List<object>();
+                var emps = (from emp in _unitOfWork.Context.Employee
+                            group emp by emp.DepartmentId into id
+                            select new { id.Key, count = id.Count() }).ToList();
+                foreach (var emp in emps)
+                {
+                    var name = _unitOfWork.Context.Department.Where(l => l.DepartmentId == emp.Key).FirstOrDefault().DepartmentName;
+                    chart.Labels.Add(name);
+                    chart.Data.Add(emp.count);
+                }
+            }
+            catch (Exception ex)
+            {
+                chart = new Chart();
+            }
+
+            return chart;
+
+        }
     }
+
 }
+

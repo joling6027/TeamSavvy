@@ -29,7 +29,6 @@ import { GetEndPoints } from '../utilities/EndPoints';
       .then((res) => {
           if(res.data.success){
              setOtp(res.data.response.result)
-             console.log(res.data.response.result)
           }
       })
   }
@@ -41,7 +40,6 @@ import { GetEndPoints } from '../utilities/EndPoints';
     const handleChange = e => {
       const {name, value} = e.target;
       setFormValue({...formValue, [name]:value});
-      console.log(formValue)
     }
 
     const hideAlert = () => {
@@ -49,7 +47,6 @@ import { GetEndPoints } from '../utilities/EndPoints';
     };
 
 
-    console.log(params.id)
     const onContinue = e =>{
       console.log(otp)
       e.preventDefault();

@@ -1,10 +1,7 @@
-import React, { Component } from 'react';
-import {Container, Form, FormGroup, Label, Input, FormFeedback, FormText, Row, Col, Modal,  ModalHeader, Button, ModalBody } from 'reactstrap';
+import React from 'react';
+import {Container } from 'reactstrap';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import Timesheet from '../timesheet/Timesheet'
-import Task from '../task/Task'
-import Profile from '../profile/Profile'
 import ProfileView from './ProfileView';
 import TaskView from './TaskView';
 import TimeSheetView from './TimeSheetView';
@@ -22,7 +19,6 @@ const EmployeeDetails = () => {
             className="mb-3"
             >
             <Tab eventKey="home" title="Timesheet">
-                {/* <Timesheet/> */}
                 <TimeSheetView/>
             </Tab>
             <Tab eventKey="profile" title="Task">

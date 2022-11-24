@@ -17,11 +17,7 @@ import {Card,
 FormFeedback,
 Progress} from 'reactstrap';
 import {Link} from 'react-router-dom';
-import Box from '@mui/material/Box';
-// import {Link} from '@material-ui/core';
-import { tableItems } from "./TableItemsteam";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import LinearProgress from '@mui/material/LinearProgress';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import './teamMembers.css';
@@ -49,7 +45,6 @@ const TeamMembers = () => {
     const [assignProject, setassignModal] = useState(false);
     const toggle = () => setModal(!modal);
     const assigntoggle = () => setassignModal(!assignProject);
-    console.log(user)
 
     const GetProjects = () => {
         http.get(GetEndPoints().projects)
@@ -211,16 +206,16 @@ const TeamMembers = () => {
         { field: 'id', headerName: 'Employee ID', },
         { field: 'employeeName', headerName: 'Name',
              sortable:true,
-             editable:true},
+             editable:true, width:200},
         { field: 'department', headerName: 'Department', sortable:true,
-        editable:true},
+        editable:true, width:200},
         { field: 'status', headerName: 'Status', sortable:true,
         editable:true },
         { field: 'position', headerName: 'Position', sortable:true,
         editable:true},
         { field: 'salary', headerName: 'Salary'},
-        { field: 'progress', headerName:'Progress', renderCell: (params) => <Progress className="w-100" color="success" value={params.row.progress}/> ,width:200},
-        { field: 'details', headerName: 'Details', renderCell: (params) => <Link to={`/dashboard/teammembers/employeedetails/${params.row.id}`} >View</Link> },
+        { field: 'progress', headerName:'Progress', renderCell: (params) => <><Progress className="w-100 " color="success" value={params.row.progress}/><span className='mx-2' >{params.row.progress}%</span></> ,width:350},
+        { field: 'details', headerName: 'Details', renderCell: (params) => <Link to={`/dashboard/teammembers/employeedetails/${params.row.id}`} >View</Link>,width:90},
       ];
       
       const columns_HR = [
@@ -235,7 +230,7 @@ const TeamMembers = () => {
         { field: 'position', headerName: 'Position', sortable:true,
         editable:true},
         { field: 'salary', headerName: 'Salary'},
-        { field: 'progress', headerName:'Progress', renderCell: (params) => <Progress className="w-100" color="success" value={params.row.progress}/> ,width:200},
+        { field: 'progress', headerName:'Progress', renderCell: (params) => <><Progress className="w-50" color="success" value={params.row.progress} /><span className='mx-2' >{params.row.progress}%</span></> ,width:350},
         { field: 'details', headerName: 'Details', renderCell: (params) => <Link to={`/dashboard/teammembers/employeedetails/${params.row.id}`} >View</Link> },
         { field: 'icon', headerName: 'Delete', renderCell: (params) => <DeleteIcon value={params.row.id} onClick={() => handleDelete(params.row.id)} color="error"/> }
       ];

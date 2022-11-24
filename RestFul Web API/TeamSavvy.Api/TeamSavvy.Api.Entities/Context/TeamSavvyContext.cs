@@ -111,21 +111,19 @@ namespace TeamSavvy.Api.Entities.Context
 
             modelBuilder.Entity<Dashboard>(entity =>
             {
-                entity.Property(e => e.DashboardId)
-                    .HasColumnName("DASHBOARD_ID")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.DashboardId).HasColumnName("DASHBOARD_ID");
 
                 entity.Property(e => e.CreatedBy)
                     .IsRequired()
                     .HasColumnName("CREATED_BY")
-                    .HasMaxLength(10)
-                    .IsFixedLength();
-
-                entity.Property(e => e.CreatedById).HasColumnName("CREATED_BY_ID");
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.CreatedOn)
+                    .IsRequired()
                     .HasColumnName("CREATED_ON")
-                    .HasColumnType("date");
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.EmployeeId).HasColumnName("EMPLOYEE_ID");
 
@@ -763,45 +761,29 @@ namespace TeamSavvy.Api.Entities.Context
 
             modelBuilder.Entity<Widget>(entity =>
             {
-                entity.Property(e => e.WidgetId)
-                    .HasColumnName("WIDGET_ID")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.WidgetId).HasColumnName("WIDGET_ID");
 
                 entity.Property(e => e.CreatedBy)
-                    .IsRequired()
                     .HasColumnName("CREATED_BY")
-                    .HasMaxLength(10)
-                    .IsFixedLength();
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.CreatedOn)
                     .HasColumnName("CREATED_ON")
-                    .HasColumnType("date");
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.DashboardId).HasColumnName("Dashboard_ID");
 
-                entity.Property(e => e.Height).HasColumnName("HEIGHT");
-
-                entity.Property(e => e.Length).HasColumnName("LENGTH");
-
-                entity.Property(e => e.WidgetName)
-                    .IsRequired()
-                    .HasColumnName("WIDGET_NAME")
+                entity.Property(e => e.Queries)
+                    .HasColumnName("QUERIES")
                     .HasMaxLength(10)
-                    .IsFixedLength();
+                    .IsUnicode(false);
 
-                entity.Property(e => e.WidgetTypeId).HasColumnName("WIDGET_TYPE_ID");
-
-                entity.Property(e => e.XAxis)
-                    .IsRequired()
-                    .HasColumnName("X_AXIS")
+                entity.Property(e => e.Selection)
+                    .HasColumnName("SELECTION")
                     .HasMaxLength(10)
-                    .IsFixedLength();
-
-                entity.Property(e => e.YAxis)
-                    .IsRequired()
-                    .HasColumnName("Y_AXIS")
-                    .HasMaxLength(10)
-                    .IsFixedLength();
+                    .IsUnicode(false);
 
                 entity.HasOne(d => d.Dashboard)
                     .WithMany(p => p.Widget)

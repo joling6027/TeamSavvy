@@ -7,6 +7,6 @@ namespace TeamSavvy.Api.BusinessModel.DataTransferModel.Charts
     public class Chart
     {
         public List<string> Labels { get; set; }
-        public List<int> Data { get; set; }
+        public List<object> Data { get; set; }
     }
 }

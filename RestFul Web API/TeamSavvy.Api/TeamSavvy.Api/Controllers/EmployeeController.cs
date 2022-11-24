@@ -139,6 +139,7 @@ namespace TeamSavvy.Api.Entities.Controllers
 
             return response;
         }
+
         // PUT api/<EmployeeController>/5
         [Route("updateEmployee")]
         [HttpPut]
@@ -201,6 +202,7 @@ namespace TeamSavvy.Api.Entities.Controllers
             }
             return response;
         }
+        
         [Route("deleteEmployee/{id}")]
         [HttpDelete]
         [Produces("application/json")]

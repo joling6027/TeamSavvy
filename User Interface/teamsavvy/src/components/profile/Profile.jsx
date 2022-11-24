@@ -102,7 +102,6 @@ const Profile = () => {
             newValues.address.city.cityName = availCities[0].cityName;
             return newValues
         })
-        console.log(formValue) 
     }
 
     const handleProvinceChange = e =>{
@@ -139,7 +138,6 @@ const Profile = () => {
         const {name, value} = event.target;
         setFormValue({...formValue, [name]: value});
         setFormErrors(ProfileValidation({...formValue, [name]: value}))
-        console.log(formValue)
     };
 
     const handleSkillChange = event =>{
@@ -177,7 +175,6 @@ const Profile = () => {
        formValue.skills = [...skArr]
        setFormValue(formValue)
        setSelectOptions([]); 
-       console.log(formValue)
     }
 
     const handleDelete = (skillId) => {
@@ -210,7 +207,6 @@ const Profile = () => {
             return newValues
         })
         setFormErrors(ProfileValidation(formValue))
-        console.log(formErrors)
     };
 
     const UpdateEmployee = () =>{
@@ -240,7 +236,6 @@ const Profile = () => {
             body: resignationStr
           })
         .then((res) => {
-            console.log(res);
             if(res.data.success){
                 setAlert(
                     <SweetAlert
@@ -261,7 +256,6 @@ const Profile = () => {
             .then((res) => {
                 if(res.data.success)
                 {
-                    console.log(res);
                 }
             })
             .catch((err) => console.log(err.message))
@@ -284,15 +278,12 @@ const Profile = () => {
     const submitForm = () => {
         if(Object.keys(formErrors).length === 0 && isSubmit) 
         {
-            console.log(formErrors)
-            console.log(formValue)
             UpdateEmployee();
         }
     }
 
     const handleCancel = event =>{
         event.preventDefault();
-        console.log("cancel")
         GetEmployee();
     };
 

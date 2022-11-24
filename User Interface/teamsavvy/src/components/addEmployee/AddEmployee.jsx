@@ -4,8 +4,7 @@ import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import {Link} from 'react-router-dom';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import './addEmployee.css';
-import { Button,Card,CardBody, FormGroup,Form,Input,Row, Col, Container, CardTitle, CardSubtitle, ListGroup,
-    ListGroupItem,  Label, Badge, Modal, ModalHeader, ModalBody, FormFeedback} from "reactstrap";
+import { Button,Card,CardBody, FormGroup,Form,Input,Row, Col, Container, CardTitle, CardSubtitle, Label, Badge, Modal, ModalHeader, ModalBody, FormFeedback} from "reactstrap";
 import AuthService from '../services/authService';
 import { GetEndPoints } from '../utilities/EndPoints';
 import { employeeInitialValue } from '../models/employee.model';
@@ -14,7 +13,6 @@ import ConvertToBase64 from '../utilities/uploadImage';
 import SweetAlert from "react-bootstrap-sweetalert";
 import { formatDate } from '../utilities/convertDate';
 import { RegisterationValidation } from '../utilities/validation';
-import { invalid, valid } from 'moment';
 
   const AddEmployee = () => {
 
@@ -112,7 +110,6 @@ import { invalid, valid } from 'moment';
         http.get(GetEndPoints().projects)
         .then((res) =>{
            if(res.data.success){
-            console.log(res.data.response);
             setProjects(res.data.response);
             setProjectDesc(res.data.response[0].projectDesc);
             setProjectManager(res.data.response[0].projectManagerName);
@@ -152,7 +149,6 @@ import { invalid, valid } from 'moment';
             newValues.address.city.cityName = cities[0].cityName;
             return newValues
         })
-        console.log(formValue)
     }
 
     const handleCountryChange = e =>{
@@ -173,7 +169,6 @@ import { invalid, valid } from 'moment';
             newValues.address.city.cityName = availCities[0].cityName;
             return newValues
         })
-        console.log(formValue) 
     }
 
     const handleProvinceChange = e =>{
@@ -190,7 +185,6 @@ import { invalid, valid } from 'moment';
             newValues.address.city.cityName = availCities[0].cityName;
             return newValues
         })
-        console.log(formValue)
     }
 
     const handleCityChange = e => {
@@ -203,7 +197,6 @@ import { invalid, valid } from 'moment';
             newValues.address.city.cityName = city.cityName;
             return newValues
         })
-        console.log(formValue) 
     }
 
     const handleCompLocation = e =>{
@@ -225,7 +218,6 @@ import { invalid, valid } from 'moment';
             newValues.role = {...role};
             return newValues
         })
-        console.log(formValue)
     }
 
     const handleDepartment = e=>{
@@ -250,9 +242,6 @@ import { invalid, valid } from 'moment';
             assignEmpProj.status = true;
             return assignEmpProj
         })
-
-        console.log(e.target.value)
-
     }
 
     const handleChange = event => {
@@ -260,14 +249,11 @@ import { invalid, valid } from 'moment';
         if(name === "extension")
         {
             setFormValue({...formValue, [name]: parseInt(value)});
-            // setFormErrors(RegisterationValidation({...formValue, [name]: parseInt(value)}))
         }
         else
         {
             setFormValue({...formValue, [name]: value});
-            // setFormErrors(RegisterationValidation({...formValue, [name]: parseInt(value)}))
         }
-        console.log(formValue)
     };
 
     const handleSkillChange = event =>{
@@ -328,7 +314,6 @@ import { invalid, valid } from 'moment';
 
     const handleSalary = e =>{
         setSalary(e.target.value);
-        console.log(e.target.value);
     }
 
     const hideAlert = () => {
@@ -340,7 +325,6 @@ import { invalid, valid } from 'moment';
         http.post(GetEndPoints().addEmployee, {...formValue})
         .then((res) => {
             if(res.data.success){
-                console.log(res.data.response)
                 setAlert(
                     <SweetAlert
                         success
@@ -369,7 +353,6 @@ import { invalid, valid } from 'moment';
         http.post(GetEndPoints().addEmployeeOnProject, {...projectFormValue, employeeId})
         .then((res) => {
             if(res.data.success){
-                console.log('Project Added')
             }
         })
         .catch((err) => console.log(err.message));
@@ -385,7 +368,6 @@ import { invalid, valid } from 'moment';
           })
         .then((res) => {
             if(res.data.success){
-                console.log('Salary Added')
             }
         })
         .catch((err) => console.log(err.message));
@@ -393,7 +375,6 @@ import { invalid, valid } from 'moment';
 
     const handleSubmit = event =>{
        event.preventDefault();
-       console.log("submit")
        
        //validation
        setFormErrors(RegisterationValidation(formValue, salary))
@@ -405,9 +386,7 @@ import { invalid, valid } from 'moment';
     const submitForm = () => {
         if(Object.keys(formErrors).length === 0 && isSubmit) 
         {
-            console.log("validated")
-            console.log(formErrors)
-                AddEmployee();
+            AddEmployee();
             setFormValue(employeeInitialValue);
         }
     }
@@ -421,7 +400,6 @@ import { invalid, valid } from 'moment';
     const assignProj = e =>{
         e.preventDefault();
         assigntoggle();
-        console.log(projectFormValue);
     }
 
     const cancelProj = e =>{
@@ -445,8 +423,6 @@ import { invalid, valid } from 'moment';
 
                     <CardTitle tag="h5"> {formValue.employeeFirstname + " " + formValue.employeeLastname} </CardTitle>
                 <CardSubtitle className="mb-2 text-muted" tag="h6">
-                    {/* <small> <strong>ID: </strong>  E-{formValue.employeeId}</small> */}
-                {/* <p>Position, dept, location</p> */}
                 <p className="mb-0"><small>{formValue.role?.roleType}, {formValue.department?.departmentName}, {formValue.jobLocation?.location}</small></p>
                 <small className="lh-1 me-2"><strong>Ext: </strong> {formValue?.extension}</small>
                 </CardSubtitle>
@@ -581,7 +557,6 @@ import { invalid, valid } from 'moment';
                     <Input
                     id="lastname"
                     name="employeeLastname"
-                    // type="text"
                     value={formValue.employeeLastname}
                     onChange={handleChange}
                     invalid = {formErrors.employeeLastname? true : false}

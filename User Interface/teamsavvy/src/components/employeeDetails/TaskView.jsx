@@ -19,68 +19,13 @@ const TaskView = () => {
     const GetTasks = () =>{
         http.get(GetEndPoints().employeeTask + "/employeeId/" + params.id)
         .then((res) => {
-            console.log(res.data.response)
             setTasks(res.data.response);
         })
         .catch((err) => console.log(err.message));
     }
     useEffect(() => {
-       
         GetTasks();
-        // http.put(GetEndPoints().updateTask)
     }, [params.id])
-
-    // const saveTaskDataHandler = (enteredTaskData) => {
-    //     const taskData = {
-    //         ...enteredTaskData,
-    //         employeeId: user.employeeId
-            
-    //     }
-    //     // window.alert(taskData)
-    //     console.log("inside")
-    //     console.log(taskData)
-    //     http.put(GetEndPoints().updateTask, {...taskData}).then((res) => {
-    //         console.log(res.data.response)
-    //         // window.location.reload();
-    //     }).catch((err) => console.log(err.message));
-    // }
-
-    // const saveUpdateDataHandler = (enteredStatus) => {
-    //     console.log(enteredStatus)
-    //     console.log(taskItem)
-    //     const taskData = {
-    //         assignedBy: taskItem.assignedBy,
-    //         assignedDate: taskItem.assignedDate,
-    //         assignedTo: taskItem.assignedTo,
-    //         employeeId: taskItem.employeeId,
-    //         projectId: taskItem.projectId,
-    //         taskDesc: taskItem.taskDesc,
-    //         taskEndDate: taskItem.taskEndDate,
-    //         taskId: taskItem.taskId,
-    //         taskName: taskItem.taskName,
-    //         taskStartDate: taskItem.taskStartDate,
-    //         taskStatus: enteredStatus,
-    //         taskTotalHours: taskItem.taskTotalHours
-    //     }
-    //     console.log('Line 62' + taskData)
-    //     http.put(GetEndPoints().updateTask, { ...taskData }).then((res) => {
-    //         console.log(res.data.response)
-    //         // window.location.reload();
-    //     }).catch((err) => console.log(err.message));
-    // }
-
-
-    // const populateData = (task) => {
-    //     setModalData(task);
-    //     console.log(task)
-    //     return modalData;
-    // }
-
-    // const passDataHandler = (task) => {
-    //     setUpdateData(task);
-    //     console.log(updateData)
-    //     return updateData;
-    // }
 
     if(tasks === undefined){
         return (<div class="d-flex justify-content-center">
@@ -106,67 +51,9 @@ const TaskView = () => {
                                         (< div className="assigned-task" key={task.taskId}>
                                             <h6>{task.taskName}</h6>
                                             <p>{task.taskDesc}</p>
-
-                                            {/* <button
-                                                className='task-btn'
-                                                type="button"
-                                                onClick={() => setShow(true)}
-                                            >
-                                                MODIFY TASK
-                                            </button> */}
-                                            {/* <TaskModal
-                                                onSaveTaskData={saveTaskDataHandler}
-                                                show={show}
-                                                close={() => setShow(false)}
-                                                onOpen={() => populateData(task)} 
-                                                    
-                                                /> */}
                                             < hr />
                                         </div>) : "")
                                     )}
-                                    
-                                    {/* <div className="assigned-task">
-                                        <h6>Create model for database</h6>
-                                        <p>Tables reuqired for database are Employee levels. Payroll. Think about topics and colums.</p>
-                                        <button
-                                            className='task-btn'
-                                            type="button"
-                                            onClick={() => setShow(true)}
-                                        >
-                                            MODIFY TASK
-                                        </button>
-                                        {/* <TaskModal onSaveTaskData={saveTaskDataHandler} show={show} close={() => setShow(false)} /> */}
-                                        {/* <Link to={"#"}>MODIFY TASK</Link> */}
-                                        {/* <hr /> */}
-                                    {/* </div>
-                                    <div className="assigned-task">
-                                        <h6>Create model for database</h6>
-                                        <p>Tables reuqired for database are Employee levels. Payroll. Think about topics and colums.</p>
-                                        <button
-                                            className='task-btn'
-                                            type="button"
-                                            onClick={() => setShow(true)}
-                                        >
-                                            MODIFY TASK
-                                        </button>
-                                        {/* <TaskModal onSaveTaskData={saveTaskDataHandler} show={show} close={() => setShow(false)} /> */}
-                                        {/* <Link to={"#"}>MODIFY TASK</Link> */}
-                                        {/* <hr /> */}
-                                    {/* </div>
-                                    <div className="assigned-task"> */}
-                                        {/* <h6>Create model for database</h6>
-                                        <p>Tables reuqired for database are Employee levels. Payroll. Think about topics and colums.</p>
-                                        <button
-                                            className='task-btn'
-                                            type="button"
-                                            onClick={() => setShow(true)}
-                                        >
-                                            MODIFY TASK
-                                        </button> */}
-                                        {/* <TaskModal onSaveTaskData={saveTaskDataHandler} show={show} close={() => setShow(false)} /> */}
-                                        {/* <Link to={"#"}>MODIFY TASK</Link> */}
-                                        {/* <hr /> */}
-                                    {/* </div>  */}
                                 </div>
                             </div>
                         </div>
@@ -180,38 +67,10 @@ const TaskView = () => {
                                                 <h6>{task.taskName}</h6>
                                                 <p>{task.taskDesc}</p>
                                                 <p><i className="tim-icons icon-refresh-01" /><QueryBuilderIcon />  Hours {task.taskTotalHours}</p>
-                                                {/* <button
-                                                    className='task-btn'
-                                                    type="button"
-                                                    onClick={() => {setShowUpdate(true);setTaskItem(task)}}
-                                                >
-                                                    UPDATE STATUS
-                                                </button> */}
-                                                {/* <UpdateStatusModal 
-                                                onSaveTaskData={saveUpdateDataHandler} 
-                                                
-                                                show={showUpdate} 
-                                                close={() => setShowUpdate(false)}
-                                                 
-                                                 /> */}
                                                 <hr />
                                             </div>): "")
                                     ))}
                                     
-                                    {/* <div className="in-progress-task">
-                                        <h6>Create model for database</h6>
-                                        <p>Tables reuqired for database are Employee levels. Payroll. Think about topics and colums.</p>
-                                        <p><i className="tim-icons icon-refresh-01" /><QueryBuilderIcon />  Hours 12</p>
-                                        <button
-                                            className='task-btn'
-                                            type="button"
-                                            onClick={() => setShowUpdate(true)}
-                                        >
-                                            UPDATE STATUS
-                                        </button>
-                                        <UpdateStatusModal onSaveTaskData={saveTaskDataHandler} show={showUpdate} close={() => setShowUpdate(false)} />
-                                        <hr />
-                                    </div> */}
                                 </div>
                             </div>
                         </div>

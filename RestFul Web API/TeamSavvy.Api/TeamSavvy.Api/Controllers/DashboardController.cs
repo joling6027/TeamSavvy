@@ -8,6 +8,7 @@ using TeamSavvy.Api.BusinessModel.DataTransferModel;
 using TeamSavvy.Api.BusinessModel.Helper;
 using TeamSavvy.Api.Entities.Controllers;
 using TeamSavvy.Api.Services.IServices;
+using TeamSavvy.Api.Services.Services;
 
 namespace TeamSavvy.Api.Web.Controllers
 {
@@ -271,6 +272,123 @@ namespace TeamSavvy.Api.Web.Controllers
             else
             {
                 response = Ok(new ResponseMessage(true, res, new Message(HttpStatusCode.OK)));
+            }
+            return response;
+        }
+
+        [Route("charts/{id:int}")]
+        [HttpGet /*Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = Access.Employee)*/]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ResponseMessage), 200)]
+        [ProducesResponseType(typeof(ResponseMessage), 400)]
+        [ProducesResponseType(typeof(ResponseMessage), 401)]
+        [ProducesResponseType(typeof(ResponseMessage), 404)]
+        public ActionResult<List<TeamMembers>> GetCharts([FromRoute] int id)
+        {
+            ActionResult response;
+            ResponseMessage responseMessage;
+            var res = _dashboardService.GetWidegts(id);
+            if (res == null)
+            {
+                response = NotFound(new ResponseMessage(false, null, new Message(HttpStatusCode.NotFound, $"There is no record in database")));
+            }
+            else
+            {
+                response = Ok(new ResponseMessage(true, res, new Message(HttpStatusCode.OK)));
+            }
+            return response;
+        }
+
+        [Route("deleteWidget/{id}")]
+        [HttpDelete]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ResponseMessage), 200)]
+        [ProducesResponseType(typeof(ResponseMessage), 400)]
+        [ProducesResponseType(typeof(ResponseMessage), 401)]
+        [ProducesResponseType(typeof(ResponseMessage), 404)]
+        public IActionResult Delete([FromRoute] int id)
+        {
+            ActionResult response;
+            ResponseMessage responseMessage;
+            if (!ModelState.IsValid)
+            {
+                responseMessage = new ResponseMessage(false, null, new Message(HttpStatusCode.BadRequest, "There is invalid entry in employee record."));
+                response = BadRequest(responseMessage);
+            }
+            else
+            {
+                bool isSuccess = _dashboardService.DeleteWidget(id);
+                if (!isSuccess)
+                {
+                    response = NotFound(new ResponseMessage(false, null, new Message(HttpStatusCode.NotFound, "No record is deleted in database.")));
+                }
+                else
+                {
+                    response = Ok(new ResponseMessage(true, isSuccess, new Message(HttpStatusCode.OK, "Deleted! Your record has been deleted. success")));
+                }
+            }
+            return response;
+        }
+
+        [Route("addWidget")]
+        [HttpPost]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ResponseMessage), 200)]
+        [ProducesResponseType(typeof(ResponseMessage), 400)]
+        [ProducesResponseType(typeof(ResponseMessage), 401)]
+        [ProducesResponseType(typeof(ResponseMessage), 404)]
+        public ActionResult<int> AddWidget([FromBody] WidgetDto widget)
+        {
+            ActionResult response;
+            ResponseMessage responseMessage;
+            if (!ModelState.IsValid)
+            {
+                responseMessage = new ResponseMessage(false, null, new Message(HttpStatusCode.BadRequest, "There is invalid entry in widget record."));
+                response = BadRequest(responseMessage);
+            }
+            else
+            {
+                var widgt = _dashboardService.AddWidget(widget);
+                if (!widgt)
+                {
+                    response = NotFound(new ResponseMessage(false, null, new Message(HttpStatusCode.NotFound, "No record is add in database.")));
+                }
+                else
+                {
+                    response = Ok(new ResponseMessage(true, widgt, new Message(HttpStatusCode.OK)));
+                }
+            }
+
+            return response;
+        }
+
+        [Route("dashbordId/{id:int}")]
+        [HttpGet /*Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = Access.Employee)*/]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ResponseMessage), 200)]
+        [ProducesResponseType(typeof(ResponseMessage), 400)]
+        [ProducesResponseType(typeof(ResponseMessage), 401)]
+        [ProducesResponseType(typeof(ResponseMessage), 404)]
+        public ActionResult<List<Project>> GetDashboardId([FromRoute] int id)
+        {
+            ActionResult response;
+            ResponseMessage responseMessage;
+            if (id <= 0)
+            {
+                responseMessage = new ResponseMessage(false, null, new Message(HttpStatusCode.BadRequest, "Please enter valid id."));
+                response = BadRequest(responseMessage);
+            }
+            else
+            {
+                var res = _dashboardService.GetDashBoardId(id);
+                if (res < 0)
+                {
+                    response = NotFound(new ResponseMessage(false, null, new Message(HttpStatusCode.NotFound, $"There is no record in database against id {id}")));
+                }
+                else
+                {
+                    response = Ok(new ResponseMessage(true, res, new Message(HttpStatusCode.OK)));
+                }
             }
             return response;
         }

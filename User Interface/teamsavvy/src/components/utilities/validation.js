@@ -23,7 +23,6 @@ export function LoginValidation(values){
 export function RegisterationValidation(values, salary){
 
     const errors = {};
-    console.log('inside')
     if(!values.employeeFirstname || values.employeeFirstname === undefined)
     {
         errors.employeeFirstname = "Please enter first name.";
@@ -96,26 +95,12 @@ export function RegisterationValidation(values, salary){
         errors.password = "Please enter a valid password with min 8 letter password, with at least a special character, upper and lower case letters and a number";
     }
 
-    // if(!values.confirmPassword){
-    //     errors.confirmPassword = "Please enter the confirm password";
-    // }
-    // else if(!validatePassword(values.confirmPassword)){
-    //     errors.confirmPassword = "Please enter a valid confirm password";
-    // }
-
-    // if(values.password !== values.confirmPassword)
-    // {
-    //     errors.confirmPassword = "Please enter same password and confirm password."
-    // }
-
     return errors;
 }
 
 export function ProfileValidation(values){
 
     const errors = {};
-    console.log('inside')
-    console.log(values)
     if(!values.employeeFirstname || values.employeeFirstname === undefined)
     {
         errors.employeeFirstname = "Please enter first name.";

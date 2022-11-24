@@ -1,28 +1,12 @@
-import React, { Component, useState  } from 'react';
-import { Link, Route, useParams, useNavigate, useLocation } from "react-router-dom";
+import React, { useState  } from 'react';
+import {useNavigate, useLocation } from "react-router-dom";
 import "../../assets/css/bootstrap.min.css";
-import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import './header.css';
-// import {Link} from 'react-router-dom';
 
 import {
   Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  NavbarText,
-  Badge,
   Breadcrumb,
   BreadcrumbItem,
-  Button,
   Alert, 
   Input
 } from 'reactstrap';
@@ -32,13 +16,13 @@ import {
 } from "reactstrap";
 
 const Header = () => {
-    // const match = useMatch();
-    // console.log(match.url);
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const pathnames = pathname.split("/").filter(Boolean);
-  console.log(pathnames)
     const [isOpen, setIsOpen] = useState(false);
+    const containsNumbers = (str) => {
+      return /[0-9]/.test(str);
+    }
     return (
         <>
         <Container className="p-4 ">
@@ -54,6 +38,7 @@ const Header = () => {
             {pathnames.map((name, index) => {
           const routeTo =  `/${pathnames.slice(0, index + 1).join("/")}`;
           console.log(routeTo)
+          console.log(containsNumbers(routeTo))
           const isLast = index === pathnames.length -1;
           return isLast? (
             <BreadcrumbItem className="text-decoration-none"  key={name}>{name}</BreadcrumbItem>
@@ -85,7 +70,7 @@ const Header = () => {
   </BreadcrumbItem> */}
 </Breadcrumb>
         
-        </div>
+</div>
         <div className= "float-end d-flex align-items-top">
             {/* <span className="me-3"  onClick={function noRefCheck(){}}>
               <SearchOutlinedIcon/>
@@ -98,25 +83,24 @@ const Header = () => {
          >
 <Input type="search" placeholder="search"/>   
  </Alert>
-  </Collapse>
-         
-        <Navbar className="p-0">
-          <Nav className="me-auto p-0" navbar>
-            <UncontrolledDropdown nav direction="start">
-              <DropdownToggle nav className="p-0">
-                <NotificationsNoneOutlinedIcon/>
-                <Badge className="notif-badge bg-danger p-1 rounded-circle position-absolute d-inline-block"> 2</Badge>
-              </DropdownToggle>
-              <DropdownMenu right>
-                <DropdownItem>Notification 1</DropdownItem>
-                <DropdownItem>Notification 2</DropdownItem>
-                {/* <DropdownItem divider />
-                <DropdownItem></DropdownItem> */}
-              </DropdownMenu>
-            </UncontrolledDropdown>
-          </Nav>
-      </Navbar>
-      <div>
+            </Collapse>
+            {/* <Navbar className="p-0">
+              <Nav className="me-auto p-0" navbar>
+                <UncontrolledDropdown nav direction="start">
+                  <DropdownToggle nav className="p-0">
+                    <NotificationsNoneOutlinedIcon/>
+                    <Badge className="notif-badge bg-danger p-1 rounded-circle position-absolute d-inline-block"> 2</Badge>
+                  </DropdownToggle>
+                  <DropdownMenu right>
+                    <DropdownItem>Notification 1</DropdownItem>
+                    <DropdownItem>Notification 2</DropdownItem>
+                    {/* <DropdownItem divider />
+                    <DropdownItem></DropdownItem> */}
+                  {/* </DropdownMenu>
+                </UncontrolledDropdown>
+              </Nav> */}
+            {/* </Navbar>  */}
+        <div>
 </div>
 
         </div>

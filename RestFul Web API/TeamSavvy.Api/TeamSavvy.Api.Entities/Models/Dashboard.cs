@@ -17,9 +17,8 @@ namespace TeamSavvy.Api.Entities.Models
         public int DashboardId { get; set; }
         public int EmployeeId { get; set; }
         public string CreatedBy { get; set; }
-        public DateTime CreatedOn { get; set; }
+        public string CreatedOn { get; set; }
         public byte IsDeleted { get; set; }
-        public int CreatedById { get; set; }
 
         public virtual Employee Employee { get; set; }
         public virtual ICollection<Widget> Widget { get; set; }
