@@ -169,12 +169,14 @@ namespace TeamSavvy.Api.Services.Services
                         var tasks = _unitOfWork.Context.Task.Where(t => t.ProjectId == project.ProjectId).ToList().Count();
                         projects.Add(new Project
                         {
-                            ProjectId = project.ProjectId,
-                            ProjectBudget = project.ProjectBudget,
-                            ProjectDesc = project.ProjectDesc,
+                            Id = project.ProjectId,
+                            ProjectManagerId = project.ProjectManagerId,
+                            ProjectManagerName = project.ProjectManagerName,
+                            Budget = project.ProjectBudget,
+                            Description = project.ProjectDesc,
                             ProjectName = project.ProjectName,
-                            TotalTasks = tasks,
-                            TotalTeamMember = totalTeamMember
+                            Tasks = tasks,
+                            Team = totalTeamMember
                         });
                     }
                 }
@@ -202,12 +204,14 @@ namespace TeamSavvy.Api.Services.Services
                         var tasks = _unitOfWork.Context.Task.Where(t => t.ProjectId == project.ProjectId).ToList().Count();
                         projects.Add(new Project
                         {
-                            ProjectId = project.ProjectId,
-                            ProjectBudget = project.ProjectBudget,
-                            ProjectDesc = project.ProjectDesc,
+                            Id = project.ProjectId,
+                            ProjectManagerId = project.ProjectManagerId,
+                            ProjectManagerName = project.ProjectManagerName,
+                            Budget = project.ProjectBudget,
+                            Description = project.ProjectDesc,
                             ProjectName = project.ProjectName,
-                            TotalTasks = tasks,
-                            TotalTeamMember = totalTeamMember
+                            Tasks = tasks,
+                            Team = totalTeamMember
                         });
                     }
                 }

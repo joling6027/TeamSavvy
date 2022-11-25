@@ -6,11 +6,13 @@ namespace TeamSavvy.Api.BusinessModel.DashboardModels
 {
     public class Project
     {
-        public int ProjectId { get; set; }
+        public int Id { get; set; }
+        public int ProjectManagerId { get; set; }
         public string  ProjectName { get; set; }
-        public int TotalTasks { get; set; }
-        public int TotalTeamMember { get; set; }
-        public string ProjectBudget { get; set; }
-        public string ProjectDesc { get; set; }
+        public string ProjectManagerName { get; set; }
+        public int Tasks { get; set; }
+        public int Team { get; set; }
+        public string Budget { get; set; }
+        public string Description { get; set; }
     }
 }
