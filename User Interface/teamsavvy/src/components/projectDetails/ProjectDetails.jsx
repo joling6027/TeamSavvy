@@ -151,15 +151,22 @@ const ProjectDetails = () => {
         console.log(managerId)
         http.get(GetEndPoints().employeeTask + "/tasklist/" + managerId)
             .then((res) => {
-                console.log(res.data.response)
-                let tasksById = [...res.data.response].filter((task) => task.projectId == params.id);
-                // console.log(tasksById)
-                setTasks(tasksById)
-                let completedTasks = [...tasksById].filter((task) => task.taskStatus === "Completed");
-                setCompletedTasks(completedTasks)
+                console.log(res);
+                if(res.data.success){
+                    console.log(res.data.response)
+                    let tasksById = [...res.data.response].filter((task) => task.projectId == params.id);
+                    // console.log(tasksById)
+                    setTasks(tasksById)
+                    let completedTasks = [...tasksById].filter((task) => task.taskStatus === "Completed");
+                    setCompletedTasks(completedTasks)
                 // console.log(completedTasks)
+                }
             }).catch((err) => {
-                console.log(err.message);
+                // console.log(err);
+                if(err.response.status === 404){
+                    setTasks([]);
+                    setCompletedTasks([]);
+                }
             })
     }
 
@@ -477,6 +484,9 @@ const ProjectDetails = () => {
                 <span class="sr-only">No project detail</span>
             </div>
         </div>);
+    }
+    else if(tasks === undefined){
+        return(<div>no project details</div>)
     }
     else if(user.role === "Manager" && project.projectManagerId === user.employeeId && teamMembers === undefined){
         // console.log(user.role);
