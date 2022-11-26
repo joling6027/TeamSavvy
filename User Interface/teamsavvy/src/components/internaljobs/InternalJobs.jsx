@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import './internaljobs.css'
 import '../../assets/css/bootstrap.min.css'
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import {
     Container, Row, Col, Card, CardImg, CardText, CardBody, CardLink,
@@ -60,6 +61,11 @@ const InternalJobs = () => {
     const [show, setShow] = useState(false);
     const toggleApplyJob = () => {
         setShow(!show)
+    }
+    //modal for delete job
+    const [delJobModal, setDelJobModal] = useState(false);
+    const toggleDelJob = () => {
+        setDelJobModal(!delJobModal);
     }
 
     //submit job apply
@@ -126,8 +132,7 @@ const InternalJobs = () => {
         currency: 'USD',
     })
 
-    // console.log(user);
-    useEffect(() => {
+    const getJobs = () => {
         http.get(GetEndPoints().internalJob)
             .then((res) => {
                 if (res.data.success) {
@@ -140,6 +145,11 @@ const InternalJobs = () => {
                 }
             })
             .catch((err) => console.log(err.message))
+    }
+
+    // console.log(user);
+    useEffect(() => {
+        getJobs();
     }, [])
 
     // handle skills
@@ -317,19 +327,66 @@ const InternalJobs = () => {
 
             // clearCreateJobInput();
             e.target.reset();
-
-
+            setAlert(
+                <SweetAlert
+                    success
+                    style={{ display: "block", marginTop: "-100px" }}
+                    title="Job Created!"
+                    onConfirm={() => {hideAlert(); getJobs()}}
+                    onCancel={() => hideAlert()}
+                    confirmBtnBsStyle="success"
+                    btnSize=""
+                >
+                </SweetAlert>
+            )
         }
-       
 
+    }
+
+    const deleteJobAlert = (jobId) => {
+        console.log(jobId)
+        setAlert(
+            <SweetAlert
+                warning
+                showCancel
+                confirmBtnText="Yes, delete it!"
+                confirmBtnBsStyle="danger"
+                title="Are you sure?"
+                style={{ display: "block", marginTop: "-100px" }}
+                onConfirm={() => deleteJob(jobId)}
+                onCancel={() => hideAlert()}
+                // confirmBtnBsStyle="success"
+                btnSize=""
+            >
+            </SweetAlert>
+
+        )
+    }
+
+    const deleteJob = (jobId) => {
+        http.delete(GetEndPoints().deleteJob + "/" + jobId)
+        .then((res) => {
+            if(res.data.success){
+                console.log("delete successfully.")
+            //     setAlert(
+            //         <SweetAlert success title="Job deleted successfully!" onConfirm={() => {hideAlert();getJobs()}
+            // } onCancel = {() => hideAlert() }>
+            //         </SweetAlert>
+            //     )
+                hideAlert()
+                getJobs();
+            }
+
+        }).catch((err) => console.log(err.message))
+        
     }
 
 
 
     if (jobItem === undefined) {
-        return (<div class="d-flex justify-content-center">
-            <div class="spinner-grow text-success" style={{width: "3rem", height: "3rem"}} role="status">
-            <span class="sr-only">No Applicant applied for this position yet.</span>
+        return (<div className="d-flex justify-content-center">
+            <div className="spinner-grow text-success" style={{width: "3rem", height: "3rem"}} role="status">
+                <span className="sr-only">No Applicant applied for this position yet.</span>
             </div>
         </div>);
     } else {
@@ -346,25 +403,43 @@ const InternalJobs = () => {
                                         <CardTitle className='job-card-title'>Jobs
                                             {(user.role === 'HR' || user.role === 'Admin' ? 
                                             (<Button className='createAndApply-btn' color="link" onClick={() => { setIsCreateJob(true); setValidate(); setJobName(); setJobDetail(); setJobResponsibility(); setJobPay(); setJobDeadline(); setSelectOptions([])}}>
-                                                <AddOutlinedIcon /> Create Job
+                                                <AddCircleIcon /> Create Job
                                             </Button>) : "")}
                                         </CardTitle>
                                         {jobs && jobs.map((job) => (
-                                            <Card className='job-card' key={job.jobId}>
+                                            <Card className='job-card' key={Math.random()} id={job.jobId}>
                                                 <CardSubtitle className='job-subtitle'>{job.jobPosition}</CardSubtitle>
                                                 <CardText>{(job.details).substring(1, 100) + "..."}</CardText>
                                                 {(user.role === 'HR' || user.role === 'Admin' ? (
                                                     /* <Button className='btn-view-job-detail' color="link"
                                                     onClick={() => { setJobItem(job) }}>VIEW</Button> */
-
+                                                    <>
                                                     < Button className='btn-view-job-detail' color="link"
                                                         onClick={() => { setJobItem(job); setIsCreateJob(false) }}>VIEW</Button>
+                                                    <Button className='btn-view-job-detail' color="text-danger"
+                                                        onClick={() => deleteJobAlert(job.jobId)}>DEL</Button>
+                                                    {/* <Modal isOpen={delJobModal} toggle={toggleDelJob} backdrop="static" centered>
+                                                        <ModalBody>
+                                                            <h4>Are you sure you want to delete this job?</h4>
+                                                            <div className="d-flex justify-content-center mt-5" id={job.jobId}>
+                                                                    <Button className="me-3" color="primary" onClick={(e) => console.log(e)}>
+                                                                    Confirm
+                                                                </Button>
+                                                                    <Button color="secondary" onClick={() => setDelJobModal(false)} >
+                                                                    Cancel
+                                                                </Button>
+                                                            </div>
+                                                        </ModalBody>
+                                                    </Modal> */}
+                                                    </>
                                                 )
                                                     :
                                                     (
+                                                        <>
                                                         <Button className='btn-view-job-detail' color="link"
                                                             onClick={() => { setJobItem(job); setIsCreateJob(false) }}>VIEW</Button>
-
+                                                        
+                                                        </>
                                                     ))}
                                                 <hr />
                                             </Card>))}
@@ -446,7 +521,7 @@ const InternalJobs = () => {
 
                                                                 </Modal>
                                                             </div>
-                                                            <Link to="" className="alert-link text-decoration-none text-center" onClick={toggle}> <AddOutlinedIcon /> ADD</Link>
+                                                            <Link to="" className="alert-link text-decoration-none text-center" onClick={toggle}> <AddCircleIcon /> ADD</Link>
                                                             <Row>
                                                                 <Col>
                                                                     <Label for='task-title'>Pay per month</Label>
@@ -461,7 +536,7 @@ const InternalJobs = () => {
 
                                                             </Row>
                                                             <Col>
-                                                                <Button type='submit' style={{ color: '#367FFF', backgroundColor: 'white', border: 'none', textTransform: 'uppercase', float: 'right' }}>Create Job</Button>{''}
+                                                                <Button type='submit' onClick={() => submitHandler} style={{ color: '#367FFF', backgroundColor: 'white', border: 'none', textTransform: 'uppercase', float: 'right' }}>Create Job</Button>{''}
                                                                 <Button type='reset' style={{ color: '#FD8787', backgroundColor: 'white', border: 'none', textTransform: 'uppercase', float: 'right' }} onClick={() => setIsCreateJob(false)}>Cancel</Button>
                                                             </Col>
                                                         </Container>
@@ -472,7 +547,7 @@ const InternalJobs = () => {
                                             (<>
                                                 <CardTitle className='job-card-title'>
                                                     {(user.role === 'HR' || user.role === 'Admin' ? 
-                                                        (<><Link className='createAndApply-btn' color="link" to={`/jobs/jobApplied/${jobItem.jobId}`} state={{ jobId:jobItem.jobId }}>Applied</Link>
+                                                        (<><Link className='createAndApply-btn' color="link" to={`/jobs/${jobItem.jobId}`} state={{ jobId:jobItem.jobId }}>Applied</Link>
                                                             <Button type='button' className='createAndApply-btn' color="link" onClick={toggleApplyJob}>Apply Now</Button></>) : (<Button type='button' className='createAndApply-btn' color="link" onClick={toggleApplyJob}>Apply Now</Button>))}
                                                     {jobItem.jobPosition}
                                                     <Modal isOpen={show} toggle={toggleApplyJob} backdrop="static" centered>
@@ -496,7 +571,7 @@ const InternalJobs = () => {
                                                 <List>
                                                     {/* {jobItem.responsibilities} */}
                                                     {(jobItem.responsibilities).trim().split(". ").map((line) => {
-                                                        return <li>{line}</li>
+                                                        return <li key={Math.random()}>{line}</li>
                                                     })}
                                                 </List>
                                                 <CardSubtitle className='job-subtitle'>Skill Required</CardSubtitle>
@@ -507,16 +582,6 @@ const InternalJobs = () => {
                                                             return <Badge className="skillPill rounded-pill me-2 mb-3" key={skill.skills.skillId} pill>{skill.skills.skillName}</Badge>
                                                         }))
                                                         : (<p>NONE</p>))}
-                                                    {/* <Badge className="skillPill rounded-pill me-2 mb-3" pill> C# </Badge>
-                                                <Badge className="skillPill rounded-pill me-2 mb-3" pill> Java </Badge>
-                                                <Badge className="skillPill rounded-pill me-2 mb-3" pill> Manual Testing </Badge>
-                                                <Badge className="skillPill rounded-pill me-2 mb-3" pill> Automation Testing </Badge>
-                                                <Badge className="skillPill rounded-pill me-2 mb-3" pill> Manual Testing </Badge>
-                                                <Badge className="skillPill rounded-pill me-2 mb-3" pill> C# </Badge>
-                                                <Badge className="skillPill rounded-pill me-2 mb-3" pill> Java </Badge>
-                                                <Badge className="skillPill rounded-pill me-2 mb-3" pill> Manual Testing </Badge>
-                                                <Badge className="skillPill rounded-pill me-2 mb-3" pill> Automation Testing </Badge>
-                                                <Badge className="skillPill rounded-pill me-2 mb-3" pill> Manual Testing </Badge> */}
                                                 </div>
 
                                                 <CardSubtitle className='job-subtitle job-detail-payAndDealine'><span>Pay: {formatter.format(jobItem.salary)}</span>
