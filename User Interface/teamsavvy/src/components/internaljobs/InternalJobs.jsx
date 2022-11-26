@@ -254,11 +254,12 @@ const InternalJobs = () => {
 
         const DateEnteredDeadline = Date.parse(e.target.value)
         const DateToday = Date.parse(today);
-        if (e.target.value !== '' || DateEnteredDeadline < DateToday) {
+        if (e.target.value !== '' && DateEnteredDeadline < DateToday) {
+            setJobDeadlineValidate(true)
+        } else {
             setJobDeadlineValidate(false)
             setJobDeadline(e.target.value);
-        } else {
-            setJobDeadlineValidate(true)
+
         }
     }
 
@@ -322,23 +323,24 @@ const InternalJobs = () => {
                     if (res.data.success) {
                         console.log("ok");
                         // setIsCreateJob(false);
+                        setAlert(
+                            <SweetAlert
+                                success
+                                style={{ display: "block", marginTop: "-100px" }}
+                                title="Job Created!"
+                                onConfirm={() => { hideAlert(); getJobs(); setIsCreateJob(true); setValidate(); setJobName(); setJobDetail(); setJobResponsibility(); setJobPay(); setJobDeadline(); setSelectOptions([]) }}
+                                onCancel={() => hideAlert()}
+                                confirmBtnBsStyle="success"
+                                btnSize=""
+                            >
+                            </SweetAlert>
+                        )
                     }
                 }).catch((err) => console.log(err.message));
 
             // clearCreateJobInput();
             e.target.reset();
-            setAlert(
-                <SweetAlert
-                    success
-                    style={{ display: "block", marginTop: "-100px" }}
-                    title="Job Created!"
-                    onConfirm={() => {hideAlert(); getJobs()}}
-                    onCancel={() => hideAlert()}
-                    confirmBtnBsStyle="success"
-                    btnSize=""
-                >
-                </SweetAlert>
-            )
+            
         }
 
     }
