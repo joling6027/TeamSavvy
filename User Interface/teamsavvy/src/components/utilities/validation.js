@@ -1,20 +1,16 @@
 export function LoginValidation(values){
     const errors = {};
-
-    if(!values.email)
+    console.log(values)
+    if(isNaN(values.employeeId) || values.employeeId <= 0)
     {
-        errors.email = "Please enter email.";
-    }
-    else if(!validateEmail(values.email))
-    {
-        errors.email = "Please enter a valid email.";
+        errors.employeeId = "Please valid employee Id.";
     }
 
     if(!values.password){
         errors.password = "Please enter the password";
     }
     else if(!validatePassword(values.password)){
-        errors.password = "Please enter a valid password";
+        errors.password = "Please enter a valid password  with min 8 letter password, with at least a symbol, upper and lower case letters and a number";
     }
 
     return errors;
@@ -138,14 +134,14 @@ export function ForgetPasswordValidation(values){
         errors.forgetPassword = "Please enter the password";
     }
     else if(!validatePassword(values.forgetPassword)){
-        errors.forgetPassword = "Please enter a valid password";
+        errors.forgetPassword = "Please enter a valid password  with min 8 letter password, with at least a symbol, upper and lower case letters and a number";
     }
 
     if(!values.forgetConfirmPassword){
         errors.forgetConfirmPassword = "Please enter the confirm password";
     }
     else if(!validatePassword(values.forgetConfirmPassword)){
-        errors.forgetConfirmPassword = "Please enter a valid confirm password";
+        errors.forgetConfirmPassword = "Please enter a valid password  with min 8 letter password, with at least a symbol, upper and lower case letters and a number";
     }
 
     if(values.forgetPassword !== values.forgetConfirmPassword)

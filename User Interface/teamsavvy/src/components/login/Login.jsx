@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import loginbg from '../../assets/img/card-bg.png';
 import forgetpass from '../forgetPassword/ForgetPasswordOtp';
 import './login.css';
+import { LoginValidation } from '../utilities/validation';
 import {
-
     Button,
     Card,
     CardBody,
@@ -18,14 +18,23 @@ import AuthService from '../services/authService';
 import { GetEndPoints } from '../utilities/EndPoints';
 
 const Login = () => {
+
   const {http, setToken, setDropdownCont, setSkillLst} = AuthService();
   const [employeeId, setEmployeeId] = useState();
   const [password, setPassword] = useState();
-
-  
+  const [isSubmit, setIsSubmit] = useState(false);
+  const [formErrors, setFormErrors] = useState({});
   
   const handleSubmit = (e) =>{
     e.preventDefault();
+    setFormErrors(LoginValidation({employeeId: parseInt(employeeId), password: password}));
+    setIsSubmit(true);
+    console.log(employeeId)
+    console.log(formErrors);
+  };
+
+  if(Object.keys(formErrors).length === 0 && isSubmit) 
+  {
     http.post(GetEndPoints().login, {employeeId: parseInt(employeeId), password: password})
         .then((res) =>{
            if(res.data.success){
@@ -51,8 +60,7 @@ const Login = () => {
           .catch((err) => console.log(err.message))
         )
         .catch((err) => console.log(err.message));
-   
-  };
+  }
 
     return (
       <>
@@ -66,11 +74,13 @@ const Login = () => {
                 <Label htmlFor="employeeId" className="form-label mt-2">Employee Id</Label>
                   <Input type="text" className="form-control" id="employeeId" name='employeeId'
                   onChange={e => setEmployeeId(e.target.value)}/>
+                   <span className='text-danger'>{formErrors.employeeId}</span>
                 </FormGroup>
                 <FormGroup className="mb-5">
                 <Label htmlFor="password" className="form-label mt-2">Password</Label>
                   <Input type="password" className="form-control " id="password" name='password'
                   onChange={e => setPassword(e.target.value)}/>
+                  <span className='text-danger'>{formErrors.password}</span>
                 <Link to={'/forgetPassword/' + employeeId} className="alert-link mb-5 font-weight-light float-end text-secondary" >
                   <small>Forgot Password?</small></Link>
                 </FormGroup>

@@ -15,12 +15,17 @@ import {
   import SweetAlert from "react-bootstrap-sweetalert";
   import AuthService from '../services/authService';
   import { GetEndPoints } from '../utilities/EndPoints';
+  import { ForgetPasswordValidation } from '../utilities/validation';
 
 const ResetPassword = () => {
   
   const {http} = AuthService();
   const [formValue, setFormValue] = useState(changePasswordInitialValue);
   const [alert, setAlert] = useState(null);
+  const [isSubmit, setIsSubmit] = useState(false);
+  const [formErrors, setFormErrors] = useState({});
+  
+
   const params = useParams();
   const navigate = useNavigate();
   const handleChange = e => {
@@ -55,10 +60,19 @@ const ResetPassword = () => {
     })
     .catch((err) => console.log(err.message));
   }
+
   const handleSubmit = e =>{
     e.preventDefault();
+    setFormErrors(ForgetPasswordValidation({ forgetPassword : formValue.newpassword, forgetConfirmPassword:formValue.confirmpassword}));
+    setIsSubmit(true);
+    console.log(formErrors);
+  }
+
+  if(Object.keys(formErrors).length === 0 && isSubmit) 
+  {
     ChangePassword();
   }
+
   return (  <>
     <div className="loginBody d-inline-block position-absolute h-100 w-100">
       {alert}
@@ -72,12 +86,14 @@ const ResetPassword = () => {
             <Input type="password" className="form-control" id="newpassword" name='newpassword' 
             value={formValue.newpassword}
             onChange={handleChange}/>
+            <span className='text-danger'>{formErrors.forgetPassword}</span>
           </FormGroup>
           <FormGroup className="mb-5">
           <Label htmlFor="confirmpassword" className="form-label mt-2">Confirm Password</Label>
             <Input type="password" className="form-control " id="confirmpassword" 
             name='confirmpassword' value={formValue.confirmpassword}
             onChange={handleChange}/>
+            <span className='text-danger'>{formErrors.forgetConfirmPassword}</span>
           </FormGroup>
           <div className="w-100 text-center d-inline-block">
           <Button onClick={handleSubmit} className="btn bg-primary">CONTINUE</Button>

@@ -21,11 +21,7 @@ import { EmployeeQueries } from './employeeDropdown';
 import SweetAlert from "react-bootstrap-sweetalert";
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import {
-    ArcElement,
-    LineElement,
-    BarElement,
-    PointElement,
+import { ArcElement, LineElement, BarElement, PointElement,
     BarController,
     BubbleController,
     DoughnutController,
@@ -180,7 +176,7 @@ const Dashboard = () => {
     }
 
     const GetProjects = () => {
-        http.get(GetEndPoints().projectsByEmployeeId+'/'+user.employeeId)
+        http.get(GetEndPoints().projects+'/'+user.employeeId)
         .then((res) =>{
            if(res.data.success){
             setTotalProjects(res.data.response.length);
@@ -662,7 +658,8 @@ else{
                                     onChange={handleChange}
                                     >
                                    {
-                                        dd_data && dd_data.map((obj, index) => <option key={index} value={obj.key}>{obj.value}</option>)
+                                        dd_data && dd_data.map((obj, index) => <option key={index} value={obj.key}>{obj.value}
+                                        </option>)
                                    }
                                     </Input>
                                 </FormGroup>
@@ -765,21 +762,6 @@ else{
                                 </Card>
                             </Tab>
                         </Tabs>
-                                
-                              {/* <div className="d-flex align-items-center justify-content-start chartIcons ">
-                                    <span className="prCard p-2 me-3 rounded"> <BarChartIcon color="primary"/></span>
-                                    <span className="prCard p-2 me-3 rounded"> <TimelineIcon color="primary"/></span>
-                                    <span className="prCard p-2 rounded"> <PieChartIcon color="primary"/></span>
-                                </div>  */}
-                                 {/* <Card className="py-5 px-3 border-0 mt-4">
-                                    <Bar data={data}  options={options}/>
-                                </Card> */}
-                                {/* <Card className=" py-5 px-3 border-0 mt-4">
-                                    <Line data={data} />
-                                </Card>
-                                <Card className="py-5 px-3 border-0 mt-4">
-                                    <Pie data={data} />
-                                </Card> */}
                     </Row>
                     </>
                 )

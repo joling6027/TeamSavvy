@@ -29,6 +29,7 @@ import { GetEndPoints } from '../utilities/EndPoints';
       .then((res) => {
           if(res.data.success){
              setOtp(res.data.response.result)
+             console.log(res.data.response.result)
           }
       })
   }
