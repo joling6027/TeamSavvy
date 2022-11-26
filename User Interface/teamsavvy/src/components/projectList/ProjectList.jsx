@@ -20,6 +20,8 @@ import {
 import { Link } from "react-router-dom";
 import { tableItems } from "./TableItems";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import DeleteIcon from '@mui/icons-material/Delete';
+import SweetAlert from "react-bootstrap-sweetalert";
 import "./projectList.css";
 import AuthService from "../services/authService";
 import { GetEndPoints } from "../utilities/EndPoints";
@@ -37,12 +39,12 @@ const ProjectList = () => {
     const columns = [
         { field: "id", headerName: "Id" },
         {
-            field: "projectname",
+            field: "projectName",
             headerName: "Project name",
             sortable: true,
             editable: true,
         },
-        { field: "tasks", headerName: "Tasks" },
+        { field: "tasks", headerName: "Tasks"},
         { field: "team", headerName: "Team members" },
         { field: "projectManagerName", headerName: "Manager Name" },
         { field: "projectManagerId", headerName: "Manager ID"},
@@ -52,8 +54,10 @@ const ProjectList = () => {
             field: "details",
             headerName: "Details",
             renderCell: (params) => (
-                <Link to={`/dashboard/projects/${params.row.id}`} state={params.row.projectManagerId }>View</Link>
+                <Link to={`/dashboard/projects/${params.row.id}`} state={params.row.projectManagerId}>View</Link>
             ),
+        },
+        { field: 'icon', headerName: 'Delete', renderCell: (params) => <DeleteIcon value={params.row.id} onClick={() => handleDelete(params.row.id)} color="error" />
         },
     ];
 
@@ -62,6 +66,21 @@ const ProjectList = () => {
         style: 'currency',
         currency: 'USD',
     })
+
+//     const currencyFormatter = (params) => {
+//         return '$' + formatNumber(params.value);
+//     };
+
+//     const formatNumber = (number) => {
+//   // this puts commas into the number eg 1000 goes to 1,000,
+//   // i pulled this from stack overflow, i have no idea how it works
+//   return Math.floor(number)
+//     .toString()
+//     .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+// };
+
+    //alert
+    const [alert, setAlert] = useState(null);
 
     //create project modal
     const [modal, setModal] = useState(false);
@@ -90,7 +109,7 @@ const ProjectList = () => {
     const userID = user.employeeId;
     const userName = user.firstName;
     const [projects, setProjects] = useState();
-    const [ projectManagerIdList, setProjectManagerIdList] = useState();
+    // const [ projectManagerIdList, setProjectManagerIdList] = useState();
 
     //create project vars
     const [projectTitle, setProjectTitle] = useState();
@@ -114,78 +133,106 @@ const ProjectList = () => {
     const [projectClientNameValidate, setProjectClientNameValidate] =
         useState(false);
 
-    const getProjects = () => {
+    const getManagerProjects = () => {
         http
-            .get(GetEndPoints().projects)
+            .get(GetEndPoints().projects + "/" + user.employeeId)
             .then((res) => {
                 console.log(res.data.response);
-                let objs = [];
-                // objs = [...res.data.response].map((project) => {
-                //   console.log(project.projectManagerName.toLowerCase());
-                //   console.log(userName);
-                //   if (
-                //     project.projectManagerName.trim().toLowerCase() ===
-                //     userName.trim().toLowerCase()
-                //   ) {
-                //     return {
-                //       id: project.projectId,
-                //       projectname: project.projectName,
-                //       team: project.projectTotalEmployees,
-                //       budget: project.projectBudget,
-                //       description: project.projectDesc,
-                //       details: "<button>View</button>"
-                //     };
-                //   }
-                // });
+                setProjects(res.data.response);
+                // let objs = [];
 
-                if (user.role === "HR" || user.role === "Admin") {
-                    objs = [...res.data.response];
-                } else {
-                    objs = [...res.data.response].filter(
-                        (project) =>
-                            project.projectManagerName.trim().toLowerCase() ===
-                            userName.trim().toLowerCase()
-                    );
-                    console.log(res.data.response[0].projectManagerName);
-                    console.log(userName);
-                }
+                // if (user.role === "HR" || user.role === "Admin") {
+                //     objs = [...res.data.response];
+                // } else {
+                //     objs = [...res.data.response].filter(
+                //         (project) =>
+                //             project.projectManagerName.trim().toLowerCase() ===
+                //             userName.trim().toLowerCase()
+                //     );
+                //     console.log(res.data.response[0].projectManagerName);
+                //     console.log(userName);
+                // }
+
+
                 // objs = [...res.data.response].filter((project) => project.projectManagerName.trim().toLowerCase() === userName.trim().toLowerCase());
 
-                console.log(objs);
+                // console.log(objs);
 
-                let structuredProjects = [];
+                // let structuredProjects = [];
                 // these are structured projects
-                for (let i = 0; i < objs.length; i++) {
-                    structuredProjects.push({
-                        "id": objs[i].projectId,
-                        "projectname": objs[i].projectName,
-                        "projectManagerName": objs[i].projectManagerName,
-                        "projectManagerId": objs[i].projectManagerId,
-                        "tasks": objs[i].totalTaskCount,
-                        "team": objs[i].projectTotalEmployees,
-                        "budget": formatter.format(objs[i].projectBudget),
-                        "description": objs[i].projectDesc,
-                        "details": `<a href="javaScript.void(0);"> View</a>`,
-                    });
-                }
+                // for (let i = 0; i < objs.length; i++) {
+                //     structuredProjects.push({
+                //         "id": objs[i].projectId,
+                //         "projectname": objs[i].projectName,
+                //         "projectManagerName": objs[i].projectManagerName,
+                //         "projectManagerId": objs[i].projectManagerId,
+                //         "tasks": objs[i].totalTaskCount,
+                //         "team": objs[i].projectTotalEmployees,
+                //         "budget": formatter.format(objs[i].projectBudget),
+                //         "description": objs[i].projectDesc,
+                //         "details": `<a href="javaScript.void(0);"> View</a>`,
+                //     });
+                // }
 
-                setProjects(structuredProjects);
-                console.log(structuredProjects);
-                let managerIdList = [];
-                for(let i = 0; i < objs.length; i++){
-                    managerIdList.push(objs[i].projectManagerId);
-                }
-                console.log(managerIdList);
-                setProjectManagerIdList(managerIdList);
+                // setProjects(structuredProjects);
+                // console.log(structuredProjects);
+                // let managerIdList = [];
+                // for(let i = 0; i < objs.length; i++){
+                //     managerIdList.push(objs[i].projectManagerId);
+                // }
+                // console.log(managerIdList);
+                // setProjectManagerIdList(managerIdList);
             })
             .catch((err) => console.log(err.message));
     };
 
+    const getProjects = () => {
+        http.get(GetEndPoints().projects)
+        .then((res) => {
+            if(res.data.success)
+                setProjects(res.data.response);
+        }).catch((err) => console.log(err.message));
+    }
+
+    const DeleteProject = (projectId) => {
+        http.delete(GetEndPoints().deleteProject + '/' + projectId)
+            .then((res) => {
+                if (res.data.success) {
+                    getProjects();
+                    hideAlert();
+                }
+            }).catch((err) => console.log(err.message))
+    }
+    const handleDelete = (projectId) => {
+        setAlert(
+            <SweetAlert
+                warning
+                style={{ display: "block", marginTop: "-100px" }}
+                title="Are you sure you want to delete this project?"
+                onConfirm={() => DeleteProject(projectId)}
+                onCancel={() => hideAlert()}
+                showCancel
+                confirmBtnText="Yes, delete it!"
+                confirmBtnBsStyle="danger"
+                cancelBtnBsStyle="light"
+                btnSize=""
+                focusCancelBtn
+            >
+            </SweetAlert>
+        )
+    }
+
+    const hideAlert = () => {
+        setAlert(null);
+    };
+
     useEffect(() => {
-        getProjects();
-        if (projects){
-            console.log(projects)
+        if(user.role === 'Manager'){
+            getManagerProjects();
+        }else{
+            getProjects();
         }
+        
     }, []);
 
     // modal data handling
@@ -251,14 +298,14 @@ const ProjectList = () => {
     };
 
     const postCreateProject = (projectData) => {
-        delete projectData.id;
+        // delete projectData.id;
         http
-            .post(GetEndPoints().projects + "/addProject", { ...projectData })
+            .post(GetEndPoints().addProject, { ...projectData })
             .then((res) => {
                 if (res.data.success) {
                     console.log(res.data.response);
                     console.log("post succeed");
-                    getProjects();
+                    getManagerProjects();
                 }
             })
             .catch((err) => console.log(err.message));
@@ -328,7 +375,7 @@ const ProjectList = () => {
         }
     };
 
-    if (projects === undefined || projectManagerIdList === undefined) {
+    if (projects === undefined) {
         return (
             <div class="d-flex justify-content-center">
                 <div
@@ -343,7 +390,7 @@ const ProjectList = () => {
     } else {
         return (
             <Container>
-                {/* {projects} */}
+                { alert }
                 <Card className="prCard">
                     <CardTitle tag="h5" className="px-3 pt-3">
                         {" "}
@@ -363,13 +410,6 @@ const ProjectList = () => {
                     <CardBody style={{ display: "flex", height: "100%" }}>
                         <div style={{ flexGrow: 1 }}>
                             <DataGrid
-                                // initialState={{
-                                //     columns:{
-                                //         columnVisibilityModel: {
-                                //             projectManagerId: false,
-                                //         }
-                                //     }
-                                // }}
                                 columnVisibilityModel={{projectManagerId: false}}
                                 rows={projects}
                                 columns={columns}
@@ -377,7 +417,8 @@ const ProjectList = () => {
                                 rowsPerPageOptions={[8]}
                                 SelectionOnClick
                                 getRowId={(project) => project.id}
-                                onRowClick={(e) => console.log(e)}
+                                // onRowClick={(e) => console.log(e)}
+                                
                             />
                         </div>
                         <Modal isOpen={modal} toggle={toggle} backdrop="static" centered>

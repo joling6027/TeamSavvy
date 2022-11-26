@@ -21,7 +21,8 @@ const enpoints = {
   dropdownRoles :'Dropdowns/roles',
   dropdownDepartments:'Dropdowns/departments',
   dropdownCompanies:'Dropdowns/companylocations',
-  projects:'Projects',
+  projects:'Dashboard/projects',
+  projectDetail: 'Projects/projectId',
   taskListByManagerId: 'EmployeeTask/tasklist',
   teamMembers:'Dashboard/teammemberscount',
   getTeamMembers:'Dashboard/teammembers',
@@ -38,7 +39,9 @@ const enpoints = {
   widgets:'Dashboard/charts',
   deleteWidget:'Dashboard/deleteWidget',
   addWidget:'Dashboard/addWidget',
-  dashboardId:'Dashboard/dashbordId'
+  dashboardId:'Dashboard/dashbordId',
+  addProject: 'Projects/addProject',
+  deleteProject: '/Projects/deleteProject'
 }
 
 export function GetEndPoints(){

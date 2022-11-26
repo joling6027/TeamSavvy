@@ -2,6 +2,7 @@ import React, { Component, useState, useEffect } from 'react';
 import { Link, useParams, useLocation } from 'react-router-dom';
 import { Container, Form, FormGroup, Label, Input, FormFeedback, FormText, Row, Col, Modal, ModalHeader, Button, ModalBody } from 'reactstrap';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import SweetAlert from "react-bootstrap-sweetalert";
 import './projectDetails.css';
 import UpdateOutlinedIcon from '@mui/icons-material/UpdateOutlined';
 import AuthService from '../services/authService';
@@ -12,13 +13,16 @@ const ProjectDetails = () => {
     const params = useParams();
     const data = useLocation();
     // console.log(params.id)
-    // console.log(data.state);
+    console.log(data.state);
     const managerId = data.state;
 
     const [project, setProject] = useState();
     const [tasks, setTasks] = useState();
     const [completedTasks, setCompletedTasks] = useState();
     const [teamMembers, setTeamMembers] = useState();
+
+    //alert
+    const [alert, setAlert] = useState(null);
 
     const { user, http } = AuthService();
     //create modal
@@ -119,12 +123,11 @@ const ProjectDetails = () => {
 
     //get project
     const getProject = () => {
-        http.get(GetEndPoints().projects + "/projectId/" + params.id)
+        http.get(GetEndPoints().projectDetail + "/" + params.id)
         .then((res) => {
             if(res.data.success){
                 console.log(res.data.response);
                 setProject(res.data.response)
-                // console.log(project)
             }
         }).catch((err) => console.log(err.message))
     }
@@ -144,8 +147,8 @@ const ProjectDetails = () => {
     }
 
     //get tasks
-    const getTasks = (project) => {
-        console.log(project)
+    const getTasks = (managerId) => {
+        console.log(managerId)
         http.get(GetEndPoints().employeeTask + "/tasklist/" + managerId)
             .then((res) => {
                 console.log(res.data.response)
@@ -430,14 +433,40 @@ const ProjectDetails = () => {
 
     //         }).catch((err) => console.log(err.message))
     // }
+    const ShowAlert = () => {
+        setAlert(
+            <SweetAlert
+                warning
+                style={{ display: "block", marginTop: "-100px" }}
+                // title="Widget Added!"
+                onConfirm={() => { hideAlert(); }}
+                onCancel={() => hideAlert()}
+                confirmBtnBsStyle="success"
+                btnSize=""
+            >
+                Please contact HR to add employee to project first.</SweetAlert>
+        );
+    }
+
+    const hideAlert = () => {
+        setAlert(null);
+    };
 
 
     useEffect(() => {
         getProject();
         if(user.role === 'Manager'){
             getProjectEmp();
+            if(teamMembers !== undefined){
+                if(teamMembers === 0){
+                    ShowAlert();
+                }else{
+                    setAlert(null);
+                }
+                
+            }
         }
-        getTasks();
+        getTasks(managerId);
 
     }, [])
 
@@ -450,18 +479,19 @@ const ProjectDetails = () => {
         </div>);
     }
     else if(user.role === "Manager" && project.projectManagerId === user.employeeId && teamMembers === undefined){
-        console.log(user.role);
-        console.log(project.projectManagerId)
+        // console.log(user.role);
+        // console.log(project.projectManagerId)
+        // ShowAlert();
         return (<div class="d-flex justify-content-center">
             <div class="spinner-grow text-success" style={{ width: "3rem", height: "3rem" }} role="status">
                 <span class="sr-only">No project detail</span>
             </div>
         </div>);
-    }
-     else {
+    }else {
 
         return (
             <>
+                {(alert)? (alert): ""}
                 <Container className="px-3">
                     <p className="h4 px-2">{project.projectName}</p>
                     <div className=" d-flex justify-content-between">
@@ -481,8 +511,9 @@ const ProjectDetails = () => {
                     <div className="d-flex mt-1">
                         <Col className="rounded m-2 prCard">
                             <h5 className="d-inline-block p-3">Tasks</h5>
-                            {(user.role === 'Manager') ? (<Link to="" onClick={toggle} className="alert-link float-end text-uppercase text-decoration-none linkStyle px-3 pt-3">
-                                <AddCircleIcon /> Create Task</Link>): ""}
+                            {(user.role === 'Manager') ? 
+                                (teamMembers.length === 0) ? "" : (<Link to="" onClick={toggle} className="alert-link float-end text-uppercase text-decoration-none linkStyle px-3 pt-3">
+                                    <AddCircleIcon /> Create Task</Link>): ""}
                             
                             <ul class="list-group p-3">
                                 {tasks && tasks.filter((task => task.taskStatus === "Assigned")).map((task) => (
