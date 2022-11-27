@@ -12,7 +12,7 @@ import { GetEndPoints } from '../utilities/EndPoints';
 const ProjectDetails = () => {
     const params = useParams();
     const data = useLocation();
-    // console.log(params.id)
+    console.log(params.id)
     console.log(data.state);
     const managerId = data.state;
 
@@ -170,6 +170,21 @@ const ProjectDetails = () => {
             })
     }
 
+    //Jaspal
+    const[totalTasks, setTotalTasks] = useState(0);
+    const[inProgress, setInProgress] = useState(0);
+    const[completed, setCompleted] = useState(0);
+    const GetTaskCounts = () =>{
+        http.get(GetEndPoints().taskCounts +'/' + params.id)
+            .then((res) => {
+                if(res.data.success){
+                    const {totalTasks, inProgress, completed} = res.data.response;
+                    setTotalTasks(totalTasks);
+                    setInProgress(inProgress);
+                    setCompleted(completed);
+                }
+            }).catch((err) => console.log(err))
+    }
     //create(post) task
     const newTitleChangeHandler = (e) => {
         if(e.target.value.trim() !== ""){
@@ -232,6 +247,8 @@ const ProjectDetails = () => {
         .then((res) => {
             if(res.data.success){
                 console.log("post succeed")
+                //Jaspal
+                GetTaskCounts();
             }
         }).catch((err) => console.log(err.message))
     }
@@ -474,8 +491,10 @@ const ProjectDetails = () => {
             }
         }
         getTasks(managerId);
+        //Jaspal
+        GetTaskCounts()
 
-    }, [])
+    }, [params.id])
 
 
     if (!(project && tasks)) {
@@ -507,15 +526,15 @@ const ProjectDetails = () => {
                     <div className=" d-flex justify-content-between">
                         <Col className="py-2 px-3 yellow-bg rounded d-flex align-items-center m-2">
                             <h5 className="text-white flex-grow-1">Tasks</h5>
-                            <h2 className="text-white fw-bold">{tasks.length}</h2>
+                            <h2 className="text-white fw-bold">{totalTasks}</h2>
                         </Col>
                         <Col className="py-2 px-3 orange-bg rounded d-flex align-items-center m-2">
                             <h5 className="text-white flex-grow-1">In-Progress</h5>
-                            <h2 className="text-white fw-bold">{(tasks.length) - (completedTasks.length)}</h2>
+                            <h2 className="text-white fw-bold">{inProgress}</h2>
                         </Col>
                         <Col className="py-2 px-3 green-bg rounded d-flex align-items-center m-2">
                             <h5 className="text-white flex-grow-1">Completed</h5>
-                            <h2 className="text-white fw-bold">{completedTasks.length}</h2>
+                            <h2 className="text-white fw-bold">{completed}</h2>
                         </Col>
                     </div>
                     <div className="d-flex mt-1">

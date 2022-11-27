@@ -45,6 +45,7 @@ const enpoints = {
   deleteJob: 'Job/deleteJob',
   removeEmpFromProj:'Projects/deleteEmployeeFromProject',
   projectByEmployeeId:'Projects/employeeId',
+  taskCounts:'Dashboard/taskcount',
 }
 
 export function GetEndPoints(){
