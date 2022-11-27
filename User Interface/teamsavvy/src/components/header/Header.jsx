@@ -19,8 +19,8 @@ const Header = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const pathnames = pathname.split("/").filter(Boolean);
-    const [isOpen, setIsOpen] = useState(false);
-    const containsNumbers = (str) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const containsNumbers = (str) => {
       return /[0-9]/.test(str);
     }
     return (
@@ -35,46 +35,42 @@ const Header = () => {
             </ol>
         </nav> */}
         <Breadcrumb listTag="div">
-            {pathnames.map((name, index) => {
-          const routeTo =  `/${pathnames.slice(0, index + 1).join("/")}`;
-          console.log(routeTo)
-          console.log(containsNumbers(routeTo))
-          const isLast = index === pathnames.length -1;
-          return isLast? (
-            <BreadcrumbItem className="text-decoration-none"  key={name}>{name}</BreadcrumbItem>
-          ) : (<BreadcrumbItem className="text-decoration-none text-primary" style={{cursor:"pointer"}}  key={name} onClick={() => navigate(routeTo)}>{name}</BreadcrumbItem>)
-        })}
-  {/* <BreadcrumbItem className="text-decoration-none"
-  active
-    tag="a"
-  >
-    {pathname.substring(1)}
-  </BreadcrumbItem> */}
-  {/* <BreadcrumbItem className="text-decoration-none"
-    href="#"
-    tag="a"
-  >
-    Library
-  </BreadcrumbItem>
-  <BreadcrumbItem className="text-decoration-none"
-    href="#"
-    tag="a"
-  >
-    Data
-  </BreadcrumbItem>
-  <BreadcrumbItem className="text-decoration-none"
-    active
-    tag="span"
-  >
-    Bootstrap
-  </BreadcrumbItem> */}
+          
+          {pathnames.map((name, index) => {
+            const routeTo =  `/${pathnames.slice(0, index + 1).join("/")}`;
+            const isLast = index === pathnames.length -1;
+            if(!containsNumbers(name))
+            {
+              
+              return isLast ?
+                <BreadcrumbItem className="text-decoration-none"  key={name}>{ name }</BreadcrumbItem>
+                :
+                containsNumbers(pathnames[index + 1]) ?
+                <BreadcrumbItem className="text-decoration-none"  key={name}>{ name }</BreadcrumbItem>
+                :
+                <BreadcrumbItem className="text-decoration-none text-primary" 
+                                style={{cursor:"pointer"}}  
+                                key={name} 
+                                onClick={() => navigate(routeTo)}>{name}</BreadcrumbItem>
+            }
+            else
+            {
+              
+              console.log(routeTo);
+              console.log(pathnames.length);
+              return;
+
+            }
+            // const isLast = index === pathnames.length -1;
+            // return isLast? (
+            //   <BreadcrumbItem className="text-decoration-none"  key={name}>{ name }</BreadcrumbItem>
+            // ) : (<BreadcrumbItem className="text-decoration-none text-primary" style={{cursor:"pointer"}}  key={name} onClick={() => navigate(routeTo)}>{name}</BreadcrumbItem>)
+           })
+          }
 </Breadcrumb>
         
 </div>
-        <div className= "float-end d-flex align-items-top">
-            {/* <span className="me-3"  onClick={function noRefCheck(){}}>
-              <SearchOutlinedIcon/>
-            </span> */}
+        {/* <div className= "float-end d-flex align-items-top">
             <Collapse horizontal>
           <Alert
           style={{
@@ -83,7 +79,7 @@ const Header = () => {
          >
 <Input type="search" placeholder="search"/>   
  </Alert>
-            </Collapse>
+            </Collapse> */}
             {/* <Navbar className="p-0">
               <Nav className="me-auto p-0" navbar>
                 <UncontrolledDropdown nav direction="start">
@@ -100,11 +96,11 @@ const Header = () => {
                 </UncontrolledDropdown>
               </Nav> */}
             {/* </Navbar>  */}
-        <div>
-</div>
+        {/* <div>
+</div> */}
 
-        </div>
-        </Container>
+        {/* </div>*/}
+        </Container> 
         </>
       );
 }

@@ -8,7 +8,7 @@ import teamMembers from '../../assets/img/team-members.png';
 import taskpic from '../../assets/img/tasks.png';
 import Chart from "chart.js/auto";
 import { Line , Bar, Pie} from "react-chartjs-2";
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import AddIcon from '@mui/icons-material/Add';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import TimelineIcon from '@mui/icons-material/Timeline';
@@ -109,7 +109,7 @@ const Dashboard = () => {
           }
         }
     };
-
+    const [pageSize, setPageSize] = useState(10);
     const {http, user} = AuthService();
     const [totalProjects, setTotalProjects] = useState();
     const [totalProjectsForHr, setTotalProjectsForHr] = useState();
@@ -325,6 +325,7 @@ const Dashboard = () => {
       ];
 
 const approvetoggle = (event) => {
+    console.log(event)
     setRowData(event.row)
     setapproveModal(!approveModal)
 };
@@ -575,11 +576,19 @@ else{
                     <CardTitle className="small text-muted">Leaves</CardTitle>
                     <div style={{ display: 'flex', height: '315px', justifyContent: 'space-between' }}>
                 <div style={{width:'100%'}}>
-                    <DataGrid className="table-striped border-0" rows={empLeaves} columns={columns}
-                        pageSize={8} 
-                        rowsPerPageOptions={[8]}
+                    <DataGrid className="table-striped border-0"
+                      pageSize={pageSize}
+                      onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+                      rowsPerPageOptions={[5, 10, 20,50,100]}
+                      pagination
+                      rows={empLeaves} columns={columns}
+                        // columnVisibilityModel={{id: false}}
                         SelectionOnClick
                         onRowClick={approvetoggle}
+                        components={{
+                            Toolbar: GridToolbar,
+                          }}
+                        
                     />
                 </div>
                 <Modal isOpen={approveModal} toggle={approvetoggle} backdrop="static" centered>

@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect } from "react";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import {
     Card,
     CardTitle,
@@ -28,7 +28,7 @@ import { GetEndPoints } from "../utilities/EndPoints";
 
 const ProjectList = () => {
     const { http, user } = AuthService();
-
+    const [pageSize, setPageSize] = useState(10);
     // createOn date data
     const newDate = new Date();
     const d = newDate.getDate();
@@ -54,7 +54,7 @@ const ProjectList = () => {
             field: "details",
             headerName: "Details",
             renderCell: (params) => (
-                <Link to={`/dashboard/projects/${params.row.id}`} state={params.row.projectManagerId}>View</Link>
+                <Link to={`/dashboard/projects/projectdetail/${params.row.id}`} state={params.row.projectManagerId}>View</Link>
             ),
         },
         { field: 'icon', headerName: 'Delete', renderCell: (params) => <DeleteIcon value={params.row.id} onClick={() => handleDelete(params.row.id)} color="error" />
@@ -411,12 +411,17 @@ const ProjectList = () => {
                         <div style={{ flexGrow: 1 }}>
                             <DataGrid
                                 columnVisibilityModel={{projectManagerId: false}}
+                                pageSize={pageSize}
+                                onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+                                rowsPerPageOptions={[5, 10, 20,50,100]}
+                                pagination
                                 rows={projects}
                                 columns={columns}
-                                pageSize={8}
-                                rowsPerPageOptions={[8]}
                                 SelectionOnClick
                                 getRowId={(project) => project.id}
+                                components={{
+                                    Toolbar: GridToolbar,
+                                  }}
                                 // onRowClick={(e) => console.log(e)}
                                 
                             />

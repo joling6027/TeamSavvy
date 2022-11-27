@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect } from 'react';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import {Card, 
     CardTitle, 
     Container, 
@@ -46,7 +46,7 @@ const TeamMembers = () => {
     const toggle = () => setModal(!modal);
     const assigntoggle = () => setassignModal(!assignProject);
     const [currProj, setCurrProj] = useState();
-
+    const [pageSize, setPageSize] = useState(10);
     const GetProjects = () => {
         http.get(GetEndPoints().projects)
         .then((res) =>{
@@ -294,12 +294,18 @@ const TeamMembers = () => {
                 <div style={{ display: 'flex', height: '100%', justifyContent: 'space-between' }}>
                     <div style={{width:'100%'}}>
                         <DataGrid className="table-striped"
+                            pageSize={pageSize}
+                            onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+                            rowsPerPageOptions={[5, 10, 20,50,100]}
+                            pagination
                             rows={data} 
                             columns={ user.role === "Manager" ? columns_Manager : columns_HR}  
-                            pageSize={8} 
-                            rowsPerPageOptions={[8]}
                             // SelectionOnClick
                             onRowClick={e => console.log(e)}
+                            components={{
+                                Toolbar: GridToolbar,
+                              }}
+                             
                         />
                     </div>
                 </div>
