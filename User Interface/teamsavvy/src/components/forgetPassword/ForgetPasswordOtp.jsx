@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import loginbg from '../../assets/img/card-bg.png';
 import './forgetPassword.css';
 import { Card, CardBody, Form, Input, FormGroup, Label, Button} from "reactstrap";
 import SweetAlert from "react-bootstrap-sweetalert";
 import AuthService from '../services/authService';
 import { GetEndPoints } from '../utilities/EndPoints';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+
 
   const ForgotPasswordOtp = () => {
     const initialValue = {
@@ -95,7 +96,8 @@ import { GetEndPoints } from '../utilities/EndPoints';
       <Card className= "loginCard">
         <img src={loginbg} className="mb-2 cardImg" alt="forget password background image"  />
         <CardBody className="border-none">
-          <h2 className="card-title mt-5 pb-3"><strong>Forgot Password</strong></h2>
+        <Link to={'/'} className="me-3 mb-0 text-dark"><ArrowBackIcon/></Link>
+          <h2 className="card-title mt-4 pb-3"><strong>Forgot Password</strong></h2>
           <Form>
             <FormGroup className="mb-3 mt-2" >
             <Label htmlFor="exampleInputEmail1" className="form-label mt-2">Enter OTP</Label>
@@ -111,7 +113,7 @@ import { GetEndPoints } from '../utilities/EndPoints';
               
             </FormGroup>
             <div className="w-100 text-center d-inline-block">
-            <Button onClick={onContinue} className="btn bg-primary">CONTINUE</Button>
+            <button onClick={onContinue} className="appBtn">CONTINUE</button>
             </div>
           </Form>
         </CardBody>

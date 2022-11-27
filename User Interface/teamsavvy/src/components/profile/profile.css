@@ -9,3 +9,17 @@
 .profileright{width: 74%; position: absolute; right: 20px;}
 .profileleft{position: fixed; width:20%;}
 .profileleft .teamMem{height:250px!important; overflow:auto}
+
+    
+@media only screen and (max-width:1024px){
+    .profileright{ right: 0px!important;}
+
+}
+
+@media only screen and (max-width:786px){
+    .profileright{ width:100%!important;position:relative!important}
+    .profileleft{position: relative!important; width:100%!important;}
+
+
+
+}

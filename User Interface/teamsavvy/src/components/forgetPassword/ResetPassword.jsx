@@ -11,12 +11,12 @@ import {
   } from "reactstrap";
   import { changePasswordInitialValue } from '../models/changepassword.model';
   import { useState } from 'react';
-  import { useParams, useNavigate } from 'react-router-dom';
+  import { useParams, useNavigate, Link } from 'react-router-dom';
   import SweetAlert from "react-bootstrap-sweetalert";
   import AuthService from '../services/authService';
   import { GetEndPoints } from '../utilities/EndPoints';
   import { ForgetPasswordValidation } from '../utilities/validation';
-
+  import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 const ResetPassword = () => {
   
   const {http} = AuthService();
@@ -79,7 +79,8 @@ const ResetPassword = () => {
     <Card className= "loginCard ">
       <img src={loginbg} className="mb-2 cardImg" alt="reset password background image."  />
       <CardBody className="border-none">
-        <h2 className="card-title mt-5 pb-3"><strong>Reset Password</strong></h2>
+      <Link to={'/'} className="me-3 mb-0 text-dark"><ArrowBackIcon/></Link>
+        <h2 className="card-title mt-4 pb-3"><strong>Reset Password</strong></h2>
         <Form>
           <FormGroup className="mb-3 mt-2">
           <Label htmlFor="newpassword" className="form-label mt-2">New Password</Label>
@@ -96,7 +97,7 @@ const ResetPassword = () => {
             <span className='text-danger'>{formErrors.forgetConfirmPassword}</span>
           </FormGroup>
           <div className="w-100 text-center d-inline-block">
-          <Button onClick={handleSubmit} className="btn bg-primary">CONTINUE</Button>
+          <button onClick={handleSubmit} className="appBtn">CONTINUE</button>
           </div>
         </Form>
       </CardBody>

@@ -714,11 +714,11 @@ const Profile = () => {
                           
                       </Modal>
                  
-                  <span className="ms-2 mt-3 d-inline-block text-center p-3">
+                  <div className="ms-md-2 mt-4 d-inline-block text-center p-md-3 p-sm-0 ms-sm-0">
                       <Button className="d-inline-block bg-primary btn-primary" onClick={handleSubmit}> Submit Changes</Button>
                       <Button className="d-inline-block bg-danger btn-primary ms-2" onClick={handleCancel}> Reset</Button>
                   
-                  </span>
+                  </div>
               </div>
           </Container>
             </>

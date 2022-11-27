@@ -1,6 +1,6 @@
 import React, { Component, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import {Card, 
     CardTitle, 
     Container, 
@@ -31,6 +31,7 @@ import { GetEndPoints } from '../utilities/EndPoints';
 import './jobAppliedEmployee.css';
 
 const JobAppliedEmployees = () => {
+    const [pageSize, setPageSize] = useState(10);
     const data = useLocation();
     const jobId = data.state.jobId;
     console.log(data.state.jobId)
@@ -93,9 +94,9 @@ const JobAppliedEmployees = () => {
     // }
 
     if (applicants === undefined) {
-            return (<div class="d-flex justify-content-center">
-            <div class="spinner-grow text-success" style={{width: "3rem", height: "3rem"}} role="status">
-            <span class="sr-only">No Applicant applied for this position yet.</span>
+            return (<div className="d-flex justify-content-center">
+            <div className="spinner-grow text-success" style={{width: "3rem", height: "3rem"}} role="status">
+            <span className="sr-only">No Applicant applied for this position yet.</span>
             </div>
         </div>);
     } else {
@@ -109,10 +110,15 @@ const JobAppliedEmployees = () => {
             <div style={{ display: 'flex', height: '100%', justifyContent: 'space-between' }}>
                 <div style={{width:'100%'}}>
                         <DataGrid className="table-striped" rows={applicants} columns={columns}  
-                        pageSize={8} 
-                        rowsPerPageOptions={[8]}
-                        SelectionOnClick
-                        onRowClick={e => console.log(e)}
+                       pageSize={pageSize}
+                       onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+                       rowsPerPageOptions={[5, 10, 20,50,100]}
+                       pagination
+                       SelectionOnClick
+                    // onRowClick={e => console.log(e)}
+                        components={{
+                            Toolbar: GridToolbar,
+                          }}
                     />
                 </div>
             </div>

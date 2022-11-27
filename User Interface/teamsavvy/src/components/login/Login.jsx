@@ -67,7 +67,7 @@ const Login = () => {
           <div className="loginBody d-inline-block position-absolute h-100 w-100">
             <Card className= "loginCard" style={{}}>
             <img src={loginbg} className="mb-2 cardImg" alt="login back ground" />
-            <CardBody className="border-none">
+            <CardBody className="border-none ">
               <h2 className="card-title mt-5 pb-3"><strong>Login</strong></h2>
               <Form onSubmit={handleSubmit}>
                 <FormGroup className="mb-3 mt-2">
@@ -85,7 +85,7 @@ const Login = () => {
                   <small>Forgot Password?</small></Link>
                 </FormGroup>
                 <div className="w-100 text-center d-inline-block">
-                <Button>LETS GO</Button>
+                <button className="appBtn"><span>LETS GO</span></button>
                 </div>
               </Form>
             </CardBody>
