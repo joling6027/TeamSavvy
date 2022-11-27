@@ -71,7 +71,7 @@ namespace TeamSavvy.Api.Services.Services
                                  s => s.RoleId,
                                  t => t.RoleId,
                                  (s, t) => new { Employee = s, Roles = t })
-                     .Where(x => x.Employee.EmployeeId == employeeId && x.Employee.Password == password)
+                     .Where(x => x.Employee.EmployeeId == employeeId && x.Employee.Password == password && x.Employee.Status.StatusId != 2 && String.IsNullOrWhiteSpace(x.Employee.Resigneddate))
                      .Select(x => new LoginDto
                      {
                          Role = x.Roles.RoleType.Trim(),
