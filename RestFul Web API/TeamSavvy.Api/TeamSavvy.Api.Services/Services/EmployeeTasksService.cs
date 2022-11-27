@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Org.BouncyCastle.Math.EC.Rfc7748;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -119,7 +120,7 @@ namespace TeamSavvy.Api.Services.Services
             List<TaskDto> task = null;
             try
             {
-                var projectIds = _unitOfWork.Context.EmployeeProject.Where(e => e.EmployeeId == managerId).Select(p => p.ProjectId).ToList();
+                var projectIds = _unitOfWork.Context.EmployeeProject.Where(e => e.EmployeeId == managerId && e.Status == true).Select(p => p.ProjectId).ToList();
                 List<Task> tasks = new List<Task>();
                 foreach (var projId in projectIds)
                 {
@@ -187,7 +188,42 @@ namespace TeamSavvy.Api.Services.Services
             List<TaskDto> task = null;
             try
             {
-                var res = _unitOfWork.Context.Task.Where(x => x.EmployeeId == employeeId).ToList();
+              var res = _unitOfWork.Context.Task
+                      .Where(x => x.EmployeeId == employeeId)
+                      .Join(_unitOfWork.Context.EmployeeProject,
+                       task => task.ProjectId,
+                       empProj => empProj.ProjectId,
+                       (task, empProj) => new { Tsk = task, EmpPrj = empProj })
+                      .Where(x => x.EmpPrj.EmployeeId == employeeId && x.EmpPrj.Status == true)
+                      .Select( s => s.Tsk)
+                      .ToList();
+                if (res != null)
+                {
+                    task = _mapper.Map<List<TaskDto>>(res);
+                }
+
+            }
+            catch (Exception e)
+            {
+                task = null;
+            }
+            return task;
+        }
+
+        public List<TaskDto> GetTasksByEmployeeIdAndProjId(int employeeId, int projId)
+        {
+            List<TaskDto> task = null;
+            try
+            {
+                var res = _unitOfWork.Context.Task
+                        .Where(x => x.EmployeeId == employeeId)
+                        .Join(_unitOfWork.Context.EmployeeProject,
+                         task => task.ProjectId,
+                         empProj => empProj.ProjectId,
+                         (task, empProj) => new { Tsk = task, EmpPrj = empProj })
+                        .Where(x => x.EmpPrj.EmployeeId == employeeId && x.EmpPrj.ProjectId == projId && x.EmpPrj.Status == true)
+                        .Select(s => s.Tsk)
+                        .ToList();
                 if (res != null)
                 {
                     task = _mapper.Map<List<TaskDto>>(res);

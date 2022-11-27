@@ -152,7 +152,7 @@ namespace TeamSavvy.Api.Web.Controllers
         [ProducesResponseType(typeof(ResponseMessage), 400)]
         [ProducesResponseType(typeof(ResponseMessage), 401)]
         [ProducesResponseType(typeof(ResponseMessage), 404)]
-        public ActionResult<List<TeamMembers>> GetTeamMembers()
+        public ActionResult<List<Employees>> GetTeamMembers()
         {
             ActionResult response;
             ResponseMessage responseMessage;

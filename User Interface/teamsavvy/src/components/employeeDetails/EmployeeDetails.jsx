@@ -5,8 +5,12 @@ import Tabs from 'react-bootstrap/Tabs';
 import ProfileView from './ProfileView';
 import TaskView from './TaskView';
 import TimeSheetView from './TimeSheetView';
+import AuthService from '../services/authService';
 
 const EmployeeDetails = () => {
+
+    const {user} = AuthService();
+
     return ( 
         <>
         <Container className="px-3">
@@ -21,9 +25,9 @@ const EmployeeDetails = () => {
             <Tab eventKey="home" title="Timesheet">
                 <TimeSheetView/>
             </Tab>
-            <Tab eventKey="profile" title="Task">
+            {user.role === 'Manager' && <Tab eventKey="profile" title="Task">
                 <TaskView/>
-            </Tab>
+            </Tab>}
             <Tab eventKey="contact" title="Profile" >
                 <ProfileView/>
             </Tab>

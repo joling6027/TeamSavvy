@@ -56,6 +56,7 @@ function App() {
             <Route path='/dashboard/teammembers/addemployee' element={<AddEmployee/>}/>
             <Route path='/dashboard/teammembers' element={<TeamMembers />}/>
             <Route path="/dashboard/teammembers/employeedetails/:id" element={<EmployeeDetails/>} />
+            <Route path="/dashboard/teammembers/employeedetails/:id/:projId" element={<EmployeeDetails/>} />
             <Route path="/timesheet" element={<Timesheet />} />
             <Route path="/task" element={<Task />} />
             <Route path="/payroll" exact element={<Payroll data={data} columns={COLUMNS} />} />

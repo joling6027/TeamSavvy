@@ -219,6 +219,7 @@ const Dashboard = () => {
         http.get(GetEndPoints().employee)
         .then((res) =>{
            if(res.data.success){
+            console.log(res.data.response)
             setTotalEmployees(res.data.response.length);
            }
         })

@@ -427,6 +427,16 @@ namespace TeamSavvy.Api.Services.Services
                     }
                     _unitOfWork.Context.Update(employee);
                     _unitOfWork.SaveChanges();
+                    var empProj = _unitOfWork.Context.EmployeeProject.Where(e => e.EmployeeId == employee.EmployeeId).ToList();
+                    if (empProj.Count() > 0)
+                    {
+                        foreach (var item in empProj)
+                        {
+                            item.Status = false;
+                        }
+                        _unitOfWork.Repository<EmployeeProject>().Update(empProj);
+                        _unitOfWork.SaveChanges();
+                    }
                     isSuccess = true;
                 }
             }

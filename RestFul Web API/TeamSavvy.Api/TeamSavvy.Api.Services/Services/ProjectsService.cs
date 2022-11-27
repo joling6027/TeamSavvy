@@ -40,6 +40,13 @@ namespace TeamSavvy.Api.Services.Services
                     var proj = _mapper.Map<Project>(project);
                     _unitOfWork.Repository<Project>().Insert(proj);
                     _unitOfWork.SaveChanges();
+                    _unitOfWork.Repository<EmployeeProject>().Insert(new EmployeeProject
+                    {
+                        EmployeeId = proj.ProjectManagerId,
+                        ProjectId = proj.ProjectId,
+                        Status = true,
+                    });
+                    _unitOfWork.SaveChanges();
                     isSuccess = true;
 
                 }
@@ -82,14 +89,14 @@ namespace TeamSavvy.Api.Services.Services
             return isSuccess;
         }
 
-        public bool DeleteEmployeeFromProject(int employeeId)
+        public bool DeleteEmployeeFromProject(int employeeId, int projectId)
         {
             bool isSuccess = false;
             try
             {
                 if (employeeId > 0)
                 {
-                    var employeeProj = _unitOfWork.Context.EmployeeProject.Where(x => x.EmployeeId == employeeId).FirstOrDefault();
+                    var employeeProj = _unitOfWork.Context.EmployeeProject.Where(x => x.EmployeeId == employeeId && x.ProjectId == projectId && x.Status == true).FirstOrDefault();
                     employeeProj.Status = false;
                     _unitOfWork.Repository<EmployeeProject>().Update(employeeProj);
                     _unitOfWork.SaveChanges();
@@ -114,6 +121,17 @@ namespace TeamSavvy.Api.Services.Services
                     var project = _unitOfWork.Context.Project.Where(x => x.ProjectId == projectId).FirstOrDefault();
                     _unitOfWork.Repository<Project>().Delete(project);
                     _unitOfWork.SaveChanges();
+                    var empsProj = _unitOfWork.Context.EmployeeProject.Where(x => x.ProjectId == projectId).ToList();
+                    if(empsProj.Count() > 0)
+                    {
+                        foreach (var emp in empsProj)
+                        {
+                            emp.Status = false;
+                        }
+
+                        _unitOfWork.Repository<EmployeeProject>().Update(empsProj);
+                        _unitOfWork.SaveChanges();
+                    }
                     isSuccess = true;
                 }
             }
@@ -226,12 +244,12 @@ namespace TeamSavvy.Api.Services.Services
         }
         public List<ProjectDto> GetProjectsByEmployeeId(int employeeId)
         {
-            List<ProjectDto> project = null;
+            List<ProjectDto> project = new List<ProjectDto>();
             try
             {
                 var proj = (from pro in _unitOfWork.Context.Project
                             join empPro in _unitOfWork.Context.EmployeeProject on pro.ProjectId equals empPro.ProjectId
-                            where empPro.EmployeeId == employeeId
+                            where empPro.EmployeeId == employeeId && empPro.Status == true
                             select new ProjectDto
                             {
                                 ProjectId = pro.ProjectId,
@@ -248,8 +266,12 @@ namespace TeamSavvy.Api.Services.Services
                                 TotalCompletedCount = pro.TotalCompletedCount,
                                 TotalTaskCount = pro.TotalTaskCount
                             }).ToList();
-                if (proj != null)
+                if (proj.Any())
                 {
+                    foreach(var item in proj)
+                    {
+                        item.ProjectTotalEmployees = _unitOfWork.Context.EmployeeProject.Where(e => e.ProjectId == item.ProjectId && e.Status == true).ToList().Count();
+                    }
                     project = proj;
                 }
             }

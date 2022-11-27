@@ -8,29 +8,38 @@ import './taskView.css'
 
 const TaskView = () => {
     const params = useParams();
-    const [show, setShow] = useState(false);
-    const [showUpdate, setShowUpdate] = useState(false);
     const [tasks, setTasks] = useState();
-    const [modalData, setModalData] = useState();
-    const [updateData, setUpdateData] = useState();
     const { http, user } = AuthService();
-    const [taskItem, setTaskItem] = useState();
+    console.log(params)
 
     const GetTasks = () =>{
-        http.get(GetEndPoints().employeeTask + "/employeeId/" + params.id)
-        .then((res) => {
-            setTasks(res.data.response);
-        })
-        .catch((err) => console.log(err.message));
+        if(user.role === 'HR')
+        {
+            http.get(GetEndPoints().employeeTask + "/employeeId/" + params.id)
+            .then((res) => {
+                setTasks(res.data.response);
+            })
+            .catch((err) => console.log(err.message));
+        }
+
+        if(user.role === 'Manager')
+        {
+            http.get(GetEndPoints().employeeTask + "/employeeId/" + params.id + '/'+ params.projId)
+            .then((res) => {
+                setTasks(res.data.response);
+            })
+            .catch((err) => console.log(err.message));
+        }
+       
     }
     useEffect(() => {
         GetTasks();
     }, [params.id])
 
     if(tasks === undefined){
-        return (<div class="d-flex justify-content-center">
-                <div class="spinner-grow text-success" style={{width: "3rem", height: "3rem"}} role="status">
-                <span class="sr-only">Loading...</span>
+        return (<div className="d-flex justify-content-center">
+                <div className="spinner-grow text-success" style={{width: "3rem", height: "3rem"}} role="status">
+                <span className="sr-only">Loading...</span>
                 </div>
             </div>);
     }else{

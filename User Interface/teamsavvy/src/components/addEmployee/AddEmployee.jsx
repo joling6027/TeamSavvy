@@ -349,13 +349,15 @@ import { RegisterationValidation } from '../utilities/validation';
     }
 
     const AddProject = (employeeId) =>{
-
-        http.post(GetEndPoints().addEmployeeOnProject, {...projectFormValue, employeeId})
-        .then((res) => {
-            if(res.data.success){
-            }
-        })
-        .catch((err) => console.log(err.message));
+        if(projectFormValue.projectId > 0)
+        {
+            http.post(GetEndPoints().addEmployeeOnProject, {...projectFormValue, employeeId})
+            .then((res) => {
+                if(res.data.success){
+                }
+            })
+            .catch((err) => console.log(err.message));
+        }
     }
 
     const AddSalary = (employeeId) =>{

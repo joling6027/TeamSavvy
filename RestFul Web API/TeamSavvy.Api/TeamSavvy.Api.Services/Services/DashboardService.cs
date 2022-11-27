@@ -274,10 +274,11 @@ namespace TeamSavvy.Api.Services.Services
                         if(employees != null)
                         {
                            teamMember.EmployeeList = new List<ProjectEmployee>();
-                           var totalTask = _unitOfWork.Context.Task.Where(t => t.ProjectId == project.ProjectId).ToList().Count();
+                           //var totalTask = _unitOfWork.Context.Task.Where(t => t.ProjectId == project.ProjectId).ToList().Count();
                             foreach (var emp in employees)
                             {
                                 var tasks = _unitOfWork.Context.Task.Where(t => t.ProjectId == emp.EmpProj.ProjectId && t.EmployeeId == emp.EmpProj.EmployeeId).ToList();
+                                var totalTask = tasks.Count();
                                 var completed = tasks.Where(t => t.TaskStatus == "Completed").Count();
                                 var empSalary = _unitOfWork.Context.Salary.Where(s => s.EmployeeId == emp.Emp.EmployeeId).ToList().OrderByDescending(s => s.Employeesalary);
                                 int progress = 0;
@@ -315,69 +316,114 @@ namespace TeamSavvy.Api.Services.Services
         }
 
 
-        public List<TeamMembers> GetTeamMembers()
+        public List<Employees> GetTeamMembers()
         {
-            List<TeamMembers> teamMembers = new List<TeamMembers>();
+            List<Employees> employees = new List<Employees>();
             try
             {
-                var projs = _unitOfWork.Context.Project.ToList();
-                if (projs != null)
+                var emps = _unitOfWork.Context.Employee.Where(e=> e.StatusId == 1 && String.IsNullOrWhiteSpace(e.Resigneddate)).ToList();
+                foreach (var emp in emps)
                 {
-                    foreach (var project in projs)
+                    var empProj = _unitOfWork.Context.EmployeeProject.Where(p => p.EmployeeId == emp.EmployeeId).ToList();
+                    if(empProj.Any())
                     {
-                        TeamMembers teamMember = new TeamMembers
+                        foreach (var emProj in empProj)
                         {
-                            ProjectName = project.ProjectName,
-                            ProjectId = project.ProjectId
-                        };
-                        var employees = _unitOfWork.Context.Employee
-                                          .Join(_unitOfWork.Context.EmployeeProject,
-                                           emp => emp.EmployeeId,
-                                           empProj => empProj.EmployeeId,
-                                           (emp, empProj) => new { Emp = emp, EmpProj = empProj })
-                                          .Where(x => x.EmpProj.ProjectId == project.ProjectId && String.IsNullOrEmpty(x.Emp.Resigneddate))
-                                          .Select(x => new { x.Emp, x.EmpProj }).ToList();
-                        if (employees != null)
-                        {
-                            teamMember.EmployeeList = new List<ProjectEmployee>();
-                            var totalTask = _unitOfWork.Context.Task.Where(t => t.ProjectId == project.ProjectId).ToList().Count();
-                            foreach (var emp in employees)
+                            var tasks = _unitOfWork.Context.Task.Where(t => t.ProjectId == emProj.ProjectId && t.EmployeeId == emp.EmployeeId).ToList();
+                            var totalTask = tasks.Count();
+                            var completed = tasks.Where(t => t.TaskStatus == "Completed").Count();
+                            var empSalary = _unitOfWork.Context.Salary.Where(s => s.EmployeeId == emp.EmployeeId).ToList().OrderByDescending(s => s.Employeesalary);
+                            int progress = 0;
+                            if (totalTask > 0)
                             {
-                                var tasks = _unitOfWork.Context.Task.Where(t => t.ProjectId == emp.EmpProj.ProjectId && t.EmployeeId == emp.EmpProj.EmployeeId).ToList();
-                                var completed = tasks.Where(t => t.TaskStatus == "Completed").Count();
-                                var empSalary = _unitOfWork.Context.Salary.Where(s => s.EmployeeId == emp.Emp.EmployeeId).ToList().OrderByDescending(s => s.Employeesalary);
-                                int progress = 0;
-                                if (totalTask > 0)
-                                {
-                                    progress = ((int)((completed / (float)totalTask) * 100));
-                                }
-
-                                teamMember.EmployeeList.Add(new ProjectEmployee
-                                {
-                                    Id = emp.Emp.EmployeeId,
-                                    Department = _unitOfWork.Context.Department.Where(x => x.DepartmentId == emp.Emp.DepartmentId).FirstOrDefault().DepartmentName,
-                                    EmployeeName = emp.Emp.EmployeeFirstname.Trim() + " " + emp.Emp.EmployeeLastname.Trim(),
-                                    Progress = progress,
-                                    Salary = empSalary.Select(s => s.Employeesalary).FirstOrDefault(),
-                                    Status = emp.EmpProj.Status ? "Active" : "Bench",
-                                    Position = _unitOfWork.Context.Role.Where(r => r.RoleId == emp.Emp.RoleId).FirstOrDefault().RoleType,
-                                });
-
-
+                                progress = ((int)((completed / (float)totalTask) * 100));
                             }
+                            employees.Add(new Employees
+                            {
+                                Id = emp.EmployeeId,
+                                Department = _unitOfWork.Context.Department.Where(x => x.DepartmentId == emp.DepartmentId).FirstOrDefault().DepartmentName,
+                                EmployeeName = emp.EmployeeFirstname.Trim() + " " + emp.EmployeeLastname.Trim(),
+                                Progress = progress,
+                                Salary = empSalary.Select(s => s.Employeesalary).FirstOrDefault(),
+                                Status = emProj.Status ? "Active" : "Bench",
+                                Position = _unitOfWork.Context.Role.Where(r => r.RoleId == emp.RoleId).FirstOrDefault().RoleType,
+                            });
                         }
-
-                        teamMembers.Add(teamMember);
-
                     }
+                    else
+                    {
+                        var empSalary = _unitOfWork.Context.Salary.Where(s => s.EmployeeId == emp.EmployeeId).ToList().OrderByDescending(s => s.Employeesalary);
+                        employees.Add(new Employees
+                        {
+                            Id = emp.EmployeeId,
+                            Department = _unitOfWork.Context.Department.Where(x => x.DepartmentId == emp.DepartmentId).FirstOrDefault().DepartmentName,
+                            EmployeeName = emp.EmployeeFirstname.Trim() + " " + emp.EmployeeLastname.Trim(),
+                            Progress = 0,
+                            Salary = empSalary.Select(s => s.Employeesalary).FirstOrDefault(),
+                            Status = "Bench",
+                            Position = _unitOfWork.Context.Role.Where(r => r.RoleId == emp.RoleId).FirstOrDefault().RoleType,
+                        });
+                    }
+
                 }
+                //var projs = _unitOfWork.Context.Project.ToList();
+                //if (projs != null)
+                //{
+                //    foreach (var project in projs)
+                //    {
+                //        TeamMembers teamMember = new TeamMembers
+                //        {
+                //            ProjectName = project.ProjectName,
+                //            ProjectId = project.ProjectId
+                //        };
+                //        var employees = _unitOfWork.Context.Employee
+                //                          .Join(_unitOfWork.Context.EmployeeProject,
+                //                           emp => emp.EmployeeId,
+                //                           empProj => empProj.EmployeeId,
+                //                           (emp, empProj) => new { Emp = emp, EmpProj = empProj })
+                //                          .Where(x => x.EmpProj.ProjectId == project.ProjectId && String.IsNullOrEmpty(x.Emp.Resigneddate))
+                //                          .Select(x => new { x.Emp, x.EmpProj }).ToList();
+                //        if (employees != null)
+                //        {
+                //            teamMember.EmployeeList = new List<ProjectEmployee>();
+                //            var totalTask = _unitOfWork.Context.Task.Where(t => t.ProjectId == project.ProjectId).ToList().Count();
+                //            foreach (var emp in employees)
+                //            {
+                //                var z = _unitOfWork.Context.Task.Where(t => t.ProjectId == emp.EmpProj.ProjectId && t.EmployeeId == emp.EmpProj.EmployeeId).ToList();
+                //                var completed = tasks.Where(t => t.TaskStatus == "Completed").Count();
+                //                var empSalary = _unitOfWork.Context.Salary.Where(s => s.EmployeeId == emp.Emp.EmployeeId).ToList().OrderByDescending(s => s.Employeesalary);
+                //                int progress = 0;
+                //                if (totalTask > 0)
+                //                {
+                //                    progress = ((int)((completed / (float)totalTask) * 100));
+                //                }
+
+                //                teamMember.EmployeeList.Add(new ProjectEmployee
+                //                {
+                //                    Id = emp.Emp.EmployeeId,
+                //                    Department = _unitOfWork.Context.Department.Where(x => x.DepartmentId == emp.Emp.DepartmentId).FirstOrDefault().DepartmentName,
+                //                    EmployeeName = emp.Emp.EmployeeFirstname.Trim() + " " + emp.Emp.EmployeeLastname.Trim(),
+                //                    Progress = progress,
+                //                    Salary = empSalary.Select(s => s.Employeesalary).FirstOrDefault(),
+                //                    Status = emp.EmpProj.Status ? "Active" : "Bench",
+                //                    Position = _unitOfWork.Context.Role.Where(r => r.RoleId == emp.Emp.RoleId).FirstOrDefault().RoleType,
+                //                });
+
+
+                //            }
+                //        }
+
+                //        teamMembers.Add(teamMember);
+
+                //    }
+                //}
             }
             catch (Exception ex)
             {
-                teamMembers = null;
+                employees = null;
             }
 
-            return teamMembers;
+            return employees;
         }
 
 

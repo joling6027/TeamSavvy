@@ -10,7 +10,7 @@ namespace TeamSavvy.Api.Services.IServices
     public interface IDashboardService
     {
         List<TeamMembers> GetTeamMembers(int managerId);
-        List<TeamMembers> GetTeamMembers();
+        List<Employees> GetTeamMembers();
         int GetTeamMembersCount(int managerId);
         List<Project> GetProjects(int managerId);
         List<Project> GetProjects();

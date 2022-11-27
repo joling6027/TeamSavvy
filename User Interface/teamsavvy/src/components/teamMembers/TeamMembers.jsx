@@ -45,17 +45,20 @@ const TeamMembers = () => {
     const [assignProject, setassignModal] = useState(false);
     const toggle = () => setModal(!modal);
     const assigntoggle = () => setassignModal(!assignProject);
+    const [currProj, setCurrProj] = useState();
 
     const GetProjects = () => {
         http.get(GetEndPoints().projects)
         .then((res) =>{
            if(res.data.success){
             setProjects(res.data.response);
-            setProjectDesc(res.data.response[0].projectDesc);
+            console.log(res.data.response[0].id)
+            setSelectProject(res.data.response[0].id)
+            setProjectDesc(res.data.response[0].description);
             setProjectManager(res.data.response[0].projectManagerName);
-            setProjectMember(res.data.response[0].projectTotalEmployees);
+            setProjectMember(res.data.response[0].team);
             let assignEmpProj = {...res.data.response[0]}
-            projectFormValue.projectId = assignEmpProj.projectId
+            projectFormValue.projectId = assignEmpProj.id
             setProjectFormValue(projectFormValue)
            }
         })
@@ -66,6 +69,8 @@ const TeamMembers = () => {
         .then((res) =>{
             if(res.data.success){
                 setTeamMembers(res.data.response);
+                console.log(res.data.response)
+                setCurrProj(res.data.response[0].projectId)
                 setData(res.data.response[0].employeeList)
             }
         })
@@ -84,9 +89,10 @@ const TeamMembers = () => {
         http.get(GetEndPoints().getTeamMembers)
         .then((res) =>{
             if(res.data.success){
+                console.log(res.data.response)
                 let empList = [];
-                res.data.response.map((emp, index) => empList.push(...emp.employeeList));
-                empList = findUnique(empList, d => d.id);
+                // res.data.response.map((emp, index) => empList.push(...emp.employeeList));
+                empList = findUnique(res.data.response, d => d.id);
                 setData(empList)
             }
         })
@@ -95,7 +101,10 @@ const TeamMembers = () => {
 
     const handleChange = e =>{
         const {name, value} = e.target;
+        console.log(value)
+        setCurrProj(value)
         let {employeeList} = teamMembers.find((m) => m.projectId === parseInt(value));
+        console.log(teamMembers)
         setData(employeeList)
     }
 
@@ -147,10 +156,13 @@ const TeamMembers = () => {
 
     const handleProject = e => {
         setSelectProject(e.target.value);
-        let proj = projects.find((p) => p.projectId === parseInt(e.target.value));
-        setProjectDesc(proj.projectDesc);
+        console.log(e.target.value)
+        let proj = projects.find((p) => p.id === parseInt(e.target.value));
+        console.log(projects)
+        console.log(proj)
+        setProjectDesc(proj.description);
         setProjectManager(proj.projectManagerName);
-        setProjectMember(proj.projectTotalEmployees);
+        setProjectMember(proj.team);
         setProjectFormValue((projectFormValue) =>{
             let assignEmpProj = {...projectFormValue}
             assignEmpProj.projectId = parseInt(e.target.value);
@@ -173,7 +185,7 @@ const TeamMembers = () => {
     }
 
     const AddProject = (employeeId) =>{
-
+        console.log({...projectFormValue, employeeId});
         http.post(GetEndPoints().addEmployeeOnProject, {...projectFormValue, employeeId})
         .then((res) => {
             if(res.data.success){
@@ -196,6 +208,7 @@ const TeamMembers = () => {
     }
 
     const handleBench = (employeeId) =>{
+        GetProjects();
         setEmployeeId(employeeId)
         toggle();
         let selectedEmployee = data.find((e) => e.id === employeeId);
@@ -203,7 +216,7 @@ const TeamMembers = () => {
     }
 
     const columns_Manager = [
-        { field: 'id', headerName: 'Employee ID', },
+        { field: 'id', headerName: 'Employee ID'},
         { field: 'employeeName', headerName: 'Name',
              sortable:true,
              editable:true, width:200},
@@ -215,7 +228,7 @@ const TeamMembers = () => {
         editable:true},
         { field: 'salary', headerName: 'Salary'},
         { field: 'progress', headerName:'Progress', renderCell: (params) => <><Progress className="w-100 " color="success" value={params.row.progress}/><span className='mx-2' >{params.row.progress}%</span></> ,width:350},
-        { field: 'details', headerName: 'Details', renderCell: (params) => <Link to={`/dashboard/teammembers/employeedetails/${params.row.id}`} >View</Link>,width:90},
+        { field: 'details', headerName: 'Details', renderCell: (params) => <Link to={`/dashboard/teammembers/employeedetails/${params.row.id}/${currProj}`} >View</Link>,width:90},
       ];
       
       const columns_HR = [
@@ -237,9 +250,9 @@ const TeamMembers = () => {
 
     if(data === undefined)
     {
-        return (<div class="d-flex justify-content-center">
-        <div class="spinner-grow text-success" style={{width: "3rem", height: "3rem"}} role="status">
-        <span class="sr-only">Loading.....</span>
+        return (<div className="d-flex justify-content-center">
+        <div className="spinner-grow text-success" style={{width: "3rem", height: "3rem"}} role="status">
+        <span className="sr-only">Loading.....</span>
         </div>
     </div>);
     }
@@ -267,7 +280,7 @@ const TeamMembers = () => {
                                 id="projects"
                                 name="projects"
                                 type="select"
-                                value={selectTeamMembers}
+                                value={currProj}
                                 onChange={handleChange}
                                 >
                                 {
@@ -329,7 +342,7 @@ const TeamMembers = () => {
                                         onChange={handleProject}
                                         >
                                         {
-                                           projects && projects.map((project, index) => <option key={index} value={project.projectId}>{project.projectName}</option>)
+                                           projects && projects.map((project, index) => <option key={index} value={project.id}>{project.projectName}</option>)
                                         }
                                         </Input>
                             </FormGroup>

@@ -42,7 +42,9 @@ const enpoints = {
   dashboardId:'Dashboard/dashbordId',
   addProject: 'Projects/addProject',
   deleteProject: '/Projects/deleteProject',
-  deleteJob: 'Job/deleteJob'
+  deleteJob: 'Job/deleteJob',
+  removeEmpFromProj:'Projects/deleteEmployeeFromProject',
+  projectByEmployeeId:'Projects/employeeId',
 }
 
 export function GetEndPoints(){
