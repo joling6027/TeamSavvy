@@ -1,2 +1,7 @@
 .chartIcons .prCard:hover{background-color: #93cee9;}
 .modal-content{width:inherit}
+.deletebtn{right:20px; top:66px; z-index:999}
+.selectChart .nav-item{display: inline-block;  }
+.selectChart .nav-link.active{background:rgb(132, 203, 248);border-radius:0!important }
+.MuiDataGrid-footerContainer div > p {display: flex; margin:0;align-items: center; }
+

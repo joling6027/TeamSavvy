@@ -37,3 +37,14 @@ thead{border-top:1px solid #b6b6b6!important;border-bottom:1px solid #b6b6b6!imp
 .green-bg{background:linear-gradient(to right,#63A9A9,#95E3E3)}
 
 .buttonPro:hover{background:linear-gradient(to right,#fff, #0480e6, #fff);color:#000000; border:none}
+
+.appBtn::before{content:""; position:absolute; height:0px; width:0px;top: 50%!important; background: #1d8cf8; left:50%!important ;
+  transform: translate(-50%, -50%)!important;transition: all 0.3s ease-in-out;z-index:-3;opacity:0}
+.appBtn{position: relative;text-decoration:none;padding:10px 3rem ;display:block; margin-bottom:1rem;color:#000; 
+  font-weight: bold;border: none;
+  background: none;
+  width: 100%;}
+.appBtn span{z-index:99}
+.appBtn:hover{ color:#000}
+.appBtn:hover::before{content:"";width:100%; height:100%;position:absolute; right:0;z-index:-3;
+  background: #1d8cf8;opacity:0.2;border-radius: 5px}

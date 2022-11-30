@@ -230,8 +230,7 @@ const GetTotalHours = (timeSheetEvent) => {
  
   const addNewEventAlert = (slotInfo) => {
    
-    if(new Date(slotInfo.start).getMonth() === new Date().getMonth() &&
-    new Date(slotInfo.start).getDate() >= new Date().getDate())
+    if(parseInt(new Date(slotInfo.start).getMonth()) > parseInt(new Date().getMonth()))
     {
       setEvents([...event, {
           title:leavesArr[0].leaveType, 
@@ -267,6 +266,44 @@ const GetTotalHours = (timeSheetEvent) => {
           </select>
         </SweetAlert>
       );
+    }
+
+    if((parseInt(new Date(slotInfo.start).getMonth()) === parseInt(new Date().getMonth()) && new Date(slotInfo.start).getDate() >= new Date().getDate()))
+    {
+      setEvents([...event, {
+        title:leavesArr[0].leaveType, 
+        leaveTypeId: leavesArr[0].leaveTypeId,
+        employeeId: user.employeeId,
+        start: slotInfo.start,
+        end: slotInfo.end,
+        allDay: true,
+        color: leavesArr[0].leaveTypeId === 1? "orange" : "yellow"
+    }]);
+    localStorage.setItem('leave', JSON.stringify({
+      title:leavesArr[0].leaveType, 
+      leaveTypeId: leavesArr[0].leaveTypeId,
+      employeeId: user.employeeId,
+      start: slotInfo.start,
+      end: slotInfo.end,
+      allDay: true,
+      color: leavesArr[0].leaveTypeId === 1? "orange" : "yellow"
+  }));
+    setAlert(
+      <SweetAlert
+        showCancel
+        title="Select type of Leave"
+        onCancel={handleLeaveCancel}
+        confirmBtnBsStyle="info"
+        cancelBtnBsStyle="danger"
+        onConfirm={(e) =>addLeave(e, slotInfo)}
+        >
+        <select id="leaves" name="leaves" className="w-100 form-select" onChange={(e) => handleLeaveChange(e, slotInfo)}>
+        {
+            leavesArr.map((leaveType, index) => <option key={index} value={leaveType.leaveTypeId}>{leaveType.leaveType}</option>)
+        }
+        </select>
+      </SweetAlert>
+    );
     }
     
   };
@@ -426,10 +463,10 @@ const GetTotalHours = (timeSheetEvent) => {
      
     }
     else{
-        if( event.leaveTypeId === 1 && event.leaveStatus === ""){
+        if( event.leaveTypeId === 1){
           style = sickLeaveStyle
         }
-        else if(event.leaveTypeId === 2 && event.leaveStatus === ""){
+        else if(event.leaveTypeId === 2 ){
           style = vaccationLeaveStyle
         }
         else{
@@ -443,7 +480,6 @@ const GetTotalHours = (timeSheetEvent) => {
     };
 
   };
-
   
    return (
      <>

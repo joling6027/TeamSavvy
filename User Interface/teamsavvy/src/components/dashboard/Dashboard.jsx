@@ -21,6 +21,7 @@ import { EmployeeQueries } from './employeeDropdown';
 import SweetAlert from "react-bootstrap-sweetalert";
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
+import CloseIcon from '@mui/icons-material/Close';
 import { ArcElement, LineElement, BarElement, PointElement,
     BarController,
     BubbleController,
@@ -474,24 +475,24 @@ const deleteWid = (widget) =>{
     .catch(err => console.log(err))
 }
 
-if(data === undefined)
-{
-    return (<div class="d-flex justify-content-center">
-                <div class="spinner-grow text-success" style={{width: "3rem", height: "3rem"}} role="status">
-                <span class="sr-only">Loading...</span>
-                </div>
-            </div>);
-}
-else{
+// if(data === undefined)
+// {
+//     return (<div class="d-flex justify-content-center">
+//                 <div class="spinner-grow text-success" style={{width: "3rem", height: "3rem"}} role="status">
+//                 <span class="sr-only">Loading...</span>
+//                 </div>
+//             </div>);
+// }
+// else{
     return ( 
         <>
          <Container className="px-3">
             {alert}
         {
             user.role && user.role === "HR" && 
-            <div className=" d-flex justify-content-between">
-            <Col className="py-2 px-3 yellow-bg rounded m-2">
-                    <Link to={"/dashboard/projects"} className='d-flex  align-items-center  text-decoration-none justify-content-between'>
+            <div className="d-md-flex d-sm-block justify-content-between pe-md-3 p-sm-0">
+            <Col className="py-2 px-3 yellow-bg rounded my-sm-2 my-md-0" sm={12} lg={4}>
+                    <Link to={"/dashboard/projects"} className='d-flex align-items-center text-decoration-none justify-content-between'>
                         <div>
                             <img src={projectpic} alt="project"/>
                         </div>
@@ -501,7 +502,7 @@ else{
                     </div>
                 </Link>
             </Col>
-            <Col className="py-2 px-3 orange-bg rounded m-2">
+            <Col className="py-2 px-3 orange-bg rounded mx-md-2 m-sm-0" sm={12} lg={4}>
                 <Link to={'/dashboard/teammembers'} className='d-flex  align-items-center  text-decoration-none justify-content-between'>
                         <div>
                             <img src={teamMembers} alt="team members"/>
@@ -512,7 +513,7 @@ else{
                         </div>    
                 </Link>
             </Col>
-            <Col className="py-2 px-3 green-bg rounded m-2">
+            <Col className="py-2 px-3 green-bg rounded my-sm-2 my-md-0" sm={12} lg={4}>
                 <div className="d-flex  align-items-center  text-decoration-none justify-content-between ">
                         <div>
                             <img src={taskpic} alt="task"/>
@@ -528,8 +529,8 @@ else{
         }
         {
             user.role && user.role === "Manager" && 
-            <div className=" d-flex justify-content-between">
-            <Col className="py-2 px-3 yellow-bg rounded m-2">
+            <div className="d-md-flex d-sm-block justify-content-between pe-md-3 p-sm-0">
+            <Col className="py-2 px-3 yellow-bg rounded my-sm-2 my-md-0" sm={12} lg={4}>
                 <Link to={"/dashboard/projects"} className='d-flex  align-items-center  text-decoration-none justify-content-between'>
                         <div>
                             <img src={projectpic} alt="manager project"/>
@@ -540,7 +541,7 @@ else{
                     </div>
                 </Link>
             </Col>
-            <Col className="py-2 px-3 orange-bg rounded m-2">
+            <Col className="py-2 px-3 orange-bg rounded mx-md-2 m-sm-0" sm={12} lg={4}>
                 <Link to={'/dashboard/teammembers'} className='d-flex  align-items-center  text-decoration-none justify-content-between'>
                         <div>
                             <img src={teamMembers} alt="team members"/>
@@ -551,8 +552,8 @@ else{
                     </div>
                 </Link>
             </Col>
-            <Col className="py-2 px-3 green-bg rounded  m-2">
-            <div className="d-flex  align-items-center  text-decoration-none justify-content-between ">
+            <Col className="py-2 px-3 green-bg rounded my-sm-2 my-md-0" sm={12} lg={4}>
+            <div className="d-flex align-items-center  text-decoration-none justify-content-between ">
                         <div>
                             <img src={taskpic} alt="task"/>
                         </div>
@@ -565,13 +566,13 @@ else{
         </div>
         }
         
-        <Row className="px-2 py-3">
-            <Col md={6} className="">
+        <div className="pe-md-3 pe-sm-0 py-3 d-md-flex d-sm-block">
+            <Col md={6} sm={12} className="p-0 bg-white me-sm-0 me-md-3">
                 <Card className="prCard py-5 px-3 border-0">
                     {data && <Bar data={data} options={options}/>}
                 </Card>
             </Col>
-            <Col md={6} className="">
+            <Col md={6} sm={12} className="p-md-0 ps-md-3 p-sm-0 pt-sm-3 mt-sm-3 mt-x`x`md-0 bg-white border-light">
                 <Card className="prCard pt-3 px-3 border-0" >
                     <CardTitle className="small text-muted">Leaves</CardTitle>
                     <div style={{ display: 'flex', height: '315px', justifyContent: 'space-between' }}>
@@ -622,8 +623,8 @@ else{
             </div>
                 </Card>
             </Col>
-        </Row>
-        <Row className="px-2 pb-3">
+        </div>
+        <div className=" pb-3">
         <Col>
             <Button onClick={toggle}  className="border-0  bg-primary rounded ">
                 <div className="text-white">< AddIcon fontSize="small"/> <strong>Add Widget</strong></div>
@@ -678,7 +679,7 @@ else{
                             }
                         {selected && selected_dd_data !== '' && 
                         <div className="p-0 ms-1 d-flex col">
-                                <Button className="bg-primary ms-3 mb-3 col-md-3 col-sm-12 buttonPro" type="submit" 
+                                <Button className="bg-none ms-md-3 mb-md-3 col-md-3 col-sm-12 appBtn" type="submit" 
                                 onClick={handleWidget}>Create Widget</Button>
                         </div>
                         }
@@ -688,7 +689,8 @@ else{
                 </Card>
             </Collapse>
         </Col>    
-        </Row>
+        </div>
+        <div className="">
        {widgetsData &&
           widgetsData.map((widget, index) => {
             let lbl = "";
@@ -746,42 +748,43 @@ else{
            
             return ( 
                 <>
-                
-                    <Row key={index} className="px-2 py-2">
-                    <button onClick={() => deleteWidget(widget)}> Delete</button>
+                    <Col key={index} className="col-md-6 col-sm-12 px-2 py-2 d-inline-block position-relative zindex-dropdown">
+                    <button className="bg-0 border-0 shadow-0 rounded text-danger position-absolute zindex-tooltip deletebtn" onClick={() => deleteWidget(widget)}> <CloseIcon/></button>
                         <Tabs key={index}
                             defaultActiveKey="bar"
                             transition={true}
                             id="noanim-tab-example"
-                            className="mb-3 flex-row"
+                            className="d-inline-block rounded-top selectChart bg-white"
                             variant="pills"
+                            
                             >
-                            <Tab eventKey="bar" title={<BarChartIcon color="primary" />}>
-                                <Card className="py-5 px-3 border-0 mt-4">
+                            <Tab className="" eventKey="bar" title={<BarChartIcon color="primary" />}>
+                                <Card className="py-5 px-3 border-0">
                                     <Bar data={data}  options={options}/>
                                 </Card>
                             </Tab>
                             <Tab eventKey="line" title={<TimelineIcon color="primary"/>}>
-                                <Card className=" py-5 px-3 border-0 mt-4">
+                                <Card className=" py-5 px-3 border-0">
                                     <Line data={data} />
                                 </Card>
                             </Tab>
                             <Tab eventKey="pie" title={<PieChartIcon color="primary"/>} >
-                                <Card className="py-5 px-3 border-0 mt-4">
+                                <Card className="py-5 px-3 border-0">
                                     <Pie data={data} />
                                 </Card>
                             </Tab>
                         </Tabs>
-                    </Row>
+                    </Col>
                     </>
                 )
          })
          }
+         </div>
         </Container>
         </>
     );
 }
 
-}
+// }
  
 export default Dashboard;
