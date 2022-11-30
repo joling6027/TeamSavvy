@@ -14,12 +14,13 @@ const ProjectDetails = () => {
     const data = useLocation();
     console.log(params.id)
     console.log(data.state);
-    const managerId = data.state;
+    // const managerId = data.state;
 
     const [project, setProject] = useState();
     const [tasks, setTasks] = useState();
     const [completedTasks, setCompletedTasks] = useState();
     const [teamMembers, setTeamMembers] = useState();
+    const [managerId, setManagerId] = useState(data.state);
 
     //alert
     const [alert, setAlert] = useState(null);
@@ -41,7 +42,7 @@ const ProjectDetails = () => {
         setTitleValidate(false)
         setDescValidate(false)
         setHoursValidate(false)
-        // setAssignEmpValidate(false)
+        setAssignEmpValidate(false)
         setStartDateValidate(false)
         setEndDateValidate(false)
 
@@ -87,7 +88,7 @@ const ProjectDetails = () => {
     const [titleValidate, setTitleValidate] = useState(false);
     const [descValidate, setDescValidate] = useState(false);
     const [hoursValidate, setHoursValidate] = useState(false);
-    // const [assignEmpValidate, setAssignEmpValidate] = useState(false);
+    const [assignEmpValidate, setAssignEmpValidate] = useState(false);
     const [startDateValidate, setStartDateValidate] = useState(false);
     const [endDateValidate, setEndDateValidate] = useState(false);
 
@@ -128,6 +129,8 @@ const ProjectDetails = () => {
             if(res.data.success){
                 console.log(res.data.response);
                 setProject(res.data.response)
+                setManagerId(res.data.response.projectManagerId);
+                console.log(res.data.response.projectManagerId);
             }
         }).catch((err) => console.log(err.message))
     }
@@ -220,6 +223,7 @@ const ProjectDetails = () => {
         console.log(option);
         setAssignedEmpId(option)
         setAssignedEmp(e.target.value)
+        setAssignEmpValidate(false)
     }
     const newStartDateChangeHandler = (e) => {
 
@@ -289,12 +293,20 @@ const ProjectDetails = () => {
             setStartDateValidate(true)
             setEndDateValidate(true)
             return;
+        }else if( assignedEmp === undefined || assignedEmpId === undefined){
+            setAssignEmpValidate(true)
+
+            return;
         }
         else{
+            setAssignedEmp(project.projectManagerName)
+            setAssignedEmpId(project.projectManagerId)
+
+
 
             const taskData = {
                 "employeeId": +assignedEmpId,
-                "projectId": +params.id,
+                "projectId": +project.projectId,
                 "taskName": title,
                 "taskDesc": description,
                 "taskStartDate": startDate,
@@ -419,6 +431,19 @@ const ProjectDetails = () => {
         }
         else {
 
+            console.log(mTaskId)  //undefined
+            console.log(mAssignedEmpId) //ok
+            console.log(+params.id) //ok
+            console.log(mTitle) //ok
+            console.log(mDesc) // ok
+            console.log(mStartDate) // ok
+            console.log(mEndDate) //ok
+            console.log(mHours) // ok
+            console.log(user.firstName) //empty string
+            console.log(mAssignedEmp) //ok
+            console.log(mAssignedDate) //ok
+            console.log(mStatus) //
+
             const modifyTaskData = {
                 taskId: +mTaskId,
                 employeeId: +mAssignedEmpId,
@@ -494,7 +519,7 @@ const ProjectDetails = () => {
         //Jaspal
         GetTaskCounts()
 
-    }, [params.id])
+    }, [managerId])
 
 
     if (!(project && tasks)) {
@@ -552,7 +577,7 @@ const ProjectDetails = () => {
                                         <p className="text-muted">Start Date: {task.taskStartDate}</p>
                                         <p className="text-muted">End Date: {task.taskEndDate}</p>
                                         <p className="text-muted">Assigned to <strong>{task.assignedTo}</strong></p>
-                                        {(user.firstName === project.projectManagerName) ? (<Link to="" onClick={() => mtoggle(task)} className="alert-link text-uppercase text-decoration-none linkStyle">Modify Task</Link>): ""}
+                                        {(user.employeeId === project.projectManagerId) ? (<Link to="" onClick={() => mtoggle(task)} className="alert-link text-uppercase text-decoration-none linkStyle">Modify Task</Link>): ""}
                                     </li>
                                 ))}
                                 {/* <li class="list-group-item border-end-0 border-bottom-0 border-start-0 rounded-0 px-0 py-3 border-top">
@@ -578,7 +603,7 @@ const ProjectDetails = () => {
                         <Col className="rounded m-2 prCard">
                             <h5 className="d-inline-block p-3">In-Progress</h5>
                             <ul class="list-group p-3">
-                                {tasks && tasks.filter((task => task.taskStatus === "In-Progress")).map((task) => (<li class="list-group-item border-end-0 border-bottom-0 border-start-0 rounded-0 px-0 py-3 border-top">
+                                {tasks && tasks.filter((task => task.taskStatus === "In Progress")).map((task) => (<li class="list-group-item border-end-0 border-bottom-0 border-start-0 rounded-0 px-0 py-3 border-top">
                                     <h6>{task.taskName}</h6>
                                     {/* <p><strong>Task Description</strong></p> */}
                                     <p className="text-muted">{task.taskDesc}</p>
@@ -688,14 +713,17 @@ const ProjectDetails = () => {
                                                 name="assignTo"
                                                 type="select"
                                                 onChange={newAssignEmpChangeHandler}
-                                                valid
+                                                valid={assignedEmp ? true : false}
+                                                invalid={assignEmpValidate}
                                             >
+                                            <option disabled selected>-- select --</option>
                                                 {teamMembers && teamMembers.map((member) => (
                                                     <option id={member.id} value={member.employeeName}>
                                                         {member.employeeName}
                                                     </option>
                                                 ))}
                                             </Input>
+                                            <FormFeedback invalid>Please select an employee</FormFeedback>
                                         </FormGroup>
                                     </Col>
                                 </Row>

@@ -19,7 +19,7 @@ const Task = () => {
 
     console.log(tasks);
 
-    useEffect(() => {
+    const getTasks = () => {
         http
             .get(GetEndPoints().employeeTask + "/employeeId/" + user.employeeId)
             .then((res) => {
@@ -27,6 +27,10 @@ const Task = () => {
                 setTasks(res.data.response);
             })
             .catch((err) => console.log(err.message));
+    }
+
+    useEffect(() => {
+        getTasks();
 
         // http.put(GetEndPoints().updateTask)
     }, []);
@@ -98,6 +102,8 @@ const Task = () => {
                 // window.location.reload();
             })
             .catch((err) => console.log(err.message));
+        getTasks();
+        
     };
 
     const populateData = (taskName) => {
