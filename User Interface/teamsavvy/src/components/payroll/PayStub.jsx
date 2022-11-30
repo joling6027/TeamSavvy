@@ -13,8 +13,19 @@ const Paystub = () => {
   const [emp, setEmployee] = useState();
   const data = useLocation();
   const [payrollItem, setPayrollItem] = useState();
+  const [endDate, setEndDate] = useState();
 
-  console.log(data.state.payrollItem)
+  // console.log(data.state.payrollItem)
+
+  const calcLastDateOfMonth = (payDate) => {
+    let datePayDate = new Date(payDate);
+    console.log(datePayDate)
+    datePayDate.setMonth(datePayDate.getMonth() + 1);
+    datePayDate.setDate(0);
+    console.log(datePayDate);
+    let endDateStr = moment(datePayDate).format("YYYY-MM-DD")
+    setEndDate(endDateStr);
+  }
   
   // console.log(data.state.payrollItem)
   useEffect(() => {
@@ -24,12 +35,12 @@ const Paystub = () => {
       setEmployee(response)
       console.log(response)
       setPayrollItem(data.state.payrollItem)
+      console.log(data.state.payrollItem)
+      calcLastDateOfMonth(payrollItem.payDate)
       
     }).catch((err) => console.log(err.message));
 
   }, [])
-
-  console.log(emp)
 
   if(emp === undefined){
     return (<div class="d-flex justify-content-center">
@@ -48,8 +59,8 @@ const Paystub = () => {
               <h5 className="title col-sm">{emp.employeeFirstname} {emp.employeeLastname}</h5>
               <h5 className="title col-sm">Employee#{emp.employeeId}</h5>
               <h5 className="title col-sm">Department: {emp.department.departmentName}</h5>
-              <h5 className="title col-sm text-right">Start Date  {moment(emp.payDate).format('DD-MMM-YYYY')}</h5>
-              <h5 className="title col-sm text-right">End Date  </h5>
+              <h5 className="title col-sm text-right">Start Date: {payrollItem.payDate}</h5>
+              <h5 className="title col-sm text-right">End Date: {endDate}</h5>
             </div>
             <hr />
           </div>

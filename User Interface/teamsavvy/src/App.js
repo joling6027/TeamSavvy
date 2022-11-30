@@ -61,8 +61,8 @@ function App() {
             <Route path="/task" element={<Task />} />
             <Route path="/payroll" exact element={<Payroll data={data} columns={COLUMNS} />} />
             <Route path="/jobs" element={<InternalJobs />} />
-            <Route path='/payroll/:payrollid' element={<Paystub />} />
-            <Route path="/jobs/:id" element={<JobAppliedEmployees/>} />
+            <Route path='/payroll/paystub/:payrollid' element={<Paystub />} />
+            <Route path="/jobs/applied/:id" element={<JobAppliedEmployees/>} />
             <Route path="/dashboard/projects" element={<ProjectList/>} />
             <Route path="/dashboard/projects/projectdetail/:id" element={<ProjectDetails />} />
           </Routes>

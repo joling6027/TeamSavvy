@@ -110,7 +110,7 @@ const Payroll = () => {
                                             {/* <Link to={`/payroll/payrollId/${payrollItem.payrollId}`}
                                                 >VIEW FILE</Link> */}
                                             <Link 
-                                                to={`/payroll/${payrollItem.payrollId}`}
+                                                to={`/payroll/paystub/${payrollItem.payrollId}`}
                                                 state={{payrollItem}}
                                             >VIEW FILE</Link>
                                         </td>
