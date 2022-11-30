@@ -418,7 +418,7 @@ const InternalJobs = () => {
                                                     <>
                                                     < Button className='btn-view-job-detail' color="link"
                                                         onClick={() => { setJobItem(job); setIsCreateJob(false) }}>VIEW</Button>
-                                                    <Button className='btn-view-job-detail' color="text-danger"
+                                                    <Button className='btn-view-job-detail' color="text-danger" style={{color: 'red'}}
                                                         onClick={() => deleteJobAlert(job.jobId)}>DEL</Button>
                                                     {/* <Modal isOpen={delJobModal} toggle={toggleDelJob} backdrop="static" centered>
                                                         <ModalBody>

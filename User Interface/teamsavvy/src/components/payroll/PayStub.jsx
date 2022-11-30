@@ -12,7 +12,7 @@ const Paystub = () => {
   const { http, user } = AuthService();
   const [emp, setEmployee] = useState();
   const data = useLocation();
-  const [payrollItem, setPayrollItem] = useState();
+  const [payrollItem, setPayrollItem] = useState(data.state.payrollItem);
   const [endDate, setEndDate] = useState();
 
   // console.log(data.state.payrollItem)
@@ -34,7 +34,7 @@ const Paystub = () => {
       const response = res.data.response
       setEmployee(response)
       console.log(response)
-      setPayrollItem(data.state.payrollItem)
+      // setPayrollItem(data.state.payrollItem)
       console.log(data.state.payrollItem)
       calcLastDateOfMonth(payrollItem.payDate)
       
@@ -42,7 +42,7 @@ const Paystub = () => {
 
   }, [])
 
-  if(emp === undefined){
+  if(emp === undefined || payrollItem === undefined){
     return (<div class="d-flex justify-content-center">
     <div class="spinner-grow text-success" style={{width: "3rem", height: "3rem"}} role="status">
     <span class="sr-only">Loading.....</span>
