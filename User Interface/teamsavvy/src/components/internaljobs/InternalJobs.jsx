@@ -162,9 +162,6 @@ const InternalJobs = () => {
                 }).catch((err) => console.log(err.message))
             
         }
-
-
-
         setShow(!show)
     }
 
@@ -421,7 +418,7 @@ const InternalJobs = () => {
                                     <Card className='jobs-card' body>
                                         <CardTitle className='job-card-title'>Jobs
                                             {(user.role === 'HR' || user.role === 'Admin' ? 
-                                            (<Button className='createAndApply-btn' color="link" onClick={() => { setIsCreateJob(true); setValidate(); setJobName(); setJobDetail(); setJobResponsibility(); setJobPay(); setJobDeadline(); setSelectOptions([])}}>
+                                            (<Button className='createAndApply-btn' color="link" onClick={() => { setIsCreateJob(true); setValidate(); setJobName(); setJobDetail(); setJobResponsibility(); setJobPay(); setJobDeadline(); setSelectOptions([]); setSkills([])}}>
                                                 <AddCircleIcon /> Create Job
                                             </Button>) : "")}
                                         </CardTitle>
@@ -502,7 +499,7 @@ const InternalJobs = () => {
                                                                                     multiple={true}
                                                                                 >
                                                                                     {
-                                                                                        skillsData.map(({ skillId, skillName }, index) => <option key={index} value={skillId}>{skillName}</option>)
+                                                                                        skillsData && skillsData.map(({ skillId, skillName }, index) => <option key={index} value={skillId}>{skillName}</option>)
                                                                                     }
                                                                                 </Input>
                                                                             </FormGroup>
