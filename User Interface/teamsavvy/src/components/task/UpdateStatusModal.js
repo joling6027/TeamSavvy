@@ -11,7 +11,8 @@ const UpdateStatusModal = (props) => {
   const [status, setStatus] = useState();
 
   const statusChangeHandler = (e) => {
-    setStatus(e.target.value);
+    let st = e.target.value.split(" ").join("");
+    setStatus(st);
 
   }
 

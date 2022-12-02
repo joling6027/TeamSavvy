@@ -59,7 +59,8 @@ const TaskModal = (props) => {
   }
 
   const statusChangeHandler = (e) => {
-    setEnteredStatus(e.target.value)
+    let st = e.target.value.split(" ").join("");
+    setEnteredStatus(st)
   }
 
   const startDateChangeHandler = (e) => {
