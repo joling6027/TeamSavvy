@@ -215,6 +215,12 @@ const TeamMembers = () => {
         setEmployeeName(selectedEmployee.employeeName)
     }
 
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+    })
+
+
     const columns_Manager = [
         { field: 'id', headerName: 'Employee ID'},
         { field: 'employeeName', headerName: 'Name',
@@ -226,7 +232,7 @@ const TeamMembers = () => {
         editable:true },
         { field: 'position', headerName: 'Position', sortable:true,
         editable:true},
-        { field: 'salary', headerName: 'Salary'},
+        { field: 'salary', headerName: 'Salary', editable: false, renderCell: (params) => formatter.format(params.row.salary) },
         { field: 'progress', headerName:'Progress', renderCell: (params) => <><Progress className="w-100 " color="success" value={params.row.progress}/><span className='mx-2' >{params.row.progress}%</span></> ,width:350},
         { field: 'details', headerName: 'Details', renderCell: (params) => <Link to={`/dashboard/teammembers/employeedetails/${params.row.id}/${currProj}`} >View</Link>,width:90},
       ];
@@ -242,7 +248,7 @@ const TeamMembers = () => {
         editable:true },
         { field: 'position', headerName: 'Position', sortable:true,
         editable:true},
-        { field: 'salary', headerName: 'Salary'},
+          { field: 'salary', headerName: 'Salary', editable: false, renderCell: (params) => formatter.format(params.row.salary) },
         { field: 'progress', headerName:'Progress', renderCell: (params) => <><Progress className="w-50" color="success" value={params.row.progress} /><span className='mx-2' >{params.row.progress}%</span></> ,width:350},
         { field: 'details', headerName: 'Details', renderCell: (params) => <Link to={`/dashboard/teammembers/employeedetails/${params.row.id}`} >View</Link> },
         { field: 'icon', headerName: 'Delete', renderCell: (params) => <DeleteIcon value={params.row.id} onClick={() => handleDelete(params.row.id)} color="error"/> }

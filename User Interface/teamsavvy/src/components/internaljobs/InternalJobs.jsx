@@ -52,6 +52,7 @@ const InternalJobs = () => {
     const [skills, setSkills] = useState([]);
     // const [skills, setSkills] = useState(new Set());
     const skillsData = getSkillsLst();
+    const [appliedEmp, setAppliedEmp] = useState([]);
 
     //modal for skills
     const [modal, setModal] = useState(false);
@@ -68,55 +69,105 @@ const InternalJobs = () => {
         setDelJobModal(!delJobModal);
     }
 
+    const getAppliedEmp = (jobId) => {
+        http.get(GetEndPoints().appliedEmp + "/" + jobId)
+        .then((res) => {
+            console.log(res.data.response);
+            setAppliedEmp(res.data.response);
+        }).catch((err) => {
+            if(err.response.status === 404){
+                console.log("404 ---")
+                setAppliedEmp([]);
+            }
+        })
+    }
+
     //submit job apply
     const submitJobApply = (e) => {
         e.preventDefault();
-        console.log(jobItem.jobId);
 
-        const jobSubmitData = {
-            employeeId: user.employeeId,
-            jobId: jobItem.jobId,
-            appliedOn: today
-        }
+        let isApplied = false;
 
-        console.log(jobSubmitData)
+        if(appliedEmp.length !== 0){
+            for (let i = 0; i < appliedEmp.length; i++) {
+                if (appliedEmp && appliedEmp[i].employeeId === user.employeeId) {
+                    isApplied = true;
+                }
+            }
+            if(!isApplied){
+                const jobSubmitData = {
+                    employeeId: user.employeeId,
+                    jobId: jobItem.jobId,
+                    appliedOn: today
+                }
 
-        http.post(GetEndPoints().internalJob + "/applyjob", { ...jobSubmitData })
-        .then((res) => {
-            if(res.data.success){
-                console.log("Job apply successed!");
+                http.post(GetEndPoints().internalJob + "/applyjob", { ...jobSubmitData })
+                    .then((res) => {
+                        if (res.data.success) {
+                            setAlert(
+                                <SweetAlert
+                                    success
+                                    style={{ display: "block", marginTop: "-100px" }}
+                                    title="Submitted!"
+                                    onConfirm={() => hideAlert()}
+                                    onCancel={() => hideAlert()}
+                                    confirmBtnBsStyle="success"
+                                    btnSize=""
+                                >
+                                    Your application has been submitted!!</SweetAlert>
+                            )
+                        }
+                    }).catch((err) => console.log(err.message))
+
+            }else{
                 setAlert(
                     <SweetAlert
-                        success
+                        danger
                         style={{ display: "block", marginTop: "-100px" }}
-                        title="Submitted!"
+                        title="You have already applied!"
                         onConfirm={() => hideAlert()}
                         onCancel={() => hideAlert()}
                         confirmBtnBsStyle="success"
                         btnSize=""
                     >
-                        Your application has been submitted!!</SweetAlert>
+                        Please wait for further information.</SweetAlert>
                 )
+                setShow(!show);
+                return;
             }
-        }).catch((err) => console.log(err.message))
 
+        }else{
+            const jobSubmitData = {
+                employeeId: user.employeeId,
+                jobId: jobItem.jobId,
+                appliedOn: today
+            }
+
+            http.post(GetEndPoints().internalJob + "/applyjob", { ...jobSubmitData })
+                .then((res) => {
+                    if (res.data.success) {
+                        setAlert(
+                            <SweetAlert
+                                success
+                                style={{ display: "block", marginTop: "-100px" }}
+                                title="Submitted!"
+                                onConfirm={() => hideAlert()}
+                                onCancel={() => hideAlert()}
+                                confirmBtnBsStyle="success"
+                                btnSize=""
+                            >
+                                Your application has been submitted!!</SweetAlert>
+                        )
+                    }
+                }).catch((err) => console.log(err.message))
+            
+        }
         setShow(!show)
     }
 
     const hideAlert = () => {
         setAlert(null);
     };
-
-    // disable apply button
-    const fetchAppliedData = (jobId) => {
-        http.get(GetEndPoints.internalJob+ "/jobApplied/" + jobId)
-        .then((res) => {
-            console.log(res.data)
-
-        })
-        .catch((err) => console.log(err.message))
-    }
-
 
     //validation
     const [jobNameValidate, setJobNameValidate] = useState(false);
@@ -136,18 +187,15 @@ const InternalJobs = () => {
         http.get(GetEndPoints().internalJob)
             .then((res) => {
                 if (res.data.success) {
-                    console.log(res.data.response)
                     setjobs(res.data.response)
 
                     const firstJob = res.data.response[0]
                     setJobItem(firstJob)
-                    // console.log(firstJob)
                 }
             })
             .catch((err) => console.log(err.message))
     }
 
-    // console.log(user);
     useEffect(() => {
         getJobs();
     }, [])
@@ -157,7 +205,6 @@ const InternalJobs = () => {
         let target = event.target
         let value = Array.from(target.selectedOptions, option => option.value);
         setSelectOptions(value);
-        console.log(value)
     };
 
     const handleDelete = (skillId) => {
@@ -175,31 +222,25 @@ const InternalJobs = () => {
     const skillCancel = () => { setSelectOptions([]); toggle(); }
     const skillSubmit = () => {
         toggle();
-        console.log(selectOptions)
         let skObjs = [];
-        // let skObjs = new Set();
         skObjs = selectOptions.map((id, index) => {
             
             let skRes = skillsData.find((s) => s.skillId === parseInt(id));
-            console.log(skRes)
             return {
                 skillid: skRes.skillId,
                 isactive: true,
                 skills: {
                     skillId: skRes.skillId,
                     skillName: skRes.skillName,
-                    // skillName: event.target.value,
                 },
             }
         })
 
         let skArr = [ ...skills, ...skObjs];
-        console.log(skArr)
         setSkills(skArr);
         // formValue.skills = [...skArr]
         // setFormValue(formValue)
         setSelectOptions([]);
-        // console.log(formValue)
 
     }
 
@@ -222,7 +263,6 @@ const InternalJobs = () => {
     }
 
     const detailChangeHandler = (e) => {
-        console.log(e.target.value)
         if (e.target.value !== '') {
             setJobDetailValidate(false);
             setJobDetail(e.target.value)
@@ -232,7 +272,6 @@ const InternalJobs = () => {
     }
 
     const responsibilityChangeHandler = (e) => {
-        console.log(e.target.value)
         if (e.target.value !== '') {
             setJobResponsibilityValidate(false);
             setJobResponsibility(e.target.value)
@@ -265,25 +304,11 @@ const InternalJobs = () => {
 
     const submitHandler = (e) => {
         e.preventDefault()
-        
-        // if (jobName === undefined || jobDetail === undefined || jobResponsibility === undefined || jobPay === undefined || jobDeadline === undefined) {
-        //     setJobNameValidate(true);
-        //     setJobDetailValidate(true);
-        //     setJobResponsibilityValidate(true);
-        //     setJobDeadlineValidate(true);
-        //     setJobPayValidate(true);
-        //     return;
-        // }
-        // console.log(jobDetailValidate);
-        // console.log(jobResponsibilityValidate);
-        // console.log(jobPayValidate);
-        // console.log(jobDeadlineValidate);
 
         if (jobName === undefined || jobName === null){
             setJobNameValidate(true);
             return;
         }
-        console.log(jobDetail)
         if (jobDetail === undefined || jobDetail === null){
             setJobDetailValidate(true);
             return;
@@ -315,13 +340,9 @@ const InternalJobs = () => {
                 jobSkills: skills
             }
 
-            // console.log("new job -");
-            // console.log(newJob);
-
             http.post(GetEndPoints().internalJob + "/addJob", { ...newJob })
                 .then((res) => {
                     if (res.data.success) {
-                        console.log("ok");
                         // setIsCreateJob(false);
                         setAlert(
                             <SweetAlert
@@ -338,7 +359,6 @@ const InternalJobs = () => {
                     }
                 }).catch((err) => console.log(err.message));
 
-            // clearCreateJobInput();
             e.target.reset();
             
         }
@@ -346,7 +366,6 @@ const InternalJobs = () => {
     }
 
     const deleteJobAlert = (jobId) => {
-        console.log(jobId)
         setAlert(
             <SweetAlert
                 warning
@@ -357,7 +376,6 @@ const InternalJobs = () => {
                 style={{ display: "block", marginTop: "-100px" }}
                 onConfirm={() => deleteJob(jobId)}
                 onCancel={() => hideAlert()}
-                // confirmBtnBsStyle="success"
                 btnSize=""
             >
             </SweetAlert>
@@ -370,11 +388,7 @@ const InternalJobs = () => {
         .then((res) => {
             if(res.data.success){
                 console.log("delete successfully.")
-            //     setAlert(
-            //         <SweetAlert success title="Job deleted successfully!" onConfirm={() => {hideAlert();getJobs()}
-            // } onCancel = {() => hideAlert() }>
-            //         </SweetAlert>
-            //     )
+
                 hideAlert()
                 getJobs();
             }
@@ -403,7 +417,7 @@ const InternalJobs = () => {
                                     <Card className='jobs-card' body>
                                         <CardTitle className='job-card-title'>Jobs
                                             {(user.role === 'HR' || user.role === 'Admin' ? 
-                                            (<Button className='createAndApply-btn' color="link" onClick={() => { setIsCreateJob(true); setValidate(); setJobName(); setJobDetail(); setJobResponsibility(); setJobPay(); setJobDeadline(); setSelectOptions([])}}>
+                                            (<Button className='createAndApply-btn' color="link" onClick={() => { setIsCreateJob(true); setValidate(); setJobName(); setJobDetail(); setJobResponsibility(); setJobPay(); setJobDeadline(); setSelectOptions([]); setSkills([])}}>
                                                 <AddCircleIcon /> Create Job
                                             </Button>) : "")}
                                         </CardTitle>
@@ -419,19 +433,7 @@ const InternalJobs = () => {
                                                         onClick={() => { setJobItem(job); setIsCreateJob(false) }}>VIEW</Button>
                                                     <Button className='btn-view-job-detail' color="text-danger" style={{color: 'red'}}
                                                         onClick={() => deleteJobAlert(job.jobId)}>DEL</Button>
-                                                    {/* <Modal isOpen={delJobModal} toggle={toggleDelJob} backdrop="static" centered>
-                                                        <ModalBody>
-                                                            <h4>Are you sure you want to delete this job?</h4>
-                                                            <div className="d-flex justify-content-center mt-5" id={job.jobId}>
-                                                                    <Button className="me-3" color="primary" onClick={(e) => console.log(e)}>
-                                                                    Confirm
-                                                                </Button>
-                                                                    <Button color="secondary" onClick={() => setDelJobModal(false)} >
-                                                                    Cancel
-                                                                </Button>
-                                                            </div>
-                                                        </ModalBody>
-                                                    </Modal> */}
+ 
                                                     </>
                                                 )
                                                     :
@@ -452,7 +454,6 @@ const InternalJobs = () => {
 
                                             <>
                                                 <Form onSubmit={submitHandler}>
-                                                    {/* {console.log('Here isCreateJob is false')} */}
                                                     <FormGroup>
                                                         <Container>
                                                             <CardTitle className='job-card-title'>Job Details</CardTitle>
@@ -480,14 +481,6 @@ const InternalJobs = () => {
                                                                 <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge" onClick={() => handleDelete(skill.skills.skillId)}> <CloseOutlinedIcon sx={{ fontSize: 13 }} /> </Badge>
                                                             </div>)}
                                                             <div className="d-flex flex-wrap ">
-                                                                {/* <Badge className="skillPill rounded-pill me-2 mb-3" pill> C# </Badge>
-                                                                <Badge className="skillPill rounded-pill me-2 mb-3" pill> Java </Badge>
-                                                                <Badge className="skillPill rounded-pill me-2 mb-3" pill> Manual Testing </Badge>
-                                                                <Badge className="skillPill rounded-pill me-2 mb-3" pill> Automation Testing </Badge>
-                                                                <Badge className="skillPill rounded-pill me-2 mb-3" pill> Manual Testing </Badge> */}
-                                                                {/* <Button className='createAndApply-btn' color="link">
-                                                                    <AddOutlinedIcon />Add
-                                                                </Button> */}
                                                                 <Modal isOpen={modal} toggle={toggle} backdrop="static" centered>
                                                                     <ModalHeader>  <h4>Add Skills</h4> </ModalHeader>
                                                                     <ModalBody>
@@ -505,7 +498,7 @@ const InternalJobs = () => {
                                                                                     multiple={true}
                                                                                 >
                                                                                     {
-                                                                                        skillsData.map(({ skillId, skillName }, index) => <option key={index} value={skillId}>{skillName}</option>)
+                                                                                        skillsData && skillsData.map(({ skillId, skillName }, index) => <option key={index} value={skillId}>{skillName}</option>)
                                                                                     }
                                                                                 </Input>
                                                                             </FormGroup>
@@ -549,17 +542,17 @@ const InternalJobs = () => {
                                                 <CardTitle className='job-card-title'>
                                                     {(user.role === 'HR' || user.role === 'Admin' ? 
                                                         (<><Link className='createAndApply-btn pt-2 lh-1 m-0' color="link" to={`/jobs/applied/${jobItem.jobId}`} state={{ jobId:jobItem.jobId }}>Applied</Link>
-                                                            <Link to="#" className='createAndApply-btn pt-2 px-3 m-0  lh-1'  color="link" onClick={toggleApplyJob}>Apply Now</Link></>) : (<Link to="#" className='createAndApply-btn py-0' color="link" onClick={toggleApplyJob}>Apply Now</Link>))}
+                                                            <Link to="#" className='createAndApply-btn pt-2 px-3 m-0  lh-1'  color="link" onClick={() => { toggleApplyJob(); getAppliedEmp(jobItem.jobId) }}>Apply Now</Link></>) : (<Link to="#" className='createAndApply-btn py-0' color="link" onClick={() => { toggleApplyJob(); getAppliedEmp(jobItem.jobId) }}>Apply Now</Link>))}
                                                     {jobItem.jobPosition}
                                                     <Modal isOpen={show} toggle={toggleApplyJob} backdrop="static" centered>
                                                         <ModalBody>
                                                             <h4>Are you sure you want to apply for this position?</h4>
                                                             <div className="d-flex justify-content-center mt-5">
-                                                                <Button className="me-3" color="primary" onClick={submitJobApply}>
-                                                                    Confirm
-                                                                </Button>
-                                                                <Button color="secondary" onClick={() => setShow(false)} >
+                                                                <Button className="me-3" color="secondary" onClick={() => setShow(false)} >
                                                                     Cancel
+                                                                </Button>
+                                                                <Button color="primary" onClick={submitJobApply}>
+                                                                    Confirm
                                                                 </Button>
                                                             </div>
                                                         </ModalBody>

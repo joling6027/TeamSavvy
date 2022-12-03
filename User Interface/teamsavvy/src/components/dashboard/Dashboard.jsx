@@ -319,7 +319,7 @@ const Dashboard = () => {
     const columns = [
         { field: 'id', headerName: 'Id', width:20},
         { field: 'employeeId', headerName: 'Employee Id', sortable:true, editable:true},
-        { field: 'projectName', headerName: 'Project'},
+        { field: 'projectName', headerName: 'Project', width:170},
         { field: 'leaveType', headerName: 'Leave Type'},
         { field: 'leaveStartDate', headerName: 'Start Date'},
         { field: 'leaveEndDate', headerName: 'End Date'},
@@ -583,7 +583,7 @@ const deleteWid = (widget) =>{
                       rowsPerPageOptions={[5, 10, 20,50,100]}
                       pagination
                       rows={empLeaves} columns={columns}
-                        // columnVisibilityModel={{id: false}}
+                      columnVisibilityModel={{id: false}}
                         SelectionOnClick
                         onRowClick={approvetoggle}
                         components={{

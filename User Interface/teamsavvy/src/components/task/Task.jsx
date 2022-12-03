@@ -17,13 +17,10 @@ const Task = () => {
     const { http, user } = AuthService();
     const [taskItem, setTaskItem] = useState();
 
-    console.log(tasks);
-
     const getTasks = () => {
         http
             .get(GetEndPoints().employeeTask + "/employeeId/" + user.employeeId)
             .then((res) => {
-                console.log(res.data.response);
                 setTasks(res.data.response);
             })
             .catch((err) => console.log(err.message));
@@ -32,7 +29,6 @@ const Task = () => {
     useEffect(() => {
         getTasks();
 
-        // http.put(GetEndPoints().updateTask)
     }, []);
 
     // const removeTask = (enteredTaskData) => {
@@ -49,9 +45,9 @@ const Task = () => {
 
         // tasks.splice(selectedTaskIndex, 1);
 
-        console.log(tasks);
+        // console.log(tasks);
 
-        console.log(enteredTaskData);
+        // console.log(enteredTaskData);
 
         const taskData = {
             ...enteredTaskData,
@@ -65,21 +61,16 @@ const Task = () => {
             taskData
         ])
 
-        console.log(tasks);
-        // console.log(taskData);
 
         http
             .put(GetEndPoints().updateTask, { ...taskData })
             .then((res) => {
-                // console.log(res.data.response)
-                // window.location.reload();
             })
             .catch((err) => console.log(err.message));
     };
 
     const saveUpdateDataHandler = (enteredStatus) => {
-        console.log(enteredStatus);
-        console.log(taskItem);
+
         const taskData = {
             assignedBy: taskItem.assignedBy,
             assignedDate: taskItem.assignedDate,
@@ -94,12 +85,9 @@ const Task = () => {
             taskStatus: enteredStatus,
             taskTotalHours: taskItem.taskTotalHours,
         };
-        console.log("Line 62" + taskData);
         http
             .put(GetEndPoints().updateTask, { ...taskData })
             .then((res) => {
-                console.log(res.data.response);
-                // window.location.reload();
             })
             .catch((err) => console.log(err.message));
         getTasks();
@@ -108,22 +96,11 @@ const Task = () => {
 
     const populateData = (taskName) => {
         let selectedTask = tasks.filter(t => t.taskName === taskName);
-        // setModalData(task);
-        // console.log(taskName);
-        // console.log(tasks);
-        // console.log(typeof tasks[0].taskName);
-        // console.log(selectedTask);
 
         setModalData(selectedTask[0]);
-        // console.log(task)
         return modalData;
     };
 
-    // const passDataHandler = (task) => {
-    //     setUpdateData(task);
-    //     console.log(updateData)
-    //     return updateData;
-    // }
 
     if (tasks === undefined) {
         return (
@@ -156,12 +133,13 @@ const Task = () => {
                                             (< div className="assigned-task" key={Math.random()} id={task.taskName}>
                                                 <h6 style={{ fontWeight: "bold" }}>{task.taskName}</h6>
                                                 <p>{task.taskDesc}</p>
+                                                <p>Start date: {task.taskStartDate}</p>
+                                                <p>End date: {task.taskEndDate}</p>
                                                 <button
                                                     className='task-btn'
                                                     type="button"
                                                     onClick={(e) => {
                                                         setShow(true);
-                                                        // console.log(e.target.parentNode.getAttribute('id'));
                                                         populateData(e.target.parentNode.getAttribute('id'))
                                                     }}
                                                 >
@@ -173,57 +151,10 @@ const Task = () => {
                                                     close={() => setShow(false)}
                                                     onOpen={modalData}
 
-                                                // onOpen={(e) => console.log(e)}
-
                                                 />}
-                                                {/* {console.log(task)} */}
                                                 < hr />
                                             </div>) : "")
                                         )}
-                                        {/* {tasks &&
-                                            tasks
-                                                .filter((task) => task.taskStatus === "Assigned")
-                                                .map((filteredTask) => (
-                                                    <div
-                                                        className="assigned-task"
-                                                        key={filteredTask.taskId}
-                                                    >
-                                                        <h6 style={{ fontWeight: "bold" }}>
-                                                            {filteredTask.taskName}
-                                                        </h6>
-                                                        <p>{filteredTask.taskDesc}</p>
-                                                        {console.log(filteredTask)}
-                                                        <button
-                                                            className="task-btn"
-                                                            type="button"
-                                                            onClick={() => setShow(true)}
-                                                        >
-                                                            MODIFY TASK
-                                                        </button>
-                                                        {show && <TaskModal
-                                                            onSaveTaskData={saveTaskDataHandler}
-                                                            show={show}
-                                                            close={() => setShow(false)}
-                                                            onOpen={() => populateData(filteredTask)}
-                                                        />}
-
-                                                        <hr />
-                                                    </div>
-                                                ))} */}
-                                        {/* <div className="assigned-task">
-                                        <h6>Create model for database</h6>
-                                        <p>Tables reuqired for database are Employee levels. Payroll. Think about topics and colums.</p>
-                                        <button
-                                            className='task-btn'
-                                            type="button"
-                                            onClick={() => setShow(true)}
-                                        >
-                                            MODIFY TASK
-                                        </button>
-                                        <TaskModal onSaveTaskData={saveTaskDataHandler} show={show} close={() => setShow(false)} />
-                                        <Link to={"#"}>MODIFY TASK</Link>
-                                        <hr />
-                                    </div> */}
                                     </div>
                                 </div>
                             </div>
@@ -236,12 +167,14 @@ const Task = () => {
                                     <div className="card-body">
                                         {tasks &&
                                             tasks.map((task) =>
-                                                task.taskStatus === "In Progress" ? (
+                                                task.taskStatus === "InProgress" ? (
                                                     <div className="in-progress-task" key={task.taskId}>
                                                         <h6 style={{ fontWeight: "bold" }}>
                                                             {task.taskName}
                                                         </h6>
                                                         <p>{task.taskDesc}</p>
+                                                        <p>Start date: {task.taskStartDate}</p>
+                                                        <p>End date: {task.taskEndDate}</p>
                                                         <p>
                                                             <i className="tim-icons icon-refresh-01" />
                                                             <QueryBuilderIcon /> Hours {task.taskTotalHours}
@@ -268,20 +201,7 @@ const Task = () => {
                                                 )
                                             )}
 
-                                        {/* <div className="in-progress-task">
-                                        <h6>Create model for database</h6>
-                                        <p>Tables reuqired for database are Employee levels. Payroll. Think about topics and colums.</p>
-                                        <p><i className="tim-icons icon-refresh-01" /><QueryBuilderIcon />  Hours 12</p>
-                                        <button
-                                            className='task-btn'
-                                            type="button"
-                                            onClick={() => setShowUpdate(true)}
-                                        >
-                                            UPDATE STATUS
-                                        </button>
-                                        <UpdateStatusModal onSaveTaskData={saveTaskDataHandler} show={showUpdate} close={() => setShowUpdate(false)} />
-                                        <hr />
-                                    </div> */}
+
                                     </div>
                                 </div>
                             </div>

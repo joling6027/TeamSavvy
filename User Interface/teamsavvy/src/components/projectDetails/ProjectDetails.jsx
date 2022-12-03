@@ -12,9 +12,6 @@ import { GetEndPoints } from '../utilities/EndPoints';
 const ProjectDetails = () => {
     const params = useParams();
     const data = useLocation();
-    console.log(params.id)
-    console.log(data.state);
-    // const managerId = data.state;
 
     const [project, setProject] = useState();
     const [tasks, setTasks] = useState();
@@ -127,10 +124,8 @@ const ProjectDetails = () => {
         http.get(GetEndPoints().projectDetail + "/" + params.id)
         .then((res) => {
             if(res.data.success){
-                console.log(res.data.response);
                 setProject(res.data.response)
                 setManagerId(res.data.response.projectManagerId);
-                console.log(res.data.response.projectManagerId);
             }
         }).catch((err) => console.log(err.message))
     }
@@ -140,10 +135,8 @@ const ProjectDetails = () => {
         http.get(GetEndPoints().getTeamMembers + "/" + user.employeeId)
             .then((res) => {
                 if (res.data.success) {
-                    console.log(res.data.response);
                     let obj = [...res.data.response].filter((proj) => proj.projectId == params.id)
-                    console.log(obj)
-                    console.log(obj[0].employeeList)
+                    // console.log(obj[0].employeeList)
                     setTeamMembers(obj[0].employeeList)
                 }
             }).catch((err) => console.log(err.message));
@@ -151,21 +144,15 @@ const ProjectDetails = () => {
 
     //get tasks
     const getTasks = (managerId) => {
-        console.log(managerId)
         http.get(GetEndPoints().employeeTask + "/tasklist/" + managerId)
             .then((res) => {
-                console.log(res);
                 if(res.data.success){
-                    console.log(res.data.response)
                     let tasksById = [...res.data.response].filter((task) => task.projectId == params.id);
-                    // console.log(tasksById)
                     setTasks(tasksById)
                     let completedTasks = [...tasksById].filter((task) => task.taskStatus === "Completed");
                     setCompletedTasks(completedTasks)
-                // console.log(completedTasks)
                 }
             }).catch((err) => {
-                // console.log(err);
                 if(err.response.status === 404){
                     setTasks([]);
                     setCompletedTasks([]);
@@ -196,7 +183,6 @@ const ProjectDetails = () => {
         }else{
             setTitleValidate(true)
         }
-        // console.log(titleValidate)
     }
     const newDescriptionChangeHandler = (e) => {
         if(e.target.value.trim() !== ""){
@@ -215,12 +201,9 @@ const ProjectDetails = () => {
         }
     }
     const newAssignEmpChangeHandler = (e) => {
-        console.log(e.target) 
-        // console.log(e.getAttribute('id'));
         const index = e.target.selectedIndex;
         const el = e.target.childNodes[index];
         const option = el.getAttribute('id');
-        console.log(option);
         setAssignedEmpId(option)
         setAssignedEmp(e.target.value)
         setAssignEmpValidate(false)
@@ -250,26 +233,15 @@ const ProjectDetails = () => {
         http.post(GetEndPoints().employeeTask + "/addTask", { ...taskData })
         .then((res) => {
             if(res.data.success){
-                console.log("post succeed")
                 //Jaspal
                 GetTaskCounts();
             }
         }).catch((err) => console.log(err.message))
     }
 
-    const updateProject = (updatedProject) => {
-        http.put(GetEndPoints().projects + "/updateProject", { ...updatedProject })
-        .then((res) => {
-            if(res.data.success){
-                console.log("Project update successfully.");
-            }
-
-        }).catch((err) => console.log(err.message))
-    }
 
     const createTaskSubmitHandler = (e) => {
         e.preventDefault();
-        // console.log(startDate)
 
         const dateStartDate = Date.parse(startDate);
         const dateEndDate = Date.parse(endDate);
@@ -323,17 +295,6 @@ const ProjectDetails = () => {
                 taskData
             ]);
 
-            //count total tasks
-            console.log(tasks.length);
-            const completedTask = [...tasks].filter((task) => task.taskStatus === 'Completed');
-
-
-            console.log(completedTask);
-            postCreatedTask(taskData);
-
-            //update project
-            // updateProject(project);
-
             toggle();
 
         }
@@ -353,7 +314,6 @@ const ProjectDetails = () => {
         if (e.target.value.trim() !== "") {
             setModifiedDescValidate(false)
             setMDesc(e.target.value)
-            console.log(mDesc)
         } else {
             setModifiedDescValidate(true)
         }  
@@ -368,6 +328,9 @@ const ProjectDetails = () => {
         } 
     }
     const mStatusChangeHandler = (e) => {
+        let st = e.target.value.split(" ").join("");
+        console.log(st)
+        
         setMStatus(e.target.value);
         
      }
@@ -375,29 +338,16 @@ const ProjectDetails = () => {
         const dateStartDate = Date.parse(e.target.value);
         setMStartDate(e.target.value)
         setModifiedStartDateValidate(false)
-        // if (dateStartDate > Date.parse(today)) {
-        //     setModifiedStartDateValidate(false);
-        //     setMStartDate(e.target.value)
-        // } else {
-        //     setModifiedStartDateValidate(true);
-        // } 
     }
     const mEndDateChangeHandler = (e) => {
         const dateStartDate = Date.parse(e.target.value);
         setMEndDate(e.target.value)
-        sestModifiedEndDateValidate(false)
-        // if (dateStartDate > Date.parse(today)) {
-        //     sestModifiedEndDateValidate(false);
-        //     setMEndDate(e.target.value)
-        // } else {
-        //     sestModifiedEndDateValidate(true);
-        // }   
+        sestModifiedEndDateValidate(false)  
     }
 
     // post modified task
     const postModifiedTask = (modifiedTaskData) => {
         http.put(GetEndPoints().updateTask, { ...modifiedTaskData }).then((res) => {
-            console.log(res.data.response)
         }).catch((err) => console.log(err.message));
     }
 
@@ -405,7 +355,6 @@ const ProjectDetails = () => {
     const modifyTaskSubmitHandler = (e) => {
         e.preventDefault();
 
-        // console.log(mAssignedBy)
         const dateStartDate = Date.parse(mStartDate);
         const dateEndDate = Date.parse(mEndDate);
 
@@ -431,19 +380,6 @@ const ProjectDetails = () => {
         }
         else {
 
-            console.log(mTaskId)  //undefined
-            console.log(mAssignedEmpId) //ok
-            console.log(+params.id) //ok
-            console.log(mTitle) //ok
-            console.log(mDesc) // ok
-            console.log(mStartDate) // ok
-            console.log(mEndDate) //ok
-            console.log(mHours) // ok
-            console.log(user.firstName) //empty string
-            console.log(mAssignedEmp) //ok
-            console.log(mAssignedDate) //ok
-            console.log(mStatus) //
-
             const modifyTaskData = {
                 taskId: +mTaskId,
                 employeeId: +mAssignedEmpId,
@@ -458,7 +394,6 @@ const ProjectDetails = () => {
                 assignedDate: mAssignedDate,
                 taskStatus: mStatus,
             }
-            console.log(modifyTaskData)
             setTasks([
                 ...tasks.filter((givenTask) => givenTask.taskId !== modifyTaskData.taskId),
                 modifyTaskData
@@ -470,18 +405,6 @@ const ProjectDetails = () => {
 
     }
 
-    //get employees
-    // const getTeamMembers = () => {
-    //     http.get(GetEndPoints().teams + "/" + params.id)
-    //         .then((res) => {
-    //             // console.log(project)
-    //             console.log(res.data.response);
-    //             const team = [...res.data.response].filter((t) => t.position !== 'Manager')
-    //             console.log(team);
-    //             setTeamMembers(team)
-
-    //         }).catch((err) => console.log(err.message))
-    // }
     const ShowAlert = () => {
         setAlert(
             <SweetAlert
@@ -533,9 +456,6 @@ const ProjectDetails = () => {
         return(<div>no project details</div>)
     }
     else if(user.role === "Manager" && project.projectManagerId === user.employeeId && teamMembers === undefined){
-        // console.log(user.role);
-        // console.log(project.projectManagerId)
-        // ShowAlert();
         return (<div class="d-flex justify-content-center">
             <div class="spinner-grow text-success" style={{ width: "3rem", height: "3rem" }} role="status">
                 <span class="sr-only">No project detail</span>
@@ -580,46 +500,19 @@ const ProjectDetails = () => {
                                         {(user.employeeId === project.projectManagerId) ? (<Link to="" onClick={() => mtoggle(task)} className="alert-link text-uppercase text-decoration-none linkStyle">Modify Task</Link>): ""}
                                     </li>
                                 ))}
-                                {/* <li class="list-group-item border-end-0 border-bottom-0 border-start-0 rounded-0 px-0 py-3 border-top">
-                        <h6>Create model for Database</h6>
-                        <p className="text-muted">Tables required for database are Employee, Leaves, Payroll. Think about topples and columns.</p>
-                        <p className="text-muted">Assigned to <strong>John Doe</strong></p>
-                        <Link to=""  className="alert-link text-uppercase text-decoration-none linkStyle">Modify Task</Link>
-                    </li>
-                    <li class="list-group-item border-end-0 border-bottom-0 border-start-0 rounded-0 px-0 py-3 border-top">
-                        <h6>Create model for Database</h6>
-                        <p className="text-muted">Tables required for database are Employee, Leaves, Payroll. Think about topples and columns.</p>
-                        <p className="text-muted">Assigned to <strong>John Doe</strong></p>
-                        <Link to=""  className="alert-link text-uppercase text-decoration-none linkStyle">Modify Task</Link>
-                    </li>
-                    <li class="list-group-item border-end-0 border-bottom-0 border-start-0 rounded-0 px-0 py-3 border-top">
-                        <h6>Create model for Database</h6>
-                        <p className="text-muted">Tables required for database are Employee, Leaves, Payroll. Think about topples and columns.</p>
-                        <p className="text-muted">Assigned to <strong>John Doe</strong></p>
-                        <Link to=""  className="alert-link text-uppercase text-decoration-none linkStyle">Modify Task</Link>
-                    </li> */}
                             </ul>
                         </Col>
                         <Col className="rounded m-2 prCard">
                             <h5 className="d-inline-block p-3">In-Progress</h5>
                             <ul class="list-group p-3">
-                                {tasks && tasks.filter((task => task.taskStatus === "In Progress")).map((task) => (<li class="list-group-item border-end-0 border-bottom-0 border-start-0 rounded-0 px-0 py-3 border-top">
+                                {tasks && tasks.filter((task => task.taskStatus === "InProgress")).map((task) => (<li class="list-group-item border-end-0 border-bottom-0 border-start-0 rounded-0 px-0 py-3 border-top">
                                     <h6>{task.taskName}</h6>
-                                    {/* <p><strong>Task Description</strong></p> */}
                                     <p className="text-muted">{task.taskDesc}</p>
                                     <p className="text-muted">Start Date: {task.taskStartDate}</p>
                                     <p className="text-muted">End Date: {task.taskEndDate}</p>
                                     <p className="text-muted">Assigned to <strong>{task.assignedTo}</strong></p>
                                     <p className="text-muted"><UpdateOutlinedIcon /> Hours <strong>{task.taskTotalHours}</strong></p>
                                 </li>))}
-
-                                {/* <li class="list-group-item border-end-0 border-bottom-0 border-start-0 rounded-0 px-0 py-3 border-top">
-                        <h6>Create model for Database</h6>
-                        <p className="text-muted">Tables required for database are Employee, Leaves, Payroll. Think about topples and columns.</p>
-                        <p className="text-muted">Assigned to <strong>John Doe</strong></p>
-                        <p className="text-muted"><UpdateOutlinedIcon/> Hours <strong>12</strong></p>
-                    </li> */}
-
                             </ul>
                         </Col>
                         <Col className="rounded m-2 prCard">
@@ -633,19 +526,6 @@ const ProjectDetails = () => {
                                         <p className="text-muted"><UpdateOutlinedIcon /> Hours <strong>{task.taskTotalHours}</strong></p>
                                     </li>
                                 ))}
-                                {/* <li class="list-group-item border-end-0 border-bottom-0 border-start-0 rounded-0 px-0 py-3 border-top">
-                        <h6>Create model for Database</h6>
-                        <p className="text-muted">Tables required for database are Employee, Leaves, Payroll. Think about topples and columns.</p>
-                        <p className="text-muted">COmpleted by <strong>John Doe</strong></p>
-                        <p className="text-muted"><UpdateOutlinedIcon/> Hours <strong>12</strong></p>
-                    </li>
-                    <li class="list-group-item border-end-0 border-bottom-0 border-start-0 rounded-0 px-0 py-3 border-top">
-                        <h6>Create model for Database</h6>
-                        <p className="text-muted">Tables required for database are Employee, Leaves, Payroll. Think about topples and columns.</p>
-                        <p className="text-muted">Completed by<strong>John Doe</strong></p>
-                        <p className="text-muted"><UpdateOutlinedIcon/> Hours <strong>12</strong></p>
-                    </li> */}
-
                             </ul>
                         </Col>
 
@@ -800,7 +680,6 @@ const ProjectDetails = () => {
                                                 <Label for='task-hour'>Hours</Label>
                                                 <Input type='number' name='task-hour' id='task-hour' onChange={mHoursChangeHandler} valid={mHours ? true : false} invalid={modifiedHourValidate} min={1} defaultValue={mHours}/>
                                                 <FormFeedback invalid>Task hours cannot be blank or 0</FormFeedback>
-                                                {/* <FormText>Please remember to set reasonable hours to the task</FormText> */}
                                             </Col>
                                             <Col>
                                                 <Label for='task-status'>Status</Label>

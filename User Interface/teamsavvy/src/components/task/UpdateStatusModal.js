@@ -8,18 +8,16 @@ import { Form, FormGroup, Label, Input, FormFeedback, FormText, Container, Row, 
 
 const UpdateStatusModal = (props) => {
 
-  console.log(props)
   const [status, setStatus] = useState();
 
   const statusChangeHandler = (e) => {
-    setStatus(e.target.value);
-    console.log(status)
+    let st = e.target.value.split(" ").join("");
+    setStatus(st);
 
   }
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log(status);
     props.onSaveTaskData(status);
     props.close(false);
   }

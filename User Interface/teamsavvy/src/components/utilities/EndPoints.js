@@ -8,6 +8,7 @@ const enpoints = {
   employeeTask: 'EmployeeTask',
   updateTask: 'EmployeeTask/updateTask',
   internalJob: 'Job',
+  appliedEmp: 'Job/jobApplied',
   teams:'Teams',
   addEmployee: 'Employee/addEmployee',
   updateEmployee: 'Employee/updateEmployee',
