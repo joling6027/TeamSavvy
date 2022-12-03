@@ -541,7 +541,7 @@ const InternalJobs = () => {
                                             (<>
                                                 <CardTitle className='job-card-title'>
                                                     {(user.role === 'HR' || user.role === 'Admin' ? 
-                                                        (<><Link className='createAndApply-btn pt-2 lh-1 m-0' color="link" to={`/jobs/applied/${jobItem.jobId}`} state={{ jobId:jobItem.jobId }}>Applied</Link>
+                                                (<><Link className='createAndApply-btn pt-2 lh-1 m-0' color="link" to={`/jobs/applied`} state={{ jobId: jobItem.jobId, jobName: jobItem.jobPosition }}>Applied</Link>
                                                             <Link to="#" className='createAndApply-btn pt-2 px-3 m-0  lh-1'  color="link" onClick={() => { toggleApplyJob(); getAppliedEmp(jobItem.jobId) }}>Apply Now</Link></>) : (<Link to="#" className='createAndApply-btn py-0' color="link" onClick={() => { toggleApplyJob(); getAppliedEmp(jobItem.jobId) }}>Apply Now</Link>))}
                                                     {jobItem.jobPosition}
                                                     <Modal isOpen={show} toggle={toggleApplyJob} backdrop="static" centered>
