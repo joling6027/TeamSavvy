@@ -42,6 +42,12 @@ const Paystub = () => {
 
   }, [])
 
+  //currency formatting
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  })
+
   if(emp === undefined || payrollItem === undefined){
     return (<div class="d-flex justify-content-center">
     <div class="spinner-grow text-success" style={{width: "3rem", height: "3rem"}} role="status">
@@ -111,10 +117,10 @@ const Paystub = () => {
                       23
                     </td> */}
                     <td>
-                      ${payrollItem.netpay}
+                      {formatter.format(payrollItem.netpay)}
                     </td>
                     <td>
-                      ${payrollItem.payYtd}
+                      {formatter.format(payrollItem.payYtd)}
                     </td>
                   </tr>
                   {/* <tr>
@@ -230,7 +236,7 @@ const Paystub = () => {
                       Electronic bank transfers
                     </th>
                     <td>
-                      ${payrollItem.netpay}
+                      {formatter.format(payrollItem.netpay)}
                     </td>
                     <td className="account">
                       {emp.bankaccount}

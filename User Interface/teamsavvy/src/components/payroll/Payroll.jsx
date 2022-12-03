@@ -77,6 +77,12 @@ const Payroll = () => {
 
     // const { pageIndex, pageSize } = state;
 
+    //currency formatter
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+    })
+
     return (
         <>
             <div className='container'>
@@ -104,8 +110,8 @@ const Payroll = () => {
                                         </td>
                                         <td className="text-center">{payrollItem.payType}</td>
                                         <td className="text-center">{payrollItem.totalHours}</td>
-                                        <td className="text-center">${payrollItem.earning}</td>
-                                        <td className="text-center">${payrollItem.netpay}</td>
+                                        <td className="text-center">{formatter.format(payrollItem.earning)}</td>
+                                        <td className="text-center">{formatter.format(payrollItem.netpay)}</td>
                                         <td className="text-center view-file">
                                             {/* <Link to={`/payroll/payrollId/${payrollItem.payrollId}`}
                                                 >VIEW FILE</Link> */}
