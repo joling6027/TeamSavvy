@@ -110,12 +110,13 @@ import { RegisterationValidation } from '../utilities/validation';
         http.get(GetEndPoints().projects)
         .then((res) =>{
            if(res.data.success){
+            console.log(res.data.response)
             setProjects(res.data.response);
-            setProjectDesc(res.data.response[0].projectDesc);
+            setProjectDesc(res.data.response[0].description);
             setProjectManager(res.data.response[0].projectManagerName);
-            setProjectMember(res.data.response[0].projectTotalEmployees);
+            setProjectMember(res.data.response[0].team);
             let assignEmpProj = {...res.data.response[0]}
-            projectFormValue.projectId = assignEmpProj.projectId
+            projectFormValue.projectId = assignEmpProj.id
             setProjectFormValue(projectFormValue)
            }
         })
@@ -232,10 +233,11 @@ import { RegisterationValidation } from '../utilities/validation';
 
     const handleProject = e => {
         setSelectProject(e.target.value);
-        let proj = projects.find((p) => p.projectId === parseInt(e.target.value));
-        setProjectDesc(proj.projectDesc);
+        let proj = projects.find((p) => p.id === parseInt(e.target.value));
+        console.log(e.target.value)
+        setProjectDesc(proj.description);
         setProjectManager(proj.projectManagerName);
-        setProjectMember(proj.projectTotalEmployees);
+        setProjectMember(proj.team);
         setProjectFormValue((projectFormValue) =>{
             let assignEmpProj = {...projectFormValue}
             assignEmpProj.projectId = parseInt(e.target.value);
@@ -412,7 +414,7 @@ import { RegisterationValidation } from '../utilities/validation';
 
     return (
       <>
-      <Container className="d-flex flex-wrap position-relative">
+      <div className="d-flex flex-wrap position-relative px-3">
         {alert}
         <div className="col-md-3 col-sm-12 profileleft">
 
@@ -462,7 +464,7 @@ import { RegisterationValidation } from '../utilities/validation';
                 </Modal>
 
             {/* project */}
-            <Card style={{}} className="mt-4 mb-md-4 mb-sm-0 prCard ">
+            <Card style={{}} className="mt-4 mb-4 prCard ">
                 <CardBody>
                 <Button className="btn bg-primary w-100" onClick={assigntoggle}>Assign Project</Button>
                 </CardBody>
@@ -502,7 +504,7 @@ import { RegisterationValidation } from '../utilities/validation';
                                     onChange={handleProject}
                                     >
                                     {
-                                       projects && projects.map((project, index) => <option key={index} value={project.projectId}>{project.projectName}</option>)
+                                       projects && projects.map((project, index) => <option key={index} value={project.id}>{project.projectName}</option>)
                                     }
                                     </Input>
                         </FormGroup>
@@ -754,7 +756,7 @@ import { RegisterationValidation } from '../utilities/validation';
             </Card>
             
             {/* Office Deatils */}
-            <Card className="ms-md-4 ms-sm-0 mt-sm-4 col-9 prCard">
+            <Card className="ms-md-4 ms-sm-0 mt-4 col-9 prCard">
             <CardBody>
             <CardTitle tag="h5"> Office Details </CardTitle>
             <Form>
@@ -991,7 +993,7 @@ import { RegisterationValidation } from '../utilities/validation';
         </div>
 
        
-    </Container>
+    </div>
              
               
       </>

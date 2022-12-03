@@ -483,10 +483,9 @@ const GetTotalHours = (timeSheetEvent) => {
   
    return (
      <>
-        <div className="container">
+        <div className="">
         {alert}
-        <Row class="justify-content-center">
-          <Col className="ml-auto mr-auto mb-5 pe-0" md={10}>
+          <Col className="ml-auto mr-auto mb-5 pe-0" md={12}>
             <Card className="card-calendar prCard">
               <CardBody>
               <BigCalendar
@@ -505,7 +504,6 @@ const GetTotalHours = (timeSheetEvent) => {
               </CardBody>
             </Card>
             </Col>
-        </Row>
         </div>
         <Modal isOpen={modal} backdrop="static" centered>
           <ModalBody>

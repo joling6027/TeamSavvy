@@ -546,9 +546,9 @@ const ProjectDetails = () => {
         return (
             <>
                 {(alert)? (alert): ""}
-                <Container className="px-3">
-                    <p className="h4 px-2">{project.projectName}</p>
-                    <div className=" d-flex justify-content-between">
+                <div className="px-3">
+                    <p className="h4 px-2 pb-3">{project.projectName}</p>
+                    <div className="d-md-flex d-sm-block justify-content-between">
                         <Col className="py-2 px-3 yellow-bg rounded d-flex align-items-center m-2">
                             <h5 className="text-white flex-grow-1">Tasks</h5>
                             <h2 className="text-white fw-bold">{totalTasks}</h2>
@@ -562,7 +562,7 @@ const ProjectDetails = () => {
                             <h2 className="text-white fw-bold">{completed}</h2>
                         </Col>
                     </div>
-                    <div className="d-flex mt-1">
+                    <div className="d-md-flex  d-sm-block mt-1 mb-1">
                         <Col className="rounded m-2 prCard">
                             <h5 className="d-inline-block p-3">Tasks</h5>
                             {(user.role === 'Manager') ? 
@@ -836,7 +836,7 @@ const ProjectDetails = () => {
 
                     </Modal>
 
-                </Container>
+                </div>
             </>
         );
     }

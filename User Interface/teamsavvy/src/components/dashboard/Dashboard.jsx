@@ -486,12 +486,12 @@ const deleteWid = (widget) =>{
 // else{
     return ( 
         <>
-         <Container className="px-3">
+         <div className="px-3">
             {alert}
         {
             user.role && user.role === "HR" && 
-            <div className="d-md-flex d-sm-block justify-content-between pe-md-3 p-sm-0">
-            <Col className="py-2 px-3 yellow-bg rounded my-sm-2 my-md-0" sm={12} lg={4}>
+            <div className="d-md-flex d-sm-block pe-md-3 p-sm-0">
+            <Col className="py-2 px-3 yellow-bg rounded mb-2 " sm={12} lg={4}>
                     <Link to={"/dashboard/projects"} className='d-flex align-items-center text-decoration-none justify-content-between'>
                         <div>
                             <img src={projectpic} alt="project"/>
@@ -502,7 +502,7 @@ const deleteWid = (widget) =>{
                     </div>
                 </Link>
             </Col>
-            <Col className="py-2 px-3 orange-bg rounded mx-md-2 m-sm-0" sm={12} lg={4}>
+            <Col className="py-2 px-3 orange-bg rounded mx-md-2 mx-sm-0 mb-2" sm={12} lg={4}>
                 <Link to={'/dashboard/teammembers'} className='d-flex  align-items-center  text-decoration-none justify-content-between'>
                         <div>
                             <img src={teamMembers} alt="team members"/>
@@ -513,7 +513,7 @@ const deleteWid = (widget) =>{
                         </div>    
                 </Link>
             </Col>
-            <Col className="py-2 px-3 green-bg rounded my-sm-2 my-md-0" sm={12} lg={4}>
+            <Col className="py-2 px-3 green-bg rounded mb-2" sm={12} lg={4}>
                 <div className="d-flex  align-items-center  text-decoration-none justify-content-between ">
                         <div>
                             <img src={taskpic} alt="task"/>
@@ -530,7 +530,7 @@ const deleteWid = (widget) =>{
         {
             user.role && user.role === "Manager" && 
             <div className="d-md-flex d-sm-block justify-content-between pe-md-3 p-sm-0">
-            <Col className="py-2 px-3 yellow-bg rounded my-sm-2 my-md-0" sm={12} lg={4}>
+            <Col className="py-2 px-3 yellow-bg rounded mb-2" sm={12} lg={4}>
                 <Link to={"/dashboard/projects"} className='d-flex  align-items-center  text-decoration-none justify-content-between'>
                         <div>
                             <img src={projectpic} alt="manager project"/>
@@ -541,7 +541,7 @@ const deleteWid = (widget) =>{
                     </div>
                 </Link>
             </Col>
-            <Col className="py-2 px-3 orange-bg rounded mx-md-2 m-sm-0" sm={12} lg={4}>
+            <Col className="py-2 px-3 orange-bg rounded mx-md-2 mx-sm-0 mb-2" sm={12} lg={4}>
                 <Link to={'/dashboard/teammembers'} className='d-flex  align-items-center  text-decoration-none justify-content-between'>
                         <div>
                             <img src={teamMembers} alt="team members"/>
@@ -552,7 +552,7 @@ const deleteWid = (widget) =>{
                     </div>
                 </Link>
             </Col>
-            <Col className="py-2 px-3 green-bg rounded my-sm-2 my-md-0" sm={12} lg={4}>
+            <Col className="py-2 px-3 green-bg rounded mb-2" sm={12} lg={4}>
             <div className="d-flex align-items-center  text-decoration-none justify-content-between ">
                         <div>
                             <img src={taskpic} alt="task"/>
@@ -567,13 +567,13 @@ const deleteWid = (widget) =>{
         }
         
         <div className="pe-md-3 pe-sm-0 py-3 d-md-flex d-sm-block">
-            <Col md={6} sm={12} className="p-0 bg-white me-sm-0 me-md-3">
+            <Col md={6} sm={12} className="p-0 bg-white me-sm-0 me-md-3 mb-2">
                 <Card className="prCard py-5 px-3 border-0">
                     {data && <Bar data={data} options={options}/>}
                 </Card>
             </Col>
-            <Col md={6} sm={12} className="p-md-0 ps-md-3 p-sm-0 pt-sm-3 mt-sm-3 mt-x`x`md-0 bg-white border-light">
-                <Card className="prCard pt-3 px-3 border-0" >
+            <Col md={6} sm={12} className="p-md-0 ps-md-3 p-sm-0 pt-sm-3 bg-white border-light mb-2">
+                <Card className="prCard pt-3 px-3 border-0 " >
                     <CardTitle className="small text-muted">Leaves</CardTitle>
                     <div style={{ display: 'flex', height: '315px', justifyContent: 'space-between' }}>
                 <div style={{width:'100%'}}>
@@ -758,18 +758,18 @@ const deleteWid = (widget) =>{
                             variant="pills"
                             
                             >
-                            <Tab className="" eventKey="bar" title={<BarChartIcon color="primary" />}>
-                                <Card className="py-5 px-3 border-0">
+                            <Tab className="align-items-top" eventKey="bar" title={<BarChartIcon color="primary" />}>
+                                <Card className="py-5 px-3 border-0 align-self-top">
                                     <Bar data={data}  options={options}/>
                                 </Card>
                             </Tab>
                             <Tab eventKey="line" title={<TimelineIcon color="primary"/>}>
-                                <Card className=" py-5 px-3 border-0">
+                                <Card className=" py-5 px-3 border-0 align-self-top">
                                     <Line data={data} />
                                 </Card>
                             </Tab>
                             <Tab eventKey="pie" title={<PieChartIcon color="primary"/>} >
-                                <Card className="py-5 px-3 border-0">
+                                <Card className="py-5 px-3 border-0 pie align-self-top">
                                     <Pie data={data} />
                                 </Card>
                             </Tab>
@@ -780,7 +780,7 @@ const deleteWid = (widget) =>{
          })
          }
          </div>
-        </Container>
+        </div>
         </>
     );
 }

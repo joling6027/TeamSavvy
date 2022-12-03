@@ -164,7 +164,7 @@ const ProfileView = () => {
     {
         return (
             <>
-            <Container className="d-flex flex-wrap position-relative">
+            <div className="d-flex flex-wrap position-relative w-100">
               {alert}
               <div className="col-md-3 col-sm-12 profileleft">
       
@@ -454,7 +454,7 @@ const ProfileView = () => {
                   </Card>
           
               </div>
-          </Container>
+          </div>
             </>
           );
     }

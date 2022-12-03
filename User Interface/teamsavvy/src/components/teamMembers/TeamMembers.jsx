@@ -52,7 +52,7 @@ const TeamMembers = () => {
         .then((res) =>{
            if(res.data.success){
             setProjects(res.data.response);
-            console.log(res.data.response[0].id)
+            
             setSelectProject(res.data.response[0].id)
             setProjectDesc(res.data.response[0].description);
             setProjectManager(res.data.response[0].projectManagerName);
@@ -263,7 +263,7 @@ const TeamMembers = () => {
                 <Card className="prCard" > 
                     <CardTitle tag="h5" className="px-3 pt-3" >{  user.role && user.role === "HR" ? 'Employee List' : 'Team Members' }
                     { 
-                        user.role && user.role === "HR" && <Link to="/dashboard/teammembers/addemployee"  className="alert-link text-decoration-none float-end linkStyle">
+                        user.role && user.role === "HR" && <Link to="/dashboard/teammembers/addemployee"  className="alert-link text-decoration-none float-md-end float-sm-start linkStyle">
                         <AddCircleIcon/> ADD NEW EMPLOYEE</Link>
                     }
                    

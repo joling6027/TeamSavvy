@@ -169,14 +169,15 @@ const Timesheet = () => {
         );
        }
        setModal(!modal);
-       event.pop()
+      //  event.pop()
+      GetLeavesById();
        setEvents(event);
     })
     .catch((err) => console.log(err.message))
   }
 
   const selectedEvent = (event) => {
-   
+    console.log(event);
     if(event.clockType === "Clock-Out" || event.clockType === "Clock-In")
     {
      
@@ -218,7 +219,7 @@ const Timesheet = () => {
           showCancel
           title="Select type of Leave"
           onCancel={handleLeaveCancel}
-          confirmBtnBsStyle="info"
+          confirmBtnBsStyle="primary"
           cancelBtnBsStyle="danger"
           onConfirm={(e) =>addLeave(e, slotInfo)}
           >
@@ -256,7 +257,7 @@ setEvents([...event, {
           showCancel
           title="Select type of Leave"
           onCancel={handleLeaveCancel}
-          confirmBtnBsStyle="info"
+          confirmBtnBsStyle="primary"
           cancelBtnBsStyle="danger"
           onConfirm={(e) =>addLeave(e, slotInfo)}
           >
@@ -455,10 +456,10 @@ setEvents([...event, {
    else{
     return (
       <>
-         <div className="container">
+         <div className="px-3">
          {alert}
          <Row class="justify-content-center">
-           <Col className="ml-auto mr-auto mb-5 pe-0" md={10}>
+           <Col className="ml-auto mr-auto mb-5 pe-0" md={12}>
              <Card className="card-calendar prCard">
                <CardBody>
                <BigCalendar
@@ -479,6 +480,7 @@ setEvents([...event, {
              </Col>
          </Row>
          </div>
+         {/* cancel leave modal */}
          <Modal isOpen={modal} backdrop="static" centered>
            <ModalBody>
                  <h4>{title}</h4>

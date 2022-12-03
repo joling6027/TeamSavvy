@@ -65,15 +65,15 @@ const JobAppliedEmployees = () => {
     },[])
 
     const columns = [
-        { field: 'id', headerName: 'Employee Id',width:200 },
+        { field: 'id', headerName: 'Employee Id' },
         { field: 'empname', headerName: 'Employee name',
         width:200,
              sortable:true,
              editable:true},
-        { field: 'dept', headerName: 'Department',width:200},
-        { field: 'position', headerName: 'Position', width:200},
+        { field: 'dept', headerName: 'Department'},
+        { field: 'position', headerName: 'Position'},
         {
-            field: 'details', headerName: 'Details', width: 200, renderCell: (params) => <Link to={`/dashboard/teammembers/employeedetails/${params.row.id}`}>View</Link> }
+            field: 'details', headerName: 'Details' , renderCell: (params) => <Link to={`/dashboard/teammembers/employeedetails/${params.row.id}`}>View</Link> }
       ];
 
     // const populateApplicants = (...applicants) => {
@@ -109,7 +109,7 @@ const JobAppliedEmployees = () => {
             <CardBody>
             <div style={{ display: 'flex', height: '100%', justifyContent: 'space-between' }}>
                 <div style={{width:'100%'}}>
-                        <DataGrid className="table-striped" rows={applicants} columns={columns}  
+                        <DataGrid className="table-striped border-0" rows={applicants} columns={columns}  
                        pageSize={pageSize}
                        onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
                        rowsPerPageOptions={[5, 10, 20,50,100]}

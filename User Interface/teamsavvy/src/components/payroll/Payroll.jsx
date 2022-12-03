@@ -84,9 +84,9 @@ const Payroll = () => {
                     <div className='card-header card-header-payroll'>
                         <h4 className='card-title' tag="h4">Paylips</h4>
                     </div>
-                    <div className='card-body'>
+                    <div className='card-body overflow-auto pt-0'>
                         <table className='table table-striped paylips-table mb-5'>
-                            <thead className="text-primary">
+                            <thead className="text-primary border-top border-bottom">
                                 <tr>
                                     <th className="text-center" scope="col">Pay Date</th>
                                     <th className="text-center" scope="col">Pay Type</th>
@@ -112,7 +112,7 @@ const Payroll = () => {
                                             <Link 
                                                 to={`/payroll/paystub/${payrollItem.payrollId}`}
                                                 state={{payrollItem}}
-                                            >VIEW FILE</Link>
+                                            ><small>VIEW FILE</small></Link>
                                         </td>
                                     </tr>
                                 ))}

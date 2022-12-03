@@ -396,11 +396,10 @@ const InternalJobs = () => {
         return (
             <>
                 {alert}
-                <div className="content">
-                    <Container>
-                        <Row>
-                            <Row>
-                                <Col sm="4">
+                <div className="content px-3" >
+                    <div className="d-md-flex d-sm-block">
+                            
+                                <Col sm="12" md="4" className="me-md-2 me-sm-0 mb-2">
                                     <Card className='jobs-card' body>
                                         <CardTitle className='job-card-title'>Jobs
                                             {(user.role === 'HR' || user.role === 'Admin' ? 
@@ -447,7 +446,7 @@ const InternalJobs = () => {
                                             </Card>))}
                                     </Card>
                                 </Col>
-                                <Col sm="8">
+                                <Col sm="12" md="8">
                                     <Card className='card-job-detail' body>
                                         {isCreateJob ? (
 
@@ -549,8 +548,8 @@ const InternalJobs = () => {
                                             (<>
                                                 <CardTitle className='job-card-title'>
                                                     {(user.role === 'HR' || user.role === 'Admin' ? 
-                                                        (<><Link className='createAndApply-btn' color="link" to={`/jobs/applied/${jobItem.jobId}`} state={{ jobId:jobItem.jobId }}>Applied</Link>
-                                                            <Button type='button' className='createAndApply-btn' color="link" onClick={toggleApplyJob}>Apply Now</Button></>) : (<Button type='button' className='createAndApply-btn' color="link" onClick={toggleApplyJob}>Apply Now</Button>))}
+                                                        (<><Link className='createAndApply-btn pt-2 lh-1 m-0' color="link" to={`/jobs/applied/${jobItem.jobId}`} state={{ jobId:jobItem.jobId }}>Applied</Link>
+                                                            <Link to="#" className='createAndApply-btn pt-2 px-3 m-0  lh-1'  color="link" onClick={toggleApplyJob}>Apply Now</Link></>) : (<Link to="#" className='createAndApply-btn py-0' color="link" onClick={toggleApplyJob}>Apply Now</Link>))}
                                                     {jobItem.jobPosition}
                                                     <Modal isOpen={show} toggle={toggleApplyJob} backdrop="static" centered>
                                                         <ModalBody>
@@ -596,9 +595,9 @@ const InternalJobs = () => {
 
                                     </Card>
                                 </Col>
-                            </Row>
-                        </Row>
-                    </Container>
+                            
+                        
+                    </div>
                 </div>
             </>
         );

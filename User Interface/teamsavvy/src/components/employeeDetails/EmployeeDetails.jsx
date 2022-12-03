@@ -13,14 +13,14 @@ const EmployeeDetails = () => {
 
     return ( 
         <>
-        <Container className="px-3">
+        <div className="px-3 position-relative">
             <p className="h4 px-2 pb-3">Employee Name</p>
             
             <Tabs
             defaultActiveKey="home"
             transition={false}
             id="noanim-tab-example"
-            className="mb-3"
+            className="mb-3 "
             >
             <Tab eventKey="home" title="Timesheet">
                 <TimeSheetView/>
@@ -33,7 +33,7 @@ const EmployeeDetails = () => {
             </Tab>
             </Tabs>
 
-        </Container>
+        </div>
         </>
     );
 }

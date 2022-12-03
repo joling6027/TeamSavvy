@@ -52,33 +52,33 @@ const Paystub = () => {
 
   return (
     <>
-      <div className="container">
+      <div className="px-3">
         <div className="card col-md-12 mb-5">
-          <div className='card-header'>
-            <div className="row">
-              <h5 className="title col-sm">{emp.employeeFirstname} {emp.employeeLastname}</h5>
-              <h5 className="title col-sm">Employee#{emp.employeeId}</h5>
-              <h5 className="title col-sm">Department: {emp.department.departmentName}</h5>
-              <h5 className="title col-sm text-right">Start Date: {payrollItem.payDate}</h5>
-              <h5 className="title col-sm text-right">End Date: {endDate}</h5>
+          <div className='pt-3 px-3'>
+            <div className="d-md-flex justify-content-between d-sm-block">
+              <p className="title col-sm-12 col-md-2 m-0"><strong>{emp.employeeFirstname} {emp.employeeLastname}</strong></p>
+              <p className="title col-sm-12 col-md-2 m-0">Employee# <strong>{emp.employeeId}</strong></p>
+              <p className="title col-sm-12 col-md-2 m-0">Department: <strong>{emp.department.departmentName}</strong></p>
+              <p className="title col-sm-12 col-md-2 m-0 text-right">Start Date:<strong> {payrollItem.payDate}</strong></p>
+              <p className="title col-sm-12 col-md-2 m-0 text-md-end text-sm-start">End Date: <strong>{endDate}</strong></p>
             </div>
             <hr />
           </div>
-          <div className='card-body'>
-            <div className="row">
-              <div className="col-8">
-                <h5>Address</h5>
-                <p>{emp.address.apartment}, {emp.address.city.cityName}, {emp.address.city.province.provinceAbbr}, {emp.address.postcode}</p>
+          <div className='px-3 pt-0 '>
+            <div className="d-md-flex d-sm-block">
+              <div className="col-md-8 col-sm-12">
+                <p className="m-0">Address</p>
+                <p className="text-muted">{emp.address.apartment}, {emp.address.city.cityName}, {emp.address.city.province.provinceAbbr}, {emp.address.postcode}</p>
               </div>
-              <div className="col-4">
-                <h5>Organization</h5>
-                <p>{emp.jobLocation.location}, {emp.jobLocation.city.cityName}, {emp.jobLocation.city.province.provinceAbbr}, {emp.jobLocation.postcode}</p>
+              <div className="col-md-3 col-sm-12">
+                <p  className="m-0">Organization</p>
+                <p className="text-muted">{emp.jobLocation.location}, {emp.jobLocation.city.cityName}, {emp.jobLocation.city.province.provinceAbbr}, {emp.jobLocation.postcode}</p>
                 <p></p>
               </div>
               <hr />
             </div>
-            <div className="paystub-inner-card">
-              <h6 className='paystub-inner-table-caption'>EARNINGS</h6>
+            <div className="paystub-inner-card pt-3 mt-2">
+              <p className='paystub-inner-table-caption'>EARNINGS</p>
               <table className="table table-striped">
                 <thead>
                   <tr>
@@ -205,8 +205,8 @@ const Paystub = () => {
                 </tbody>
               </table>
             </div> */}
-            <div className="paystub-inner-card">
-              <h6 className='paystub-inner-table-caption'>PAY DISTRIBUTION</h6>
+            <div className="paystub-inner-card pt-3 mt-2">
+              <p className='paystub-inner-table-caption'>PAY DISTRIBUTION</p>
               <table className="table table-striped">
                 <thead>
                   <tr>
@@ -232,7 +232,7 @@ const Paystub = () => {
                     <td>
                       ${payrollItem.netpay}
                     </td>
-                    <td>
+                    <td className="account">
                       {emp.bankaccount}
                     </td>
                     <td>

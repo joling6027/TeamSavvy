@@ -165,29 +165,10 @@
     transition: all 0.2s ease-in-out;
     outline: none;
     text-transform: lowercase;
-    background: #1d8cf8;
-    background-image: -webkit-linear-gradient(
-      to bottom left,
-      #1d8cf8,
-      #3358f4,
-      #1d8cf8
-    );
-    background-image: -o-linear-gradient(
-      to bottom left,
-      #1d8cf8,
-      #3358f4,
-      #1d8cf8
-    );
-    background-image: -moz-linear-gradient(
-      to bottom left,
-      #1d8cf8,
-      #3358f4,
-      #1d8cf8
-    );
-    background-image: linear-gradient(to bottom left, #1d8cf8, #3358f4, #1d8cf8);
+    background:none!important;
     background-size: 210% 210%;
     background-position: top right;
-    background-color: #1d8cf8;
+    background-color: none!important;
     transition: all 0.15s ease;
     box-shadow: none;
     color: #ffffff;
@@ -207,32 +188,11 @@
   .rbc-toolbar button:active:hover,
   .rbc-toolbar button.active:focus,
   .rbc-toolbar button.active:hover {
-    background-color: #3358f4 !important;
-    background-image: linear-gradient(
-      to bottom left,
-      #1d8cf8,
-      #3358f4,
-      #1d8cf8
-    ) !important;
-    background-image: -webkit-linear-gradient(
-      to bottom left,
-      #1d8cf8,
-      #3358f4,
-      #1d8cf8
-    ) !important;
-    background-image: -o-linear-gradient(
-      to bottom left,
-      #1d8cf8,
-      #3358f4,
-      #1d8cf8
-    ) !important;
-    background-image: -moz-linear-gradient(
-      to bottom left,
-      #1d8cf8,
-      #3358f4,
-      #1d8cf8
-    ) !important;
-    color: #ffffff;
+    background: transparent !important;
+    background: transparent!important;
+    background: transparent!important;
+    background: transparent!important;
+    color: #000;
     box-shadow: none;
   }
   .rbc-toolbar button:active {
@@ -269,12 +229,12 @@
   fieldset[disabled] .rbc-toolbar button.focus,
   fieldset[disabled] .rbc-toolbar button:active,
   fieldset[disabled] .rbc-toolbar button.active {
-    background-color: #1d8cf8;
-    border-color: #1d8cf8;
+    background-color: transparent;
+    border-color:transparent;
   }
   .rbc-toolbar button.btn-simple {
-    color: #1d8cf8;
-    border-color: #1d8cf8;
+    color: #333;
+    border-color:transparent;
     background: transparent;
   }
   .rbc-toolbar button.btn-simple:hover,
@@ -288,39 +248,15 @@
     box-shadow: none;
   }
   .rbc-toolbar button.btn-simple.active {
-    border-color: #1d8cf8 !important;
+    border-color: transparent !important;
   }
   .rbc-toolbar button.btn-simple.active:hover,
   .rbc-toolbar button.btn-simple.active:focus,
   .rbc-toolbar button.btn-simple.active:active,
   .rbc-toolbar button.btn-simple.active:not(:disabled):not(.disabled):active {
-    color: #ffffff;
-    border-color: #1d8cf8;
-    background-image: linear-gradient(
-      to bottom left,
-      #1d8cf8,
-      #3358f4,
-      #1d8cf8
-    ) !important;
-    background-image: -webkit-linear-gradient(
-      to bottom left,
-      #1d8cf8,
-      #3358f4,
-      #1d8cf8
-    ) !important;
-    background-image: -o-linear-gradient(
-      to bottom left,
-      #1d8cf8,
-      #3358f4,
-      #1d8cf8
-    ) !important;
-    background-image: -moz-linear-gradient(
-      to bottom left,
-      #1d8cf8,
-      #3358f4,
-      #1d8cf8
-    ) !important;
-    background-color: #3358f4 !important;
+    color: #333333;
+    border-color: transparent;
+    background: transparent !important;
     box-shadow: none;
   }
   .rbc-toolbar button.btn-link {
@@ -356,9 +292,9 @@
     color:#333
   }
   .rbc-btn-group button:hover,rbc-btn-group button:focus, rbc-btn-group button:active{
-      background:none!important;
+      background:transparent!important;
       color:#367FFF!important;
-      box-shadow:none!important;
+      box-shadow:transparent!important;
   }
   
   @media screen and (max-width: 526px) {
@@ -977,7 +913,7 @@
       display: block;
     }
     .rbc-toolbar .rbc-btn-group {
-      display: block;
+      display: flex;
       text-align: center;
     }
     .rbc-toolbar .rbc-toolbar-label {
