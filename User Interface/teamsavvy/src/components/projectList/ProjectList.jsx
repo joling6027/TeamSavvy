@@ -48,7 +48,7 @@ const ProjectList = () => {
         { field: "team", headerName: "Team members" },
         { field: "projectManagerName", headerName: "Manager Name" },
         { field: "projectManagerId", headerName: "Manager ID"},
-        { field: "budget", headerName: "Budget" },
+        { field: "budget", headerName: "Budget", renderCell: (params) => formatter.format(params.row.budget) },
         { field: "description", headerName: "Descritpion", width: 300 },
         {
             field: "details",
@@ -67,18 +67,6 @@ const ProjectList = () => {
         currency: 'USD',
     })
 
-//     const currencyFormatter = (params) => {
-//         return '$' + formatNumber(params.value);
-//     };
-
-//     const formatNumber = (number) => {
-//   // this puts commas into the number eg 1000 goes to 1,000,
-//   // i pulled this from stack overflow, i have no idea how it works
-//   return Math.floor(number)
-//     .toString()
-//     .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-// };
-
     //alert
     const [alert, setAlert] = useState(null);
 
@@ -95,7 +83,7 @@ const ProjectList = () => {
         setProjectEndDate();
         setProjectClientName();
 
-        //validation
+        //clean validation
         setProjectTitleValidate(false);
         setProjectDescriptionValidate(false);
         setProjectBudgetValidate(false);
