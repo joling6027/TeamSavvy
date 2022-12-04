@@ -235,6 +235,7 @@ const ProjectDetails = () => {
             if(res.data.success){
                 //Jaspal
                 GetTaskCounts();
+                getTasks(managerId);
             }
         }).catch((err) => console.log(err.message))
     }
@@ -290,11 +291,12 @@ const ProjectDetails = () => {
                 "taskStatus": "Assigned"
             }
 
-            setTasks([
-                ...tasks,
-                taskData
-            ]);
-
+            // setTasks([
+            //     ...tasks,
+            //     taskData
+            // ]);
+            postCreatedTask(taskData);
+            
             toggle();
 
         }
@@ -331,7 +333,7 @@ const ProjectDetails = () => {
         let st = e.target.value.split(" ").join("");
         console.log(st)
         
-        setMStatus(e.target.value);
+        setMStatus(st);
         
      }
     const mStartDateChangeHandler = (e) => { 
@@ -348,6 +350,8 @@ const ProjectDetails = () => {
     // post modified task
     const postModifiedTask = (modifiedTaskData) => {
         http.put(GetEndPoints().updateTask, { ...modifiedTaskData }).then((res) => {
+            GetTaskCounts();
+            getTasks(managerId);
         }).catch((err) => console.log(err.message));
     }
 

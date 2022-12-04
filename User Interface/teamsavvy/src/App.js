@@ -59,10 +59,11 @@ function App() {
             <Route path="/dashboard/teammembers/employeedetails/:id/:projId" element={<EmployeeDetails/>} />
             <Route path="/timesheet" element={<Timesheet />} />
             <Route path="/task" element={<Task />} />
-            <Route path="/payroll" exact element={<Payroll data={data} columns={COLUMNS} />} />
+            <Route path="/payroll" exact element={<Payroll />} />
             <Route path="/jobs" element={<InternalJobs />} />
             <Route path='/payroll/paystub/:payrollid' element={<Paystub />} />
-            <Route path="/jobs/applied/:id" element={<JobAppliedEmployees/>} />
+            <Route path="/jobs/applied" element={<JobAppliedEmployees />} />
+            <Route path="/jobs/applied/employeedetails/:id" element={<EmployeeDetails />} />
             <Route path="/dashboard/projects" element={<ProjectList/>} />
             <Route path="/dashboard/projects/projectdetail/:id" element={<ProjectDetails />} />
           </Routes>

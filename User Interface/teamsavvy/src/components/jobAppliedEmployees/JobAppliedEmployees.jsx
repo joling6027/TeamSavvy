@@ -33,36 +33,46 @@ import './jobAppliedEmployee.css';
 const JobAppliedEmployees = () => {
     const [pageSize, setPageSize] = useState(10);
     const data = useLocation();
-    const jobId = data.state.jobId;
-    console.log(data.state.jobId)
+
     const { http, user } = AuthService();
     // const [modal, setModal] = useState(false);
     const [applicants, setApplicants] = useState([]);
+    const [jobId, setJobId] = useState()
+    const [jobName, setJobName] = useState();
     // const toggle = () => setModal(!modal);
 
-    useEffect(() => {
+    const getJobApplied = () => {
         http.get(GetEndPoints().internalJob + "/jobApplied/" + jobId)
-        .then((res) => {
-            if(res.data.success){
-                console.log(res.data.response)
-                // setApplicants(res.data.response)
-                let objs = [];
-                objs = [...res.data.response].map((applicant) => {
-                    return{
-                        id: applicant.employeeId,
-                        empname: applicant.employeeFirstname + " " + applicant.employeeLastname,
-                        dept: applicant.department.departmentName,
-                        position: applicant.role.roleType,
-                        details: "<button>View</button>"
-                    }
-                })
-                setApplicants(objs);
-                console.log(applicants)
-            }
-        })
-        .catch((err) => console.log(err))
-        
-    },[])
+            .then((res) => {
+                if (res.data.success) {
+                    // console.log(res.data.response)
+                    // setApplicants(res.data.response)
+                    let objs = [];
+                    objs = [...res.data.response].map((applicant) => {
+                        return {
+                            id: applicant.employeeId,
+                            empname: applicant.employeeFirstname + " " + applicant.employeeLastname,
+                            dept: applicant.department.departmentName,
+                            position: applicant.role.roleType,
+                            details: "<button>View</button>"
+                        }
+                    })
+                    setApplicants(objs);
+                }
+            })
+            .catch((err) => console.log(err.message))
+    }
+
+    useEffect(() => {
+        if (data.state !== null) {
+            localStorage.setItem("jId", data.state.jobId);
+            localStorage.setItem("jName", data.state.jobName);
+        }
+        setJobId(localStorage.getItem('jId'));
+        setJobName(localStorage.getItem('jName'));
+        getJobApplied();
+
+    }, [jobId, jobName])
 
     const columns = [
         { field: 'id', headerName: 'Employee Id', flex:1 },
@@ -73,7 +83,7 @@ const JobAppliedEmployees = () => {
         { field: 'dept', headerName: 'Department', flex:1},
         { field: 'position', headerName: 'Position', flex:1},
         {
-            field: 'details', flex:1,headerName: 'Details' , renderCell: (params) => <Link to={`/dashboard/teammembers/employeedetails/${params.row.id}`}>View</Link> }
+            field: 'details', headerName: 'Details', renderCell: (params) => <Link to={`/jobs/applied/employeedetails/${params.row.id}`}>View</Link> }
       ];
 
     // const populateApplicants = (...applicants) => {
@@ -93,7 +103,7 @@ const JobAppliedEmployees = () => {
     //       return setApplicantRows(...applicantsObj);
     // }
 
-    if (applicants === undefined) {
+    if (applicants === undefined || jobId === undefined) {
             return (<div className="d-flex justify-content-center">
             <div className="spinner-grow text-success" style={{width: "3rem", height: "3rem"}} role="status">
             <span className="sr-only">No Applicant applied for this position yet.</span>
@@ -104,7 +114,7 @@ const JobAppliedEmployees = () => {
     return ( 
         <Container>
             <Card className="prCard" > 
-                <CardTitle tag="h5" className="px-3 pt-3" > Employees List
+                <CardTitle tag="h5" className="px-3 pt-3" > Employees Applied For: {jobName}
             </CardTitle>
             <CardBody>
             <div style={{ display: 'flex', height: '100%', justifyContent: 'space-between' }}>
