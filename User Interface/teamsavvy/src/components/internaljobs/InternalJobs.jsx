@@ -76,7 +76,6 @@ const InternalJobs = () => {
             setAppliedEmp(res.data.response);
         }).catch((err) => {
             if(err.response.status === 404){
-                console.log("404 ---")
                 setAppliedEmp([]);
             }
         })
@@ -465,13 +464,13 @@ const InternalJobs = () => {
                                                             
                                                             <div>
                                                             <Label for='newJob_detail' className="mt-4" >Details</Label>
-                                                            <Input type='text' name='newJob_detail' id='newJob_detail' onChange={detailChangeHandler} invalid={jobDetailValidate} />
+                                                            <Input type='textarea' name='newJob_detail' id='newJob_detail' onChange={detailChangeHandler} invalid={jobDetailValidate} />
                                                             <FormFeedback invalid>Detail cannot be blank</FormFeedback>
                                                             </div>
 
                                                             <div>
                                                             <Label for='newJob_responsibility' className="mt-4">Responsibilities</Label>
-                                                            <Input type='text' name='newJob_responsibility' id='newJob_responsibility' onChange={responsibilityChangeHandler} invalid={jobResponsibilityValidate} />
+                                                        <Input type='textarea' name='newJob_responsibility' id='newJob_responsibility' onChange={responsibilityChangeHandler} invalid={jobResponsibilityValidate} />
                                                             <FormFeedback>Responsibilities cannot be blank</FormFeedback>
                                                             <CardSubtitle className='job-subtitle'>Skill Required</CardSubtitle>
                                                             </div>
