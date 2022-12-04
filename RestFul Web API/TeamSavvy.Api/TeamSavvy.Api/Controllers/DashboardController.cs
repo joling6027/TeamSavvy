@@ -381,7 +381,7 @@ namespace TeamSavvy.Api.Web.Controllers
             else
             {
                 var res = _dashboardService.GetDashBoardId(id);
-                if (res < 0)
+                if (res <= 0)
                 {
                     response = NotFound(new ResponseMessage(false, null, new Message(HttpStatusCode.NotFound, $"There is no record in database against id {id}")));
                 }

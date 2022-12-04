@@ -477,7 +477,12 @@ namespace TeamSavvy.Api.Services.Services
 
         public int GetDashBoardId(int employeeId)
         {
-           return _unitOfWork.Context.Dashboard.Where(x => x.EmployeeId == employeeId).FirstOrDefault().DashboardId;
+           var res =  _unitOfWork.Context.Dashboard.Where(x => x.EmployeeId == employeeId).FirstOrDefault();
+           if(res != null)
+           {
+                return res.DashboardId;
+           }
+           return 0;
         }
 
         public List<DashboardWidget> GetWidegts(int employeeId)
