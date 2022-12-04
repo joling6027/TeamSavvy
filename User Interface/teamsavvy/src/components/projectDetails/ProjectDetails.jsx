@@ -151,6 +151,7 @@ const ProjectDetails = () => {
                     setTasks(tasksById)
                     let completedTasks = [...tasksById].filter((task) => task.taskStatus === "Completed");
                     setCompletedTasks(completedTasks)
+                    console.log(res.data.response)
                 }
             }).catch((err) => {
                 if(err.response.status === 404){
