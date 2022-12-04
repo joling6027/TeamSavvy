@@ -65,15 +65,15 @@ const JobAppliedEmployees = () => {
     },[])
 
     const columns = [
-        { field: 'id', headerName: 'Employee Id' },
+        { field: 'id', headerName: 'Employee Id', flex:1 },
         { field: 'empname', headerName: 'Employee name',
-        width:200,
+        flex:1,
              sortable:true,
              editable:true},
-        { field: 'dept', headerName: 'Department'},
-        { field: 'position', headerName: 'Position'},
+        { field: 'dept', headerName: 'Department', flex:1},
+        { field: 'position', headerName: 'Position', flex:1},
         {
-            field: 'details', headerName: 'Details' , renderCell: (params) => <Link to={`/dashboard/teammembers/employeedetails/${params.row.id}`}>View</Link> }
+            field: 'details', flex:1,headerName: 'Details' , renderCell: (params) => <Link to={`/dashboard/teammembers/employeedetails/${params.row.id}`}>View</Link> }
       ];
 
     // const populateApplicants = (...applicants) => {

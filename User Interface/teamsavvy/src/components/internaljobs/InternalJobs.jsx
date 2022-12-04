@@ -413,7 +413,7 @@ const InternalJobs = () => {
                 <div className="content px-3" >
                     <div className="d-md-flex d-sm-block">
                             
-                                <Col sm="12" md="4" className="me-md-2 me-sm-0 mb-2">
+                                <Col sm="12" md="4" className="me-md-2 me-sm-0 mb-4">
                                     <Card className='jobs-card' body>
                                         <CardTitle className='job-card-title'>Jobs
                                             {(user.role === 'HR' || user.role === 'Admin' ? 
@@ -458,24 +458,23 @@ const InternalJobs = () => {
                                                         <Container>
                                                             <CardTitle className='job-card-title'>Job Details</CardTitle>
                                                             <div>
-                                                            <Label for='newJob_name'>Position Name</Label>
+                                                            <Label for='newJob_name' className="mt-4">Position Name</Label>
                                                             <Input type='text' name='newJob_name' id='newJob_name' onChange={nameChangeHandler} invalid={jobNameValidate} />
                                                             <FormFeedback invalid>Position name cannot be blank</FormFeedback>
                                                             </div>
                                                             
                                                             <div>
-                                                            <Label for='newJob_detail'>Details</Label>
+                                                            <Label for='newJob_detail' className="mt-4" >Details</Label>
                                                             <Input type='text' name='newJob_detail' id='newJob_detail' onChange={detailChangeHandler} invalid={jobDetailValidate} />
                                                             <FormFeedback invalid>Detail cannot be blank</FormFeedback>
                                                             </div>
 
                                                             <div>
-                                                            <Label for='newJob_responsibility'>Responsibilities</Label>
+                                                            <Label for='newJob_responsibility' className="mt-4">Responsibilities</Label>
                                                             <Input type='text' name='newJob_responsibility' id='newJob_responsibility' onChange={responsibilityChangeHandler} invalid={jobResponsibilityValidate} />
                                                             <FormFeedback>Responsibilities cannot be blank</FormFeedback>
                                                             <CardSubtitle className='job-subtitle'>Skill Required</CardSubtitle>
                                                             </div>
-                                                            <br />
                                                             {skills && skills.map((skill, index) => skill.isactive && <div class="skill position-relative" key={index}>
                                                                 <Badge className="skillPill rounded-pill me-3 mb-3 " pill > {skill.skills.skillName} </Badge>
                                                                 <Badge className="bg-secondary p-1 rounded-circle position-absolute close-badge" onClick={() => handleDelete(skill.skills.skillId)}> <CloseOutlinedIcon sx={{ fontSize: 13 }} /> </Badge>
@@ -518,12 +517,12 @@ const InternalJobs = () => {
                                                             <Link to="" className="alert-link text-decoration-none text-center" onClick={toggle}> <AddCircleIcon /> ADD</Link>
                                                             <Row>
                                                                 <Col>
-                                                                    <Label for='task-title'>Pay per month</Label>
+                                                                    <Label for='task-title' className="mt-4">Pay per month</Label>
                                                                     <Input type='number' name='task-title' id='task-title' onChange={payChangeHandler} invalid={jobPayValidate} />
                                                                     <FormFeedback>Pay cannot be blank or less than 1</FormFeedback>
                                                                 </Col>
                                                                 <Col>
-                                                                    <Label for='task-title'>Deadline</Label>
+                                                                    <Label for='task-title'className="mt-4" >Deadline</Label>
                                                                     <Input type='date' name='task-end-date' id='task-end-date' onChange={deadlineChangeHandler} invalid={jobDeadlineValidate} />
                                                                     <FormFeedback>Deadline cannot be blank or before today</FormFeedback>
                                                                 </Col>

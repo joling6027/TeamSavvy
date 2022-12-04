@@ -222,36 +222,38 @@ const TeamMembers = () => {
 
 
     const columns_Manager = [
-        { field: 'id', headerName: 'Employee ID'},
+        { field: 'id', headerName: 'Employee ID',flex:1},
         { field: 'employeeName', headerName: 'Name',
              sortable:true,
-             editable:true, width:200},
+             editable:true,flex:1},
         { field: 'department', headerName: 'Department', sortable:true,
-        editable:true, width:200},
+        editable:true, flex:1},
         { field: 'status', headerName: 'Status', sortable:true,
-        editable:true },
+        editable:true,flex:1 },
         { field: 'position', headerName: 'Position', sortable:true,
-        editable:true},
-        { field: 'salary', headerName: 'Salary', editable: false, renderCell: (params) => formatter.format(params.row.salary) },
-        { field: 'progress', headerName:'Progress', renderCell: (params) => <><Progress className="w-100 " color="success" value={params.row.progress}/><span className='mx-2' >{params.row.progress}%</span></> ,width:350},
-        { field: 'details', headerName: 'Details', renderCell: (params) => <Link to={`/dashboard/teammembers/employeedetails/${params.row.id}/${currProj}`} >View</Link>,width:90},
+        editable:true, flex:1},
+        { field: 'salary', headerName: 'Salary', editable: false, renderCell: (params) => formatter.format(params.row.salary) ,flex:1},
+        { field: 'progress', headerName:'Progress',flex:1, renderCell: (params) => <><Progress className="w-100 " color="success" value={params.row.progress}/><span className='mx-2' >{params.row.progress}%</span></> },
+        { field: 'details', headerName: 'Details', flex:1, renderCell: (params) => <Link to={`/dashboard/teammembers/employeedetails/${params.row.id}/${currProj}`} >View</Link>},
+        
       ];
       
       const columns_HR = [
-        { field: 'id', headerName: 'Employee ID', },
+        { field: 'id', headerName: 'Employee ID',flex:1 },
         { field: 'employeeName', headerName: 'Name',
              sortable:true,
-             editable:true},
+             editable:true,
+             flex:1},
         { field: 'department', headerName: 'Department', sortable:true,
-        editable:true},
+        editable:true,flex:1},
         { field: 'status', headerName: 'Status', renderCell: (params) => params.row.status === 'Active' ? 'Active' :<Button className="btn bg-primary" onClick={() => handleBench(params.row.id)}>Bench</Button>, sortable:true,
-        editable:true },
+        editable:true,flex:1,Width:300},
         { field: 'position', headerName: 'Position', sortable:true,
-        editable:true},
-          { field: 'salary', headerName: 'Salary', editable: false, renderCell: (params) => formatter.format(params.row.salary) },
-        { field: 'progress', headerName:'Progress', renderCell: (params) => <><Progress className="w-50" color="success" value={params.row.progress} /><span className='mx-2' >{params.row.progress}%</span></> ,width:350},
-        { field: 'details', headerName: 'Details', renderCell: (params) => <Link to={`/dashboard/teammembers/employeedetails/${params.row.id}`} >View</Link> },
-        { field: 'icon', headerName: 'Delete', renderCell: (params) => <DeleteIcon value={params.row.id} onClick={() => handleDelete(params.row.id)} color="error"/> }
+        editable:true, flex:1},
+          { field: 'salary', headerName: 'Salary', editable: false, renderCell: (params) => formatter.format(params.row.salary), flex:1 },
+        { field: 'progress', headerName:'Progress',flex:2, renderCell: (params) => <><Progress className="w-50" color="success" value={params.row.progress} /><span className='mx-2' >{params.row.progress}%</span></> },
+        { field: 'details', headerName: 'Details',flex:1, renderCell: (params) => <Link to={`/dashboard/teammembers/employeedetails/${params.row.id}`} >View</Link> },
+        { field: 'icon', headerName: 'Delete',flex:1, renderCell: (params) => <DeleteIcon value={params.row.id} onClick={() => handleDelete(params.row.id)} color="error"/> }
       ];
 
     if(data === undefined)
@@ -264,12 +266,12 @@ const TeamMembers = () => {
     }
     else{
         return ( 
-            <Container>
+            <div className="px-3">
                 {alert}
                 <Card className="prCard" > 
                     <CardTitle tag="h5" className="px-3 pt-3" >{  user.role && user.role === "HR" ? 'Employee List' : 'Team Members' }
                     { 
-                        user.role && user.role === "HR" && <Link to="/dashboard/teammembers/addemployee"  className="alert-link text-decoration-none float-md-end float-sm-start linkStyle">
+                        user.role && user.role === "HR" && <Link to="/dashboard/teammembers/addemployee"  className="alert-link text-decoration-none float-md-end pt-md-0 pt-sm-2 linkStyle">
                         <AddCircleIcon/> ADD NEW EMPLOYEE</Link>
                     }
                    
@@ -297,9 +299,8 @@ const TeamMembers = () => {
                     </Form>
                     </Col>
                     </Row>}
-                <div style={{ display: 'flex', height: '100%', justifyContent: 'space-between' }}>
-                    <div style={{width:'100%'}}>
-                        <DataGrid className="table-striped"
+                    <div className="d-flex justify-content-around">
+                        <DataGrid className="responsive d-flex table-striped"
                             pageSize={pageSize}
                             onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
                             rowsPerPageOptions={[5, 10, 20,50,100]}
@@ -314,12 +315,11 @@ const TeamMembers = () => {
                              
                         />
                     </div>
-                </div>
                 
                
                 </CardBody>
            </Card>
-           <Modal isOpen={modal} toggle={toggle} backdrop="static" centered>
+           <Modal isOpen={modal} toggle={toggle} backdrop="static" centered size="lg">
                         <ModalHeader>  <h4>Assign Project</h4> </ModalHeader>
                         <ModalBody>
                             <Form>
@@ -362,7 +362,7 @@ const TeamMembers = () => {
                             </Row>
                             <Row>
                             <h6 className="text-muted">Project Description</h6>
-                            <p className="text-muted">{projectDesc}</p>
+                            <p className="text-muted truncate">{projectDesc}</p>
                             <p className="text-muted">Project Manager <strong>{projectManager}</strong> <span className="ms-2">Team Member <strong> {projectMember}</strong></span></p>
                             </Row>
                         </Form>
@@ -378,7 +378,7 @@ const TeamMembers = () => {
                         
                     </Modal>
     
-            </Container>    
+            </div>    
         );
     }
    

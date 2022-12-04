@@ -166,7 +166,7 @@ const ProfileView = () => {
             <>
             <div className="d-flex flex-wrap position-relative w-100">
               {alert}
-              <div className="col-md-3 col-sm-12 profileleft">
+              <div className="col-md-3 col-sm-12">
       
                   {/* profile card */}
                   <Card style={{}} className="text-center prCard">
@@ -180,7 +180,7 @@ const ProfileView = () => {
                       </CardBody>
                   </Card>
                   {/* project */}
-            <Card style={{}} className="mt-4 mb-md-4 mb-sm-0 prCard ">
+            <Card style={{}} className="mt-4 mb-md-4 prCard">
                 <CardBody>
                 <Button className="btn bg-primary w-100" onClick={assigntoggle} disabled={projects.length === 0}>{projects.length === 0 ? 'Employee On Bench':'Remove From Project'}</Button>
                 </CardBody>
@@ -438,7 +438,7 @@ const ProfileView = () => {
                   </Card>
       
                   {/* skill set */}
-                  <Card style={{}} className="ms-md-4 ms-sm-0 mt-4 prCard">
+                  <Card style={{}} className="ms-md-4 ms-sm-0 mt-4 mb-4 prCard">
                       <CardBody className="" >
                       <CardTitle tag="h5" className="mb-3"> Skill Set </CardTitle>
                       <div className="d-flex flex-wrap">

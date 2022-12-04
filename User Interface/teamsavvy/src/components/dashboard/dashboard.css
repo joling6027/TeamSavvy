@@ -8,7 +8,7 @@ canvas{height:300px!important; width:auto!important; }
 
 .MuiDataGrid-footerContainer div > p {display: flex; margin:0;align-items: center; }
 
-@media only screen and (max-width:600px){
+@media only screen and (max-width:800px){
     canvas{overflow:auto; width:100%!important;height:auto!important}
     .pie canvas{margin-left:0%; width:100%!important}
 
