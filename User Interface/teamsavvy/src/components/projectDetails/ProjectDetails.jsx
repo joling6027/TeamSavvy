@@ -504,7 +504,7 @@ const ProjectDetails = () => {
                                 {tasks && tasks.filter((task => task.taskStatus === "Assigned")).map((task) => (
                                     <li class="list-group-item border-end-0 border-bottom-0 border-start-0 rounded-0 px-0 py-3 border-top" key={Math.random()}>
                                         <h6>{task.taskName}</h6>
-                                        <p className="text-muted">{task.taskDesc}</p>
+                                        <p className=" showHide text-muted">{task.taskDesc}</p>
                                         <p className="text-muted">Start Date: {task.taskStartDate}</p>
                                         <p className="text-muted">End Date: {task.taskEndDate}</p>
                                         <p className="text-muted">Assigned to <strong>{task.assignedTo}</strong></p>
@@ -518,7 +518,7 @@ const ProjectDetails = () => {
                             <ul class="list-group p-3">
                                 {tasks && tasks.filter((task => task.taskStatus === "InProgress")).map((task) => (<li class="list-group-item border-end-0 border-bottom-0 border-start-0 rounded-0 px-0 py-3 border-top">
                                     <h6>{task.taskName}</h6>
-                                    <p className="text-muted">{task.taskDesc}</p>
+                                    <p className=" showHide text-muted">{task.taskDesc}</p>
                                     <p className="text-muted">Start Date: {task.taskStartDate}</p>
                                     <p className="text-muted">End Date: {task.taskEndDate}</p>
                                     <p className="text-muted">Assigned to <strong>{task.assignedTo}</strong></p>
@@ -532,7 +532,7 @@ const ProjectDetails = () => {
                                 {tasks && tasks.filter((task => task.taskStatus === 'Completed')).map((task) => (
                                     <li class="list-group-item border-end-0 border-bottom-0 border-start-0 rounded-0 px-0 py-3 border-top">
                                         <h6>{task.taskName}</h6>
-                                        <p className="text-muted">{task.taskDesc}</p>
+                                        <p className="showHide text-muted">{task.taskDesc}</p>
                                         <p className="text-muted">Completed by <strong>{task.assignedTo}</strong></p>
                                         <p className="text-muted"><UpdateOutlinedIcon /> Hours <strong>{task.taskTotalHours}</strong></p>
                                     </li>
