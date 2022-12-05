@@ -343,7 +343,7 @@ namespace TeamSavvy.Api.Services.Services
                 var emps = _unitOfWork.Context.Employee.Where(e=> e.StatusId == 1 && String.IsNullOrWhiteSpace(e.Resigneddate)).ToList();
                 foreach (var emp in emps)
                 {
-                    var empProj = _unitOfWork.Context.EmployeeProject.Where(p => p.EmployeeId == emp.EmployeeId).ToList();
+                    var empProj = _unitOfWork.Context.EmployeeProject.Where(p => p.EmployeeId == emp.EmployeeId && p.Status == true).ToList();
                     if(empProj.Any())
                     {
                         foreach (var emProj in empProj)

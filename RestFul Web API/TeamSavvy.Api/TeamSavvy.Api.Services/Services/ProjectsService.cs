@@ -68,7 +68,7 @@ namespace TeamSavvy.Api.Services.Services
                     var employeeIsExist = _unitOfWork.Context.EmployeeProject.Where(e => e.EmployeeId == employeeProject.EmployeeId && e.ProjectId == employeeProject.ProjectId && e.Status == false).FirstOrDefault();
                     if (employeeIsExist != null)
                     {
-                        employeeIsExist.Status = false;
+                        employeeIsExist.Status = true;
                         _unitOfWork.Repository<EmployeeProject>().Update(employeeIsExist);
                         _unitOfWork.SaveChanges();
                         isSuccess = true;

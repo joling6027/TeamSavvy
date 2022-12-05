@@ -187,12 +187,10 @@ const TeamMembers = () => {
                         title="Project is assigned"
                         onConfirm={() => hideAlert()}
                         onCancel={() => hideAlert()}
-                        showCancel
                         confirmBtnText="OK"
-                        confirmBtnBsStyle="danger"
-                        btnSize=""
+                        confirmBtnBsStyle="success"
                     >
-                     Sad to here this.</SweetAlert>)
+                     Nice to see you.</SweetAlert>)
                      GetTeamMembersForHr();
             }
         })

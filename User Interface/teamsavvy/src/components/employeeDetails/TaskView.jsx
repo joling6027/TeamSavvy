@@ -70,7 +70,7 @@ const TaskView = () => {
                                 <h5 className='task-card-title'>In progress<hr /></h5>
                                 <div className="card-body">
                                     {tasks && tasks.map((task) => (
-                                        (task.taskStatus === 'In Progress'? 
+                                        (task.taskStatus === 'InProgress'? 
                                             (<div className="in-progress-task" key={task.taskId}>
                                                 <h6>{task.taskName}</h6>
                                                 <p className="showHide text-muted">{task.taskDesc}</p>
