@@ -82,7 +82,6 @@ const TaskModal = (props) => {
     if (dateEndDate < dateStartDate) {
       console.log("Wrong date");
       setEndDateValidate(true);
-      return;
     }
 
     if (titleValidate || descValidate || endDateValidate) {
@@ -124,7 +123,7 @@ const TaskModal = (props) => {
     <div>
       <Modal
         className='task-modal'
-        // size='lg'
+        size='lg'
         centered={true}
         show={props.show}
         onHide={props.close}
@@ -146,7 +145,7 @@ const TaskModal = (props) => {
                 </Row>
                 <Row>
                   <Label for='task-desc'>Description</Label>
-                  <Input type='textarea' name='task-desc' id='task-desc' onChange={descriptionChangeHandler} defaultValue={props.onOpen.taskDesc} invalid={descValidate} />
+                  <Input type='text' name='task-desc' id='task-desc' onChange={descriptionChangeHandler} defaultValue={props.onOpen.taskDesc} invalid={descValidate} />
                   <FormFeedback>Description cannot be blank</FormFeedback>
                 </Row>
                 <Row>
@@ -176,7 +175,7 @@ const TaskModal = (props) => {
                     <Label for="task-end-date">End Date</Label>
                     <Input type='date' name='task-end-date' id='task-end-date'
                       defaultValue={props.onOpen.taskEndDate} onChange={endDateChangeHandler} invalid={endDateValidate} />
-                    <FormFeedback>The start date cannnot be blank or earlier than start date</FormFeedback>
+                    <FormFeedback>The start date cannnot be blank</FormFeedback>
                   </Col>
                 </Row>
                 {/* <Input type='hidden' name="assignedBy" defaultValue={props.onOpen().assignedBy}/>

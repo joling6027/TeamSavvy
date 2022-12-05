@@ -111,7 +111,7 @@ const Paystub = () => {
                       {payrollItem.payType}
                     </th>
                     <td>
-                      {payrollItem.totalHours}
+                      80
                     </td>
                     {/* <td>
                       23
