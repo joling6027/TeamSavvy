@@ -3,9 +3,23 @@
     "apis1": {
       "restored": true,
       "restoreTime": "2022-10-02T00:09:24.4336465Z"
+    },
+    "mssql1": {
+      "restored": true,
+      "restoreTime": "2022-12-04T19:29:15.4109383Z"
     }
   },
   "parameters": {
+    "mssql1.subscriptionId": {
+      "Name": "mssql1.subscriptionId",
+      "Type": "subscription",
+      "Value": "f528611f-e2e8-40ff-a1b9-c7cbf2b0b1d9"
+    },
+    "mssql1.resourceGroupName": {
+      "Name": "mssql1.resourceGroupName",
+      "Type": "resourceGroup",
+      "Value": "TeamSavvy"
+    },
     "apis1.resourceGroupName": {
       "Name": "apis1.resourceGroupName",
       "Type": "resourceGroup",
