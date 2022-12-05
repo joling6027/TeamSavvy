@@ -240,6 +240,7 @@ const Dashboard = () => {
     const GetEmployeeLeaves = () =>{
         http.get(GetEndPoints().employeeLeaves)
         .then((res) =>{
+           
            if(res.data.success){
             setEmpLeaves(res.data.response)
            }
@@ -250,6 +251,7 @@ const Dashboard = () => {
     const GetEmployeeLeavesById = () =>{
         http.get(GetEndPoints().employeeLeaves+'/'+user.employeeId)
         .then((res) =>{
+            console.log(res.data.response)
            if(res.data.success){
             setEmpLeaves(res.data.response)
            }

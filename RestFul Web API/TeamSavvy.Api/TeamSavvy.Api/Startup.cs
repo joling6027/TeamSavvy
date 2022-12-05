@@ -48,6 +48,7 @@ namespace TeamSavvy.Api
                         options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().Build();
                     });
                 });
+
                 services.AddSwaggerGen(c =>
                 {
                     c.SwaggerDoc(

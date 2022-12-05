@@ -9,7 +9,6 @@ import { Card, CardBody, Row, Col, CardTitle ,Button,Modal, ModalBody} from "rea
 import './timesheet.css';
 import { dateFnsLocalizer } from 'react-big-calendar';
 import SweetAlert from "react-bootstrap-sweetalert";
-import events from './events';
 import AuthService from '../services/authService';
 import { useEffect } from 'react';
 import { GetEndPoints } from '../utilities/EndPoints';
@@ -28,7 +27,7 @@ const Timesheet = () => {
   const [modal, setModal] = useState(false);
   const [title, setTitle] = useState();
   const [event, setEvents] = useState([]);
-  const [timeSheet, setTimeSheet] = useState();
+  const [timeSheet, setTimeSheet] = useState([]);
   const [alert, setAlert] = useState(null);
   const [leavesArr, setLeaveArr] = useState([]);
   const [selectedLeaveType, setSelectedLeaveType] = useState();
@@ -49,7 +48,7 @@ const Timesheet = () => {
     http.get(GetEndPoints().timeSheet+'/'+user.employeeId)
     .then((res) =>{
        if(res.data.success){
-       
+       console.log(res.data.response)
        let timeSheetEvent = res.data.response.map((timeSheet, index) => {
           let actualDate = new Date(timeSheet.clockDate);
           actualDate.setDate(actualDate.getDate() + 1);
@@ -118,6 +117,7 @@ const Timesheet = () => {
         if(res.data.success)
         {
            let customLeaves = res.data.response.map((leave, index) => {
+            console.log(!leave.isApproved && leave.leaveStatus)
               let leaves = {
                 title:leave.leaveTypeId === 1 ? 'Sick Leave(s)':'Vacation Leave(s)', 
                
@@ -128,7 +128,8 @@ const Timesheet = () => {
                 end: leave.leaveEnds,
                 allDay: true,
                 isApproved:leave.isApproved,
-                color: leave.isApproved? "green" : leave.leaveTypeId === 1 ? "orange" : "yellow",
+                leaveStatus:leave.leaveStatus,
+                color: leave.isApproved && leave.leaveStatus === 'Approved' ? "green" : leave.isApproved === false && leave.leaveStatus === 'Rejected' ? "red" :  leave.leaveTypeId === 1 ? "orange" : "yellow",
               }
               return leaves;
             })
@@ -411,32 +412,47 @@ setEvents([...event, {
       display: 'block'
   };
 
-    if(event.isApproved){
+  console.log(event)
+    // if(event.isApproved){
      
       if(event.clockType === "Clock-Out")
       {
         style = clockOutStyle
       }
-      else if(event.clockType === "Clock-In")
+     if(event.clockType === "Clock-In")
       {
         style = clockInStyle
       }
-      else{
-        style = leaveIsApproved
-      }
-     
-    }
-    else{
-        if( event.leaveTypeId === 1){
+      if( event.leaveTypeId === 1){
           style = sickLeaveStyle
-        }
-        else if(event.leaveTypeId === 2 ){
-          style = vaccationLeaveStyle
-        }
-        else{
-            style = vaccationReject
-        }
-    }
+      }
+      if(event.leaveTypeId === 2 ){
+        style = vaccationLeaveStyle
+      }
+      if(!event.isApproved && event.leaveStatus === 'Rejected')
+      {
+        style = vaccationReject;
+      }
+      if(event.isApproved && event.leaveStatus === 'Approved')
+      {
+        style = leaveIsApproved;
+      }
+      // else{
+      //   style = leaveIsApproved
+      // }
+     
+    // }
+    // else{
+    //     if( event.leaveTypeId === 1){
+    //       style = sickLeaveStyle
+    //     }
+    //     else if(event.leaveTypeId === 2 ){
+    //       style = vaccationLeaveStyle
+    //     }
+    //     else{
+    //         style = vaccationReject
+    //     }
+    // }
     
   
     return {

@@ -124,7 +124,7 @@ const GetTotalHours = (timeSheetEvent) => {
                 allDay: true,
                 isApproved:leave.isApproved,
                 leaveStatus:leave.leaveStatus,
-                color: leave.isApproved? "green" : leave.leaveTypeId === 1 ? "orange" : "yellow",
+                color: leave.isApproved && leave.leaveStatus === 'Approved' ? "green" : leave.isApproved === false && leave.leaveStatus === 'Rejected' ? "red" :  leave.leaveTypeId === 1 ? "orange" : "yellow",
               }
               return leaves;
             })
@@ -447,32 +447,47 @@ const GetTotalHours = (timeSheetEvent) => {
       display: 'block'
   };
 
-    if(event.isApproved){
+  console.log(event)
+    // if(event.isApproved){
      
       if(event.clockType === "Clock-Out")
       {
         style = clockOutStyle
       }
-      else if(event.clockType === "Clock-In")
+     if(event.clockType === "Clock-In")
       {
         style = clockInStyle
       }
-      else{
-        style = leaveIsApproved
-      }
-     
-    }
-    else{
-        if( event.leaveTypeId === 1){
+      if( event.leaveTypeId === 1){
           style = sickLeaveStyle
-        }
-        else if(event.leaveTypeId === 2 ){
-          style = vaccationLeaveStyle
-        }
-        else{
-            style = vaccationReject
-        }
-    }
+      }
+      if(event.leaveTypeId === 2 ){
+        style = vaccationLeaveStyle
+      }
+      if(!event.isApproved && event.leaveStatus === 'Rejected')
+      {
+        style = vaccationReject;
+      }
+      if(event.isApproved && event.leaveStatus === 'Approved')
+      {
+        style = leaveIsApproved;
+      }
+      // else{
+      //   style = leaveIsApproved
+      // }
+     
+    // }
+    // else{
+    //     if( event.leaveTypeId === 1){
+    //       style = sickLeaveStyle
+    //     }
+    //     else if(event.leaveTypeId === 2 ){
+    //       style = vaccationLeaveStyle
+    //     }
+    //     else{
+    //         style = vaccationReject
+    //     }
+    // }
     
   
     return {

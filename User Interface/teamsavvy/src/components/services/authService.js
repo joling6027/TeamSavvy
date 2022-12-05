@@ -57,7 +57,7 @@ const AuthService = () => {
     };
 
     const http = axios.create({
-        baseURL:"https://localhost:44362/api/",
+        baseURL: "https://teamsavvyapi.azurewebsites.net/api/", //"https://localhost:44362/api/",
         headers:{
             "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`
