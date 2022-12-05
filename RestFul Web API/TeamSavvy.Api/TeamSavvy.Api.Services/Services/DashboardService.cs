@@ -489,7 +489,7 @@ namespace TeamSavvy.Api.Services.Services
         {
             List<DashboardWidget> widgt = new List<DashboardWidget>();
             var dashboardId = _unitOfWork.Context.Dashboard.Where(d => d.EmployeeId == employeeId).FirstOrDefault().DashboardId;
-            if (dashboardId > 0)
+            if (dashboardId > 0) 
             {
                 var widgets = _unitOfWork.Context.Widget.Where(w => w.DashboardId == dashboardId).ToList();
                 if (widgets.Count > 0)

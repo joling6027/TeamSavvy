@@ -42,10 +42,18 @@ namespace TeamSavvy.Api.Services.Services
             {
                 if(timeSheet != null)
                 {
-                    var attendence = _mapper.Map<TimeSheetDto, TimeSheet>(timeSheet);
-                    _unitOfWork.Repository<TimeSheet>().Insert(attendence);
-                    _unitOfWork.SaveChanges();
-                    isSuccess = true;
+                    var IsExist = _unitOfWork.Context.Employee.Where(e => e.EmployeeId == timeSheet.EmployeeId).Any();
+                    if(IsExist)
+                    {
+                        var attendence = _mapper.Map<TimeSheetDto, TimeSheet>(timeSheet);
+                        _unitOfWork.Repository<TimeSheet>().Insert(attendence);
+                        _unitOfWork.SaveChanges();
+                        isSuccess = true;
+                    }
+                    else
+                    {
+                        isSuccess = false;
+                    }
                 }
             }
             catch (Exception e)
@@ -79,12 +87,13 @@ namespace TeamSavvy.Api.Services.Services
                                            .Where(x => x.EmployeeId == employeeId && x.ClockDate == ts.ClockDate && x.ClockType == "Clock-Out").OrderByDescending(x => x.TimesheetId)
                                            .FirstOrDefault();
                             var lastCLockOut = _mapper.Map<TimeSheet, TimeSheetDto>(lco);
+                            if(firstClockIn != null)
                             empTimeSheet.Add(firstClockIn);
+                            if (lco != null)
                             empTimeSheet.Add(lastCLockOut);
                         }
                        
                     }
-                    //empTimeSheet = _mapper.Map<List<TimeSheet>, List<TimeSheetDto>>(timeSheet);
                 }
             }
             catch (Exception e)
@@ -103,17 +112,18 @@ namespace TeamSavvy.Api.Services.Services
                 {
                     clockType = _unitOfWork.Context.TimeSheet
                                     .OrderByDescending(x => x.ClockTime)
+                                    .OrderByDescending(x => x.TimesheetId)
                                     .Where(x => x.EmployeeId == employeeId)
                                     .Select(x => x.ClockType).FirstOrDefault();
                     if(clockType != null)
                     {
-                        if(clockType == ClockType.ClockIn.ToString())
+                        if(clockType == "Clock-In")
                         {
-                            clockType = ClockType.ClockOut.ToString();
+                            clockType = "ClockOut";
                         }
                         else
                         {
-                            clockType = ClockType.ClockIn.ToString();
+                            clockType = "ClockIn";
                         }
                     }
                 }
