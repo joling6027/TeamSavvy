@@ -14,8 +14,6 @@ import InternalJobs from './components/internaljobs/InternalJobs';
 import Header from './components/header/Header';
 import Paystub from './components/payroll/PayStub';
 import JobAppliedEmployees from './components/jobAppliedEmployees/JobAppliedEmployees'
-import data from './data.json'
-import { COLUMNS } from './column'
 import AuthService from './components/services/authService';
 import AddEmployee from './components/addEmployee/AddEmployee';
 import TeamMembers from './components/teamMembers/TeamMembers';

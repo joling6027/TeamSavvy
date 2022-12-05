@@ -58,7 +58,6 @@ const ProfileView = () => {
     const GetEmployeeProj = () =>{
         http.get(GetEndPoints().projectByEmployeeId+'/'+ params.id)
         .then((res) =>{
-            console.log(res.data)
             setProjects(res.data.response)
             if(res.data.response.length > 0)
             {
@@ -83,7 +82,6 @@ const ProfileView = () => {
             let assignEmpProj = {...projectFormValue}
             assignEmpProj.projectId = parseInt(e.target.value);
             assignEmpProj.status = false;
-            console.log(assignEmpProj);
             return assignEmpProj
         })
     }
@@ -96,15 +94,10 @@ const ProfileView = () => {
     },[params.id]);
 
   
-    // const handleChange = event => {
-    //     const {name, value} = event.target;
-    //     setFormValue({...formValue, [name]: value});
-    // };
     const hideAlert = () => {
         setAlert(null);
       };
     const handleRemoveProject = () =>{
-       console.log()
         setAlert(
             <SweetAlert
                 warning

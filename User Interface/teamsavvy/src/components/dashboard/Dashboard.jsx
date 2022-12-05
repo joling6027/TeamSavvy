@@ -220,7 +220,6 @@ const Dashboard = () => {
         http.get(GetEndPoints().employee)
         .then((res) =>{
            if(res.data.success){
-            console.log(res.data.response)
             setTotalEmployees(res.data.response.length);
            }
         })
@@ -251,7 +250,6 @@ const Dashboard = () => {
     const GetEmployeeLeavesById = () =>{
         http.get(GetEndPoints().employeeLeaves+'/'+user.employeeId)
         .then((res) =>{
-            console.log(res.data.response)
            if(res.data.success){
             setEmpLeaves(res.data.response)
            }
@@ -328,7 +326,6 @@ const Dashboard = () => {
       ];
 
 const approvetoggle = (event) => {
-    console.log(event)
     setRowData(event.row)
     setapproveModal(!approveModal)
 };

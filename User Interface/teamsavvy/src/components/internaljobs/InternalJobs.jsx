@@ -72,7 +72,6 @@ const InternalJobs = () => {
     const getAppliedEmp = (jobId) => {
         http.get(GetEndPoints().appliedEmp + "/" + jobId)
         .then((res) => {
-            console.log(res.data.response);
             setAppliedEmp(res.data.response);
         }).catch((err) => {
             if(err.response.status === 404){
@@ -257,7 +256,6 @@ const InternalJobs = () => {
             setJobName(e.target.value)
         } else {
             setJobNameValidate(true);
-            console.log("name is empty")
         }
     }
 
@@ -386,8 +384,6 @@ const InternalJobs = () => {
         http.delete(GetEndPoints().deleteJob + "/" + jobId)
         .then((res) => {
             if(res.data.success){
-                console.log("delete successfully.")
-
                 hideAlert()
                 getJobs();
             }

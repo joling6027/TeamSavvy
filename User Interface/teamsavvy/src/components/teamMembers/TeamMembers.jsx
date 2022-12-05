@@ -69,7 +69,6 @@ const TeamMembers = () => {
         .then((res) =>{
             if(res.data.success){
                 setTeamMembers(res.data.response);
-                console.log(res.data.response)
                 setCurrProj(res.data.response[0].projectId)
                 setData(res.data.response[0].employeeList)
             }
@@ -89,9 +88,7 @@ const TeamMembers = () => {
         http.get(GetEndPoints().getTeamMembers)
         .then((res) =>{
             if(res.data.success){
-                console.log(res.data.response)
                 let empList = [];
-                // res.data.response.map((emp, index) => empList.push(...emp.employeeList));
                 empList = findUnique(res.data.response, d => d.id);
                 setData(empList)
             }
@@ -101,10 +98,8 @@ const TeamMembers = () => {
 
     const handleChange = e =>{
         const {name, value} = e.target;
-        console.log(value)
         setCurrProj(value)
         let {employeeList} = teamMembers.find((m) => m.projectId === parseInt(value));
-        console.log(teamMembers)
         setData(employeeList)
     }
 
@@ -156,10 +151,7 @@ const TeamMembers = () => {
 
     const handleProject = e => {
         setSelectProject(e.target.value);
-        console.log(e.target.value)
         let proj = projects.find((p) => p.id === parseInt(e.target.value));
-        console.log(projects)
-        console.log(proj)
         setProjectDesc(proj.description);
         setProjectManager(proj.projectManagerName);
         setProjectMember(proj.team);
@@ -185,7 +177,6 @@ const TeamMembers = () => {
     }
 
     const AddProject = (employeeId) =>{
-        console.log({...projectFormValue, employeeId});
         http.post(GetEndPoints().addEmployeeOnProject, {...projectFormValue, employeeId})
         .then((res) => {
             if(res.data.success){
@@ -307,8 +298,6 @@ const TeamMembers = () => {
                             pagination
                             rows={data} 
                             columns={ user.role === "Manager" ? columns_Manager : columns_HR}  
-                            // SelectionOnClick
-                            onRowClick={e => console.log(e)}
                             components={{
                                 Toolbar: GridToolbar,
                               }}

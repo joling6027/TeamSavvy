@@ -118,7 +118,6 @@ const Profile = () => {
             newValues.address.city.cityName = availCities[0].cityName;
             return newValues
         })
-        console.log(formValue)
     }
     
     const handleCityChange = e => {
@@ -131,7 +130,6 @@ const Profile = () => {
             newValues.address.city.cityName = city.cityName;
             return newValues
         })
-        console.log(formValue) 
     }
 
     const handleChange = event => {
@@ -271,7 +269,6 @@ const Profile = () => {
        setFormErrors(ProfileValidation(formValue))
        setIsSubmit(true);
        submitForm();
-        // UpdateEmployee();
     };
 
     //validation

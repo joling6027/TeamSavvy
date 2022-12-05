@@ -29,8 +29,6 @@ const Login = () => {
     e.preventDefault();
     setFormErrors(LoginValidation({employeeId: parseInt(employeeId), password: password}));
     setIsSubmit(true);
-    console.log(employeeId)
-    console.log(formErrors);
   };
 
   if(Object.keys(formErrors).length === 0 && isSubmit) 

@@ -110,7 +110,6 @@ import { RegisterationValidation } from '../utilities/validation';
         http.get(GetEndPoints().projects)
         .then((res) =>{
            if(res.data.success){
-            console.log(res.data.response)
             setProjects(res.data.response);
             setProjectDesc(res.data.response[0].description);
             setProjectManager(res.data.response[0].projectManagerName);
@@ -234,7 +233,6 @@ import { RegisterationValidation } from '../utilities/validation';
     const handleProject = e => {
         setSelectProject(e.target.value);
         let proj = projects.find((p) => p.id === parseInt(e.target.value));
-        console.log(e.target.value)
         setProjectDesc(proj.description);
         setProjectManager(proj.projectManagerName);
         setProjectMember(proj.team);

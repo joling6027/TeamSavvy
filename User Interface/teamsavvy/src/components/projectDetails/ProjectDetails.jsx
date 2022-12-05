@@ -3,7 +3,6 @@ import { Link, useParams, useLocation } from 'react-router-dom';
 import { Container, Form, FormGroup, Label, Input, FormFeedback, FormText, Row, Col, Modal, ModalHeader, Button, ModalBody } from 'reactstrap';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import SweetAlert from "react-bootstrap-sweetalert";
-import './projectDetails.css';
 import UpdateOutlinedIcon from '@mui/icons-material/UpdateOutlined';
 import AuthService from '../services/authService';
 import { GetEndPoints } from '../utilities/EndPoints';
@@ -136,7 +135,6 @@ const ProjectDetails = () => {
             .then((res) => {
                 if (res.data.success) {
                     let obj = [...res.data.response].filter((proj) => proj.projectId == params.id)
-                    // console.log(obj[0].employeeList)
                     setTeamMembers(obj[0].employeeList)
                 }
             }).catch((err) => console.log(err.message));
@@ -331,8 +329,6 @@ const ProjectDetails = () => {
     }
     const mStatusChangeHandler = (e) => {
         let st = e.target.value.split(" ").join("");
-        console.log(st)
-        
         setMStatus(st);
         
      }

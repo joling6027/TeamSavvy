@@ -1,6 +1,5 @@
 export function LoginValidation(values){
     const errors = {};
-    console.log(values)
     if(isNaN(values.employeeId) || values.employeeId <= 0)
     {
         errors.employeeId = "Please valid employee Id.";

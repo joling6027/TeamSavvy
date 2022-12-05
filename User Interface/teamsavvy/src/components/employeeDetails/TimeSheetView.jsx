@@ -446,9 +446,6 @@ const GetTotalHours = (timeSheetEvent) => {
       border: '0px',
       display: 'block'
   };
-
-  console.log(event)
-    // if(event.isApproved){
      
       if(event.clockType === "Clock-Out")
       {
@@ -472,24 +469,7 @@ const GetTotalHours = (timeSheetEvent) => {
       {
         style = leaveIsApproved;
       }
-      // else{
-      //   style = leaveIsApproved
-      // }
      
-    // }
-    // else{
-    //     if( event.leaveTypeId === 1){
-    //       style = sickLeaveStyle
-    //     }
-    //     else if(event.leaveTypeId === 2 ){
-    //       style = vaccationLeaveStyle
-    //     }
-    //     else{
-    //         style = vaccationReject
-    //     }
-    // }
-    
-  
     return {
         style:style
     };

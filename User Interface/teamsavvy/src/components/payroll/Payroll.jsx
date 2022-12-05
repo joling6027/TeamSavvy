@@ -1,17 +1,12 @@
-import React, { Component, useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import AuthService from '../services/authService';
 import {
-    BrowserRouter,
-    Routes,
-    Route,
     Link,
 } from "react-router-dom";
-import { usePagination, useTable } from 'react-table';
 import moment from 'moment/moment';
 import '../../assets/css/bootstrap.min.css'
 import './payroll.css'
-import Paystub from './PayStub';
 import { GetEndPoints } from '../utilities/EndPoints';
 
 
@@ -19,63 +14,16 @@ import { GetEndPoints } from '../utilities/EndPoints';
 const Payroll = () => {
 
     const [payrollItems, setPayrollItems] = useState();
-    // const [employeeId, setEmployeeId] = useState();
     const { http, user } = AuthService();
 
-    // const columns = [
-    //     { field: 'id', headerName: 'Pay Date', width: 200 },
-    //     {
-    //         field: 'empname', headerName: 'Pay Type',
-    //         width: 200,
-    //     },
-    //     { field: 'email', headerName: 'Total Hours', width: 200 },
-    //     { field: 'dept', headerName: 'Earnings', width: 200 },
-    //     { field: 'position', headerName: 'Net Pay', width: 200 },
-    //     { field: 'details', headerName: 'File', width: 200, renderCell: (params) => <Link to="${params.row.id}">View</Link> },
-    // ];
-
-
     useEffect(() => {
-        // setEmployeeId(user.employeeId);
-        // console.log(`employee ID: ${employeeId}`)
-        // console.log(`${GetEndPoints().payrollList}/${user_detail.employeeId}`);
-
-        
-
         http.get(GetEndPoints().payrollList + "/" + user.employeeId).then((res) => {
             if (res.data.success) {
-                console.log(res.data.response[0])
                 setPayrollItems(res.data.response)
             }
         }).catch((err) => console.log(err.message));
 
     }, [])
-
-    // const {
-    //     getTableProps,
-    //     getTableBodyProps,
-    //     headerGroups,
-    //     page,
-    //     nextPage,
-    //     previousPage,
-    //     canPreviousPage,
-    //     canNextPage,
-    //     pageOptions,
-    //     state,
-    //     gotoPage,
-    //     pageCount,
-    //     setPageSize,
-    //     prepareRow
-    // } = useTable(
-    //     {
-    //         columns,
-    //         data,
-    //         initialState: { pageIndex: 2 }
-    //     },
-    //     usePagination
-    // );
-
-    // const { pageIndex, pageSize } = state;
 
     //currency formatter
     const formatter = new Intl.NumberFormat('en-US', {
@@ -113,8 +61,6 @@ const Payroll = () => {
                                         <td className="text-center">{formatter.format(payrollItem.earning)}</td>
                                         <td className="text-center">{formatter.format(payrollItem.netpay)}</td>
                                         <td className="text-center view-file">
-                                            {/* <Link to={`/payroll/payrollId/${payrollItem.payrollId}`}
-                                                >VIEW FILE</Link> */}
                                             <Link 
                                                 to={`/payroll/paystub/${payrollItem.payrollId}`}
                                                 state={{payrollItem}}
@@ -123,205 +69,13 @@ const Payroll = () => {
                                     </tr>
                                 ))}
 
-                                {/* <tr>
-                                    <td className="text-center">
-                                        28-FEB-2022
-                                    </td>
-                                    <td className="text-center">Monthly</td>
-                                    <td className="text-center">80</td>
-                                    <td className="text-center">$3600</td>
-                                    <td className="text-center">$3200</td>
-                                    <td className="text-center view-file">
-                                        <Link to={"/paystub"}>VIEW FILE</Link>
-                                    </td>
-                                </tr> */}
-                                {/* <tr>
-                                    <td className="text-center">
-                                        31-JAN-2022
-                                    </td>
-                                    <td className="text-center">Monthly</td>
-                                    <td className="text-center">80</td>
-                                    <td className="text-center">$3600</td>
-                                    <td className="text-center">$3200</td>
-                                    <td className="text-center view-file">
-                                        <Link to={"/paystub"}>VIEW FILE</Link>
-                                    </td>
-                                 </tr> */}
-                                {/* <tr>
-                                    <td className="text-center">
-                                        31-JAN-2022
-
-                                    </td>
-                                    <td className="text-center">Monthly</td>
-                                    <td className="text-center">80</td>
-                                    <td className="text-center">$3600</td>
-                                    <td className="text-center">$3200</td>
-                                    <td className="text-center view-file">
-                                        <Link to={"/paystub"}>VIEW FILE</Link>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="text-center">
-                                        31-JAN-2022
-
-                                    </td>
-                                    <td className="text-center">Monthly</td>
-                                    <td className="text-center">80</td>
-                                    <td className="text-center">$3600</td>
-                                    <td className="text-center">$3200</td>
-                                    <td className="text-center view-file">
-                                        <Link to={"/paystub"}>VIEW FILE</Link>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="text-center">
-                                        31-JAN-2022
-
-                                    </td>
-                                    <td className="text-center">Monthly</td>
-                                    <td className="text-center">80</td>
-                                    <td className="text-center">$3600</td>
-                                    <td className="text-center">$3200</td>
-                                    <td className="text-center view-file">
-                                        <Link to={"/paystub"}>VIEW FILE</Link>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="text-center">
-                                        31-JAN-2022
-
-                                    </td>
-                                    <td className="text-center">Monthly</td>
-                                    <td className="text-center">80</td>
-                                    <td className="text-center">$3600</td>
-                                    <td className="text-center">$3200</td>
-                                    <td className="text-center view-file">
-                                        <Link to={"/paystub"}>VIEW FILE</Link>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="text-center">
-                                        31-JAN-2022
-
-                                    </td>
-                                    <td className="text-center">Monthly</td>
-                                    <td className="text-center">80</td>
-                                    <td className="text-center">$3600</td>
-                                    <td className="text-center">$3200</td>
-                                    <td className="text-center view-file">
-                                        <Link to={"/paystub"}>VIEW FILE</Link>
-                                    </td>
-                                </tr> */}
                             </tbody>
                         </table>
-                        {/* <div className='payroll-pagination'>
-                            <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-                                {"<<"}
-                            </button>{" "}
-                            <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-                                Previous
-                            </button>{" "}
-                            <button onClick={() => nextPage()} disabled={!canNextPage}>
-                                Next
-                            </button>{" "}
-                            <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-                                {">>"}
-                            </button>{" "}
-                            <span>
-                                Page{" "}
-                                <strong>
-                                    {pageIndex + 1} of {pageOptions.length}
-                                </strong>{" "}
-                            </span>
-                            <span>
-                                | Go to page:{" "}
-                                <input
-                                    type="number"
-                                    defaultValue={pageIndex + 1}
-                                    onChange={(e) => {
-                                        const pageNumber = e.target.value
-                                            ? Number(e.target.value) - 1
-                                            : 0;
-                                        gotoPage(pageNumber);
-                                    }}
-                                    style={{ width: "50px" }}
-                                />
-                            </span>{" "}
-                            <select
-                                value={pageSize}
-                                onChange={(e) => setPageSize(Number(e.target.value))}
-                            >
-                                {[10, 25, 50].map((pageSize) => (
-                                    <option key={pageSize} value={pageSize}>
-                                        Show {pageSize}
-                                    </option>
-                                ))}
-                            </select>
-                        </div> */}
                     </div>
                     <div className='card-footer card-footer-payroll'>
-                        {/* <h6>Rows per page</h6> */}
                         <div className="pagination_style">
-
-                            {/* <Pagination>
-                                    <PaginationItem>
-                                        <PaginationLink
-                                            aria-label="Previous"
-                                            href="#pablo"
-                                            onClick={(e) => e.preventDefault()}
-                                        >
-                                            <span aria-hidden={true}>
-                                                <i
-                                                    aria-hidden={true}
-                                                    className="tim-icons icon-double-left"
-                                                />
-                                            </span>
-                                        </PaginationLink>
-                                    </PaginationItem>
-                                    <PaginationItem>
-                                        <PaginationLink
-                                            href="#pablo"
-                                            onClick={(e) => e.preventDefault()}
-                                        >
-                                            1
-                                        </PaginationLink>
-                                    </PaginationItem>
-                                    <PaginationItem className="active">
-                                        <PaginationLink
-                                            href="#pablo"
-                                            onClick={(e) => e.preventDefault()}
-                                        >
-                                            2
-                                        </PaginationLink>
-                                    </PaginationItem>
-                                    <PaginationItem>
-                                        <PaginationLink
-                                            href="#pablo"
-                                            onClick={(e) => e.preventDefault()}
-                                        >
-                                            3
-                                        </PaginationLink>
-                                    </PaginationItem>
-                                    <PaginationItem>
-                                        <PaginationLink
-                                            aria-label="Next"
-                                            href="#pablo"
-                                            onClick={(e) => e.preventDefault()}
-                                        >
-                                            <span aria-hidden={true}>
-                                                <i
-                                                    aria-hidden={true}
-                                                    className="tim-icons icon-double-right"
-                                                />
-                                            </span>
-                                        </PaginationLink>
-                                    </PaginationItem>
-                                </Pagination> */}
                         </div>
                     </div>
-                    {/* </div> */}
-                    {/* </div> */}
-                    {/* </Row> */}
                 </div>
             </div>
         </>

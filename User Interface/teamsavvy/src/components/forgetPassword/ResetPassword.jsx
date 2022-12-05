@@ -65,7 +65,6 @@ const ResetPassword = () => {
     e.preventDefault();
     setFormErrors(ForgetPasswordValidation({ forgetPassword : formValue.newpassword, forgetConfirmPassword:formValue.confirmpassword}));
     setIsSubmit(true);
-    console.log(formErrors);
   }
 
   if(Object.keys(formErrors).length === 0 && isSubmit) 

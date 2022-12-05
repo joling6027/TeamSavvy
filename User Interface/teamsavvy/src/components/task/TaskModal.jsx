@@ -6,9 +6,6 @@ import { Button } from 'react-bootstrap';
 import { Form, FormGroup, Label, Input, FormFeedback, FormText, Container, Row, Col } from 'reactstrap';
 
 const TaskModal = (props) => {
-  console.log(props);
-  // console.log(props.children);
-  // console.log(props.onOpen())
   const [enteredTitle, setEnteredTitle] = useState(props.onOpen.taskName);
   const [enteredDescription, setEnteredDescription] = useState(props.onOpen.taskDesc);
   const [enteredHours, setEnteredHours] = useState(props.onOpen.taskTotalHours);
@@ -65,7 +62,6 @@ const TaskModal = (props) => {
 
   const startDateChangeHandler = (e) => {
     setEnteredStartDate(e.target.value)
-    console.log(e.target.value)
   }
 
   const endDateChangeHandler = (e) => {
@@ -88,7 +84,6 @@ const TaskModal = (props) => {
       return;
     }
 
-    // console.log(e.target)
     const taskData = {
       taskId: taskId,
       projectId: projectId,
@@ -103,18 +98,8 @@ const TaskModal = (props) => {
       taskStatus: enteredStatus,
     }
 
-    console.log(enteredStartDate)
 
     props.onSaveTaskData(taskData);
-
-    // setEnteredTitle('');
-    // setEnteredDescription('');
-    // setEnteredHours('');
-    // setEnteredStatus('');
-    // setEnteredStartDate('');
-    // setEnteredEndDate('');
-    // setValidate(true);
-
     props.close(false);
   }
 
@@ -177,9 +162,6 @@ const TaskModal = (props) => {
                     <FormFeedback>The start date cannnot be blank or earlier than start date</FormFeedback>
                   </Col>
                 </Row>
-                {/* <Input type='hidden' name="assignedBy" defaultValue={props.onOpen().assignedBy}/>
-                <Input type='hidden' name="projectId" defaultValue={props.onOpen().projectId}/>
-                <Input type='hidden' name="assignedDate" defaultValue={props.onOpen().assignedDate}/> */}
               </Container>
             </FormGroup>
             <Modal.Footer>

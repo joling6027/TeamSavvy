@@ -18,7 +18,6 @@ import {
     FormFeedback,
 } from "reactstrap";
 import { Link } from "react-router-dom";
-import { tableItems } from "./TableItems";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import DeleteIcon from '@mui/icons-material/Delete';
 import SweetAlert from "react-bootstrap-sweetalert";
@@ -125,51 +124,7 @@ const ProjectList = () => {
         http
             .get(GetEndPoints().projects + "/" + user.employeeId)
             .then((res) => {
-                console.log(res.data.response);
                 setProjects(res.data.response);
-                // let objs = [];
-
-                // if (user.role === "HR" || user.role === "Admin") {
-                //     objs = [...res.data.response];
-                // } else {
-                //     objs = [...res.data.response].filter(
-                //         (project) =>
-                //             project.projectManagerName.trim().toLowerCase() ===
-                //             userName.trim().toLowerCase()
-                //     );
-                //     console.log(res.data.response[0].projectManagerName);
-                //     console.log(userName);
-                // }
-
-
-                // objs = [...res.data.response].filter((project) => project.projectManagerName.trim().toLowerCase() === userName.trim().toLowerCase());
-
-                // console.log(objs);
-
-                // let structuredProjects = [];
-                // these are structured projects
-                // for (let i = 0; i < objs.length; i++) {
-                //     structuredProjects.push({
-                //         "id": objs[i].projectId,
-                //         "projectname": objs[i].projectName,
-                //         "projectManagerName": objs[i].projectManagerName,
-                //         "projectManagerId": objs[i].projectManagerId,
-                //         "tasks": objs[i].totalTaskCount,
-                //         "team": objs[i].projectTotalEmployees,
-                //         "budget": formatter.format(objs[i].projectBudget),
-                //         "description": objs[i].projectDesc,
-                //         "details": `<a href="javaScript.void(0);"> View</a>`,
-                //     });
-                // }
-
-                // setProjects(structuredProjects);
-                // console.log(structuredProjects);
-                // let managerIdList = [];
-                // for(let i = 0; i < objs.length; i++){
-                //     managerIdList.push(objs[i].projectManagerId);
-                // }
-                // console.log(managerIdList);
-                // setProjectManagerIdList(managerIdList);
             })
             .catch((err) => console.log(err.message));
     };
@@ -291,8 +246,6 @@ const ProjectList = () => {
             .post(GetEndPoints().addProject, { ...projectData })
             .then((res) => {
                 if (res.data.success) {
-                    console.log(res.data.response);
-                    console.log("post succeed");
                     getManagerProjects();
                 }
             })
@@ -333,7 +286,6 @@ const ProjectList = () => {
             return;
         }
         if (dateDeadline < dateStartDate) {
-            console.log("deadline date shouldn't be earlier than start date");
             return;
         } else {
             const projectData = {
@@ -353,12 +305,7 @@ const ProjectList = () => {
                 employeeProjectStatus: true,
             };
 
-            console.log(...projects);
-            console.log(projectData);
-
             postCreateProject(projectData);
-            
-            
             toggle();
         }
     };
@@ -410,7 +357,6 @@ const ProjectList = () => {
                                 components={{
                                     Toolbar: GridToolbar,
                                   }}
-                                // onRowClick={(e) => console.log(e)}
                                 
                             />
                         </div>

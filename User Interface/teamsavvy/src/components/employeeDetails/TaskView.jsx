@@ -10,7 +10,6 @@ const TaskView = () => {
     const params = useParams();
     const [tasks, setTasks] = useState();
     const { http, user } = AuthService();
-    console.log(params)
 
     const GetTasks = () =>{
         if(user.role === 'HR')

@@ -50,10 +50,8 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 
     const onContinue = e =>{
-      console.log(otp)
       e.preventDefault();
       let num = formValue.first + formValue.second + formValue.third + formValue.fourth;
-      console.log(num)
       if(num === "")
       {
         setAlert(<SweetAlert

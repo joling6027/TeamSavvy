@@ -3,7 +3,6 @@ import AuthService from "../services/authService";
 import { GetEndPoints } from "../utilities/EndPoints";
 import TaskModal from "./TaskModal";
 import UpdateStatusModal from "./UpdateStatusModal";
-// import { Form, FormGroup, Label, Input, FormFeedback, FormText, Container, Row, Col } from 'reactstrap';
 import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
 import "../../assets/css/bootstrap.min.css";
 import "./task.css";
@@ -31,24 +30,9 @@ const Task = () => {
 
     }, []);
 
-    // const removeTask = (enteredTaskData) => {
-    //     setTasks((currentTasks) => currentTasks.filter((task) => task.taskId !== enteredTaskData.taskId));
-    // }
-
     const saveTaskDataHandler = (enteredTaskData) => {
 
         let selectedTaskIndex = tasks.findIndex((obj => obj.taskId === enteredTaskData.taskId));
-
-        // setTasks(() => tasks.filter(selectedTask => selectedTask.taskId !== enteredTaskData.taskId));
-
-        // console.log("Before update: " + tasks[selectedTaskIndex]);
-
-        // tasks.splice(selectedTaskIndex, 1);
-
-        // console.log(tasks);
-
-        // console.log(enteredTaskData);
-
         const taskData = {
             ...enteredTaskData,
             key: Math.random(),

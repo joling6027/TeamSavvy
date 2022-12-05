@@ -48,7 +48,6 @@ const Timesheet = () => {
     http.get(GetEndPoints().timeSheet+'/'+user.employeeId)
     .then((res) =>{
        if(res.data.success){
-       console.log(res.data.response)
        let timeSheetEvent = res.data.response.map((timeSheet, index) => {
           let actualDate = new Date(timeSheet.clockDate);
           actualDate.setDate(actualDate.getDate() + 1);
@@ -117,7 +116,6 @@ const Timesheet = () => {
         if(res.data.success)
         {
            let customLeaves = res.data.response.map((leave, index) => {
-            console.log(!leave.isApproved && leave.leaveStatus)
               let leaves = {
                 title:leave.leaveTypeId === 1 ? 'Sick Leave(s)':'Vacation Leave(s)', 
                
@@ -178,7 +176,6 @@ const Timesheet = () => {
   }
 
   const selectedEvent = (event) => {
-    console.log(event);
     if(event.clockType === "Clock-Out" || event.clockType === "Clock-In")
     {
      
@@ -412,9 +409,6 @@ setEvents([...event, {
       display: 'block'
   };
 
-  console.log(event)
-    // if(event.isApproved){
-     
       if(event.clockType === "Clock-Out")
       {
         style = clockOutStyle
@@ -437,23 +431,6 @@ setEvents([...event, {
       {
         style = leaveIsApproved;
       }
-      // else{
-      //   style = leaveIsApproved
-      // }
-     
-    // }
-    // else{
-    //     if( event.leaveTypeId === 1){
-    //       style = sickLeaveStyle
-    //     }
-    //     else if(event.leaveTypeId === 2 ){
-    //       style = vaccationLeaveStyle
-    //     }
-    //     else{
-    //         style = vaccationReject
-    //     }
-    // }
-    
   
     return {
         style:style
