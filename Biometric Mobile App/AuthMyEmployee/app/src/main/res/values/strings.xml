@@ -6,7 +6,8 @@
     <string name="emp_id">Employee ID</string>
     <string name="status">STATUS</string>
     <string name="clock_in">CLOCK IN</string>
-    <string name="GetData">https://teamsavvyapi.azurewebsites.net/api/Employee</string>
-    <string name="ClockIn">https://teamsavvyapi.azurewebsites.net/api/TimeSheet/clockIn</string>
-    <string name="ClockOut">https://teamsavvyapi.azurewebsites.net/api/TimeSheet/clockOut</string>
+    <string name="GetData">https://teamsavvyapi.azurewebsites.net/api/TimeSheet/mobile</string>
+    <string name="ClockIn">https://teamsavvyapi.azurewebsites.net/api/TimeSheet/addTimesheet</string>
+    <string name="ClockOut">https://teamsavvyapi.azurewebsites.net/api/TimeSheet/addTimesheet</string>
+    <string name="close">Close</string>
 </resources>

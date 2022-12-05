@@ -6,21 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
     <Button
         android:id="@+id/btnAuth"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="63dp"
+        android:layout_marginBottom="26dp"
         android:onClick="EmployeeAuthentication"
         android:text="@string/clock_in"
         android:textColor="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/empAuthStatus"
+        app:layout_constraintBottom_toTopOf="@+id/btnClose"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emp_id"
-        tools:ignore="TextContrastCheck" />
+        app:layout_constraintTop_toBottomOf="@+id/emp_id" />
 
     <TextView
         android:id="@+id/empAuthStatus"
@@ -28,23 +28,23 @@
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="317dp"
+        android:layout_marginBottom="203dp"
         android:gravity="center|center_horizontal"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnAuth" />
+        app:layout_constraintTop_toBottomOf="@+id/btnClose" />
 
     <EditText
         android:id="@+id/emp_id"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="122dp"
+        android:layout_marginTop="192dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="65dp"
+        android:layout_marginBottom="52dp"
         android:autofillHints=""
         android:backgroundTint="@color/purple_500"
         android:ems="10"
@@ -55,7 +55,20 @@
         app:layout_constraintBottom_toTopOf="@+id/btnAuth"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="TextContrastCheck,TextContrastCheck" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnClose"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="38dp"
+        android:text="@string/close"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toTopOf="@+id/empAuthStatus"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnAuth" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
