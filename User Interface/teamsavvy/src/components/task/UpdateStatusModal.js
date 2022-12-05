@@ -13,11 +13,13 @@ const UpdateStatusModal = (props) => {
   const statusChangeHandler = (e) => {
     let st = e.target.value.split(" ").join("");
     setStatus(st);
+    console.log(st)
 
   }
 
   const submitHandler = (e) => {
     e.preventDefault();
+    console.log(status);
     props.onSaveTaskData(status);
     props.close(false);
   }
@@ -44,7 +46,8 @@ const UpdateStatusModal = (props) => {
             <FormGroup>
               <Container className='status-modal-container'>
                 <Label for='task-status'>Status</Label>
-                <Input type='select' name='task-status' id='task-status' defaultValue="In Progress" onChange={statusChangeHandler}>
+                <Input type='select' name='task-status' id='task-status' onChange={statusChangeHandler}>
+                  <option disabled selected>-- select --</option>
                   <option>Assigned</option>
                   <option>In Progress</option>
                   <option>Completed</option>

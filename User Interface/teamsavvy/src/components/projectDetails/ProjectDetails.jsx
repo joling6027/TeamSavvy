@@ -65,7 +65,7 @@ const ProjectDetails = () => {
         setModifiedDescValidate(false)
         setModifiedHourValidate(false)
         setModifiedStartDateValidate(false)
-        setEndDateValidate(false)
+        sestModifiedEndDateValidate(false)
 
         setModifyModal(!modifyModal);
     }
@@ -156,6 +156,17 @@ const ProjectDetails = () => {
                     setCompletedTasks([]);
                 }
             })
+    }
+
+    const deleteTask = (taskId) => {
+        http.delete(GetEndPoints().employeeTask + "/deleteTask/" + taskId)
+        .then((res) => {
+            if(res.data.success){
+                console.log("delete ok");
+
+            }
+
+        }).catch((err) => console.log(err.message));
     }
 
     //Jaspal
@@ -465,7 +476,7 @@ const ProjectDetails = () => {
 
         return (
             <>
-                {(alert)? (alert): ""}
+                {(alert)? ({alert}): ""}
                 <div className="px-3">
                     <p className="h4 px-2 pb-3">{project.projectName}</p>
                     <div className="d-md-flex d-sm-block justify-content-between">
