@@ -568,7 +568,7 @@ const ProjectDetails = () => {
                                 <Row>
                                     <Col md={6}>
                                         <FormGroup>
-                                            <Label className="mt-2 mb-1" for="estimatedHours">
+                                            <Label className="mt-1 mb-1" for="estimatedHours">
                                                 Estimated Hours
                                             </Label>
                                             <Input
@@ -643,7 +643,7 @@ const ProjectDetails = () => {
                                 </Row>
                             </Form>
                             <div className="d-flex justify-content-center mt-5">
-                                <Button className="me-3" color="secondary" onClick={toggle}>
+                                <Button className="me-3 bg-danger"  onClick={toggle}>
                                     Cancel
                                 </Button>
                                 <Button type='submit' color="primary" onClick={createTaskSubmitHandler}>
@@ -665,23 +665,23 @@ const ProjectDetails = () => {
                             >
                                 <FormGroup>
                                     <Container>
-                                        <Row>
-                                            <Label for='task-title'>Title</Label>
+                                        <Row className="p-0">
+                                            <Label className="p-0" for='task-title'>Title</Label>
                                             <Input type='text' name='task-title' id='task-title' onChange={mTitleChangeHandler} valid={mTitle ? true : false} invalid={modifiedTitleValidate} defaultValue={mTitle} />
                                             <FormFeedback invalid>Title cannot be blank</FormFeedback>
                                         </Row>
-                                        <Row>
-                                            <Label for='task-desc'>Description</Label>
+                                        <Row className="p-0 mt-3">
+                                            <Label  className="p-0" for='task-desc'>Description</Label>
                                             <Input type='text' name='task-desc' id='task-desc' onChange={mDescriptionChangeHandler} valid={mDesc ? true : false} invalid={modifiedDescValidate} defaultValue={mDesc}/>
                                             <FormFeedback invalid>Description cannot be blank</FormFeedback>
                                         </Row>
-                                        <Row>
-                                            <Col>
+                                        <Row className="p-0 mt-3">
+                                            <Col className="p-0">
                                                 <Label for='task-hour'>Hours</Label>
                                                 <Input type='number' name='task-hour' id='task-hour' onChange={mHoursChangeHandler} valid={mHours ? true : false} invalid={modifiedHourValidate} min={1} defaultValue={mHours}/>
                                                 <FormFeedback invalid>Task hours cannot be blank or 0</FormFeedback>
                                             </Col>
-                                            <Col>
+                                            <Col className="p-0 ps-2 ">
                                                 <Label for='task-status'>Status</Label>
                                                 <Input type='select' name='task-status' id='task-status' onChange={mStatusChangeHandler} valid defaultValue={mStatus}>
                                                     <option>Assigned</option>
@@ -690,14 +690,14 @@ const ProjectDetails = () => {
                                                 </Input>
                                             </Col>
                                         </Row>
-                                        <Row>
-                                            <Col>
+                                        <Row className="p-0 mt-3">
+                                            <Col className="p-0">
                                                 <Label for="task-start-date">Start Date</Label>
                                                 <Input type='date' name='task-start-date' id='task-start-date'
                                                     onChange={mStartDateChangeHandler} valid={mStartDate ? true : false} invalid={modifiedStartDateValidate} defaultValue={mStartDate}/>
                                                 <FormFeedback invalid>Start date cannot later than end date</FormFeedback>
                                             </Col>
-                                            <Col>
+                                            <Col className="p-0 ps-2">
                                                 <Label for="task-end-date">End Date</Label>
                                                 <Input type='date' name='task-end-date' id='task-end-date'
                                                     onChange={mEndDateChangeHandler} valid={mEndDate ? true : false} invalid={modifiedEndDateValidate} defaultValue={mEndDate}/>
@@ -707,8 +707,8 @@ const ProjectDetails = () => {
                                     </Container>
                                 </FormGroup>
                                 <div className="d-flex justify-content-center mt-5">
-                                    <Button onClick={mtoggle} style={{ color: '#FD8787', backgroundColor: 'white', border: 'none', textTransform: 'uppercase' }}>Cancel</Button>
-                                    <Button type='submit' onClick={modifyTaskSubmitHandler} style={{ color: '#367FFF', backgroundColor: 'white', border: 'none', textTransform: 'uppercase' }}>Apply Changes</Button>{''}
+                                    <Button onClick={mtoggle} className="border-0 bg-danger">Cancel</Button>
+                                    <Button type='submit' onClick={modifyTaskSubmitHandler} className="border-0 bg-primary ms-2" >Apply Changes</Button>{''}
                                 </div>
                             </Form>
                         </ModalBody>

@@ -115,10 +115,10 @@ const Task = () => {
                                         {tasks && tasks.map((task) =>
                                         (task.taskStatus === 'Assigned' ?
                                             (< div className="assigned-task" key={Math.random()} id={task.taskName}>
-                                                <h6 style={{ fontWeight: "bold" }}>{task.taskName}</h6>
-                                                <p className="showHide">{task.taskDesc} </p>
-                                                <p>Start date: {task.taskStartDate}</p>
-                                                <p>End date: {task.taskEndDate}</p>
+                                                <h6>{task.taskName}</h6>
+                                                <p className="showHide text-muted">{task.taskDesc} </p>
+                                                <p className="text-muted">Start date: {task.taskStartDate}</p>
+                                                <p className="text-muted">End date: {task.taskEndDate}</p>
                                                 <button
                                                     className='task-btn p-0'
                                                     type="button"
@@ -127,7 +127,7 @@ const Task = () => {
                                                         populateData(e.target.parentNode.getAttribute('id'))
                                                     }}
                                                 >
-                                                    MODIFY TASK
+                                                    <strong>MODIFY TASK</strong>
                                                 </button>
                                                 {modalData && <TaskModal
                                                     onSaveTaskData={saveTaskDataHandler}
@@ -153,12 +153,12 @@ const Task = () => {
                                             tasks.map((task) =>
                                                 task.taskStatus === "InProgress" ? (
                                                     <div className="in-progress-task" key={task.taskId}>
-                                                        <h6 style={{ fontWeight: "bold" }}>
+                                                        <h6>
                                                             {task.taskName}
                                                         </h6>
-                                                        <p className="showHide">{task.taskDesc}</p>
-                                                        <p>Start date: {task.taskStartDate}</p>
-                                                        <p>End date: {task.taskEndDate}</p>
+                                                        <p className="showHide text-muted">{task.taskDesc}</p>
+                                                        <p className="text-muted">Start date: {task.taskStartDate}</p>
+                                                        <p className="text-muted">End date: {task.taskEndDate}</p>
                                                         <p>
                                                             <i className="tim-icons icon-refresh-01" />
                                                             <QueryBuilderIcon /> Hours {task.taskTotalHours}
@@ -200,11 +200,11 @@ const Task = () => {
                                             tasks.map((task) =>
                                                 task.taskStatus === "Completed" ? (
                                                     <div className="completed-task">
-                                                        <h6 style={{ fontWeight: "bold" }}>
+                                                        <h6>
                                                             {task.taskName}
                                                         </h6>
-                                                        <p className="showHide">{task.taskDesc}</p>
-                                                        <p>
+                                                        <p className="showHide text-muted">{task.taskDesc}</p>
+                                                        <p className="text-muted">
                                                             <i className="tim-icons icon-refresh-01" />
                                                             <QueryBuilderIcon /> Hours {task.taskTotalHours}
                                                         </p>

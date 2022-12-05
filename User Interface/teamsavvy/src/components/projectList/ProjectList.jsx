@@ -42,21 +42,23 @@ const ProjectList = () => {
             headerName: "Project name",
             sortable: true,
             editable: true,
+            flex:1
         },
-        { field: "tasks", headerName: "Tasks"},
-        { field: "team", headerName: "Team members" },
-        { field: "projectManagerName", headerName: "Manager Name" },
-        { field: "projectManagerId", headerName: "Manager ID"},
-        { field: "budget", headerName: "Budget", renderCell: (params) => formatter.format(params.row.budget) },
-        { field: "description", headerName: "Descritpion", width: 300 },
+        { field: "tasks", headerName: "Tasks", flex:1},
+        { field: "team", headerName: "Team members", flex:1 },
+        { field: "projectManagerName", headerName: "Manager Name", flex:1},
+        { field: "projectManagerId", headerName: "Manager ID", flex:1},
+        { field: "budget", headerName: "Budget",  flex:1,renderCell: (params) => formatter.format(params.row.budget) },
+        { field: "description", headerName: "Descritpion",  flex:1 },
         {
             field: "details",
             headerName: "Details",
+             flex:1,
             renderCell: (params) => (
                 <Link to={`/dashboard/projects/projectdetail/${params.row.id}`} state={params.row.projectManagerId}>View</Link>
             ),
         },
-        { field: 'icon', headerName: 'Delete', renderCell: (params) => <DeleteIcon value={params.row.id} onClick={() => handleDelete(params.row.id)} color="error" />
+        { field: 'icon', headerName: 'Delete',  flex:1, renderCell: (params) => <DeleteIcon value={params.row.id} onClick={() => handleDelete(params.row.id)} color="error" />
         },
     ];
 
@@ -360,7 +362,7 @@ const ProjectList = () => {
                                 
                             />
                         </div>
-                        <Modal isOpen={modal} toggle={toggle} backdrop="static" centered>
+                        <Modal isOpen={modal}  toggle={toggle} backdrop="static" centered>
                             <ModalHeader>
                                 {" "}
                                 <h4>Create Project</h4>{" "}
@@ -368,7 +370,7 @@ const ProjectList = () => {
                             <ModalBody>
                                 <Form onSubmit={createProjectsubmitHandler}>
                                     <FormGroup>
-                                        <Label className="mt-2 mb-1" for="title">
+                                        <Label className="mt-2 mb-1 p-0" for="title">
                                             Title
                                         </Label>
                                         <Input
@@ -382,7 +384,7 @@ const ProjectList = () => {
                                         <FormFeedback>Project name cannot be blank</FormFeedback>
                                     </FormGroup>
                                     <FormGroup>
-                                        <Label className="mt-2 mb-1" for="description">
+                                        <Label className="mt-2 mb-1 p-0" for="description">
                                             Description
                                         </Label>
                                         <Input
@@ -417,7 +419,7 @@ const ProjectList = () => {
                                                 Project estimated tasks cannot be blank
                                             </FormFeedback>
                                         </Col>
-                                        <Col md={6}>
+                                        <Col md={6} >
                                             <FormGroup>
                                                 <Label className="mt-2 mb-1" for="budget">
                                                     Budget ($)
@@ -477,8 +479,8 @@ const ProjectList = () => {
                                             </FormGroup>
                                         </Col>
                                     </Row>
-                                    <Row>
-                                        <Col md={6}>
+                                    <Row >
+                                        <Col md={6} >
                                             <FormGroup>
                                                 <Label className="mt-3  mb-1" for="clientName">
                                                     Client Name
@@ -497,7 +499,7 @@ const ProjectList = () => {
                                     </Row>
                                 </Form>
                                 <div className="d-flex justify-content-center mt-5">
-                                    <Button className="me-3" color="secondary" onClick={toggle}>
+                                    <Button className="me-3 bg-danger" onClick={toggle}>
                                         Cancel
                                     </Button>
                                     <Button color="primary" onClick={(e) => {
