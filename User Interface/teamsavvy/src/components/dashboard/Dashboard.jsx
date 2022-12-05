@@ -239,7 +239,6 @@ const Dashboard = () => {
     const GetEmployeeLeaves = () =>{
         http.get(GetEndPoints().employeeLeaves)
         .then((res) =>{
-           
            if(res.data.success){
             setEmpLeaves(res.data.response)
            }
