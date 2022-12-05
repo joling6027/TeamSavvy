@@ -273,7 +273,7 @@ const GetTotalHours = (timeSheetEvent) => {
       setEvents([...event, {
         title:leavesArr[0].leaveType, 
         leaveTypeId: leavesArr[0].leaveTypeId,
-        employeeId: user.employeeId,
+        employeeId:  parseInt(params.id),
         start: slotInfo.start,
         end: slotInfo.end,
         allDay: true,
@@ -282,7 +282,7 @@ const GetTotalHours = (timeSheetEvent) => {
     localStorage.setItem('leave', JSON.stringify({
       title:leavesArr[0].leaveType, 
       leaveTypeId: leavesArr[0].leaveTypeId,
-      employeeId: user.employeeId,
+      employeeId:  parseInt(params.id),
       start: slotInfo.start,
       end: slotInfo.end,
       allDay: true,
