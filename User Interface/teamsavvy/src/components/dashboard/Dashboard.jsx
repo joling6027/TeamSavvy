@@ -626,7 +626,7 @@ const deleteWid = (widget) =>{
         <div className=" pb-3">
         <Col>
             <Button onClick={toggle}  className="border-0  bg-primary rounded ">
-                <div className="text-white">< AddIcon fontSize="small"/> <strong>Add Widget</strong></div>
+                <div className="text-white">< AddIcon fontSize="w"/> <strong>Add Widget</strong></div>
             </Button>
             <Collapse isOpen={isOpen} className="mb-3 ">
                 <Card className="rounded-0 border-0">

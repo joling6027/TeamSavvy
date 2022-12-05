@@ -15,6 +15,8 @@ import { useEffect } from 'react';
 import AuthService from '../services/authService';
 import { useState } from 'react';
 import { GetEndPoints } from '../utilities/EndPoints';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import SweetAlert from 'react-bootstrap-sweetalert';
 
@@ -367,8 +369,9 @@ const InternalJobs = () => {
             <SweetAlert
                 warning
                 showCancel
-                confirmBtnText="Yes, delete it!"
-                confirmBtnBsStyle="danger"
+                confirmBtnText="Confirm"
+                confirmBtnBsStyle="primary"
+                cancelBtnBsStyle="danger"
                 title="Are you sure?"
                 style={{ display: "block", marginTop: "-100px" }}
                 onConfirm={() => deleteJob(jobId)}
@@ -424,10 +427,12 @@ const InternalJobs = () => {
                                                     /* <Button className='btn-view-job-detail' color="link"
                                                     onClick={() => { setJobItem(job) }}>VIEW</Button> */
                                                     <>
+                                                    <div className="d-flex">
                                                     < Button className='btn-view-job-detail' color="link"
                                                         onClick={() => { setJobItem(job); setIsCreateJob(false) }}>VIEW</Button>
                                                     <Button className='btn-view-job-detail' color="text-danger" style={{color: 'red'}}
-                                                        onClick={() => deleteJobAlert(job.jobId)}>DEL</Button>
+                                                        onClick={() => deleteJobAlert(job.jobId)}> <DeleteIcon/> </Button>
+                                                    </div>
  
                                                     </>
                                                 )
@@ -524,8 +529,8 @@ const InternalJobs = () => {
 
                                                             </Row>
                                                             <Col>
-                                                                <Button type='submit' onClick={() => submitHandler} style={{ color: '#367FFF', backgroundColor: 'white', border: 'none', textTransform: 'uppercase', float: 'right' }}>Create Job</Button>{''}
-                                                                <Button type='reset' style={{ color: '#FD8787', backgroundColor: 'white', border: 'none', textTransform: 'uppercase', float: 'right' }} onClick={() => setIsCreateJob(false)}>Cancel</Button>
+                                                                <Button type='submit' onClick={() => submitHandler} className=" mt-4 border-0 bg-primary float-end">Create Job</Button>{''}
+                                                                <Button type='reset' className="mt-4 border-0 bg-danger me-2 float-end" onClick={() => setIsCreateJob(false)}>Cancel</Button>
                                                             </Col>
                                                         </Container>
                                                     </FormGroup>

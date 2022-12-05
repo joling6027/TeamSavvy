@@ -52,8 +52,8 @@ const UpdateStatusModal = (props) => {
               </Container>
             </FormGroup>
             <Modal.Footer className='status-modal-footer'>
-              <Button onClick={props.close} style={{ color: '#FD8787', backgroundColor: 'white', border: 'none', textTransform: 'uppercase' }}>Cancel</Button>
-              <Button type='submit' style={{ color: '#367FFF', backgroundColor: 'white', border: 'none', textTransform: 'uppercase' }}>Apply Changes</Button>{''}
+              <Button onClick={props.close} className="border-0 bg-danger">Cancel</Button>
+              <Button type='submit' className="border-0">Apply Changes</Button>{''}
             </Modal.Footer>
           </Form>
         </Modal.Body>

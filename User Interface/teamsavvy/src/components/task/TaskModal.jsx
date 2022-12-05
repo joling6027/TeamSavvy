@@ -122,25 +122,25 @@ const TaskModal = (props) => {
           >
             <FormGroup>
               <Container>
-                <Row>
-                  <Label for='task-title'>Title</Label>
+                <Row className="p-0">
+                  <Label className="p-0 text-muted small" for='task-title'>Title</Label>
                   <Input type='text' name='task-title' id='task-title' onChange={titleChangeHandler} defaultValue={props.onOpen.taskName} invalid={titleValidate} />
                   <FormFeedback>Title cannot be blank</FormFeedback>
                 </Row>
-                <Row>
-                  <Label for='task-desc'>Description</Label>
+                <Row className="p-0 mt-3">
+                  <Label className="p-0 text-muted small" for='task-desc'>Description</Label>
                   <Input type='textarea' name='task-desc' id='task-desc' onChange={descriptionChangeHandler} defaultValue={props.onOpen.taskDesc} invalid={descValidate} />
                   <FormFeedback>Description cannot be blank</FormFeedback>
                 </Row>
-                <Row>
-                  <Col>
-                    <Label for='task-hour'>Hours</Label>
+                <Row className=" mt-3" >
+                  <Col className="p-0 ">
+                    <Label className="text-muted small" for='task-hour'>Hours</Label>
                     <Input type='number' name='task-hour' id='task-hour' onChange={HoursChangeHandler} defaultValue={props.onOpen.taskTotalHours} invalid={hourValidate} />
                     <FormFeedback>Task hours cannot be blank or 0</FormFeedback>
                     {/* <FormText>Please remember to set reasonable hours to the task</FormText> */}
                   </Col>
-                  <Col>
-                    <Label for='task-status'>Status</Label>
+                  <Col className="p-0 ps-2">
+                    <Label className="text-muted small" for='task-status'>Status</Label>
                     <Input type='select' name='task-status' id='task-status' onChange={statusChangeHandler}>
                       <option>Assigned</option>
                       <option>In Progress</option>
@@ -148,15 +148,15 @@ const TaskModal = (props) => {
                     </Input>
                   </Col>
                 </Row>
-                <Row>
-                  <Col>
-                    <Label for="task-start-date">Start Date</Label>
+                <Row className="p-0 mt-3">
+                  <Col className="p-0">
+                    <Label className="text-muted small" for="task-start-date">Start Date</Label>
                     <Input type='date' name='task-start-date' id='task-start-date'
                       defaultValue={props.onOpen.taskStartDate} onChange={startDateChangeHandler} />
                     <FormFeedback>The start date cannnot be blank</FormFeedback>
                   </Col>
-                  <Col>
-                    <Label for="task-end-date">End Date</Label>
+                  <Col className="p-0 ps-2">
+                    <Label className="text-muted small" for="task-end-date">End Date</Label>
                     <Input type='date' name='task-end-date' id='task-end-date'
                       defaultValue={props.onOpen.taskEndDate} onChange={endDateChangeHandler} invalid={endDateValidate} />
                     <FormFeedback>The start date cannnot be blank or earlier than start date</FormFeedback>
@@ -164,9 +164,9 @@ const TaskModal = (props) => {
                 </Row>
               </Container>
             </FormGroup>
-            <Modal.Footer>
-              <Button onClick={props.close} style={{ color: '#FD8787', backgroundColor: 'white', border: 'none', textTransform: 'uppercase' }}>Cancel</Button>
-              <Button type='submit' style={{ color: '#367FFF', backgroundColor: 'white', border: 'none', textTransform: 'uppercase' }}>Apply Changes</Button>{''}
+            <Modal.Footer className=" pe-0">
+              <Button className="bg-danger border-0" onClick={props.close} >Cancel</Button>
+              <Button className="border-0" type='submit' >Apply Changes</Button>{''}
             </Modal.Footer>
           </Form>
         </Modal.Body>

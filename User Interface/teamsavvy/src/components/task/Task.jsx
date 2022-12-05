@@ -116,11 +116,11 @@ const Task = () => {
                                         (task.taskStatus === 'Assigned' ?
                                             (< div className="assigned-task" key={Math.random()} id={task.taskName}>
                                                 <h6 style={{ fontWeight: "bold" }}>{task.taskName}</h6>
-                                                <p>{task.taskDesc}</p>
+                                                <p className="showHide">{task.taskDesc} </p>
                                                 <p>Start date: {task.taskStartDate}</p>
                                                 <p>End date: {task.taskEndDate}</p>
                                                 <button
-                                                    className='task-btn'
+                                                    className='task-btn p-0'
                                                     type="button"
                                                     onClick={(e) => {
                                                         setShow(true);
@@ -156,7 +156,7 @@ const Task = () => {
                                                         <h6 style={{ fontWeight: "bold" }}>
                                                             {task.taskName}
                                                         </h6>
-                                                        <p>{task.taskDesc}</p>
+                                                        <p className="showHide">{task.taskDesc}</p>
                                                         <p>Start date: {task.taskStartDate}</p>
                                                         <p>End date: {task.taskEndDate}</p>
                                                         <p>
@@ -203,7 +203,7 @@ const Task = () => {
                                                         <h6 style={{ fontWeight: "bold" }}>
                                                             {task.taskName}
                                                         </h6>
-                                                        <p>{task.taskDesc}</p>
+                                                        <p className="showHide">{task.taskDesc}</p>
                                                         <p>
                                                             <i className="tim-icons icon-refresh-01" />
                                                             <QueryBuilderIcon /> Hours {task.taskTotalHours}

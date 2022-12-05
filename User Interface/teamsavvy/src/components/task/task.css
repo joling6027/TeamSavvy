@@ -67,3 +67,13 @@
   border: none;
 
 }
+
+.showHide{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  line-height: 25px;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+}
+.showHide:hover{display:block}
