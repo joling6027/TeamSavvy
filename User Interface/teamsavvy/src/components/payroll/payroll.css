@@ -1,0 +1,101 @@
+:root{
+  --font-color: #333333;
+}
+
+.content{
+  height: 85vh;
+  /* background-color: aquamarine; */
+  position: relative;
+}
+
+/* .card-payroll {
+  /* margin-top: 150px; */
+  /* width: 80vw;
+  height: 90%;
+  overflow-x: hidden; */
+  
+  /* position: absolute; */
+  /* margin: 2% 0% 0% 2%;
+} */ 
+
+.card-header-payroll{
+  background-color: white;
+  border: none;
+}
+
+.card-footer-payroll{
+  background-color: white;
+  border: none;
+}
+
+.card-footer-payroll > h6 {
+  text-align: end;
+}
+
+.paylips-table{
+  width: 100%;
+}
+
+.paylips-table > tbody > tr:hover{
+  background-color: #ddd;
+}
+
+.paylips-table > thead{
+  /* border-top: 1px solid #00000029;
+  border-bottom: 1px solid #00000029; */
+  border:none!important;
+  
+}
+table, tr, thead, tbody, th, td {
+  /* border-top: 1px solid #00000029;
+  border-bottom: 1px solid #00000029; */
+  border:none!important;
+  border-color: transparent; 
+  border-style: none;
+  border-width: 0;
+  
+}
+
+.paylips-table > thead > tr > th {
+  color: #848484;
+}
+
+.paylips-table thead{
+  border:1px solid #00000029
+}
+
+.view-file >a {
+  text-decoration: none;
+}
+
+.payroll-pagination{
+  text-align: end;
+}
+
+/* paystub */
+.paystub-inner-card {
+  width: auto;
+  height: auto;
+  top: 15vh;
+  margin-bottom: 3%;
+  border-top: 1px solid #00000029;
+
+}
+
+.paystub-inner-table-caption{
+  text-transform: uppercase;
+  font-weight: bold;
+  color: var(--font-color);
+  opacity: 1;
+  border-bottom:none;
+}
+
+@media only screen and (max-width:780px){
+  .account{max-width:20px;white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip}
+    .paylips-table{overflow:auto}
+
+}
+        
+

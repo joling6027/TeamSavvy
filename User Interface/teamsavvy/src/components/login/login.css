@@ -1,0 +1,20 @@
+.loginBody{background:url("../../assets/img/bg.png")no-repeat;background-size:cover;}
+.cardImg{position:absolute; width:24.87rem; z-index: -8}
+.loginCard{width: 25rem!important; position: absolute!important; top: 50%!important; left:50%!important ;
+    transform: translate(-50%, -50%)!important;}
+.appBtn::before{content:""; position:absolute; height:0px; width:0px;top: 50%!important; background: #1d8cf8; left:50%!important ;
+    transform: translate(-50%, -50%)!important;transition: all 0.3s ease-in-out;z-index:-3;opacity:0}
+.appBtn{position: relative;text-decoration:none;padding:10px 3rem ;display:block; margin-bottom:1rem;color:#000; 
+    font-weight: bold;border: none;
+    background: none;
+    width: 100%;}
+.appBtn span{z-index:99}
+.appBtn:hover{ color:#000}
+.appBtn:hover::before{content:"";width:100%; height:100%;position:absolute; right:0;z-index:-3;
+    background: #1d8cf8;opacity:0.2;border-radius: 5px}
+
+@media only screen and (max-width:600px){
+    .loginCard{width: 20rem!important}
+    .cardImg{width:19.87rem; z-index: -8}
+
+}

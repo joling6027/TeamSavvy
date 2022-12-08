@@ -1,0 +1,10 @@
+.MuiDataGrid-main:nth-child(2){height:400px;}
+.MuiDataGrid-main{display: flex;}
+path{height:0;width:0}
+
+@media only screen and (max-width:780px){
+   
+    /* .MuiDataGrid-selectedRowCount, .MuiTablePagination-root{visibility: hidden;}
+    .MuiDataGrid-footerContainer{display: none;} */
+
+  }

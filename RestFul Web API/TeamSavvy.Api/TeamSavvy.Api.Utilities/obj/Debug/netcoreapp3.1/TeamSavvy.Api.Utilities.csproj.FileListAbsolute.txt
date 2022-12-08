@@ -1,0 +1,15 @@
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Utilities\obj\Debug\netcoreapp3.1\TeamSavvy.Api.Utilities.csproj.AssemblyReference.cache
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Utilities\obj\Debug\netcoreapp3.1\TeamSavvy.Api.Utilities.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Utilities\obj\Debug\netcoreapp3.1\TeamSavvy.Api.Utilities.AssemblyInfoInputs.cache
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Utilities\obj\Debug\netcoreapp3.1\TeamSavvy.Api.Utilities.AssemblyInfo.cs
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Utilities\obj\Debug\netcoreapp3.1\TeamSavvy.Api.Utilities.csproj.CoreCompileInputs.cache
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Utilities\bin\Debug\netcoreapp3.1\TeamSavvy.Api.Utilities.deps.json
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Utilities\bin\Debug\netcoreapp3.1\TeamSavvy.Api.Utilities.dll
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Utilities\bin\Debug\netcoreapp3.1\TeamSavvy.Api.Utilities.pdb
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Utilities\bin\Debug\netcoreapp3.1\TeamSavvy.Api.BusinessModel.dll
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Utilities\bin\Debug\netcoreapp3.1\TeamSavvy.Api.Entities.dll
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Utilities\bin\Debug\netcoreapp3.1\TeamSavvy.Api.BusinessModel.pdb
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Utilities\bin\Debug\netcoreapp3.1\TeamSavvy.Api.Entities.pdb
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Utilities\obj\Debug\netcoreapp3.1\TeamSavvy.Api.Utilities.csproj.CopyComplete
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Utilities\obj\Debug\netcoreapp3.1\TeamSavvy.Api.Utilities.dll
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Utilities\obj\Debug\netcoreapp3.1\TeamSavvy.Api.Utilities.pdb

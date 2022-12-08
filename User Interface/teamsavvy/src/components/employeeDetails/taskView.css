@@ -1,0 +1,70 @@
+:root {
+    --font-color: #333333;
+  }
+  
+  .content {
+    height: 85vh;
+    /* background-color: aquamarine; */
+    /* position: relative; */
+    overflow: auto;
+  }
+  
+  /* .card{
+    top: 0%;
+    left: 0%;
+    transform: none;
+    margin-right: 5%;
+  } */
+  
+  .card-task{
+    width: 80vw;
+    /* height: 90%; */
+    /* overflow-x: hidden;
+    overflow-y: auto; */
+    /* position: absolute; */
+    /* margin-left: 3%; */
+    padding: 2% 2%;
+    top: 0%;
+    left: 0%;
+    /* overflow-x: scroll; */
+  }
+  
+  
+  .task-list-card{
+    /* grid-auto-rows: 1fr; */
+    width: 100%;
+    align-self: flex-start;
+    overflow-x: auto;
+  }
+  
+  .task-btn{
+    border: none;
+    background-color: transparent;
+    color: #367FFF;
+  }
+  
+  .task-card-title{
+    padding: 16px 16px 0 16px;
+  }
+  
+  /* override bootstrap.css class but it's only for opacity */
+  .modal-backdrop.show {
+    opacity: 0.2;
+  }
+  
+  /* Update status modal */
+  .status-modal-style{
+    width: 35vw;
+    margin: auto;
+  }
+  
+  .status-modal-container{
+    margin-top: 3%;
+    height: 200px;
+  }
+  
+  .status-modal-footer{
+    border: none;
+  
+  }
+  

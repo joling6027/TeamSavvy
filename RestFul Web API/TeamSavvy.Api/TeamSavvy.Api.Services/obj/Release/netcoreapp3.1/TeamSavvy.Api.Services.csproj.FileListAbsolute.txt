@@ -1,0 +1,15 @@
+C:\Users\jaspa\source\repos\TeamSavvy.Api\TeamSavvy.Api.Services\bin\Release\netcoreapp3.1\TeamSavvy.Api.Services.deps.json
+C:\Users\jaspa\source\repos\TeamSavvy.Api\TeamSavvy.Api.Services\bin\Release\netcoreapp3.1\TeamSavvy.Api.Services.dll
+C:\Users\jaspa\source\repos\TeamSavvy.Api\TeamSavvy.Api.Services\bin\Release\netcoreapp3.1\TeamSavvy.Api.Services.pdb
+C:\Users\jaspa\source\repos\TeamSavvy.Api\TeamSavvy.Api.Services\bin\Release\netcoreapp3.1\TeamSavvy.Api.BusinessModel.dll
+C:\Users\jaspa\source\repos\TeamSavvy.Api\TeamSavvy.Api.Services\bin\Release\netcoreapp3.1\TeamSavvy.Api.Entities.dll
+C:\Users\jaspa\source\repos\TeamSavvy.Api\TeamSavvy.Api.Services\bin\Release\netcoreapp3.1\TeamSavvy.Api.BusinessModel.pdb
+C:\Users\jaspa\source\repos\TeamSavvy.Api\TeamSavvy.Api.Services\bin\Release\netcoreapp3.1\TeamSavvy.Api.Entities.pdb
+C:\Users\jaspa\source\repos\TeamSavvy.Api\TeamSavvy.Api.Services\obj\Release\netcoreapp3.1\TeamSavvy.Api.Services.csproj.AssemblyReference.cache
+C:\Users\jaspa\source\repos\TeamSavvy.Api\TeamSavvy.Api.Services\obj\Release\netcoreapp3.1\TeamSavvy.Api.Services.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jaspa\source\repos\TeamSavvy.Api\TeamSavvy.Api.Services\obj\Release\netcoreapp3.1\TeamSavvy.Api.Services.AssemblyInfoInputs.cache
+C:\Users\jaspa\source\repos\TeamSavvy.Api\TeamSavvy.Api.Services\obj\Release\netcoreapp3.1\TeamSavvy.Api.Services.AssemblyInfo.cs
+C:\Users\jaspa\source\repos\TeamSavvy.Api\TeamSavvy.Api.Services\obj\Release\netcoreapp3.1\TeamSavvy.Api.Services.csproj.CoreCompileInputs.cache
+C:\Users\jaspa\source\repos\TeamSavvy.Api\TeamSavvy.Api.Services\obj\Release\netcoreapp3.1\TeamSavvy.Api.Services.csproj.CopyComplete
+C:\Users\jaspa\source\repos\TeamSavvy.Api\TeamSavvy.Api.Services\obj\Release\netcoreapp3.1\TeamSavvy.Api.Services.dll
+C:\Users\jaspa\source\repos\TeamSavvy.Api\TeamSavvy.Api.Services\obj\Release\netcoreapp3.1\TeamSavvy.Api.Services.pdb

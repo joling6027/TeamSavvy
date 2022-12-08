@@ -1,0 +1,8 @@
+.MuiDataGrid-main:nth-child(2){height:400px;}
+.MuiDataGrid-main{display: flex;}
+path{height:0;width:0}
+.MuiDataGrid-row:nth-child(even){background:#f7f7f7}
+
+@media only screen and (max-width:780px){
+    .linkStyle{display:block}
+  }

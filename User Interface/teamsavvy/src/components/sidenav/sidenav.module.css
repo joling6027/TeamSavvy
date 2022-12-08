@@ -1,0 +1,102 @@
+.sidenav {
+    width: 250px;
+    transition: width 0.3s ease-in-out;
+    height: 100vh;
+    background:url("../../assets/img/bg.png") no-repeat #000;
+    background-position: left center;
+    background-size: cover;
+    padding: 20px 0;
+    position:relative;
+    z-index:1024;
+}
+
+.sidenav > button{position: absolute;color:#000;right:-50px;z-index:5}
+
+.sidenavClosed {
+    composes: sidenav;
+    transition: width 0.3s ease-in-out;
+    width: 60px;
+}
+
+.sideitem {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    cursor: pointer;
+    color: #B2BAC2;
+    text-decoration: none;
+    overflow: hidden;
+    position: relative;
+}
+.w{width:1%!important}
+
+.sidenav .sideitem:nth-of-type(2){
+  /* margin:0 10px; */
+  padding:15px;
+  border-top: 1px solid rgba(255,255,255,0.5);
+  border-bottom: 1px solid rgba(255,255,255,0.5);
+}
+
+.sidenav .sideitem:nth-of-type(2) > img{
+    height: 32px;
+    width:32px;
+    border-radius:50%;
+}
+
+.sidenav .sideitem:last-child{position: fixed;
+    bottom:10px; border-top:1px solid rgba(255,255,255,0.5);
+    /* margin:0 15px; */
+    width:213px;
+
+}
+
+.linkText {
+    padding-left: 16px;
+}
+.sideitem::before{content:""; position:absolute; height:0px; width:0px;top: 50%!important; background: #1d8cf8; color:#fff; left:50%!important ;
+    transform: translate(-50%, -50%)!important;transition: all 0.3s ease-in-out;z-index:-3;opacity:0}
+
+    .sideitem:hover{color:#fff}
+
+.sideitem:hover::before {
+     color:#fff;
+     content:"";width:100%; height:100%;position:absolute; right:0;z-index:-3;
+    background: #1d8cf8;opacity:0.5;
+}
+.menuBtn {
+    align-self: center;
+    align-self: flex-start;  
+    justify-self: flex-end;
+    color: #B2BAC2;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding-left: 20px;
+}
+/* .sidenavClosed .sideitem:nth-of-type(2) > img {
+    height:px !important;
+    width:28px !important;
+    border-radius:50%;
+
+} */
+.sidenavClosed .navlinklogo a img{
+    height:30px!important;
+    max-width: 40px;
+    overflow:hidden;
+}
+.sidenavClosed .sideitem:last-child{
+   width:60px;
+    border-top:1px solid transparent;
+   margin:0;
+   left:0
+}
+
+
+
+.sidebarprofile{height:35px; width:auto; display:inline-block}
+
+/* .navlinklogo a img{
+  height:30px!important;
+  overflow:hidden;
+} */
+

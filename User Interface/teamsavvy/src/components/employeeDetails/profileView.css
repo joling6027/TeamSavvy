@@ -1,0 +1,11 @@
+.profile-card{background:url("../../assets/img/bg-profile.png")no-repeat;background-position:center top }
+.prCard{transform:translate(0); left:0; top:0; width:auto !important; Height:auto !important}
+.skillPill{background-color: #F0A86A!important;font-size: 14px}
+.moremargin{margin-bottom:100px}
+.fsmall{font-size:12px;}
+.mail:hover .showmail{display: inline-block!important; z-index:999}
+.close-badge{ top:-5px; right:4px;display: none;}
+.skill:hover .close-badge{display: inline-block;}
+.profileright{width: 74%; position: absolute; right: 20px;}
+.profileleft{position: fixed; width:20%;}
+.profileleft .teamMem{height:250px!important; overflow:auto}

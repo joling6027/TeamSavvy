@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121.
+-->
+<Project>
+  <PropertyGroup>
+    <History>False|2022-10-01T23:35:33.1254838Z;False|2022-10-01T16:35:06.1223066-07:00;</History>
+    <LastFailureDetails>2022-10-01T23:35:33.1254838Z|checkContainerPrereq</LastFailureDetails>
+  </PropertyGroup>
+</Project>

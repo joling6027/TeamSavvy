@@ -1,0 +1,17 @@
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Middleware\obj\Debug\netcoreapp3.1\TeamSavvy.Api.Middleware.csproj.AssemblyReference.cache
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Middleware\obj\Debug\netcoreapp3.1\TeamSavvy.Api.Middleware.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Middleware\obj\Debug\netcoreapp3.1\TeamSavvy.Api.Middleware.AssemblyInfoInputs.cache
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Middleware\obj\Debug\netcoreapp3.1\TeamSavvy.Api.Middleware.AssemblyInfo.cs
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Middleware\obj\Debug\netcoreapp3.1\TeamSavvy.Api.Middleware.csproj.CoreCompileInputs.cache
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Middleware\bin\Debug\netcoreapp3.1\TeamSavvy.Api.Middleware.deps.json
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Middleware\bin\Debug\netcoreapp3.1\TeamSavvy.Api.Middleware.dll
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Middleware\bin\Debug\netcoreapp3.1\TeamSavvy.Api.Middleware.pdb
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Middleware\bin\Debug\netcoreapp3.1\TeamSavvy.Api.BusinessModel.dll
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Middleware\bin\Debug\netcoreapp3.1\TeamSavvy.Api.Entities.dll
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Middleware\bin\Debug\netcoreapp3.1\TeamSavvy.Api.Utilities.dll
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Middleware\bin\Debug\netcoreapp3.1\TeamSavvy.Api.Utilities.pdb
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Middleware\bin\Debug\netcoreapp3.1\TeamSavvy.Api.BusinessModel.pdb
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Middleware\bin\Debug\netcoreapp3.1\TeamSavvy.Api.Entities.pdb
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Middleware\obj\Debug\netcoreapp3.1\TeamSavvy.Api.Middleware.csproj.CopyComplete
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Middleware\obj\Debug\netcoreapp3.1\TeamSavvy.Api.Middleware.dll
+D:\Projects\TeamSavvy\RestFul Web API\TeamSavvy.Api\TeamSavvy.Api.Middleware\obj\Debug\netcoreapp3.1\TeamSavvy.Api.Middleware.pdb

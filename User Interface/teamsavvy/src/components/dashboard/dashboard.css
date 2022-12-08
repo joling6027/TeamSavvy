@@ -1,0 +1,17 @@
+.chartIcons .prCard:hover{background-color: #93cee9;}
+.modal-content{width:inherit}
+.deletebtn{right:20px; top:66px; z-index:999}
+.selectChart .nav-item{display: inline-block;  }
+.selectChart .nav-link.active{background:rgb(132, 203, 248);border-radius:0!important }
+canvas{height:300px!important; width:auto!important; }
+.pie canvas{ width:300px!important;margin-left:25%}
+
+.MuiDataGrid-footerContainer div > p {display: flex; margin:0;align-items: center; }
+
+@media only screen and (max-width:800px){
+    canvas{overflow:auto; width:100%!important;height:auto!important}
+    .pie canvas{margin-left:0%; width:100%!important}
+
+}
+
+
