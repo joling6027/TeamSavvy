@@ -32,16 +32,16 @@ To use TeamSavvy, follow these steps:
 ## Examples
 
 1. HR can create new profile for new employees
-![](.\Design\Images\create-user.png)
+![](https://github.com/joling6027/Design/Images/create-user.png)
 
 2. Manager can use dashboard to manage projects and employee performace.
-![](.\Design\Images\dashboard.png)
+![](https://github.com/joling6027/Design/Images/dashboard.png)
 
 3. Employee can apply for leaves from the timesheet page. They can also see their clock-in\ clock-out time here after performing on their mobile app.
-![](.\Design\Images\apply-for-leaves.png)
+![](https://github.com/joling6027/Design/Images/apply-for-leaves.png)
 
 4. Employee can also apply for internal jobs. HR has the authority to create/delete jobs as well as view who applied for a specific job.
-![](.\Design\Images\apply-for-internal-jobs.png)
+![](https://github.com/joling6027/Design/Images/apply-for-internal-jobs.png)
 
 
 
