@@ -33,19 +33,19 @@ To use TeamSavvy, follow these steps:
 
 1. HR can create new profile for new employees
 <!-- ![](https://github.com/joling6027/TeamSavvy/blob/main/Design/Images/create-user.png) -->
-<img src="https://github.com/joling6027/TeamSavvy/blob/main/Design/Images/create-user.png" alt="" style="height: 200px; width:250px;"/>
+<img src="https://github.com/joling6027/TeamSavvy/blob/main/Design/Images/create-user.png" alt="" style="height: 200px; width:350px;"/>
 
 2. Manager can use dashboard to manage projects and employee performace.
 <!-- ![](https://github.com/joling6027/TeamSavvy/blob/main/Design/Images/dashboard.png) -->
-<img src="https://github.com/joling6027/TeamSavvy/blob/main/Design/Images/dashboard.png" alt="" style="height: 200px; width:250px;"/>
+<img src="https://github.com/joling6027/TeamSavvy/blob/main/Design/Images/dashboard.png" alt="" style="height: 200px; width:350px;"/>
 
 3. Employee can apply for leaves from the timesheet page. They can also see their clock-in\ clock-out time here after performing on their mobile app.
 <!-- ![](https://github.com/joling6027/TeamSavvy/blob/main/Design/Images/apply-for-leaves.png) -->
-<img src="https://github.com/joling6027/TeamSavvy/blob/main/Design/Images/apply-for-leaves.png" alt="" style="height: 200px; width:250px;"/>
+<img src="https://github.com/joling6027/TeamSavvy/blob/main/Design/Images/apply-for-leaves.png" alt="" style="height: 200px; width:350px;"/>
 
 4. Employee can also apply for internal jobs. HR has the authority to create/delete jobs as well as view who applied for a specific job.
 <!-- ![](https://github.com/joling6027/TeamSavvy/blob/main/Design/Images/apply-for-internal-jobs.png) -->
-<img src="https://github.com/joling6027/TeamSavvy/blob/main/Design/Images/apply-for-internal-jobs.png" alt="" style="height: 200px; width:250px;"/>
+<img src="https://github.com/joling6027/TeamSavvy/blob/main/Design/Images/apply-for-internal-jobs.png" alt="" style="height: 200px; width:350px;"/>
 
 
 
